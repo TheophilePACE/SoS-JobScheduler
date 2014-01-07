@@ -1,0 +1,16 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+  "http://www.w3.org/TR/html4/transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+  "http://www.w3.org/TR/html4/transitional.dtd">
+<html>
+	<head>
+		<meta http-equiv="refresh" content="5">
+		<meta http-equiv="cache-control" content="no-cache">
+		<title>Running jobnets</title>
+	</head>
+	<body style="margin-left:20px; margin-top:10px; font-family:Arial;">
+		<h1>List of jobnets</h1>
+		<div id="${uuid_jobnet_identifier}.svg">
+		</div>
+</body>
+</html>

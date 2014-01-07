@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="scheduler_job_documentation_v1.1.xsl"?>
+<description xmlns="http://www.sos-berlin.com/schema/scheduler_job_documentation_v1.1" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sos-berlin.com/schema/scheduler_job_documentation_v1.1 http://www.sos-berlin.com/schema/scheduler_job_documentation_v1.1.xsd">
+  <job name="JobNetCreator" title="creates the job net for a given bootstrap order" order="yes" tasks="unbounded">
+    <script />
+  </job>
+  <releases>
+    <release id="id" created="2012-02-22" modified="2012-02-22">
+      <author name="Stefan Schaedlich" email="stefan.schaedlich@sos-berlin.com" />
+    </release>
+  </releases>
+  <configuration>
+    <params>
+    <!-- 
+	  <param name="hibernate_connection_config_file" required="false" default_value="hibernate.cfg.xml" DataType="SOSOptionInFileName">
+	   <note language="de">
+	        <title/>
+	      <div xmlns="http://www.w3.org/1999/xhtml">Hibernate-Konfigurationsdatei der Datenbank-Verbindung</div>
+	    </note>
+	    <note language="en">
+	        <title/>
+	      <div xmlns="http://www.w3.org/1999/xhtml">Hibernate configuration file of the database connection</div>
+	    </note>
+  	  </param>
+     -->
+      <param name="OrderId" required="true" />
+      <param name="JobChainName" required="true" />
+      <param name="time_horizon" default_value="1:00:00:00" required="false" />
+      <param name="JobNet" default_value="" required="true" DataType="SOSOptionString">
+        <note language="de">
+          <div xmlns="http://www.w3.org/1999/xhtml">Name des Job-Netztes</div>
+        </note>
+        <note language="en">
+          <div xmlns="http://www.w3.org/1999/xhtml">Name of the job net</div>
+        </note>
+      </param>
+      <param name="HostName" default_value=""      
+       required="true" 
+       DataType="SOSOptionHostName"         >
+       <note language="de">
+          <div xmlns="http://www.w3.org/1999/xhtml">Name des scheduler hosts</div>
+        </note>
+        <note language="en">
+          <div xmlns="http://www.w3.org/1999/xhtml">Name of the JobScheduler host</div>
+        </note>
+      </param>
+      <param name="PortNumber" default_value=""      
+       required="true" 
+       DataType="SOSOptionPortNumber"         >
+       <note language="de">
+          <div xmlns="http://www.w3.org/1999/xhtml">Nummer des JobScheduler ports</div>
+        </note>
+        <note language="en">
+          <div xmlns="http://www.w3.org/1999/xhtml">Number of the JobScheduler port</div>
+        </note>
+      </param>
+      <param name="RootFolder"      
+       default_value=""
+       required="false"
+       DataType="SOSOptionFolderName"         >
+       <note language="de">
+          <div xmlns="http://www.w3.org/1999/xhtml">Wurzelverzeichnis der Jobnetzdefinitionen.</div>
+        </note>
+        <note language="en">
+          <div xmlns="http://www.w3.org/1999/xhtml">root folder of the job net definitions.</div>
+        </note>
+      </param>
+      <param name="SchedulerId"      
+       default_value=""
+       required="false"
+       DataType="SOSOptionString"         >
+       <note language="de">
+          <div xmlns="http://www.w3.org/1999/xhtml">ID des Schedulers.</div>
+        </note>
+        <note language="en">
+          <div xmlns="http://www.w3.org/1999/xhtml">scheduler id.</div>
+        </note>
+      </param>
+      <param name="MaxJobNetNodes"      
+       default_value="500"
+       required="false"
+       DataType="SOSOptionInteger"         >
+       <note language="de">
+          <div xmlns="http://www.w3.org/1999/xhtml">Maximale Anzahl der Knoten eines Jobnetzes.</div>
+        </note>
+        <note language="en">
+          <div xmlns="http://www.w3.org/1999/xhtml">maximun number of nodes in one job net.</div>
+        </note>
+      </param>
+    </params>
+  </configuration>
+  <documentation language="de">
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <xhtml:div>
+        <p xmlns="http://www.sos-berlin.com/schema/scheduler_job_documentation_v1.1">Dieser Job erzeugt den Plan für Jobnetze des JobScheduler für einen gegebenen Zeithorizont in einer Datenbank. Er ist Grundlage für die Ausführung von Jobnetzen.</p>
+        <p xmlns="http://www.sos-berlin.com/schema/scheduler_job_documentation_v1.1">Order, die als "bootstrap" order gekennzeichnet sind, gelten als Einstiegsknoten für ein Jobnetz. Dieser Job analysiert diese Order und erstellt die aus ihnen resultierenden Jobnetze in einer Datenbank.</p>
+      </xhtml:div>
+    </div>
+  </documentation>
+  <documentation language="en">
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <xhtml:div>
+        <p xmlns="http://www.sos-berlin.com/schema/scheduler_job_documentation_v1.1">This job create the job net plan for a given time horizon. The plan was stored in a database file and is the base for executing job nets.</p>
+      </xhtml:div>
+    </div>
+  </documentation>
+</description>
+

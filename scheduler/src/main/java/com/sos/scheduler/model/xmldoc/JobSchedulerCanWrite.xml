@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="scheduler_job_documentation.xsl"?>
+<description xmlns="http://www.sos-berlin.com/schema/scheduler_job_documentation_v1.1" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sos-berlin.com/schema/scheduler_job_documentation_v1.1 http://www.sos-berlin.com/schema/scheduler_job_documentation_v1.1.xsd">
+  <job order="both" name="JobSchedulerCanWrite" tasks="unbounded" title="check for file is writable">
+    <script language="java" java_class="sos.scheduler.file.JobSchedulerCanWrite" resource="1" />
+    <monitor>
+      <script language="java" java_class="myJavaClass" resource="myResource" />
+    </monitor>
+  </job>
+  <releases>
+    <release id="1.3" created="2009-03-18" modified="2009-06-15">
+      <title>version 1.3</title>
+      <author name="Uwe Risse" email="uwe.risse@sos-berlin.com" />
+      <note language="de">
+        <div xmlns="http://www.w3.org/1999/xhtml">test</div>
+      </note>
+      <changes language="de">
+        <div xmlns="http://www.w3.org/1999/xhtml">xxx</div>
+      </changes>
+    </release>
+  </releases>
+  <resources>
+    <file os="all" type="java" file="sos.scheduler.jar" id="1" />
+    <file os="all" type="java" file="sos.spooler.jar" id="2" />
+    <file os="all" type="java" file="sos.util.jar" id="3">
+      <note language="de">
+        <div xmlns="http://www.w3.org/1999/xhtml">verwendet die Klasse SOSFileOperations</div>
+      </note>
+      <note language="en">
+        <div xmlns="http://www.w3.org/1999/xhtml">Makes use of the SOSFileOperations class</div>
+      </note>
+    </file>
+  </resources>
+  <configuration>
+    <note language="de">
+      <div xmlns="http://www.w3.org/1999/xhtml">Dieser Job kann standalone oder auftragsgesteuert eingesetzt werden.
+        Die Parameter werden entsprechend als Job- oder Auftragsparameter verarbeitet.</div>
+    </note>
+    <note language="en">
+      <div xmlns="http://www.w3.org/1999/xhtml">This job can be used standalone or as an order driven job.
+        Parameters are respectively accepted as job parameters or as order parameters.</div>
+    </note>
+    <params>
+      <param name="file" required="true">
+        <note language="de">
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            Datei oder Verzeichnis
+            <p>
+              Unterstützt Substitution von Masken im Datei- und Verzeichnisnamen mit Formatangaben, die mit
+              <em>[</em>
+              und
+              <em>]</em>
+              geklammert sind.
+                Folgende Formate werden unterstützt:
+              <br />
+              <br />
+              <ul>
+                <li>
+                  <code>
+                    [date:
+                    <em>date format</em>
+                    ]
+                  </code>
+                  <br />
+                  <em>date format</em>
+                  muss ein gültiger Java Format-String für Datumsangaben sein, z.B.
+                  <br />
+                  <em>yyyyMMddHHmmss</em>
+                  ,
+                  <em>yyyy-MM-dd.HHmmss</em>
+                  etc.
+                  <br />
+                  Beispiel:
+                  <br />
+                  <code>&lt;param name="file" value="sample/hello[date:yyyyMMdd].txt" /&gt;</code>
+                  <br />
+                  Am 31.12.2050 enthält der Parameter
+                  <code>file</code>
+                  den Wert
+                  <code>"sample/hello20501231.txt"</code>
+                  .
+                </li>
+              </ul>
+            </p>
+            <p>
+              Unterstützt Substitution von Job-Parameternamen durch deren Wert, wenn der jeweilige Job-Parametername mit
+              <em>%</em>
+               und 
+              <em>%</em>
+              geklammert ist.
+              <br />
+              Beispiel:
+              <code>&lt;param name="file" value="%scheduler_file_path%" /&gt;</code>
+              <br />
+              Der Parameter
+              <code>file</code>
+              enthält zur Laufzeit den Wert, der im Job-Parameter
+              <code>scheduler_file_path</code>
+              gesetzt ist. Bei der
+              <a href="http://www.sos-berlin.com/doc/de/scheduler.doc/file_orders.xml">Verzeichnisüberwachung mit Dateiaufträgen</a>
+              wird der Job-Parameter
+              <code>scheduler_file_path</code>
+              automatisch mit dem Pfad der Datei gesetzt, die den Auftrag ausgelöst hat.
+            </p>
+          </div>
+        </note>
+        <note language="en">
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            file or directory
+            <p>
+              Supports masks for substitution in the file name and directory name with format strings that are enclosed by
+              <em>[</em>
+              and
+              <em>]</em>
+              .
+                The following format strings are supported:
+              <br />
+              <br />
+              <ul>
+                <li>
+                  <code>
+                    [date:
+                    <em>date format</em>
+                    ]
+                  </code>
+                  <br />
+                  <em>date format</em>
+                  must be a valid Java data format string, e.g.
+                  <br />
+                  <em>yyyyMMddHHmmss</em>
+                  ,
+                  <em>yyyy-MM-dd.HHmmss</em>
+                  etc.
+                  <br />
+                  Example:
+                  <br />
+                  <code>&lt;param name="file" value="sample/hello[date:yyyyMMdd].txt" /&gt;</code>
+                  <br />
+                  On 2050-12-31 the parameter
+                  <code>file</code>
+                  contains the value
+                  <code>"sample/hello20501231.txt"</code>
+                  .
+                </li>
+              </ul>
+            </p>
+            <p>
+              Supports substitution of job parameter names with their value if the job parameter name is enclosed by
+              <em>%</em>
+               and 
+              <em>%</em>
+              .
+              <br />
+              Example:
+              <code>&lt;param name="file" value="%scheduler_file_path%" /&gt;</code>
+              <br />
+              During the job runtime the parameter
+              <code>file</code>
+              contains the value of the job parameter
+              <code>scheduler_file_path</code>
+              .
+	          	Using
+              <a href="http://www.sos-berlin.com/doc/en/scheduler.doc/file_orders.xml">Directory Monitoring with File Orders</a>
+              the job parameter
+              <code>scheduler_file_path</code>
+              contains automatically the path of the file that triggered the order.
+            </p>
+          </div>
+        </note>
+      </param>
+      <param name="file_spec" required="false">
+        <note language="de">
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            Regulärer Ausdruck als Dateifilter.
+            Verhält sich CASE_INSENSITIVE.
+            <br />
+            Nur wirksam, wenn der Parameter
+            <code>file</code>
+            ein Verzeichnis ist.
+          </div>
+        </note>
+        <note language="en">
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            Regular Expression for file filtering.
+            The behaviour is CASE_INSENSITIVE.
+            <br />
+            Only effective if the parameter
+            <code>file</code>
+            is a directory.
+          </div>
+        </note>
+      </param>
+      <param name="gracious" default_value="false" required="false">
+        <note language="de">
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            Schaltet Fehlermeldungen an oder aus, die aufgrund einer
+            nicht existierenden Datei oder eines nicht existierenden Verzeichnisses ausgelöst werden,
+            die/das mit den Parametern
+            <code>file</code>
+            bzw.
+            <code>file_spec</code>
+            spezifiziert wurde.
+            <br />
+            <br />
+            Gültige Werte:
+            <em>true, 1, on, yes, y, ja, j, all</em>
+            und
+            <em>false, 0, off, no, n, nein, none</em>
+            <br />
+            <br />
+            Bei auftragsgesteuerter Verwendung dieses Jobs gilt:
+            <br />
+            <br />
+            <ul>
+              <li>
+                Wird der Wert
+                <em>all</em>
+                für diesen Parameter angegeben, dann wird
+                der Auftrag in der Job-Kette fortgesetzt unabhängig davon, ob Dateien
+                kopiert werden konnten.
+              </li>
+              <li>
+                Wird der Wert
+                <em>true</em>
+                oder ein anderer entsprechend positiver Wert angegeben,
+                dann wird der Auftrag in der Job-Kette nicht fortgesetzt, wenn keine
+                Datei kopiert werden konnte.
+              </li>
+            </ul>
+          </div>
+        </note>
+        <note language="en">
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            Enables or disables error messages that are caused by a nonexistent file or directory
+            being specified with the parameters
+            <code>file</code>
+            and respectively
+            <code>file_spec</code>
+            .
+            <br />
+            <br />
+            Valid values:
+            <em>true, 1, on, yes, y, ja, j, all</em>
+            and
+            <em>false, 0, off, no, n, nein, none</em>
+            <br />
+            <br />
+            The following rules apply when used with orders:
+            <br />
+            <br />
+            <ul>
+              <li>
+                If the value
+                <em>all</em>
+                is specified for this parameter,
+                then an order will be continued in its job chain regardless of whether any files could be copied or not
+              </li>
+              <li>
+                If the value
+                <em>true</em>
+                or any other positive value is specified,
+                then the order will not be continued in its job chain if it has not been possible to copy any files.
+              </li>
+            </ul>
+          </div>
+        </note>
+      </param>
+    </params>
+  </configuration>
+  <documentation language="de">
+    <div xmlns="http://www.w3.org/1999/xhtml">Prüft ob eine oder mehrere Dateien beschreibbar sind. Das schließt die Prüfung auf Existenz ein.</div>
+  </documentation>
+  <documentation language="en">
+    <div xmlns="http://www.w3.org/1999/xhtml">Checks whether one or more files can be written including check of file exist.</div>
+  </documentation>
+</description>
+

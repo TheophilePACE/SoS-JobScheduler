@@ -1,0 +1,17 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+  "http://www.w3.org/TR/html4/transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+  "http://www.w3.org/TR/html4/transitional.dtd">
+<html>
+	<head>
+		<meta http-equiv="refresh" content="${checkInterval}">
+		<meta http-equiv="cache-control" content="no-cache">
+		<title>${uuid_jobnet_identifier}</title>
+	</head>
+	<body style="margin-left:20px; margin-top:10px;">
+		<p style="font-family:Verdana;">
+		<img src="${uuid_jobnet_identifier}.svg">
+		The file ${uuid_jobnet_identifier}.svg can not be displayed.
+		</object>
+</body>
+</html>

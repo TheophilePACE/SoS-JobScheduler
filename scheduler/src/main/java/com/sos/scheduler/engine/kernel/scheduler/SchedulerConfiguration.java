@@ -1,0 +1,100 @@
+/********************************************************* begin of preamble
+**
+** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
+** All rights reserved.
+**
+** This file may be used under the terms of either the 
+**
+**   GNU General Public License version 2.0 (GPL)
+**
+**   as published by the Free Software Foundation
+**   http://www.gnu.org/licenses/gpl-2.0.txt and appearing in the file
+**   LICENSE.GPL included in the packaging of this file. 
+**
+** or the
+**  
+**   Agreement for Purchase and Licensing
+**
+**   as offered by Software- und Organisations-Service GmbH
+**   in the respective terms of supply that ship with this file.
+**
+** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+** IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+** THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+** PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+** BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+** CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+** SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+** INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+** CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+** POSSIBILITY OF SUCH DAMAGE.
+********************************************************** end of preamble*/
+package com.sos.scheduler.engine.kernel.scheduler;
+
+import com.sos.scheduler.engine.data.scheduler.ClusterMemberId;
+import com.sos.scheduler.engine.data.scheduler.SchedulerId;
+import com.sos.scheduler.engine.kernel.cppproxy.SpoolerC;
+import com.sos.scheduler.engine.kernel.settings.SettingName;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.io.File;
+
+import static com.google.common.base.Objects.firstNonNull;
+import static com.google.common.base.Strings.isNullOrEmpty;
+import static com.sos.scheduler.engine.kernel.settings.SettingName.htmlDir;
+
+@Singleton
+public final class SchedulerConfiguration {
+    private static final File workingDirectory = new File(".");
+
+    private final SpoolerC spoolerC;
+
+    @Inject private SchedulerConfiguration(SpoolerC spoolerC) {
+        this.spoolerC = spoolerC;
+    }
+
+    public ClusterMemberId clusterMemberId() {
+        return new ClusterMemberId(spoolerC.cluster_member_id());
+    }
+
+    public File mainConfigurationDirectory() {
+        return firstNonNull(mainConfigurationFile().getParentFile(), workingDirectory);
+    }
+
+    public File mainConfigurationFile() {
+        return new File(spoolerC.configuration_file_path());
+    }
+
+    /** Das Verzeichnis der Konfigurationsdatei scheduler.xml, Normalerweise "config" */
+    public File localConfigurationDirectory() {
+        return new File(spoolerC.local_configuration_directory());
+    }
+
+    public File logDirectory() {
+        String result = spoolerC.log_directory();
+        if (isNullOrEmpty(result) || result.equals("*stderr")) throw new SchedulerException("Scheduler runs without a log directory");
+        return new File(result);
+    }
+
+    public SchedulerId schedulerId() {
+        return new SchedulerId(spoolerC.id());
+    }
+
+//    public URL httpUrl() {
+//        return new URL(spoolerC.http_url());
+//    }
+
+    public int tcpPort() {
+        return spoolerC.tcp_port();
+    }
+
+    String setting(SettingName name) {
+        return spoolerC.setting(name.getNumber());
+    }
+
+    public String webDirectory() {
+        return setting(htmlDir);
+    }
+}

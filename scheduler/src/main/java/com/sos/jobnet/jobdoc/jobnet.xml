@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="scheduler_job_documentation_v1.1.xsl"?>
+<description xmlns="http://www.sos-berlin.com/schema/scheduler_job_documentation_v1.1" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sos-berlin.com/schema/scheduler_job_documentation_v1.1  http://www.sos-berlin.com/schema/scheduler_job_documentation_v1.1.xsd">
+  <job name="JobNet" title="title" order="yes">
+    <script      language="java" java_class="sos.scheduler.file.JobSchedulerExistsFile" resource="1"    />
+  </job>
+  <releases>
+    <release id="id" created="2012-02-24" modified="2012-02-24">
+      <author name="name" email="email"        
+ />
+    </release>
+  </releases>
+  <configuration>
+    <params>
+      <param name="hibernate_connection_config_file" required="false" default_value="hibernate.cfg.xml"        
+       DataType="SOSOptionInFileName"         >
+       <note language="de">
+            <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+Hibernate-Konfigurationsdatei der Datenbank-Verbindung
+          </div>
+        </note>
+        <note language="en">
+            <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+Hibernate configuration file of the database connection         
+          </div>
+        </note>
+      </param>
+      
+      
+      <param name="hibernate_connection_driver_class" required="false" default_value="oracle.jdbc.driver.OracleDriver"        
+       DataType="SOSOptionDBDriver"         >
+       <note language="de">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+Klasse des JDBC Treibers der Datenbank-Verbindung
+          </div>
+        </note>
+        <note language="en">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+Class of JBDC driver of the database connection         
+          </div>
+        </note>
+      </param>
+      
+      <param name="hibernate_connection_password"      
+       DefaultValue=""
+       required="false"
+       DataType="SOSOptionPassword"         >
+       <note language="de">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+Kennwort der Datenbank-Verbindung
+          </div>
+        </note>
+        <note language="en">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+Password of the database connection          
+          </div>
+        </note>
+      </param>
+      
+      <param name="hibernate_connection_url"      
+       DefaultValue=""
+       required="false"
+       DataType="SOSOptionJdbcUrl"         >
+       <note language="de">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+JDBC URL der Datenbank-Verbindung
+          </div>
+        </note>
+        <note language="en">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+JDBC URL of the database connection          
+          </div>
+        </note>
+      </param>
+      
+      <param name="hibernate_connection_username"      
+       DefaultValue=""
+       required="false"
+       DataType="SOSOptionString"         >
+       <note language="de">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+User der Datenbank-Verbindung
+          </div>
+        </note>
+        <note language="en">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+User of the database connection          
+          </div>
+        </note>
+      </param>
+      
+      <param name="hibernate_dialect" required="false"        
+       DefaultValue="org.hibernate.dialect.Oracle10gDialect"
+       DataType="SOSOptionString"         >
+       <note language="de">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+Hibernate-Dialekt der Datenbank-Verbindung
+          </div>
+        </note>
+        <note language="en">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+Hibernate dialect of the database connection          
+          </div>
+        </note>
+      </param>
+      
+      <param name="hibernate_show_sql" required="false" default_value="false"        
+       DataType="SOSOptionBoolean"         >
+       <note language="de">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+
+          </div>
+        </note>
+        <note language="en">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+          
+          </div>
+        </note>
+      </param>
+      
+      <param name="hibernate_connection_autocommit" required="false" default_value="false"        
+       DataType="SOSOptionBoolean"         >
+       <note language="de">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+
+          </div>
+        </note>
+        <note language="en">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+         
+          </div>
+        </note>
+      </param>
+      
+      <param name="hibernate_format_sql" required="false" default_value="false"        
+       DataType="SOSOptionBoolean"         >
+       <note language="de">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+
+          </div>
+        </note>
+        <note language="en">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+          
+          </div>
+        </note>
+      </param>
+      
+      <param name="successor_nodes"      
+       DefaultValue=""
+       required="false"
+       DataType="SOSOptionString"         >
+       <note language="de">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+
+          </div>
+        </note>
+        <note language="en">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+          
+          </div>
+        </note>
+      </param>
+      
+      <param name="predesessor_nodes"      
+       DefaultValue=""
+       required="false"
+       DataType="SOSOptionString"         >
+       <note language="de">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+
+          </div>
+        </note>
+        <note language="en">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+          
+          </div>
+        </note>
+      </param>
+      
+      <param name="delay_start_dispatcher"      
+       DefaultValue="00:00:03"
+       required="false"
+       DataType="SOSOptionTime"         >
+       <note language="de">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+
+          </div>
+        </note>
+        <note language="en">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+          
+          </div>
+        </note>
+      </param>
+      <param name="skipWaiter"      
+       DefaultValue="false"
+       required="false"
+       DataType="SOSOptionBoolean"         >
+       <note language="de">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+
+          </div>
+        </note>
+        <note language="en">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+          
+          </div>
+        </note>
+      </param>
+      
+      <param name="skipDispatcher"      
+       DefaultValue="false"
+       required="false"
+       DataType="SOSOptionBoolean"         >
+       <note language="de">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+
+          </div>
+        </note>
+        <note language="en">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+          
+          </div>
+        </note>
+      </param>
+      
+      <param name="skipRunner"      
+       DefaultValue="false"
+       required="false"
+       DataType="SOSOptionBoolean"         >
+       <note language="de">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+
+          </div>
+        </note>
+        <note language="en">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+          
+          </div>
+        </note>
+      </param>
+      
+      <param name="uuid_jobnet_identifier"      
+       DefaultValue=""
+       required="false"
+       DataType="SOSOptionUUID"         >
+       <note language="de">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+
+          </div>
+        </note>
+        <note language="en">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+          
+          </div>
+        </note>
+      </param>
+      
+      <param name="scheduler_id"      
+       DefaultValue=""
+       required="false"
+       DataType="SOSOptionSchedulerID"         >
+       <note language="de">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+ID des JobScheduler (Clusters)
+          </div>
+        </note>
+        <note language="en">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+ID of the JobScheduler (Cluster)         
+          </div>
+        </note>
+      </param>
+      
+      <param name="jobnet"      
+       DefaultValue=""
+       required="false"
+       DataType="SOSOptionString"         >
+       <note language="de">
+            <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+Name des Job-Netztes
+          </div>
+        </note>
+        <note language="en">
+            <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+Name of the job net         
+          </div>
+        </note>
+      </param>
+      
+      <param name="node"      
+       DefaultValue=""
+       required="false"
+       DataType="SOSOptionString"         >
+       <note language="de">
+            <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+Name des Job-Netz-Knotens
+          </div>
+        </note>
+        <note language="en">
+            <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+Name of the job net node        
+          </div>
+        </note>
+      </param>
+      
+      <param name="check_interval"      
+       DefaultValue="00:00:30"
+       required="false"
+       DataType="SOSOptionTime"         >
+       <note language="de">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+
+          </div>
+        </note>
+        <note language="en">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+          
+          </div>
+        </note>
+      </param>
+      
+      <param name="max_number_of_checks" default_value="-1"      
+       required="false"
+       DataType="SOSOptionInteger"         >
+       <note language="de">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+
+          </div>
+        </note>
+        <note language="en">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+          
+          </div>
+        </note>
+      </param>
+      
+      <param name="script_to_execute"      
+       DefaultValue=""
+       required="false"
+       DataType="SOSOptionScript"         >
+       <note language="de">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+
+          </div>
+        </note>
+        <note language="en">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+         
+          </div>
+        </note>
+      </param>
+      
+      <param name="is_bootstrap_order"      
+       DefaultValue="false"
+       required="false"
+       DataType="SOSOptionBoolean"         ><note language="de">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+
+          </div>
+        </note>
+        <note language="en">
+		    <title/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+          
+          </div>
+        </note>
+      </param>
+    </params>
+  </configuration>
+  <documentation language="de">
+    <xhtml:div>
+      <p>.</p>
+    </xhtml:div>
+  </documentation>
+</description>
+

@@ -1,0 +1,71 @@
+/********************************************************* begin of preamble
+**
+** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
+** All rights reserved.
+**
+** This file may be used under the terms of either the 
+**
+**   GNU General Public License version 2.0 (GPL)
+**
+**   as published by the Free Software Foundation
+**   http://www.gnu.org/licenses/gpl-2.0.txt and appearing in the file
+**   LICENSE.GPL included in the packaging of this file. 
+**
+** or the
+**  
+**   Agreement for Purchase and Licensing
+**
+**   as offered by Software- und Organisations-Service GmbH
+**   in the respective terms of supply that ship with this file.
+**
+** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+** IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+** THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+** PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+** BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+** CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+** SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+** INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+** CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+** POSSIBILITY OF SUCH DAMAGE.
+********************************************************** end of preamble*/
+/*
+ * JobSchedulerShowParams.java
+ * Created on 06.04.2005
+ * 
+ */
+package sos.scheduler.job;
+import sos.spooler.Order;
+import sos.spooler.Variable_set;
+
+/**
+ * logs job and order parameters (good for debugging)
+ *
+ * @author Andreas Liebert 
+ */
+public class JobSchedulerShowParams extends JobSchedulerJob {
+	public boolean spooler_process() throws Exception {
+		boolean rc = false;
+		// classic or order queue driven? return true for order queue driven invocation, return false for classic job start
+		rc = !(spooler_task.job().order_queue() == null);
+		Variable_set params = spooler_task.params();
+		spooler_log.info("Params for task: " + spooler_task.id());
+		if (params != null) {
+			spooler_log.info("Job params: \n" + params.xml());
+		}
+		Order order = spooler_task.order();
+		Variable_set payload = null;
+		if (order != null) {
+			Object oPayload = order.payload();
+			if (oPayload != null)
+				payload = (Variable_set) oPayload;
+		}
+		if (payload != null) {
+			spooler_log.info("Order payload: \n" + payload.xml());
+		}
+		else
+			spooler_log.info("No order payload.");
+		return rc;
+	}
+}
