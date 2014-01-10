@@ -2,10 +2,10 @@ package org.jobscheduler.dashboard.repository;
 
 import java.util.List;
 
-import org.jobscheduler.dashboard.model.Job;
+import org.jobscheduler.dashboard.model.SchedulerJob;
 import org.springframework.data.repository.CrudRepository;
 
-public interface JobCrudRepository extends CrudRepository<Job, Long> {
+public interface JobCrudRepository extends CrudRepository<SchedulerJob, Long> {
 
-	List<Job> findByName(String name);
+	List<SchedulerJob> findByNextStartTime(String nextStartTime);
 }

@@ -1,1 +1,22 @@
-Hello
+<!DOCTYPE html>
+<html ng-app>
+<head>
+    <title>Jobs</title>
+    <link rel="stylesheet" type="text/css" href="app/components/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<body>
+ 
+    <div class="container" ng-controller="JobCtrl">
+        <h2>Jobs</h2>
+        <input type="search" ng-model="criteria">
+        <ul class="unstyled">
+            <li ng-repeat="book in books | filter:criteria | orderBy :'name'">
+                <span>{{book.name}} written by {{book.author | uppercase}}</span>
+            </li>
+        </ul>
+    </div>
+ 
+<script type="text/javascript" src="app/components/angular/angular.min.js"></script>
+<script type="text/javascript" src="app/app.js"></script>
+</body>
+</html>
