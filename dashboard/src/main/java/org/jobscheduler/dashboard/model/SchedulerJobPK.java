@@ -4,7 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 /**
- * The primary key class for the SCHEDULER_JOBS database table.
+ * The primary key class for the scheduler_jobs database table.
  * 
  */
 @Embeddable
@@ -12,13 +12,13 @@ public class SchedulerJobPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="SPOOLER_ID")
+	@Column(name="\"SPOOLER_ID\"")
 	private String spoolerId;
 
-	@Column(name="CLUSTER_MEMBER_ID")
+	@Column(name="\"CLUSTER_MEMBER_ID\"")
 	private String clusterMemberId;
 
-	@Column(name="PATH")
+	@Column(name="\"PATH\"")
 	private String path;
 
 	public SchedulerJobPK() {

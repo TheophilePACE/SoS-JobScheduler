@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html ng-app="APP">
+<head>
+    <title>Jobs</title>
+    <link rel="stylesheet" type="text/css" href="app/components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="app/components/ng-table/ng-table.css">
+</head>
+<body ng-controller="jobListCtrl">
+ 	<button ng-click="tableParams.reload()" class="btn btn-default">Reload</button>
+ 	<button ng-click="tableParams.sorting({})" class="btn btn-default">Clear sorting</button>
+	<div loading-container="tableParams.settings().$loading">
+		<table ng-table="tableParams" show-filter="true" class="table">
+		<tr ng-repeat="job in $data">
+			<td data-title="'Id'" filter="{ 'id': 'text' }" sortable="id">
+				{{job.id.spoolerId}}
+			</td>
+			<td data-title="'Next start time'" filter="{ 'nextStartTime': 'text' }" sortable="nextStartTime">
+				{{job.nextStartTime}}
+			</td>
+		</tr>
+		</table>
+	</div>
+	 
+<script type="text/javascript" src="app/components/angular/angular.min.js"></script>
+<script type="text/javascript" src="app/components/angular-resource/angular-resource.min.js"></script>
+<script type="text/javascript" src="app/components/ng-table/ng-table.js"></script>
+<script type="text/javascript" src="app/list-job-app.js"></script>
+</body>
+</html>

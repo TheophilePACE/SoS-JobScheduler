@@ -1,8 +1,14 @@
 package org.jobscheduler.dashboard.controller;
 
+import java.util.List;
+
+import org.jobscheduler.dashboard.dto.ListDataTransfertObject;
 import org.jobscheduler.dashboard.model.SchedulerJob;
-import org.jobscheduler.dashboard.repository.JobCrudRepository;
+import org.jobscheduler.dashboard.repository.SchedulerJobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,7 +23,7 @@ import com.wordnik.swagger.annotations.ApiOperation;
 public class SchedulerJobController {
 	
 		@Autowired
-		JobCrudRepository jobRepository;
+		SchedulerJobRepository schedulerJobRepository;
 
 		@RequestMapping("/job")
 		@ApiOperation(value="Get job detail")
@@ -27,10 +33,14 @@ public class SchedulerJobController {
 		}
 		
 		@RequestMapping("/jobs")
-		@ApiOperation(value="Get job information")
-		public @ResponseBody Iterable<SchedulerJob> schedulerJobs(Model model) {
-			return jobRepository.findAll();
-			
+		@ApiOperation(value="Get list jobs")
+		public @ResponseBody ListDataTransfertObject schedulerJobs(Model model, @RequestParam(value="count") Integer count, @RequestParam(value="page") Integer page) {
+			Pageable pageable = new PageRequest(page, count);
+			Page<SchedulerJob> scheduleJob = schedulerJobRepository.findAll(pageable);
+			ListDataTransfertObject dto = new ListDataTransfertObject();
+			dto.setTotal(scheduleJob.getSize());
+			dto.setResult(scheduleJob.getContent());
+			return dto; 
 		}		
 	
 }

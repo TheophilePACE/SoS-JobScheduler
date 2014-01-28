@@ -113,7 +113,7 @@ public class SpringConfiguration extends WebMvcConfigurerAdapter {
 		HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
 		hibernateJpaVendorAdapter.setShowSql(true);
 		hibernateJpaVendorAdapter.setGenerateDdl(false);
-		hibernateJpaVendorAdapter.setDatabase(Database.MYSQL);
+		hibernateJpaVendorAdapter.setDatabase(Database.POSTGRESQL);
 		return hibernateJpaVendorAdapter;
 	}
 	
@@ -126,7 +126,7 @@ public class SpringConfiguration extends WebMvcConfigurerAdapter {
 		HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
 		hibernateJpaVendorAdapter.setShowSql(true);
 		hibernateJpaVendorAdapter.setGenerateDdl(false);
-		hibernateJpaVendorAdapter.setDatabase(Database.MYSQL);
+		hibernateJpaVendorAdapter.setDatabase(Database.POSTGRESQL);
 		return hibernateJpaVendorAdapter;
 	}
 	
