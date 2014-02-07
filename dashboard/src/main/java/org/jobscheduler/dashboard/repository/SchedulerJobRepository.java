@@ -11,5 +11,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 public interface SchedulerJobRepository extends PagingAndSortingRepository<SchedulerJob, Long> {
 
 	List<SchedulerJob> findByNextStartTime(String nextStartTime);
+	List<SchedulerJob> findByNextStartTime(String nextStartTime, Pageable pageable);
 
 }

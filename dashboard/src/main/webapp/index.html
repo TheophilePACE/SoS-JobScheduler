@@ -1,24 +1,48 @@
 <!DOCTYPE html>
-<html ng-app>
+<html ng-app="DashBoard-JobScheduler">
 <head>
+	<meta charset="utf-8">
     <title>Jobs</title>
     <link rel="stylesheet" type="text/css" href="app/components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="app/components/ng-table/ng-table.css">
 </head>
 <body>
- 
-    <div class="container" ng-controller="JobCtrl">
-        <h2>Jobs</h2>
-        <input type="search" ng-model="criteria">
-        <ul class="unstyled">
-            <li ng-repeat="job in jobs | filter:criteria | orderBy :'id'">
-                <span>{{job.id}}</span>
-            </li>
-        </ul>
+ <div class="container">
+
+	<div class="masthead">
+        <h3 class="muted">Job scheduler</h3>
+		<div class="navbar" ng-controller="HeaderController">
+            <div class="navbar-inner">
+                <div class="container">
+                    <ul class="nav">
+                        <li ng-class="{ active: isActive('/home')}"><a href="#/home">Home</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div><!-- /.navbar -->       
     </div>
- 
+
+
+    <hr class="" />
+    <div ng-view></div>
+   
+
+    <div class="footer">
+        <p>&copy; OSS Job scheduler</p>
+    </div>
+
+ </div> 
 <script type="text/javascript" src="app/components/angular/angular.min.js"></script>
+<script type="text/javascript" src="app/components/angular-resource/angular-resource.min.js"></script>
+<script type="text/javascript" src="app/components/angular-route/angular-route.min.js"></script>
+<script type="text/javascript" src="app/components/angular-bootstrap/ui-bootstrap.min.js"></script>
+<script type="text/javascript" src="app/components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script type="text/javascript" src="app/components/angular-sanitize/angular-sanitize.min.js"></script>
 <script type="text/javascript" src="app/components/ng-table/ng-table.js"></script>
+<script type="text/javascript" src="app/home/controllers/route-ctrl.js"></script>
+<script type="text/javascript" src="app/jobs/controllers/job-ctrl.js"></script>
 <script type="text/javascript" src="app/app.js"></script>
+
+
 </body>
 </html>

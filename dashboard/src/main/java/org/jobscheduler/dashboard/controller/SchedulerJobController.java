@@ -19,28 +19,48 @@ import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 
 @RestController
-@Api(value="", description="Jobs information")
+@Api(value = "", description = "Jobs information")
 public class SchedulerJobController {
-	
-		@Autowired
-		SchedulerJobRepository schedulerJobRepository;
 
-		@RequestMapping("/job")
-		@ApiOperation(value="Get job detail")
-		public @ResponseBody SchedulerJob schedulerJob(@RequestParam(value="name", required=false, defaultValue="essai") String name, Model model) {
-			model.addAttribute("name", name);
-			return new SchedulerJob();
-		}
-		
-		@RequestMapping("/jobs")
-		@ApiOperation(value="Get list jobs")
-		public @ResponseBody ListDataTransfertObject schedulerJobs(Model model, @RequestParam(value="count") Integer count, @RequestParam(value="page") Integer page) {
-			Pageable pageable = new PageRequest(page, count);
-			Page<SchedulerJob> scheduleJob = schedulerJobRepository.findAll(pageable);
-			ListDataTransfertObject dto = new ListDataTransfertObject();
+	@Autowired
+	SchedulerJobRepository schedulerJobRepository;
+
+	@RequestMapping("/job")
+	@ApiOperation(value = "Get job detail")
+	public @ResponseBody
+	SchedulerJob schedulerJob(
+			@RequestParam(value = "name", required = false, defaultValue = "essai") String name,
+			Model model) {
+		model.addAttribute("name", name);
+		return new SchedulerJob();
+	}
+
+	@RequestMapping("/jobs")
+	@ApiOperation(value = "Get list jobs")
+	public @ResponseBody
+	ListDataTransfertObject schedulerJobs( 
+			Model model,
+			@RequestParam(value = "count") Integer count,
+			@RequestParam(value = "page") Integer page,
+			@RequestParam(value = "nextStartTime", required = false) String nextStartTime) {
+		Pageable pageable = new PageRequest(page, count);
+
+		ListDataTransfertObject dto = new ListDataTransfertObject();
+		if (nextStartTime != null) {
+			System.out.println("SchedulerJobController.schedulerJobs()" + nextStartTime);
+			List<SchedulerJob> scheduleJob = schedulerJobRepository
+					.findByNextStartTime(nextStartTime, pageable);
+
+			dto.setResult(scheduleJob);
+			dto.setTotal(scheduleJob.size());
+
+		} else {
+			Page<SchedulerJob> scheduleJob = schedulerJobRepository
+					.findAll(pageable);
 			dto.setTotal(scheduleJob.getSize());
 			dto.setResult(scheduleJob.getContent());
-			return dto; 
-		}		
-	
+		}
+		return dto;
+	}
+
 }
