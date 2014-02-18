@@ -1,0 +1,30 @@
+      <form name="datepickerForm" class="form-inline" role="form">
+      <div class="form-group" ng-class="{'has-error': datepickerForm.date.$invalid}">
+        <label class="control-label"><i class="fa fa-calendar"></i> Start Date <small></small></label>
+        <input type="text" class="form-control" ng-model="startDate" name="startDate" data-date-format="yyyy/MM/dd" data-date-type="string" bs-datepicker>
+        <label class="control-label"><i class="fa fa-calendar"></i> End Date <small></small></label>
+        <input type="text" class="form-control" ng-model="endDate" name="endDate" data-date-format="yyyy/MM/dd" data-date-type="string" data-max-date="today" bs-datepicker>
+        <button type="button" class="btn btn-default" ng-click="getchart(startDate, endDate)">
+  			<span class="glyphicon glyphicon-ok"></span> Get chart
+		</button>
+      </div>
+      </form>
+      
+<div ng-controller="ChartSchedulerHistoryController">
+	<nvd3-cumulative-line-chart
+    	data="nbJobsBetween2Date"
+        id="nbJobsBetween2DateId"
+        width="550"
+        height="350"
+        showXAxis="true"
+        showYAxis="true"
+        showLegend="true"
+        interactive="true"
+        tooltips="true"
+        x="xFunction()"
+	    y="yFunction()"
+        yAxisTickFormat="yAxisTickFormatFunction()"
+	    xAxisTickFormat="xAxisTickFormatFunction()">
+        	<svg></svg>
+    </nvd3-cumulative-line-chart>
+</div>

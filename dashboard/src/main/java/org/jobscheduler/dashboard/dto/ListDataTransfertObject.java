@@ -2,9 +2,15 @@ package org.jobscheduler.dashboard.dto;
 
 import java.util.List;
 
+/**
+ * DTO to transfert a list and the number of elements inside this list
+ *  
+ * @author Cédric
+ *
+ */
 public class ListDataTransfertObject {
 
-	public Integer total;
+	public Long total;
 	
 	public List<?> result;
 
@@ -16,11 +22,11 @@ public class ListDataTransfertObject {
 		this.result = result;
 	}
 
-	public Integer getTotal() {
+	public Long getTotal() {
 		return total;
 	}
 
-	public void setTotal(Integer total) {
+	public void setTotal(Long total) {
 		this.total = total;
 	}
 

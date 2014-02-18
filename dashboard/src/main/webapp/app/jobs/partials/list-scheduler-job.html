@@ -1,14 +1,19 @@
- 	<div ng-controller="JobListCtrl">
+ 	<div ng-controller="ListSchedulerJobController">
  	<button ng-click="tableParams.reload()" class="btn btn-default">Reload</button>
  	<button ng-click="tableParams.sorting({})" class="btn btn-default">Clear sorting</button>
 	<div loading-container="tableParams.settings().$loading">
 		<table ng-table="tableParams" show-filter="true" class="table">
 		<tr ng-repeat="job in $data">
 			<td data-title="'Id'" filter="{ 'id': 'text' }" sortable="id">
-				{{job.id.spoolerId}}
+				<p>Spooler : <span class="label label-default">{{job.id.spoolerId}}</span></p>
+				<p>Cluster Member : <span class="label label-default">{{job.id.clusterMemberId}}</span></p>
+				<p>Path : <span class="label label-default">{{job.id.path}}</span></p>
 			</td>
 			<td data-title="'Next start time'" filter="{ 'nextStartTime': 'text' }" sortable="nextStartTime">
 				{{job.nextStartTime}}
+			</td>
+			<td data-title="'Run'" filter="{ 'stopped': 'text' }" sortable="stopped">
+				{{job.stopped}}
 			</td>
 		</tr>
 		</table>

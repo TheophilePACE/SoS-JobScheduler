@@ -12,10 +12,23 @@
     "es5-shim": "~2.1.0",
     "jquery": "~1.10.2",
     "bootstrap": "~3.0.2",
-    "ng-table": "0.3.1"
+    "ng-table": "0.3.1",
+    "d3": "~3.4.1",
+    "nvd3": "~1.1.15-beta",
+    "angularjs-nvd3-directives": "~0.0.5-beta",
+    "angular-strap": "~2.0.0",
+    "angular-animate": "~1.2.12",
+    "angular-motion": "~0.3.2",
+    "components-font-awesome": "~4.0.3"
   },
   "devDependencies": {
     "angular-mocks": "1.2.6",
     "angular-scenario": "1.2.6"
+  },
+  "resolutions": {
+    "d3": "~3.3.13",
+    "angular": "~1.2.10",
+    "nvd3": "~1.1.15-beta",
+    "bootstrap": "~3.1.0"
   }
 }

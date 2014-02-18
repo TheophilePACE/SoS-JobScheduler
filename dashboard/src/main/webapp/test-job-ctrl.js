@@ -1,10 +1,4 @@
-'use strict';
-
-/**
- * JobListCtrl
- * @constructor
- */
-var JobListCtrl = function($timeout, $scope, $resource, ngTableParams) {
+angular.module('APP', ['ngTable', 'ngResource']).controller('jobListCtrl', ['$timeout', '$scope', '$resource', 'ngTableParams', function($timeout, $scope, $resource, ngTableParams) {
 		var Api = $resource('/jobs');
 		$scope.tableParams = new ngTableParams({
 			page: 1,
@@ -23,6 +17,14 @@ var JobListCtrl = function($timeout, $scope, $resource, ngTableParams) {
 				});
 			}
 		});
-};
+}]);
 
+
+
+
+//function JobCtrl($scope, $http) {
+//		$http.get('/jobs').success(function(data) {
+//			$scope.jobs = data;
+//		});
+//};
 

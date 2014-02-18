@@ -3,3 +3,4 @@ dist
 .tmp
 .sass-cache
 src/main/webapp/app/components
+rebel.xml

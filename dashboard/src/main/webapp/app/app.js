@@ -2,20 +2,11 @@
 
 var AngularSpringApp = {};
 
-var App = angular.module('DashBoard-JobScheduler', ['ui.bootstrap', 'ngRoute', 'ngSanitize', 'ngTable', 'ngResource']);
+var App = angular.module('DashBoard-JobScheduler', ['ui.bootstrap', 'ngRoute', 
+             'ngSanitize', 'ngTable', 'ngResource', 'nvd3ChartDirectives', 'mgcrea.ngStrap', 'ngAnimate']);
 
 // Declare app level module which depends on filters, and services
 App.config(['$routeProvider', function ($routeProvider) {
-
-//    $routeProvider.when('/todoes', {
-//        templateUrl: 'resources/templates/todoes.html',
-//        controller: TodoController
-//    });
-//
-//    $routeProvider.when('/signup', {
-//        templateUrl: 'resources/templates/signup.html',
-//        controller: UserController
-//    });
 
     $routeProvider.when('/login', {
         templateUrl: 'resources/templates/login.html',
@@ -28,10 +19,25 @@ App.config(['$routeProvider', function ($routeProvider) {
     });
 
     $routeProvider.when('/home', {
-        templateUrl: 'app/jobs/partials/list-job.html',
+        templateUrl: 'app/home/partials/home.html',
         controller: HomeController
     });
+    
+    $routeProvider.when('/list-scheduler-job', {
+        templateUrl: 'app/jobs/partials/list-scheduler-job.html',
+        controller: ListSchedulerJobController
+    });
 
+    $routeProvider.when('/chart-scheduler-history', {
+        templateUrl: 'app/jobs/partials/chart-scheduler-history.html',
+        controller: ChartSchedulerHistoryController
+    });
+
+    $routeProvider.when('/list-scheduler-history', {
+        templateUrl: 'app/jobs/partials/list-scheduler-history.html',
+        controller: ListSchedulerHistoryController
+    });
+    
     $routeProvider.otherwise({redirectTo: '/home'});
 }]);
 
@@ -93,7 +99,7 @@ App.factory("SessionService", function() {
         unset: function(key) {
             return sessionStorage.removeItem(key);
         }
-    }
+    };
 });
 
 
@@ -105,7 +111,7 @@ App.factory("FlashService", function($rootScope) {
         clear: function() {
             $rootScope.flash = "";
         }
-    }
+    };
 });
 
 
@@ -139,7 +145,7 @@ App.factory("AuthenticationService", function($http, $sanitize, SessionService, 
             var payload = $.param({j_username: credentials.j_username, j_password: credentials.j_password});
             var config = {
                 headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
-            }
+            };
 
             var login = $http.post("j_spring_security_check", payload,config );
             login.success(cacheSession);

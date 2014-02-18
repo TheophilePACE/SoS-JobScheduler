@@ -52,12 +52,12 @@ public class SchedulerJobController {
 					.findByNextStartTime(nextStartTime, pageable);
 
 			dto.setResult(scheduleJob);
-			dto.setTotal(scheduleJob.size());
+			dto.setTotal(new Long(scheduleJob.size()));
 
 		} else {
 			Page<SchedulerJob> scheduleJob = schedulerJobRepository
 					.findAll(pageable);
-			dto.setTotal(scheduleJob.getSize());
+			dto.setTotal(new Long(scheduleJob.getSize()));
 			dto.setResult(scheduleJob.getContent());
 		}
 		return dto;

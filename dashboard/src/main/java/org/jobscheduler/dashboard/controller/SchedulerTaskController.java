@@ -26,7 +26,7 @@ public class SchedulerTaskController {
 		SchedulerTaskRepository schedulerTaskRepository;
 
 		@RequestMapping("/schedulerTask")
-		@ApiOperation(value="Get shceduler task detail")
+		@ApiOperation(value="Get scheduler task detail")
 		public @ResponseBody SchedulerTask schedulerTask(@RequestParam(value="name", required=false, defaultValue="essai") String name, Model model) {
 			model.addAttribute("name", name);
 			return new SchedulerTask();
