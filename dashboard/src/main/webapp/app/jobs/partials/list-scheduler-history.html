@@ -1,12 +1,14 @@
  	<div ng-controller="ListSchedulerHistoryController">
- 	<p><strong>Page :</strong> {{tableParams.page()}} / {{tableParams.total()/tableParams.count()| number:0}}</p>
-    <p><strong>Total :</strong> {{tableParams.total()}}</p>
-    
- 	<button ng-click="tableParams.reload()" class="btn btn-default">Reload</button>
- 	<button ng-click="tableParams.sorting({})" class="btn btn-default">Clear sorting</button>
 	<div loading-container="tableParams.settings().$loading">
+ 		<p>
+	 		<strong>Page :</strong> {{tableParams.page()}} / {{tableParams.total()/tableParams.count()| number:0}}&nbsp;
+	    	<strong>Total :</strong> {{tableParams.total()}} jobs&nbsp; 
+	    	
+	 		<button ng-click="tableParams.reload()" class="btn btn-primary btn-xs">Reload</button>
+	 		<button ng-click="tableParams.sorting({})" class="btn btn-info btn-xs">Clear sorting</button>
+    	</p>
 		<table ng-table="tableParams" show-filter="true" class="table">
-		<tr ng-repeat="job in $data" ng-class="{ 'emphasis': job.error == '1' }">
+		<tr ng-repeat="job in $data">
 			<td data-title="'Spooler Id'" filter="{ 'spoolerId': 'text' }" sortable="spoolerId">
 				{{job.spoolerId}}
 			</td>
@@ -16,30 +18,29 @@
 			<td data-title="'Error'" filter="{ 'error': 'error' }" sortable="error">
 				{{job.error}}
 			</td>
+			<td data-title="'Start Time'" filter="{ 'startTime': 'startTime' }" sortable="startTime">
+				{{job.startTime | date : "yyyy-MM-dd HH:mm:ss" }}
+			</td>
+			<td data-title="'End Time'" filter="{ 'endTime': 'endTime' }" sortable="endTime">
+				{{job.endTime | date : "yyyy-MM-dd HH:mm:ss" }}
+			</td>
+			
 		</tr>
+		<tr >
+          <td ng-if="!($data.length||tableParams.settings().$loading)">
+            No Result
+          </td>
+        </tr>
 		</table>
 	</div>
-	<script type="text/ng-template" id="custom/pager">
-        <ul class="pager ng-cloak">
-          <li ng-repeat="page in pages"
-                ng-class="{'disabled': !page.active, 'previous': page.type == 'prev', 'next': page.type == 'next'}"
-                ng-show="page.type == 'prev' || page.type == 'next'" ng-switch="page.type">
-            <a ng-switch-when="prev" ng-click="params.page(page.number)" href="">&laquo; Previous</a>
-            <a ng-switch-when="next" ng-click="params.page(page.number)" href="">Next &raquo;</a>
-          </li>
-            <li> 
-            <div class="btn-group">
-                <button type="button" ng-class="{'active':params.count() == 10}" ng-click="params.count(10)" class="btn btn-default">10</button>
-                <button type="button" ng-class="{'active':params.count() == 26}" ng-click="params.count(25)" class="btn btn-default">25</button>
-                <button type="button" ng-class="{'active':params.count() == 50}" ng-click="params.count(50)" class="btn btn-default">50</button>
-                <button type="button" ng-class="{'active':params.count() == 100}" ng-click="params.count(100)" class="btn btn-default">100</button>
-            </div>
-            </li>
-        </ul>
-    </script>
     <script type="text/ng-template" id="ng-table/filters/error.html">
-        <input type="radio" ng-model="params.filter()[error]" name="filter-error" value="0" /> <i class="fa fa-thumbs-up"></i>
+        <input type="radio" ng-model="params.filter()[name]" name="error" value="0" selected/> <i class="fa fa-thumbs-up"></i>
         <br />
-        <input type="radio" ng-model="params.filter()[error]" name="filter-error" value="1" /> <i class="fa fa-thumbs-down"></i>
+        <input type="radio" ng-model="params.filter()[name]" name="error" value="1" /> <i class="fa fa-thumbs-down"></i>
     </script>
-	</div>
+    <script type="text/ng-template" id="ng-table/filters/startTime.html">
+        <input type="text" class="form-control" ng-model="params.filter()[name]" name="startTime" data-date-format="yyyy/MM/dd HH:mm:ss" data-date-type="string" bs-datepicker>
+	</script>
+	<script type="text/ng-template" id="ng-table/filters/endTime.html">
+        <input type="text" class="form-control" ng-model="params.filter()[name]" name="endTime" data-date-format="yyyy/MM/dd HH:mm:ss" data-date-type="string" bs-datepicker>
+	</script>

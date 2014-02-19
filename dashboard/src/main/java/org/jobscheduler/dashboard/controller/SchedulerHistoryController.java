@@ -50,7 +50,7 @@ public class SchedulerHistoryController {
 			.getLog(SchedulerHistoryController.class);
 
 	DateTimeFormatter fmt = org.joda.time.format.DateTimeFormat
-			.forPattern("yyyy/MM/dd");
+			.forPattern("yyyy/MM/dd HH:mm:ss");
 
 	@Autowired
 	SchedulerHistoryRepository schedulerHistoryRepository;
@@ -68,18 +68,21 @@ public class SchedulerHistoryController {
 	@RequestMapping("/schedulerHistories")
 	@ApiOperation(value = "Get list scheduler history")
 	public @ResponseBody
-	ListDataTransfertObject schedulerHistories(
-			Model model,
+	ListDataTransfertObject schedulerHistories(Model model,
 			@RequestParam(value = "count") Integer count,
 			@RequestParam(value = "page") Integer page,
-			@RequestParam(value = "startDate", required = false) @DateTimeFormat(pattern = "yyyy/MM/dd") DateTime startDT,
-			@RequestParam(value = "endDate", required = false) @DateTimeFormat(pattern = "yyyy/MM/dd") DateTime endDT,
 			HttpServletRequest request) throws UnsupportedEncodingException {
 
 		Enumeration<String> parametersNames = request.getParameterNames();
+
+		// Parameters
 		String jobName = "%";
 		String spoolerId = "%";
-		BigDecimal error = new BigDecimal(1);
+		BigDecimal error = null;
+
+		DateTime startDT = DateTime.now().minusDays(100);
+		DateTime endDT = DateTime.now();
+
 		while (parametersNames.hasMoreElements()) {
 			String parameterName = (String) parametersNames.nextElement();
 			if (parameterName.startsWith(Constant.PARAM_FILTER)) {
@@ -87,15 +90,23 @@ public class SchedulerHistoryController {
 				String parameterFilter = parameterName.substring(
 						parameterName.indexOf("[") + 1,
 						parameterName.indexOf("]"));
+				String filterUrlDecoded = URLDecoder.decode(filter, "UTF-8");
 				if (parameterFilter.equals("jobName")) {
-					jobName = "%" + URLDecoder.decode(filter, "UTF-8") + "%";
+					jobName = "%" + filterUrlDecoded + "%";
 				}
 				if (parameterFilter.equals("spoolerId")) {
-					spoolerId = "%" + filter + "%";
+					spoolerId = "%" + filterUrlDecoded + "%";
 				}
 				if (parameterFilter.equals("error")) {
 					error = new BigDecimal(filter);
 				}
+				if (parameterFilter.equals("startTime")) {
+					startDT = DateTime.parse(filterUrlDecoded, fmt);
+				}
+				if (parameterFilter.equals("endTime")) {
+					endDT = DateTime.parse(filterUrlDecoded, fmt);
+				}
+
 				log.info("Filter in get list history : " + parameterName + "="
 						+ filter);
 			}
@@ -105,20 +116,24 @@ public class SchedulerHistoryController {
 		Pageable pageable = new PageRequest(page, count);
 
 		ListDataTransfertObject dto = new ListDataTransfertObject();
-		if (startDT == null) {
-			startDT = DateTime.now().minusDays(100);
-		}
-		if (endDT == null) {
-			endDT = DateTime.now();
-		}
 
-		List<SchedulerHistory> scheduleJob = schedulerHistoryRepository
-				.findByStartTimeBetweenAndJobNameLikeAndSpoolerIdLikeAndError(
-						new Timestamp(startDT.getMillis()),
-						new Timestamp(endDT.getMillis()), jobName, spoolerId, error, pageable);
+		Page<SchedulerHistory> scheduleJob;
+		if (error != null)
+			scheduleJob = schedulerHistoryRepository
+					.findByStartTimeBetweenAndJobNameLikeAndSpoolerIdLikeAndError(
+							new Timestamp(startDT.getMillis()), new Timestamp(
+									endDT.getMillis()), jobName, spoolerId,
+							error, pageable);
 
-		dto.setResult(scheduleJob);
-		dto.setTotal(schedulerHistoryRepository.count());
+		else
+			scheduleJob = schedulerHistoryRepository
+					.findByStartTimeBetweenAndJobNameLikeAndSpoolerIdLike(
+							new Timestamp(startDT.getMillis()), new Timestamp(
+									endDT.getMillis()), jobName, spoolerId,
+							pageable);
+
+		dto.setResult(scheduleJob.getContent());
+		dto.setTotal(scheduleJob.getTotalElements());
 
 		return dto;
 	}
@@ -190,7 +205,8 @@ public class SchedulerHistoryController {
 		List<SchedulerHistory> schedulerHistories = schedulerHistoryRepository
 				.findByStartTimeBetweenAndJobNameLikeAndError(new Timestamp(
 						startChartDT.getMillis()),
-						new Timestamp(endChartDT.getMillis()), "%", new BigDecimal(1), null);
+						new Timestamp(endChartDT.getMillis()), "%",
+						new BigDecimal(1), null);
 
 		Days days = Days.daysBetween(startChartDT, endChartDT);
 		List<SerieDataTransfertObject> series = new ArrayList<SerieDataTransfertObject>();
