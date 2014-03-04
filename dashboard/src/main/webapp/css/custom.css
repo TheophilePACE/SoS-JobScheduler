@@ -1,0 +1,13 @@
+.ng-table tr.emphasis td {
+	background-color: #2aabd2;
+	font-weight: bold;
+}
+
+.console {
+	text-align: left;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	background-color: #FAF4F4;
+	border: 1px solid #CE4E4E;
+	font-size: 12px;
+}

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.servlet.MultipartConfigElement;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
@@ -163,6 +164,11 @@ public class SpringConfiguration extends WebMvcConfigurerAdapter {
 		ResourceHandlerRegistration registrationSwagger = registry.addResourceHandler("/rest-api-doc/**");
 		registrationSwagger.addResourceLocations("classpath:swagger/");
 	}
+	
+    @Bean
+    public MultipartConfigElement multipartConfigElement() {
+        return new MultipartConfigElement("");
+    }	
 
 
 	

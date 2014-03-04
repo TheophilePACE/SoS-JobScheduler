@@ -38,6 +38,11 @@ App.config(['$routeProvider', function ($routeProvider) {
         controller: ListSchedulerHistoryController
     });
     
+    $routeProvider.when('/scheduler-history/:schedulerHistoryId', {
+        templateUrl: 'app/jobs/partials/scheduler-history.html',
+        controller: SchedulerHistoryController
+    });
+    
     $routeProvider.otherwise({redirectTo: '/home'});
 }]);
 
@@ -163,6 +168,17 @@ App.factory("AuthenticationService", function($http, $sanitize, SessionService, 
         }
     };
 });
+
+App.filter('newlines', function() {
+	  return function(text) {
+		  var result = "<p>" + text + "</p>";
+		  result = result.replace(/\r\n\r\n/g, "</p><p>").replace(/\n\n/g, "</p><p>");
+		  result = result.replace(/\r\n/g, "<br/>").replace(/\n/g, "<br/>");
+		  result = result.replace(/info/g, "<b>info</b>");
+		  result = result.replace(/ERROR/g, "<span class='btn btn-warning btn-xs'>ERROR</span>");
+		  return result;
+	  };
+	});
 
 
 

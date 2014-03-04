@@ -1,0 +1,72 @@
+<div class="container">
+<a href="" ng-click="back()">Back to list</a>
+
+	<div class="row">
+		<div class="row">
+			<div class="col-xs-12 col-md-8"><h2>Job Scheduler</h2></div>
+		 	<div class="col-xs-6 col-md-4 img-thumbnail">
+		 		<p><b><h5>{{job.jobName}}</h5></b></p>
+		 		<p>Id : {{job.id}}</p>
+		 	</div>
+		</div>
+	</div>
+
+	<div class="row heading">
+		<h3>Details</h3><hr/>
+	</div>
+	<div class="row">
+		<div class="col-md-2">Steps :</div> 
+		<div class="col-md-8">{{job.steps}}</div>
+	</div>
+	<div class="row">
+		<div class="col-md-2">Error :</div> 
+		<div class="col-md-4">
+			<i ng-if="job.error == 0" class="fa fa-thumbs-up"></i>
+			<i ng-if="job.error == 1" class="fa fa-thumbs-down"></i>
+		</div>
+
+	</div>
+	<div class="row">
+		<div class="col-md-2">Error Text :</div> 
+		<div class="col-md-8">{{job.errorText}}</div>
+	</div>
+	<div class="row">		
+		<div class="col-md-2">Error Code :</div>
+		<div class="col-md-4">{{job.errorCode}}</div>
+		<div class="col-md-2">Exit Code :</div>
+		<div class="col-md-4">{{job.exitCode}}</div>
+	</div>
+	<div class="row">
+		<div class="col-md-2">PID :</div> 
+		<div class="col-md-4">{{job.pid}}</div>
+		<div class="col-md-2">Spooler ID :</div>
+		<div class="col-md-4">{{job.spoolerId}}</div>
+
+	</div>
+	
+	<div class="row">		
+		<div class="col-md-2">StartTime :</div> 
+		<div class="col-md-4">{{job.startTime | date : "yyyy-MM-dd HH:mm:ss"}}</div>
+	</div>
+	<div class="row">
+	 	<div class="col-md-2">EndTime : </div>
+	 	<div class="col-md-4">{{job.endTime | date : "yyyy-MM-dd HH:mm:ss"}} </div>
+	</div>
+	<div class="row">
+	 	<div class="col-md-2">Log : </div>
+	 	<div class="col-md-8">
+	 		<div class="console well well-sm">
+		 		<div ng-bind-html="job.log | newlines"></div>
+		 	</div>
+	 	</div>
+	</div>	
+	<div class="row">
+	 	<div class="col-md-2">Parameters : </div>
+	 	<div class="col-md-8">
+	 		<div class="console well well-sm">
+		 		<div ng-bind-html="job.parameters | newlines"></div>
+		 	</div>
+	 	</div>
+	</div>	
+</div>
+

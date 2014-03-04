@@ -1,30 +1,73 @@
-      <form name="datepickerForm" class="form-inline" role="form">
-      <div class="form-group" ng-class="{'has-error': datepickerForm.date.$invalid}">
-        <label class="control-label"><i class="fa fa-calendar"></i> Start Date <small></small></label>
-        <input type="text" class="form-control" ng-model="startDate" name="startDate" data-date-format="yyyy/MM/dd" data-date-type="string" bs-datepicker>
-        <label class="control-label"><i class="fa fa-calendar"></i> End Date <small></small></label>
-        <input type="text" class="form-control" ng-model="endDate" name="endDate" data-date-format="yyyy/MM/dd" data-date-type="string" data-max-date="today" bs-datepicker>
-        <button type="button" class="btn btn-default" ng-click="getchart(startDate, endDate)">
-  			<span class="glyphicon glyphicon-ok"></span> Get chart
-		</button>
-      </div>
-      </form>
-      
-<div ng-controller="ChartSchedulerHistoryController">
-	<nvd3-cumulative-line-chart
-    	data="nbJobsBetween2Date"
-        id="nbJobsBetween2DateId"
-        width="550"
-        height="350"
-        showXAxis="true"
-        showYAxis="true"
-        showLegend="true"
-        interactive="true"
-        tooltips="true"
-        x="xFunction()"
-	    y="yFunction()"
-        yAxisTickFormat="yAxisTickFormatFunction()"
-	    xAxisTickFormat="xAxisTickFormatFunction()">
-        	<svg></svg>
-    </nvd3-cumulative-line-chart>
+<div class="row">
+	<form name="datepickerForm" class="form-inline" role="form">
+		<div class="form-group"
+			ng-class="{'has-error': datepickerForm.date.$invalid}">
+			<label class="control-label"><i class="fa fa-calendar"></i>
+				Start Date <small></small></label> <input type="text" class="form-control"
+				ng-model="startDate" name="startDate" data-date-format="yyyy/MM/dd"
+				data-date-type="string" bs-datepicker> <label
+				class="control-label"><i class="fa fa-calendar"></i> End
+				Date <small></small></label> <input type="text" class="form-control"
+				ng-model="endDate" name="endDate" data-date-format="yyyy/MM/dd"
+				data-date-type="string" data-max-date="today" bs-datepicker>
+			<div class="btn-group">
+				<button class="btn btn-group btn-default" href="#">
+					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+						<span class="caret"></span> Get charts
+					</a>
+					<ul class="dropdown-menu">
+						<li><a
+							ng-click="getNbJobsBetween2Date(startDate, endDate, 0)"> <span
+								class="glyphicon glyphicon-ok-circle"></span> Number of jobs per
+								day
+						</a></li>
+						<li><a
+							ng-click="getNbJobsBetween2Date(startDate, endDate, 1)"> <span
+								class="glyphicon glyphicon-remove-circle"></span> Number of jobs
+								in error per day
+						</a></li>
+						<li><a
+							ng-click="getLongRunningJobsBetween2Date(startDate, endDate)">
+								<span class="glyphicon glyphicon-signal"></span> Most long
+								running jobs
+						</a></li>
+					</ul>
+
+				</button>
+			</div>
+		</div>
+	</form>
+</div>
+<div class="row">
+	<div class="col-md-6">
+
+		<div ng-controller="ChartSchedulerHistoryController">
+			<nvd3-line-chart data="nbJobsBetween2Date" id="nbJobsBetween2DateId"
+				width="550" height="350" showXAxis="true" showYAxis="true"
+				showLegend="true" interactive="true" tooltips="true" x="xFunction()"
+				y="yFunction()" isArea="true"
+				yAxisTickFormat="yAxisTickFormatFunction()"
+				xAxisTickFormat="xAxisTickFormatFunction()">
+			<p>
+				<svg></svg>
+			</p>
+			</nvd3-line-chart>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div ng-controller="ChartSchedulerHistoryController">
+			<nvd3-multi-bar-chart data="longRunningJobsBetween2Date"
+				id="longRunningJobsBetween2DateId" width="550" height="350"
+				showXAxis="true" showYAxis="true" 
+				interactive="true" tooltips="true" x="xFunction()"
+				y="yBarFunction()" isArea="true"
+				yAxisTickFormat="yAxisTickFormatFunction()"
+				xAxisTickFormat="xAxisTickFormatFunction()"
+				showLegend="true">
+			<p>
+				<svg></svg>
+			</p>
+			</nvd3-multi-bar-chart>
+		</div>
+	</div>
 </div>

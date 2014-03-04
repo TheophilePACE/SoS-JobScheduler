@@ -31,6 +31,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus.Series;
 import org.springframework.ui.Model;
@@ -59,10 +61,10 @@ public class SchedulerHistoryController {
 	@ApiOperation(value = "Get scheduler history detail")
 	public @ResponseBody
 	SchedulerHistory schedulerHistory(
-			@RequestParam(value = "name", required = false) String name,
-			Model model) {
-		model.addAttribute("name", name);
-		return new SchedulerHistory();
+			@RequestParam(value = "id", required = false) Long id, Model model) {
+		SchedulerHistory schedulerHistory = schedulerHistoryRepository
+				.findOne(id);
+		return schedulerHistory;
 	}
 
 	@RequestMapping("/schedulerHistories")
@@ -83,37 +85,57 @@ public class SchedulerHistoryController {
 		DateTime startDT = DateTime.now().minusDays(100);
 		DateTime endDT = DateTime.now();
 
+		// For sorting
+		List<Order> orders = new ArrayList<Order>();
+
 		while (parametersNames.hasMoreElements()) {
 			String parameterName = (String) parametersNames.nextElement();
+
+			// Filtering
 			if (parameterName.startsWith(Constant.PARAM_FILTER)) {
 				String filter = request.getParameter(parameterName);
 				String parameterFilter = parameterName.substring(
 						parameterName.indexOf("[") + 1,
 						parameterName.indexOf("]"));
-				String filterUrlDecoded = URLDecoder.decode(filter, "UTF-8");
+				String decodedFilter = URLDecoder.decode(filter, "UTF-8");
 				if (parameterFilter.equals("jobName")) {
-					jobName = "%" + filterUrlDecoded + "%";
+					jobName = "%" + decodedFilter + "%";
 				}
 				if (parameterFilter.equals("spoolerId")) {
-					spoolerId = "%" + filterUrlDecoded + "%";
+					spoolerId = "%" + decodedFilter + "%";
 				}
 				if (parameterFilter.equals("error")) {
 					error = new BigDecimal(filter);
 				}
 				if (parameterFilter.equals("startTime")) {
-					startDT = DateTime.parse(filterUrlDecoded, fmt);
+					startDT = DateTime.parse(decodedFilter, fmt);
 				}
 				if (parameterFilter.equals("endTime")) {
-					endDT = DateTime.parse(filterUrlDecoded, fmt);
+					endDT = DateTime.parse(decodedFilter, fmt);
 				}
 
 				log.info("Filter in get list history : " + parameterName + "="
 						+ filter);
 			}
 
+			// Sorting
+			if (parameterName.startsWith(Constant.PARAM_SORT)) {
+				String directionParameter = request.getParameter(parameterName);
+				String sortByColumnName = parameterName.substring(
+						parameterName.indexOf("[") + 1,
+						parameterName.indexOf("]"));
+				String direction = URLDecoder.decode(directionParameter,
+						"UTF-8");
+				orders.add(new Order(Direction.fromString(direction),
+						sortByColumnName));
+			}
 		}
 
-		Pageable pageable = new PageRequest(page, count);
+		PageRequest pageable;
+		if (orders.size() == 0)
+			pageable = new PageRequest(page, count);
+		else
+			pageable = new PageRequest(page, count, new Sort(orders));
 
 		ListDataTransfertObject dto = new ListDataTransfertObject();
 
@@ -139,7 +161,8 @@ public class SchedulerHistoryController {
 	}
 
 	/**
-	 * Build one serie with number of jobs between startDate and endDate
+	 * Build one serie with number of jobs between startDate and endDate (job in
+	 * error or not)
 	 * 
 	 * @param startTime
 	 * @param endTime
@@ -152,30 +175,47 @@ public class SchedulerHistoryController {
 	List<SerieDataTransfertObject> nbJobsBetween2Date(
 			@RequestParam(value = "startDate", required = false) @DateTimeFormat(pattern = "yyyy/MM/dd") DateTime startChartDT,
 			@RequestParam(value = "endDate", required = false) @DateTimeFormat(pattern = "yyyy/MM/dd") DateTime endChartDT,
+			@RequestParam(value = "jobInError", required = false) Boolean jobInError,
 			Model model) {
 
 		if ((startChartDT == null) || (endChartDT == null))
 			return null;
 
-		List<SchedulerHistory> schedulerHistories = schedulerHistoryRepository
-				.findByStartTimeBetween(
-						new Timestamp(startChartDT.getMillis()), new Timestamp(
-								endChartDT.getMillis()));
-
 		Days days = Days.daysBetween(startChartDT, endChartDT);
+		if (days.getDays() < 0)
+			return new ArrayList<SerieDataTransfertObject>(0);
 		// Create 1 serie with point per day
-		List<SerieDataTransfertObject> series = new ArrayList<SerieDataTransfertObject>();
+		List<SerieDataTransfertObject> series = new ArrayList<SerieDataTransfertObject>(
+				1);
 		SerieDataTransfertObject serie = new SerieDataTransfertObject();
 		List<PointDataTransfertObject> points = new ArrayList<PointDataTransfertObject>(
 				days.getDays() + 1);
 		for (int i = 0; i < days.getDays() + 1; i++) {
 			PointDataTransfertObject point = new PointDataTransfertObject();
 			point.setX(startChartDT.plusDays(i).getMillis());
-			point.setY(new Long(schedulerHistories.size()));
+			Long nbJobs;
+			if (jobInError) {
+				nbJobs = schedulerHistoryRepository
+						.countByStartTimeBetweenAndError(new Timestamp(
+								startChartDT.plusDays(i).getMillis()),
+								new Timestamp(startChartDT.plusDays(i + 1)
+										.getMillis()), new BigDecimal(1));
+			} else {
+				nbJobs = schedulerHistoryRepository
+						.countByStartTimeBetween(new Timestamp(startChartDT
+								.plusDays(i).getMillis()), new Timestamp(
+								startChartDT.plusDays(i + 1).getMillis()));
+			}
+
+			point.setY(nbJobs);
 			points.add(point);
 		}
-		serie.setKey("Number of jobs between " + startChartDT.toString(fmt)
-				+ " and " + endChartDT.toString(fmt));
+		String inError = "";
+		if (jobInError)
+			inError = "in Error";
+		serie.setKey("Number of jobs " + inError + " between "
+				+ startChartDT.toString(fmt) + " and "
+				+ endChartDT.toString(fmt));
 
 		serie.setValues(points);
 		series.add(serie);
@@ -184,17 +224,17 @@ public class SchedulerHistoryController {
 	}
 
 	/**
-	 * Build series with nbr jobs failed
+	 * Build series with long running jobs
 	 * 
 	 * @param startTime
 	 * @param endTime
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("/nbJobsFailedBetween2Date")
-	@ApiOperation(value = "Build one serie with number of jobs between startDate and endDate")
+	@RequestMapping("/longRunningJobsBetween2Date")
+	@ApiOperation(value = "Build series with the most long running jobs between startDate and endDate")
 	public @ResponseBody
-	List<SerieDataTransfertObject> nbJobsFailedBetween2Date(
+	List<SerieDataTransfertObject> longRunningJobsBetween2Date(
 			@RequestParam(value = "startDate", required = false) @DateTimeFormat(pattern = "yyyy/MM/dd") DateTime startChartDT,
 			@RequestParam(value = "endDate", required = false) @DateTimeFormat(pattern = "yyyy/MM/dd") DateTime endChartDT,
 			Model model) {
@@ -202,29 +242,47 @@ public class SchedulerHistoryController {
 		if ((startChartDT == null) || (endChartDT == null))
 			return null;
 
-		List<SchedulerHistory> schedulerHistories = schedulerHistoryRepository
-				.findByStartTimeBetweenAndJobNameLikeAndError(new Timestamp(
-						startChartDT.getMillis()),
-						new Timestamp(endChartDT.getMillis()), "%",
-						new BigDecimal(1), null);
-
 		Days days = Days.daysBetween(startChartDT, endChartDT);
-		List<SerieDataTransfertObject> series = new ArrayList<SerieDataTransfertObject>();
-		// Create 1 serie per day
-		SerieDataTransfertObject serie = new SerieDataTransfertObject();
-		List<PointDataTransfertObject> points = new ArrayList<PointDataTransfertObject>();
-		for (int i = 0; i < days.getDays() + 1; i++) {
+		if (days.getDays() < 0)
+			return new ArrayList<SerieDataTransfertObject>(0);
+		// 1 serie by day
+		List<SerieDataTransfertObject> series = new ArrayList<SerieDataTransfertObject>(
+				days.getDays());
 
-			PointDataTransfertObject point = new PointDataTransfertObject();
-			point.setX(startChartDT.plusDays(i).getMillis());
-			point.setY(new Long(schedulerHistories.size()));
-			points.add(point);
+		for (int i = 0; i < days.getDays()+1; i++) {
+			// 1 serie contains the most long running jobs
+			SerieDataTransfertObject serie = new SerieDataTransfertObject();
+			serie.setKey("Serie "
+					+ i + " in seconds");
+			List<PointDataTransfertObject> points = new ArrayList<PointDataTransfertObject>();
+			serie.setValues(points);
+			series.add(serie);
 		}
-		serie.setKey("Number of jobs between" + startChartDT.toString(fmt)
-				+ " and " + endChartDT.toString(fmt));
 
-		series.add(serie);
+		for (int i = 0; i < days.getDays()+1; i++) {
+			List<SchedulerHistory> schedulerHistories = schedulerHistoryRepository
+					.findByStartTimeBetweenAndDuringTime(new Timestamp(
+							startChartDT.getMillis()), new Timestamp(
+							startChartDT.plusDays(i).getMillis()), new PageRequest(0, days.getDays()+1));
+			SerieDataTransfertObject serie = series.get(days.getDays()-i);
+			for (int j = 0; j < schedulerHistories.size(); j++) {
+				List<PointDataTransfertObject> points = (List<PointDataTransfertObject>) serie
+						.getValues();
+				PointDataTransfertObject point = new PointDataTransfertObject();
+				point.setX(startChartDT.plusDays(j).getMillis());
+				if (schedulerHistories.get(j).getEndTime() != null
+						&& schedulerHistories.get(j).getStartTime() != null) {
+					long elapsedTime = schedulerHistories.get(j).getEndTime()
+							.getTime()
+							- schedulerHistories.get(j).getStartTime()
+									.getTime();
 
+					point.setY(elapsedTime);
+				} else
+					point.setY(0L);
+				points.add(point);
+			}
+		}
 		return series;
 
 	}

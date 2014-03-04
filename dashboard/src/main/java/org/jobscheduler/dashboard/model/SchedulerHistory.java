@@ -1,9 +1,16 @@
 package org.jobscheduler.dashboard.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.sql.Timestamp;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 
 /**
@@ -51,9 +58,11 @@ public class SchedulerHistory implements Serializable {
 	private String jobName;
 
 	@Column(name="\"LOG\"")
+	@JsonSerialize(using= LogSerializer.class)
 	private byte[] log;
 
 	@Column(name="\"PARAMETERS\"")
+	@JsonSerialize(using= ParameterSerializer.class)
 	private String parameters;
 
 	@Column(name="\"PID\"")

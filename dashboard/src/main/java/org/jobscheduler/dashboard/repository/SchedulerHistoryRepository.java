@@ -13,10 +13,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.query.Param;
 
 public interface SchedulerHistoryRepository extends PagingAndSortingRepository<SchedulerHistory, Long> {
 
 	List<SchedulerHistory> findByStartTimeBetween(Timestamp startTime1, Timestamp startTime2);
+	Long countByStartTimeBetweenAndError(Timestamp startTime1, Timestamp startTime2, BigDecimal error);
+	Long countByStartTimeBetween(Timestamp startTime1, Timestamp startTime2);
+	
 	// find and start time
 	List<SchedulerHistory> findByStartTimeBetween(Timestamp startTime1, Timestamp startTime2, Pageable pageable);
  	// 
@@ -24,4 +28,7 @@ public interface SchedulerHistoryRepository extends PagingAndSortingRepository<S
 	
 	Page<SchedulerHistory> findByStartTimeBetweenAndJobNameLikeAndSpoolerIdLikeAndError(Timestamp startTime1, Timestamp startTime2, String jobName, String spoolerId, BigDecimal error, Pageable pageable);
 	Page<SchedulerHistory> findByStartTimeBetweenAndJobNameLikeAndSpoolerIdLike(Timestamp startTime1, Timestamp startTime2, String jobName, String spoolerId, Pageable pageable);
+	
+	@Query("from SchedulerHistory where (startTime >= :startTime1 and startTime <= :startTime2) order by (endTime - startTime) DESC")
+	List<SchedulerHistory> findByStartTimeBetweenAndDuringTime(@Param("startTime1") Timestamp startTime1,@Param("startTime2") Timestamp startTime2, Pageable pageable);
 }

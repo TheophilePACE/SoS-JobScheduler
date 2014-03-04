@@ -5,23 +5,24 @@
 	    	<strong>Total :</strong> {{tableParams.total()}} jobs&nbsp; 
 	    	
 	 		<button ng-click="tableParams.reload()" class="btn btn-primary btn-xs">Reload</button>
+	 		<button ng-click="tableParams.filter({})" class="btn btn-info btn-xs">Clear filter</button>
 	 		<button ng-click="tableParams.sorting({})" class="btn btn-info btn-xs">Clear sorting</button>
     	</p>
-		<table ng-table="tableParams" show-filter="true" class="table">
-		<tr ng-repeat="job in $data">
-			<td data-title="'Spooler Id'" filter="{ 'spoolerId': 'text' }" sortable="spoolerId">
-				{{job.spoolerId}}
+		<table ng-table="tableParams" show-filter="true" class="table table-hover table-striped">
+		<tr ng-repeat="job in $data" ng-class="{ 'emphasis': job.error >= 1 }">
+			<td data-title="'Spooler Id'" filter="{ 'spoolerId': 'text' }" sortable="'spoolerId'">
+				<a href="/#/scheduler-history/{{job.id}}">{{job.spoolerId}}</a>
 			</td>
-			<td data-title="'Job name'" filter="{ 'jobName': 'text' }" sortable="jobName">
+			<td data-title="'Job name'" filter="{ 'jobName': 'text' }" sortable="'jobName'">
 				{{job.jobName}}
 			</td>
-			<td data-title="'Error'" filter="{ 'error': 'error' }" sortable="error">
+			<td data-title="'Error'" filter="{ 'error': 'error' }" sortable="'error'">
 				{{job.error}}
 			</td>
-			<td data-title="'Start Time'" filter="{ 'startTime': 'startTime' }" sortable="startTime">
+			<td data-title="'Start Time'" filter="{ 'startTime': 'startTime' }" sortable="'startTime'">
 				{{job.startTime | date : "yyyy-MM-dd HH:mm:ss" }}
 			</td>
-			<td data-title="'End Time'" filter="{ 'endTime': 'endTime' }" sortable="endTime">
+			<td data-title="'End Time'" filter="{ 'endTime': 'endTime' }" sortable="'endTime'">
 				{{job.endTime | date : "yyyy-MM-dd HH:mm:ss" }}
 			</td>
 			
@@ -34,7 +35,7 @@
 		</table>
 	</div>
     <script type="text/ng-template" id="ng-table/filters/error.html">
-        <input type="radio" ng-model="params.filter()[name]" name="error" value="0" selected/> <i class="fa fa-thumbs-up"></i>
+        <input type="radio" ng-model="params.filter()[name]" name="error" value="0"/> <i class="fa fa-thumbs-up"></i>
         <br />
         <input type="radio" ng-model="params.filter()[name]" name="error" value="1" /> <i class="fa fa-thumbs-down"></i>
     </script>
