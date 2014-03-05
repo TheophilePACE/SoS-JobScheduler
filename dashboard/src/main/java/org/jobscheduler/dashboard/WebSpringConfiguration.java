@@ -48,9 +48,9 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 @EnableAutoConfiguration
 @ComponentScan
 @PropertySource("classpath:dashboard.properties")
-public class SpringConfiguration extends WebMvcConfigurerAdapter {
+public class WebSpringConfiguration extends WebMvcConfigurerAdapter {
 
-	private static final Log log = LogFactory.getLog(SpringConfiguration.class);
+	private static final Log log = LogFactory.getLog(WebSpringConfiguration.class);
 	
 	@Autowired
 	Environment env;

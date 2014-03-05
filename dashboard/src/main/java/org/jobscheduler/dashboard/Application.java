@@ -12,12 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainerFactory;
+import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
 import org.springframework.boot.context.embedded.MimeMappings;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
-import org.springframework.boot.web.SpringBootServletInitializer;
+import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -60,7 +60,7 @@ public class Application extends SpringBootServletInitializer implements Embedde
 			System.exit(0);
 		}
 		System.setProperty("status", "ok");
-        SpringApplication app = new SpringApplication(Application.class, SpringConfiguration.class);
+        SpringApplication app = new SpringApplication(Application.class, WebSpringConfiguration.class);
         ConfigurableApplicationContext ctx = app.run(args);
         
         
@@ -106,11 +106,13 @@ public class Application extends SpringBootServletInitializer implements Embedde
 	}
 
 	@Override
-	public void customize(ConfigurableEmbeddedServletContainerFactory factory) {
+	public void customize(ConfigurableEmbeddedServletContainer container) {
 		MimeMappings mimeMappings = new MimeMappings(MimeMappings.DEFAULT);
 		mimeMappings.add("html",  "text/html;charset=utf-8");
-		factory.setMimeMappings(mimeMappings);
+		container.setMimeMappings(mimeMappings);
 	}
+
+
 	
 
 }

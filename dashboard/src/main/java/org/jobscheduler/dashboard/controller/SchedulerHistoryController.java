@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jobscheduler.dashboard.SpringConfiguration;
+import org.jobscheduler.dashboard.WebSpringConfiguration;
 import org.jobscheduler.dashboard.dto.ListDataTransfertObject;
 import org.jobscheduler.dashboard.dto.PointDataTransfertObject;
 import org.jobscheduler.dashboard.dto.SerieDataTransfertObject;
