@@ -1,0 +1,9 @@
+target/
+.project
+.classpath
+.settings/
+dashboard/
+scheduler/
+src/
+release.properties
+pom.xml.releaseBackup
