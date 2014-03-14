@@ -162,7 +162,8 @@ public class WebSpringConfiguration extends WebMvcConfigurerAdapter {
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		// Map all static resources coming to /rest-api-doc/** to the resource files under the 'swagger' directory
 		ResourceHandlerRegistration registrationSwagger = registry.addResourceHandler("/rest-api-doc/**");
-		registrationSwagger.addResourceLocations("classpath:swagger/");
+		registrationSwagger.addResourceLocations("classpath:/static/swagger/");
+		
 	}
 	
     @Bean
