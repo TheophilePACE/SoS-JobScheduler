@@ -5,3 +5,4 @@ dist
 src/main/webapp/app/components
 rebel.xml
 /bin
+/target
