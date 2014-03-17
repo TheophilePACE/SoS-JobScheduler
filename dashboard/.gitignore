@@ -2,7 +2,8 @@ node_modules
 dist
 .tmp
 .sass-cache
-src/main/webapp/app/components
+src/main/webapp/
 rebel.xml
 /bin
 /target
+/.externalToolBuilders

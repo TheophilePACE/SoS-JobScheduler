@@ -3,7 +3,7 @@
 var AngularSpringApp = {};
 
 var App = angular.module('DashBoard-JobScheduler', ['ui.bootstrap', 'ngRoute', 
-             'ngSanitize', 'ngTable', 'ngResource', 'nvd3ChartDirectives', 'mgcrea.ngStrap', 'ngAnimate']);
+             'ngSanitize', 'ngTable', 'ngResource', 'nvd3ChartDirectives', 'mgcrea.ngStrap', 'ngAnimate', 'ui.select2']);
 
 // Declare app level module which depends on filters, and services
 App.config(['$routeProvider', function ($routeProvider) {
