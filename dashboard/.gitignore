@@ -7,3 +7,5 @@ rebel.xml
 /bin
 /target
 /.externalToolBuilders
+/bak
+/target

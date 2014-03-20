@@ -3,11 +3,12 @@
   "name": "dashboard-webapp",
   "version": "1.0.0",
   "dependencies": {
-    "angular": "1.2.6",
+    "angular": "1.2.13",
     "angular-bootstrap": "0.10.0",
-    "angular-resource": "1.2.6",
-    "angular-route": "1.2.6",
-    "angular-sanitize": "1.2.6",
+    "angular-resource": "1.2.13",
+    "angular-cookies": "1.2.13",
+    "angular-route": "1.2.13",
+    "angular-sanitize": "1.2.13",
     "json3": "~3.2.6",
     "es5-shim": "~2.1.0",
     "jquery": "~1.10.2",
@@ -21,15 +22,23 @@
     "angular-motion": "~0.3.2",
     "components-font-awesome": "~4.0.3",
     "angular-base64": "~2.0.1",
-    "angular-ui-select2": "~0.0.5"
+    "angular-ui-select2": "~0.0.5",
+    "angular-translate": "2.0.0",
+    "angular-translate-storage-cookie": "2.0.0",
+    "angular-translate-loader-static-files": "2.0.0",
+    "angular-dynamic-locale": "0.1.1",
+    "angular-i18n": "1.2.5",
+    "atmosphere": "2.1.2",
+    "jquery-atmosphere": "2.1.2",
+    "modernizr": "2.7.1",
   },
   "devDependencies": {
-    "angular-mocks": "1.2.6",
-    "angular-scenario": "1.2.6"
+    "angular-mocks": "1.2.13",
+    "angular-scenario": "1.2.13"
   },
   "resolutions": {
     "d3": "~3.3.13",
-    "angular": "1.2.6",
+    "angular": "1.2.13",
     "nvd3": "v1.1.14-beta",
     "bootstrap": "~3.1.0"
   }

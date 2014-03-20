@@ -2,7 +2,7 @@ package org.jobscheduler.dashboard.repository;
 
 import java.util.List;
 
-import org.jobscheduler.dashboard.model.Filter;
+import org.jobscheduler.dashboard.domain.Filter;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 

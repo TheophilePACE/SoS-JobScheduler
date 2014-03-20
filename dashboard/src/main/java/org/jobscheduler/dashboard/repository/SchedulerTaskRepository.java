@@ -3,7 +3,7 @@ package org.jobscheduler.dashboard.repository;
 import java.sql.Timestamp;
 import java.util.List;
 
-import org.jobscheduler.dashboard.model.SchedulerTask;
+import org.jobscheduler.dashboard.domain.SchedulerTask;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.CrudRepository;

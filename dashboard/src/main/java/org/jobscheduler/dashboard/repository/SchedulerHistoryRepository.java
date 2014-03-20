@@ -4,9 +4,9 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
 
-import org.jobscheduler.dashboard.model.SchedulerHistory;
-import org.jobscheduler.dashboard.model.SchedulerJob;
-import org.jobscheduler.dashboard.model.SchedulerTask;
+import org.jobscheduler.dashboard.domain.SchedulerHistory;
+import org.jobscheduler.dashboard.domain.SchedulerJob;
+import org.jobscheduler.dashboard.domain.SchedulerTask;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

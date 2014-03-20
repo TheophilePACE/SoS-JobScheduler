@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <!-- JobScheduler Dashboard core tables -->
+    <changeSet id="1" author="bigloupe">
+
+		<comment>Add tables to an existing JobScheduler database</comment>
+		
+        <createTable tableName="USER_DETAIL">
+            <column name="LOGIN" type="varchar(50)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="PASSWORD" type="varchar(100)"/>
+            <column name="FIRST_NAME" type="varchar(50)"/>
+            <column name="LAST_NAME" type="varchar(50)"/>
+            <column name="EMAIL" type="varchar(100)"/>
+        </createTable>
+
+        <createTable tableName="AUTHORITY">
+            <column name="NAME" type="varchar(255)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="USER_AUTHORITY">
+            <column name="LOGIN" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NAME" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="LOGIN, NAME" tableName="USER_AUTHORITY"/>
+
+        <createTable tableName="PERSISTENT_TOKEN">
+            <column name="series" type="varchar(255)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="USER_LOGIN" type="varchar(50)"/>
+            <column name="TOKEN_VALUE" type="varchar(255)"/>
+            <column name="TOKEN_DATE" type="date"/>
+            <column name="IP_ADDRESS" type="varchar(39)"/>
+            <column name="USER_AGENT" type="varchar(255)"/>
+        </createTable>
+
+        <createTable tableName="HIBERNATE_SEQUENCES">
+            <column name="SEQUENCE_NAME" type="varchar(255)"/>
+            <column name="SEQUENCE_NEXT_HI_VALUE" type="integer"/>
+        </createTable>
+
+        <createIndex indexName="IDX_USER_AUTHORITY"
+                     tableName="USER_AUTHORITY"
+                     unique="true">
+            <column name="LOGIN" type="varchar(50)"/>
+            <column name="NAME" type="varchar(255)"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="NAME"
+                                 baseTableName="USER_AUTHORITY"
+                                 constraintName="FK_AUTHORITY_NAME"
+                                 referencedColumnNames="NAME"
+                                 referencedTableName="AUTHORITY"/>
+
+        <addForeignKeyConstraint baseColumnNames="LOGIN"
+                                 baseTableName="USER_AUTHORITY"
+                                 constraintName="FK_USER_LOGIN"
+                                 referencedColumnNames="LOGIN"
+                                 referencedTableName="USER_DETAIL"/>
+
+        <addForeignKeyConstraint baseColumnNames="USER_LOGIN"
+                                 baseTableName="PERSISTENT_TOKEN"
+                                 constraintName="FK_USER_PERSISTENT_TOKEN"
+                                 referencedColumnNames="LOGIN"
+                                 referencedTableName="USER_DETAIL"/>
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/users.csv"
+                  separator=";"
+                  tableName="USER_DETAIL"/>
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/authorities.csv"
+                  separator=";"
+                  tableName="AUTHORITY"/>
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/users_authorities.csv"
+                  separator=";"
+                  tableName="USER_AUTHORITY"/>
+
+
+    	<!-- Manage the new Springboot actuator Audit event -->
+        <createTable tableName="PERSISTENT_AUDIT_EVENT">
+            <column name="EVENT_ID" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="PRINCIPAL" type="varchar(50)"/>
+            <column name="EVENT_DATE" type="date"/>
+            <column name="EVENT_TYPE" type="varchar(50)"/>
+        </createTable>
+
+        <createTable tableName="PERSISTENT_AUDIT_EVENT_DATA">
+            <column name="EVENT_ID" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NAME" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VALUE" type="varchar(255)"/>
+        </createTable>
+        <addPrimaryKey columnNames="EVENT_ID, NAME" tableName="PERSISTENT_AUDIT_EVENT_DATA"/>
+
+        <createIndex indexName="IDX_PERSISTENT_AUDIT_EVENT"
+                     tableName="PERSISTENT_AUDIT_EVENT"
+                     unique="false">
+            <column name="PRINCIPAL" type="varchar(50)"/>
+            <column name="EVENT_DATE" type="timestamp"/>
+        </createIndex>
+
+        <createIndex indexName="IDX_PERSISTENT_AUDIT_EVENT_DATA"
+                     tableName="PERSISTENT_AUDIT_EVENT_DATA"
+                     unique="false">
+            <column name="EVENT_ID" type="bigint"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="EVENT_ID"
+                                 baseTableName="PERSISTENT_AUDIT_EVENT_DATA"
+                                 constraintName="FK_EVENT_PERSISTENT_AUDIT_EVENT_DATA"
+                                 referencedColumnNames="EVENT_ID"
+                                 referencedTableName="PERSISTENT_AUDIT_EVENT"/>
+                                 
+		<createTable tableName="FILTER">
+			<column name="ID" type="int">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="NAME" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<addAutoIncrement columnDataType="int" columnName="ID" incrementBy="1" startWith="1"
+			tableName="FILTER" />
+		<createTable tableName="FIELD">
+			<column name="ID" type="int">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="NAME" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="VALUE" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="FILTER_ID" type="int"/>
+		</createTable>
+		<addForeignKeyConstraint baseColumnNames="FILTER_ID"
+			baseTableName="FIELD" constraintName="FIELD_FILTER_FK"
+			referencedColumnNames="ID" referencedTableName="FILTER" />
+		<addAutoIncrement columnDataType="int" columnName="ID" incrementBy="1" startWith="1"
+			tableName="FIELD" />
+
+		<rollback>
+			<dropTable tableName="USER_DETAIL" />
+			<dropTable tableName="AUTHORITY" />
+			<dropTable tableName="USER_AUTHORITY" />
+			<dropTable tableName="HIBERNATE_SEQUENCES" />
+			
+			<dropTable tableName="PERSISTENT_TOKEN" />
+			<dropTable tableName="PERSISTENT_AUDIT_EVENT" />
+			<dropTable tableName="PERSISTENT_AUDIT_EVENT_DATA" />
+
+			<dropTable tableName="FILTER" />
+			<dropTable tableName="FIELD" />			
+		</rollback>
+                                 
+    </changeSet>
+</databaseChangeLog>
