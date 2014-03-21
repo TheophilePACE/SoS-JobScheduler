@@ -147,30 +147,26 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/trace*").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/trace/**").hasAuthority(AuthoritiesConstants.ADMIN);
         
-		
+		http.csrf().disable();
 
 		// disable csrf for upload request
-		http.csrf().requireCsrfProtectionMatcher(new RequestMatcher() {
-			private Pattern allowedMethods = Pattern
-					.compile("^(GET|HEAD|TRACE|OPTIONS)$");
-			private RegexRequestMatcher apiMatcher = new RegexRequestMatcher(
-					"/jobDefinitionUpload.*", "POST");
-
-			@Override
-			public boolean matches(HttpServletRequest request) {
-				// No CSRF due to allowedMethod
-				if (allowedMethods.matcher(request.getMethod()).matches())
-					return false;
-
-				// No CSRF due to api call
-				if (apiMatcher.matches(request))
-					return false;
-
-				// CSRF for everything else that is not an API call or an
-				// allowedMethod
-				return true;
-			}
-		});
+//		http.csrf().requireCsrfProtectionMatcher(new RequestMatcher() {
+////			private Pattern allowedMethods = Pattern
+////					.compile("^(GET|HEAD|TRACE|OPTIONS)$");
+////			private RegexRequestMatcher apiMatcher = new RegexRequestMatcher(
+////					"/api-docs.*", "GET");
+//
+//			@Override
+//			public boolean matches(HttpServletRequest request) {
+//				// CSRF due to REST api call
+//				if (request.getRequestURI().startsWith("/api-docs")) {
+//					return false;
+//				}
+//				// CSRF false for everything else that is not an API call or an
+//				// allowedMethod
+//				return false;
+//			}
+//		});
 	}
 
 	@EnableGlobalMethodSecurity(prePostEnabled = true, jsr250Enabled = true)

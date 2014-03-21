@@ -2,7 +2,10 @@ package org.jobscheduler.dashboard.web.rest;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.LoggerContext;
+
 import com.codahale.metrics.annotation.Timed;
+import com.mangofactory.swagger.annotations.ApiIgnore;
+
 import org.jobscheduler.dashboard.web.rest.dto.LoggerDTO;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -21,6 +24,7 @@ public class LogsResource {
             method = RequestMethod.GET,
             produces = "application/json")
     @Timed
+    @ApiIgnore
     public List<LoggerDTO> getList() {
         LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
 
@@ -35,6 +39,7 @@ public class LogsResource {
             method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Timed
+    @ApiIgnore
     public void changeLevel(@RequestBody LoggerDTO jsonLogger) {
         LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
         context.getLogger(jsonLogger.getName()).setLevel(Level.valueOf(jsonLogger.getLevel()));

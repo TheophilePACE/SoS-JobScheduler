@@ -1,6 +1,9 @@
 package org.jobscheduler.dashboard.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
+import javax.annotation.security.RolesAllowed;
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
+
 import org.jobscheduler.dashboard.domain.User;
 import org.jobscheduler.dashboard.repository.UserRepository;
 import org.jobscheduler.dashboard.security.AuthoritiesConstants;
@@ -11,9 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.security.RolesAllowed;
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletResponse;
+import com.codahale.metrics.annotation.Timed;
+import com.mangofactory.swagger.annotations.ApiIgnore;
 
 /**
  * REST controller for managing users.
@@ -34,6 +36,7 @@ public class UserResource {
             produces = "application/json")
     @Timed
     @RolesAllowed(AuthoritiesConstants.ADMIN)
+    @ApiIgnore
     public User getUser(@PathVariable String login, HttpServletResponse response) {
         log.debug("REST request to get User : {}", login);
         User user = userRepository.findOne(login);

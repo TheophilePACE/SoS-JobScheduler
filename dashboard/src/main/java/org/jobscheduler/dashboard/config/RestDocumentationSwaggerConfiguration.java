@@ -43,7 +43,7 @@ public class RestDocumentationSwaggerConfiguration {
 		//properties.setProperty("documentation.services.basePath",
 		//		servletContext.getContextPath());
 		properties.setProperty("documentation.services.basePath",
-		 "http://tlssbcloud12:7000/");
+		 "http://tlssbcloud12.france.airfrance.fr:7000/");
 		properties.setProperty("documentation.services.version", "ignored");
 		PropertyPlaceholderConfigurer configurer = new PropertyPlaceholderConfigurer();
 		configurer.setProperties(properties);

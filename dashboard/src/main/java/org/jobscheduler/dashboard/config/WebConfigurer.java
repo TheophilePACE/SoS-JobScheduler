@@ -62,7 +62,7 @@ public class WebConfigurer implements ServletContextInitializer {
             initCachingHttpHeadersFilter(servletContext, disps);
         }
         initGzipFilter(servletContext, disps);
-        initH2Console(servletContext);
+        //initH2Console(servletContext);
 
         log.info("Web application fully configured");
     }
