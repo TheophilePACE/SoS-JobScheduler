@@ -1,8 +1,16 @@
 <!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <html ng-app="JobSchedulerApp">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width">
+        
 <title>Jobs</title>
+<!-- build:css(.tmp) css/custom.css -->
 <link rel="stylesheet" type="text/css" href="app/components/bootstrap/dist/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="app/components/ng-table/ng-table.css">
 <link rel="stylesheet" type="text/css" href="app/components/angular-motion/dist/angular-motion.min.css">
@@ -11,9 +19,12 @@
 <link rel="stylesheet" type="text/css" href="app/components/select2/select2.css">
 <link rel="stylesheet" type="text/css" href="css/cus-icons.css">
 <link rel="stylesheet" type="text/css" href="css/custom.css">
-
+<!-- endbuild -->
 </head>
 <body>
+    <!--[if lt IE 10]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
 	<div class="container">
 
 		<div class="masthead" ng-switch="authenticated">
@@ -112,6 +123,8 @@
 		</div>
 
 	</div>
+	<!-- build:js app/components/scripts.js -->
+	<script type="text/javascript" src="app/components/modernizr/modernizr.js"></script>
 	<script type="text/javascript"
 		src="app/components/jquery/jquery.min.js"></script>
 	<script type="text/javascript"
