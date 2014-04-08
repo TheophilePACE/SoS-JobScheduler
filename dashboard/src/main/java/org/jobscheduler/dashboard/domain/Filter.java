@@ -1,24 +1,21 @@
 package org.jobscheduler.dashboard.domain;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.jobscheduler.dashboard.web.jsonview.BaseView;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
 @Table(name="filter")
@@ -32,9 +29,12 @@ public class Filter {
 	@Column(name="NAME")
 	String name;
 	
-	@OneToMany(mappedBy="filter")
-	@JsonManagedReference
+	@OneToMany(mappedBy="filter", fetch=FetchType.EAGER)
+	@JsonManagedReference()
+	@JsonView(NormalView.class)
 	Set<Field> fields = null;
+	
+	public static interface NormalView extends BaseView {}
 	
 	public long getId() {
 		return id;
@@ -90,8 +90,12 @@ public class Filter {
 			return false;
 		return true;
 	}
-
 	
-
+	@Override
+	public String toString() {
+		return "Filter [id=" + id + ", name=" + name + ", fields=" + fields
+				+ "]";
+	}
+	
 
 }

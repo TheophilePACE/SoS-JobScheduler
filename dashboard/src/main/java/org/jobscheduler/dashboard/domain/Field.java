@@ -12,6 +12,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity
@@ -35,6 +36,14 @@ public class Field {
 	@JsonBackReference
 	Filter filter;
 
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -87,7 +96,10 @@ public class Field {
 		return true;
 	}
 
-
+	@Override
+	public String toString() {
+		return "Field [id=" + id + ", name=" + name + ", value=" + value +"]";
+	}
 	
 
 }

@@ -102,7 +102,7 @@
 		                            <li ng-switch-when="true"><a href="#/password"><span class="glyphicon glyphicon-lock"></span>
 		                                &nbsp;<span translate="global.menu.account.password">Password</span></a></li>
 									<li class="divider"></li>
-									<li><a href="#/manageFilters"><span class="glyphicon glyphicon-filter"></span>&nbsp;Manage filters</a></li>
+									<li><a href="#/filters"><span class="glyphicon glyphicon-filter"></span>&nbsp;Manage filters</a></li>
 									<li ng-switch-when="true"><a href="rest-api-doc/index.html"><span class="cus-rainbow"></span>Test API</a></li>
 								</ul></li>
 						</ul>
@@ -139,6 +139,8 @@
 	<script type="text/javascript"
 		src="app/components/angular-route/angular-route.min.js"></script>
 	<script type="text/javascript"
+		src="app/components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script type="text/javascript"
 		src="app/components/angular-bootstrap/ui-bootstrap.min.js"></script>
 	<script type="text/javascript"
 		src="app/components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
@@ -171,6 +173,10 @@
 	
 	<script type="text/javascript" src="app/http-auth-interceptor.js"></script>
 	<script type="text/javascript" src="app/services.js"></script>
-
+    <script type="text/javascript" src="app/filter/router.js"></script>
+    <script type="text/javascript" src="app/filter/controller.js"></script>
+    <script type="text/javascript" src="app/filter/service.js"></script>
+    <!-- endbuild -->
+        
 </body>
 </html>

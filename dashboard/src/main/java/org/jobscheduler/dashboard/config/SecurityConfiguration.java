@@ -151,16 +151,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 		// disable csrf for upload request
 //		http.csrf().requireCsrfProtectionMatcher(new RequestMatcher() {
-////			private Pattern allowedMethods = Pattern
-////					.compile("^(GET|HEAD|TRACE|OPTIONS)$");
-////			private RegexRequestMatcher apiMatcher = new RegexRequestMatcher(
-////					"/api-docs.*", "GET");
+//			private Pattern allowedMethods = Pattern
+//					.compile("^(GET|HEAD|TRACE|OPTIONS)$");
+//			private RegexRequestMatcher apiMatcher = new RegexRequestMatcher(
+//					"/api-docs.*", "GET");
 //
 //			@Override
 //			public boolean matches(HttpServletRequest request) {
 //				// CSRF due to REST api call
 //				if (request.getRequestURI().startsWith("/api-docs")) {
-//					return false;
+//					return true;
 //				}
 //				// CSRF false for everything else that is not an API call or an
 //				// allowedMethod
