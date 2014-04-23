@@ -61,7 +61,12 @@ JobSchedulerApp.config(['$routeProvider', '$httpProvider', '$translateProvider',
                     controller: 'MainController'
                 });
             
-           
+
+            $routeProvider.when('/stats-scheduler-job/spooler/:spoolerId', {
+                templateUrl: 'app/jobs/partials/stats-scheduler-job.html',
+                controller: SchedulerJobStatsController
+            });
+            
             $routeProvider.when('/list-scheduler-job', {
                 templateUrl: 'app/jobs/partials/list-scheduler-job.html',
                 controller: ListSchedulerJobController

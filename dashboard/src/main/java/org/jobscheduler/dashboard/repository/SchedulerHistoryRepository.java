@@ -17,6 +17,8 @@ import org.springframework.data.repository.query.Param;
 
 public interface SchedulerHistoryRepository extends PagingAndSortingRepository<SchedulerHistory, Long> {
 
+	// For graphics
+	///////////////
 	List<SchedulerHistory> findByStartTimeBetween(Timestamp startTime1, Timestamp startTime2);
 	Long countByStartTimeBetweenAndError(Timestamp startTime1, Timestamp startTime2, BigDecimal error);
 	Long countByStartTimeBetween(Timestamp startTime1, Timestamp startTime2);
@@ -31,4 +33,9 @@ public interface SchedulerHistoryRepository extends PagingAndSortingRepository<S
 	
 	@Query("from SchedulerHistory where (startTime >= :startTime1 and startTime <= :startTime2) order by (endTime - startTime) DESC")
 	List<SchedulerHistory> findByStartTimeBetweenAndDuringTime(@Param("startTime1") Timestamp startTime1,@Param("startTime2") Timestamp startTime2, Pageable pageable);
+	
+	// for getting information details
+	//////////////////////////////////
+	
+	List<SchedulerHistory> findBySpoolerIdAndJobName(String spoolerId, String jobName);
 }

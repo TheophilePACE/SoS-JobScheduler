@@ -10,7 +10,12 @@ import java.util.List;
  */
 public class ListDTO {
 
-	public Long total;
+	// Number of elements
+	public Long totalElements;
+	// Number of pages
+	public int totalPages;
+	
+	
 	
 	public List<?> result;
 
@@ -22,12 +27,21 @@ public class ListDTO {
 		this.result = result;
 	}
 
-	public Long getTotal() {
-		return total;
+	public Long getTotalElements() {
+		return totalElements;
 	}
 
-	public void setTotal(Long total) {
-		this.total = total;
+	public void setTotalElements(Long totalElements) {
+		this.totalElements = totalElements;
+	}
+
+	public int getTotalPages() {
+		return totalPages;
+	}
+
+	public void setTotalPages(int totalPages) {
+		this.totalPages = totalPages;
+		
 	}
 
 

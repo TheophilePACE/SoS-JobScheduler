@@ -2,12 +2,21 @@
  	<button ng-click="tableParams.reload()" class="btn btn-default">Reload</button>
  	<button ng-click="tableParams.sorting({})" class="btn btn-default">Clear sorting</button>
 	<div loading-container="tableParams.settings().$loading">
+		<span class="navbar-text navbar-right">
+	 		<strong>Page :</strong> {{tableParams.page()}} / {{totalPages}}&nbsp;
+	    	<strong>Total :</strong> {{tableParams.total()}} jobs&nbsp;
+	    </span>
+	    
 		<table ng-table="tableParams" show-filter="true" class="table">
 		<tr ng-repeat="job in $data">
-			<td data-title="'Id'" filter="{ 'id': 'text' }" sortable="id">
-				<p>Spooler : <span class="label label-default">{{job.id.spoolerId}}</span></p>
-				<p>Cluster Member : <span class="label label-default">{{job.id.clusterMemberId}}</span></p>
-				<p>Path : <span class="label label-default">{{job.id.path}}</span></p>
+			<td data-title="'Spooler'" filter="{ 'spoolerId': 'text' }" sortable="spoolerId">
+				{{job.id.spoolerId}}
+			</td>
+			<td data-title="'Cluster member'" filter="{ 'clusterMemberId': 'text' }" sortable="clusterMemberId">
+				{{job.id.clusterMemberId}}
+			</td>
+			<td data-title="'Path'" filter="{ 'jobName': 'text' }" sortable="jobName">
+				<a href="/#/stats-scheduler-job/spooler/{{job.id.spoolerId}}?job={{job.id.path}}">{{job.id.path}}</a>
 			</td>
 			<td data-title="'Next start time'" filter="{ 'nextStartTime': 'text' }" sortable="nextStartTime">
 				{{job.nextStartTime}}

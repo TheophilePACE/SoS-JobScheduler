@@ -20,6 +20,8 @@ import org.jobscheduler.dashboard.web.rest.dto.SerieDTO;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.format.DateTimeFormatter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -40,9 +42,8 @@ import com.wordnik.swagger.annotations.ApiOperation;
 @Api(value = "", description = "Scheduler History information")
 public class SchedulerHistoryResource {
 
-	private static final Log log = LogFactory
-			.getLog(SchedulerHistoryResource.class);
-
+    private final Logger log = LoggerFactory.getLogger(SchedulerHistoryResource.class);
+    
 	DateTimeFormatter fmt = org.joda.time.format.DateTimeFormat
 			.forPattern("yyyy/MM/dd HH:mm:ss");
 
@@ -67,6 +68,8 @@ public class SchedulerHistoryResource {
 			@RequestParam(value = "page") Integer page,
 			HttpServletRequest request) throws UnsupportedEncodingException {
 
+		// Spring Data count from page 0, ngTable from page 1
+		page--;
 		Enumeration<String> parametersNames = request.getParameterNames();
 
 		// Parameters
@@ -147,7 +150,8 @@ public class SchedulerHistoryResource {
 							pageable);
 
 		dto.setResult(scheduleJob.getContent());
-		dto.setTotal(scheduleJob.getTotalElements());
+		dto.setTotalElements(scheduleJob.getTotalElements());
+		dto.setTotalPages(scheduleJob.getTotalPages());
 
 		return dto;
 	}

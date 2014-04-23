@@ -1,11 +1,23 @@
 'use strict';
 
+
 /**
  * SchedulerJob
  */
-var SchedulerJobController = function($timeout, $scope, $resource,
-		ngTableParams) {
-
+var SchedulerJobStatsController = function($http, $scope, $resource,
+		$routeParams) {
+	var spoolerId = $routeParams.spoolerId;
+	var jobName = $routeParams.job;
+	$http({
+		url : '/jobStats',
+		method : 'GET',
+		params : {
+			spoolerId : spoolerId,
+			jobName : jobName
+		}
+	}).success(function(data) {
+		$scope.job = data;
+	});
 };
 
 var ListSchedulerJobController = function($timeout, $scope, $resource,
@@ -20,7 +32,8 @@ var ListSchedulerJobController = function($timeout, $scope, $resource,
 		getData : function($defer, params) {
 			Api.get(params.url(), function(data) {
 				$timeout(function() {
-					params.total(data.total);
+					params.total(data.totalElements);
+					$scope.totalPages = data.totalPages;
 					$defer.resolve(data.result);
 				}, 500);
 
@@ -70,7 +83,8 @@ var ListSchedulerHistoryController = function($timeout, $scope, $http,
 			ApiSchedulerHistories.get(params.url(), function(data) {
 				$timeout(function() {
 					// set total for recalc pagination
-					params.total(data.total);
+					params.total(data.totalElements);
+					$scope.totalPages = data.totalPages;
 					$defer.resolve(data.result);
 					SessionService.set("jobs", data.result);
 				}, 500);

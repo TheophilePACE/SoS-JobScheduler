@@ -13,8 +13,8 @@
 	 			<button ng-click="tableParams.sorting({})" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-sort"></span>&nbsp;Clear sorting</button>
 			</div>				 
 			<span class="navbar-text navbar-right">
-	 			<strong>Page :</strong> {{tableParams.page()}} / {{tableParams.total()/tableParams.count()| number:0}}&nbsp;
-	    		<strong>Total :</strong> {{tableParams.total()}} jobs&nbsp;
+	 			<strong>Page :</strong> {{tableParams.page()}} / {{totalPages}}&nbsp;
+	    		<strong>Total :</strong> {{tableParams.total()}} jobs in history&nbsp;
 	    	</span>
 	    	</div>
 

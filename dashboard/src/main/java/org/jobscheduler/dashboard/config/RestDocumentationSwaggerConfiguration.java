@@ -40,8 +40,9 @@ public class RestDocumentationSwaggerConfiguration {
 	public PropertyPlaceholderConfigurer swaggerProperties()
 			throws UnknownHostException {
 		Properties properties = new Properties();
-		//properties.setProperty("documentation.services.basePath",
-		//		servletContext.getContextPath());
+//		properties.setProperty("documentation.services.basePath",
+//				servletContext.getContextPath());
+		
 		properties.setProperty("documentation.services.basePath",
 		 "http://tlssbcloud12.france.airfrance.fr:7000/");
 		properties.setProperty("documentation.services.version", "ignored");
