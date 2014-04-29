@@ -12,7 +12,7 @@ public class SerieDTO {
 
 	public String key;
 
-	public List<?> values;
+	public List<PointDTO> values;
 	
 	public String getKey() {
 		return key;
@@ -22,11 +22,11 @@ public class SerieDTO {
 		this.key = key;
 	}
 
-	public List<?> getValues() {
+	public List<PointDTO> getValues() {
 		return values;
 	}
 
-	public void setValues(List<?> values) {
+	public void setValues(List<PointDTO> values) {
 		this.values = values;
 	}
 

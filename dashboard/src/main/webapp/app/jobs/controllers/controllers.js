@@ -5,7 +5,7 @@
  * SchedulerJob
  */
 var SchedulerJobStatsController = function($http, $scope, $resource,
-		$routeParams) {
+		$routeParams, $timeout, SessionService) {
 	var spoolerId = $routeParams.spoolerId;
 	var jobName = $routeParams.job;
 	$http({
@@ -17,7 +17,40 @@ var SchedulerJobStatsController = function($http, $scope, $resource,
 		}
 	}).success(function(data) {
 		$scope.job = data;
+		$scope.chartStatsSchedulerValue = data.workingTime;
+		SessionService.set("jobStats", data);
 	});
+	
+	$scope.xAxisTickFormatFunction = function() {
+		return function(d) {
+			var xLabel = new Date(d);
+			return d3.time.format('%y/%m/%d')(xLabel);
+		};
+	};
+
+	$scope.yAxisTickFormatFunction = function() {
+		return function(d) {
+			return d3.format('d')(d);
+		};
+	};
+
+	$scope.xFunction = function() {
+		return function(d) {
+			return d[0];
+		};
+	};
+
+	$scope.yFunction = function() {
+		return function(d) {
+			return d[1];
+		};
+	};
+
+	$scope.yBarFunction = function() {
+		return function(d) {
+			return d[1] / 1000;
+		};
+	};
 };
 
 var ListSchedulerJobController = function($timeout, $scope, $resource,
@@ -177,3 +210,5 @@ var ChartSchedulerHistoryController = function($timeout, $scope, $resource,
 		};
 	};
 };
+
+

@@ -10,6 +10,14 @@ public class PointDTO {
 	Long x;
 	Long y;
 	
+	public PointDTO() {
+	}
+	
+	public PointDTO(Long x, Long y) {
+		this.x = x;
+		this.y = y;
+	}
+	
 	public Long getX() {
 		return x;
 	}

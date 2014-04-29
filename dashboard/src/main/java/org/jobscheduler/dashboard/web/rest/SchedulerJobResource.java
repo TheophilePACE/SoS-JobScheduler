@@ -71,7 +71,7 @@ public class SchedulerJobResource {
 			@RequestParam(value = "count") Integer count,
 			@RequestParam(value = "page") Integer page,
 			HttpServletRequest request) throws UnsupportedEncodingException {
-		
+
 		// Spring Data count from page 0, ngTable from page 1
 		page--;
 
@@ -131,13 +131,13 @@ public class SchedulerJobResource {
 		ListDTO dto = new ListDTO();
 
 		Page<SchedulerJob> scheduleJob = schedulerJobRepository
-				.findBySpoolerIdLikeAndClusterMemberLikeAndJobNameLike(spoolerId, clusterMember, jobName,
-						pageable);
+				.findBySpoolerIdLikeAndClusterMemberLikeAndJobNameLike(
+						spoolerId, clusterMember, jobName, pageable);
 
 		dto.setResult(scheduleJob.getContent());
 		dto.setTotalElements(scheduleJob.getTotalElements());
 		dto.setTotalPages(scheduleJob.getTotalPages());
-		
+
 		return dto;
 	}
 
@@ -159,8 +159,13 @@ public class SchedulerJobResource {
 	public @ResponseBody
 	SchedulerJobStatsDTO statsByJobName(
 			@RequestParam(value = "spoolerId") String spoolerId,
-			@RequestParam(value = "jobName") String jobName, Model model) {
-		return schedulerJobService.getStatsPerJobName(spoolerId, jobName);
+			@RequestParam(value = "jobName") String jobName, Model model,
+			@RequestParam(value = "count", defaultValue = "100") Integer count,
+			@RequestParam(value = "page", defaultValue = "0") Integer page) {
+		PageRequest pageable = new PageRequest(page, count, new Sort(new Order(
+				Direction.DESC, "startTime")));
+		return schedulerJobService.getStatsPerJobName(spoolerId, jobName,
+				pageable);
 	}
 
 }

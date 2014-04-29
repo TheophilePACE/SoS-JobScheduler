@@ -37,5 +37,6 @@ public interface SchedulerHistoryRepository extends PagingAndSortingRepository<S
 	// for getting information details
 	//////////////////////////////////
 	
-	List<SchedulerHistory> findBySpoolerIdAndJobName(String spoolerId, String jobName);
+	List<SchedulerHistory> findBySpoolerIdAndJobName(String spoolerId, String jobName, Pageable pageable);
+	Long countBySpoolerIdAndJobName(String spoolerId, String jobName);
 }
