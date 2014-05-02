@@ -5,16 +5,16 @@
 
 	<groupId>org.jobscheduler</groupId>
 	<artifactId>dashboard</artifactId>
-	<version>0.0.1</version>
+	<version>0.1.0</version>
 	<packaging>war</packaging>
 
-	<name>JobScheduler Dashboard</name>
+	<name>JobScheduler :: Dashboard</name>
 	<description>Dashboard for JobScheduler project</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.0.0.RELEASE</version>
+		<version>1.0.2.RELEASE</version>
 	</parent>
 
 	<properties>
@@ -46,6 +46,8 @@
 		<usertype.core.version>3.1.0.CR10</usertype.core.version>
 
 		<maven-enforcer-plugin.version>1.3.1</maven-enforcer-plugin.version>
+		<!-- Used bi iZpack plugin -->
+		<staging.dir>${project.build.directory}</staging.dir>
 	</properties>
 
 	<dependencies>
@@ -230,11 +232,11 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-collections4</artifactId>
 			<version>${commons-collections.version}</version>
-		</dependency> 
+		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-math3</artifactId>
-			<version>${commons-math.version}</version> 
+			<version>${commons-math.version}</version>
 		</dependency>
 
 		<dependency>
@@ -304,6 +306,8 @@
 	</dependencies>
 
 	<build>
+		<finalName>${project.artifactId}</finalName>
+	
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
@@ -349,6 +353,13 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 
+			<plugin>
+				<groupId>pl.project13.maven</groupId>
+				<artifactId>git-commit-id-plugin</artifactId>
+				<configuration>
+					<dotGitDirectory>../.git</dotGitDirectory>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -541,6 +552,7 @@
 							</execution>
 						</executions>
 					</plugin>
+
 				</plugins>
 			</build>
 		</profile>

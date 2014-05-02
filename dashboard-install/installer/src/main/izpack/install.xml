@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- XML configuration file for Job Scheduler dashboard setup -->
+<izpack:installation version="5.0"
+	xmlns:izpack="http://izpack.org/schema/installation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://izpack.org/schema/installation http://izpack.org/schema/5.0/izpack-installation-5.0.xsd">
+	<info>
+		<appname>JobScheduler Dashboard</appname>
+		<appversion>@{project.version}</appversion>
+		<url>http://bigloupe.github.io/SoS-JobScheduler/</url>
+		<javaversion>1.7</javaversion>
+		<requiresjdk>no</requiresjdk>
+		<summarylogfilepath>$INSTALL_PATH/Uninstaller/installSummary.htm</summarylogfilepath>
+	</info>
+
+	<!--The locale section. Asks here to include the English langpacks. -->
+	<locale>
+		<langpack iso3="eng" />
+	</locale>
+
+	<!--The gui preferences indication. -->
+	<guiprefs width="800" height="600" resizable="no">
+		<splash>dashboard-job-scheduler.png</splash>
+		<laf name="looks">
+			<os family="windows" />
+		</laf>
+		<modifier key="useHeadingPanel" value="yes" />
+	</guiprefs>
+
+	<resources>
+		<res id="userInputSpec.xml" src="userInputSpec.xml" />
+	</resources>
+
+	<!--The panels section. We indicate here which panels we want to use. The 
+		order will be respected. -->
+	<panels>
+		<!-- Welcome panel -->
+		<panel classname="HelloPanel" />
+		<!-- Where install dashboard -->
+		<panel classname="TargetPanel" />
+		<!-- Database panel -->
+		<panel classname="UserInputPanel" id="jdbc.connection.parameters" />
+		<!-- Summary action -->
+		<panel classname="SummaryPanel" />
+		<!-- Installation Panel -->
+		<panel classname="InstallPanel" />
+		<!-- Generate automatic installation script -->
+		<panel classname="FinishPanel" />
+	</panels>
+
+	<!--The Natives section. We specify here our dll files and libraries. -->
+	<!--The packs section. We specify here our packs. -->
+	<packs>
+		<pack name="dashboard" required="yes" preselected="yes" hidden="false">
+			<description>Dashboard</description>
+			<file src="dashboard.war" targetdir="$INSTALL_PATH/"
+				override="true" />
+		</pack>
+		<pack name="script" required="yes" preselected="yes" hidden="false">
+			<os family="windows" />
+			<description>Script Windows</description>
+			<file src="dashboard.bat" targetdir="$INSTALL_PATH/"
+				override="true" />
+		</pack>
+	</packs>
+</izpack:installation>	

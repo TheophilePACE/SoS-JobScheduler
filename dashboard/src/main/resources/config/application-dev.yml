@@ -6,7 +6,7 @@ spring:
     profiles: dev
     datasource:
         dataSourceClassName: org.h2.jdbcx.JdbcDataSource
-        url: jdbc:h2:mem:jhipster
+        url: jdbc:h2:mem:jobscheduler
         databaseName: 
         serverName: 
         username: 

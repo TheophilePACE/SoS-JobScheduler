@@ -21,7 +21,7 @@
     <logger name="log4j.logger.org.hibernate.SQL" level="DEBUG"/>
     <logger name="log4j.logger.org.hibernate.type" level="TRACE"/>
 
-    <logger name="org.atmosphere" level="WARN"/>
+    <logger name="org.atmosphere" level="ERROR"/>
     <logger name="org.springframework" level="WARN"/>
     <logger name="org.springframework.web" level="INFO"/>
     <logger name="org.springframework.security" level="INFO"/>

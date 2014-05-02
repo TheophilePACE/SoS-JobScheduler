@@ -81,7 +81,6 @@ public class SchedulerJobService {
 					&& (schedulerHistory.getEndTime().getTime() >= 0)) {
 				endDateTime = new DateTime(schedulerHistory.getEndTime()
 						.getTime());
-				log.debug("" + endDateTime);
 				startDateTime = new DateTime(schedulerHistory.getStartTime()
 						.getTime());
 				long workingTime = endDateTime.getMillis() - startDateTime.getMillis();

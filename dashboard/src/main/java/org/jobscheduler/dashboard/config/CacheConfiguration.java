@@ -47,34 +47,34 @@ public class CacheConfiguration {
             metricRegistry.remove(name);
         }
         log.info("Closing Cache Manager");
-        cacheManager.shutdown();
+        if (cacheManager != null)
+        	cacheManager.shutdown();
     }
 
-//    @Bean
-//    public CacheManager cacheManager() {
-//    	System.out.println("CacheConfiguration.cacheManager()");
-//        log.debug("Starting Ehcache");
-//        cacheManager = net.sf.ehcache.CacheManager.create();
-//        cacheManager.getConfiguration().setMaxBytesLocalHeap(env.getProperty("cache.ehcache.maxBytesLocalHeap", String.class, "16M"));
-//        log.debug("Registring Ehcache Metrics gauges");
-//        Set<EntityType<?>> entities = entityManager.getMetamodel().getEntities();
-//        for (EntityType<?> entity : entities) {
-//            
-//            String name = entity.getName();
-//            if ( name == null ) {
-//                name = entity.getJavaType().getName();
-//            }
-//            Assert.notNull(name, "entity cannot exist without a identifier");
-//            
-//            net.sf.ehcache.Cache cache = cacheManager.getCache(name);
-//            if (cache != null) {
-//                cache.getCacheConfiguration().setTimeToLiveSeconds(env.getProperty("cache.timeToLiveSeconds", Integer.class, 3600));
-//                net.sf.ehcache.Ehcache decoratedCache = InstrumentedEhcache.instrument(metricRegistry, cache);
-//                cacheManager.replaceCacheWithDecoratedCache(cache, decoratedCache);
-//            }
-//        }
-//        EhCacheCacheManager ehCacheManager = new EhCacheCacheManager();
-//        ehCacheManager.setCacheManager(cacheManager);
-//        return ehCacheManager;
-//    }
+    @Bean
+    public CacheManager cacheManager() {
+        log.debug("Starting Ehcache");
+        cacheManager = net.sf.ehcache.CacheManager.create();
+        cacheManager.getConfiguration().setMaxBytesLocalHeap(env.getProperty("cache.ehcache.maxBytesLocalHeap", String.class, "16M"));
+        log.debug("Registring Ehcache Metrics gauges");
+        Set<EntityType<?>> entities = entityManager.getMetamodel().getEntities();
+        for (EntityType<?> entity : entities) {
+            
+            String name = entity.getName();
+            if ( name == null ) {
+                name = entity.getJavaType().getName();
+            }
+            Assert.notNull(name, "entity cannot exist without a identifier");
+            
+            net.sf.ehcache.Cache cache = cacheManager.getCache(name);
+            if (cache != null) {
+                cache.getCacheConfiguration().setTimeToLiveSeconds(env.getProperty("cache.timeToLiveSeconds", Integer.class, 3600));
+                net.sf.ehcache.Ehcache decoratedCache = InstrumentedEhcache.instrument(metricRegistry, cache);
+                cacheManager.replaceCacheWithDecoratedCache(cache, decoratedCache);
+            }
+        }
+        EhCacheCacheManager ehCacheManager = new EhCacheCacheManager();
+        ehCacheManager.setCacheManager(cacheManager);
+        return ehCacheManager;
+    }
 }
