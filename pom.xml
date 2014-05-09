@@ -1,24 +1,24 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.jobscheduler</groupId>
+	<groupId>com.github.bigloupe</groupId>
 	<artifactId>jobscheduler-pom</artifactId>
 	<name>JobScheduler :: POM</name>
-	<version>0.1.0</version>
+	<version>0.1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	
+
 	<parent>
 		<groupId>org.sonatype.oss</groupId>
 		<artifactId>oss-parent</artifactId>
 		<version>9</version>
 		<relativePath />
 	</parent>
-	
+
 	<modules>
 		<module>dashboard</module>
 		<module>dashboard-install</module>
 	</modules>
-	
+
 	<url>https://github.com/bigloupe/SoS-JobScheduler</url>
 	<inceptionYear>2014</inceptionYear>
 	<organization>
@@ -27,8 +27,8 @@
 	</organization>
 
 	<description>
-  	Dashboard for JobScheduler (https://sourceforge.net/projects/jobscheduler/)
-	SpringMVC + Hibernate  
+  		Dashboard for JobScheduler (https://sourceforge.net/projects/jobscheduler/)
+		SpringMVC + Hibernate  
 	</description>
 
 	<scm>
@@ -37,6 +37,11 @@
 		<url>https://github.com/bigloupe/SoS-JobScheduler</url>
 		<tag>HEAD</tag>
 	</scm>
+
+	<issueManagement>
+		<system>Github</system>
+		<url>https://github.com/bigloupe/SoS-JobScheduler/issues</url>
+	</issueManagement>
 
 	<licenses>
 		<license>
@@ -51,16 +56,47 @@
 		<maven>3</maven>
 	</prerequisites>
 
+	<distributionManagement>
+		<snapshotRepository>
+			<id>sonatype-nexus-snapshots</id>
+			<name>Sonatype Nexus snapshot repository</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>sonatype-nexus-staging</id>
+			<name>Sonatype Nexus release repository</name>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
 
-	<profiles>
+	<profiles> 
 
 		<profile>
 			<id>release</id>
+			<activation>
+				<property>
+					<name>performRelease</name>
+					<value>true</value>
+				</property>
+			</activation>
 			<build>
 				<plugins>
 					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-release-plugin</artifactId>
+						<version>2.2.2</version>
+						<configuration>
+							<arguments>-Dgpg.passphrase=${gpg.passphrase}</arguments>
+						</configuration>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-gpg-plugin</artifactId>
 						<version>1.4</version>
+						<configuration>
+							<passphrase>${gpg.passphrase}</passphrase>
+						</configuration>
 						<executions>
 							<execution>
 								<id>sign-artifacts</id>

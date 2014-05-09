@@ -30,6 +30,11 @@
 		<res id="userInputSpec.xml" src="userInputSpec.xml" />
 	</resources>
 
+ 	<!-- pull in the built jar file for our custom panel -->
+ 	 <jar src="custom/jobscheduler-installer-panel.jar" stage="both"/>
+ 	 <jar src="custom/commons-cli.jar" stage="both"/>
+ 	 <jar src="custom/jansi.jar" stage="both"/>
+ 	 
 	<!--The panels section. We indicate here which panels we want to use. The 
 		order will be respected. -->
 	<panels>
@@ -38,7 +43,13 @@
 		<!-- Where install dashboard -->
 		<panel classname="TargetPanel" />
 		<!-- Database panel -->
-		<panel classname="UserInputPanel" id="jdbc.connection.parameters" />
+		<panel classname="UserInputPanel" id="jdbc.connection.parameters" >
+			<validator classname="org.jobscheduler.dashboard.installer.DatabaseConnectionValidator"/>
+			<actions>
+				<action stage="postvalidate" classname="org.jobscheduler.dashboard.installer.DatabaseConnectionPostValidateAction" />
+			</actions>
+		</panel>
+		
 		<!-- Summary action -->
 		<panel classname="SummaryPanel" />
 		<!-- Installation Panel -->
@@ -47,9 +58,10 @@
 		<panel classname="FinishPanel" />
 	</panels>
 
-	<!--The Natives section. We specify here our dll files and libraries. -->
 	<!--The packs section. We specify here our packs. -->
 	<packs>
+	
+	
 		<pack name="dashboard" required="yes" preselected="yes" hidden="false">
 			<description>Dashboard</description>
 			<file src="dashboard.war" targetdir="$INSTALL_PATH/"
@@ -59,6 +71,12 @@
 			<os family="windows" />
 			<description>Script Windows</description>
 			<file src="dashboard.bat" targetdir="$INSTALL_PATH/"
+				override="true" />
+		</pack>
+		<pack name="script" required="yes" preselected="yes" hidden="false">
+			<os family="unix" />
+			<description>Script Windows</description>
+			<file src="dashboard.sh" targetdir="$INSTALL_PATH/"
 				override="true" />
 		</pack>
 	</packs>

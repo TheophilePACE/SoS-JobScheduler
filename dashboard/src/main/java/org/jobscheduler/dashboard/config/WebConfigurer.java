@@ -23,9 +23,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.context.embedded.ServletContextInitializer;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Controller;
 import org.springframework.util.ReflectionUtils;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.health.HealthCheckRegistry;
@@ -36,6 +39,9 @@ import com.codahale.metrics.servlets.MetricsServlet;
  * Configuration of web application with Servlet 3.0 APIs.
  */
 @Configuration
+@ComponentScan(basePackages = { "org.jobscheduler.dashboard.controller",
+	"com.mangofactory.swagger.spring.controller" }, useDefaultFilters = false, includeFilters = { @ComponentScan.Filter({
+		Controller.class, RestController.class }) })
 @AutoConfigureAfter(CacheConfiguration.class)
 public class WebConfigurer implements ServletContextInitializer {
 

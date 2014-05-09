@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.jobscheduler</groupId>
+        <groupId>com.github.bigloupe</groupId>
         <artifactId>jobscheduler-pom</artifactId>
-        <version>0.1.0</version>
+        <version>0.1.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>jobscheduler-install</artifactId>
@@ -21,10 +21,8 @@
     </properties>
 
     <modules>
-        <module>installer</module>
-        <!-- 
         <module>panel</module>
-         -->
+        <module>installer</module>
     </modules>
 
 </project>

@@ -26,7 +26,7 @@
 		</field>
 		<!-- Port Number -->
 		<field type="text" align="left" variable="jobscheduler.db.port.number">
-			<spec txt="Enter database port number :" size="25" set="3306" />
+			<spec txt="Enter database port number :" size="25" set="" />
 			<validator class="com.izforge.izpack.panels.userinput.validator.NotEmptyValidator"
 				txt="Please set to 3306, if you are not sure!" />
 		</field>
