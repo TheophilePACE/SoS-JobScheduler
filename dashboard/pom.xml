@@ -4,7 +4,7 @@
 
 	<groupId>com.github.bigloupe</groupId>
 	<artifactId>dashboard</artifactId>
-	<version>0.2</version>
+	<version>0.2-SNAPSHOT</version>
 	<packaging>war</packaging>
 
 	<name>JobScheduler :: Dashboard</name>
@@ -16,6 +16,13 @@
 		<version>1.0.2.RELEASE</version>
 	</parent>
 
+	<scm>
+		<connection>scm:git:https://github.com/bigloupe/SoS-JobScheduler.git</connection>
+		<developerConnection>scm:git:https://github.com/bigloupe/SoS-JobScheduler.git</developerConnection>
+		<url>https://github.com/bigloupe/SoS-JobScheduler</url>
+		<tag>jobscheduler-pom-0.2</tag>
+	</scm>
+	
 	<properties>
 		<!-- Maven build properties -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -574,8 +581,4 @@
 
 	</profiles>
 
-
-  <scm>
-    <tag>jobscheduler-pom-0.2</tag>
-  </scm>
 </project>
