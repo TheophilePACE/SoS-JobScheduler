@@ -6,3 +6,4 @@ pom.xml.releaseBackup
 .springBeans
 release.properties
 /dashboard-jhipster
+git.properties
