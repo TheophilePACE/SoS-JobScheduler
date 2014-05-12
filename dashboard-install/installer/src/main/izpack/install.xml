@@ -33,8 +33,13 @@
  	<!-- pull in the built jar file for our custom panel -->
  	 <jar src="custom/jobscheduler-installer-panel.jar" stage="both"/>
  	 <jar src="custom/commons-cli.jar" stage="both"/>
+ 	 <jar src="custom/commons-lang.jar" stage="both"/>
+ 	 <jar src="custom/commons-io.jar" stage="both"/>
  	 <jar src="custom/jansi.jar" stage="both"/>
+ 	 <jar src="custom/postgresql.jar" stage="both"/>
  	 
+	<jar src="application-jobscheduler-template.yml" stage="both"/>
+	 	 
 	<!--The panels section. We indicate here which panels we want to use. The 
 		order will be respected. -->
 	<panels>
@@ -67,6 +72,7 @@
 			<file src="dashboard.war" targetdir="$INSTALL_PATH/"
 				override="true" />
 		</pack>
+		
 		<pack name="script" required="yes" preselected="yes" hidden="false">
 			<os family="windows" />
 			<description>Script Windows</description>
