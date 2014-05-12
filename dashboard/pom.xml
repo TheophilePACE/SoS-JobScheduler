@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.github.bigloupe</groupId>
 	<artifactId>dashboard</artifactId>
-	<version>0.1.0-SNAPSHOT</version>
+	<version>0.2-SNAPSHOT</version>
 	<packaging>war</packaging>
 
 	<name>JobScheduler :: Dashboard</name>
@@ -22,6 +21,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.7</java.version>
+		<github.global.server>github</github.global.server>
 
 		<start-class>org.jobscheduler.dashboard.Application</start-class>
 		<main.basedir>${basedir}/src/main/webapp</main.basedir>
@@ -574,4 +574,8 @@
 
 	</profiles>
 
+
+  <scm>
+    <tag>jobscheduler-pom-0.1.0</tag>
+  </scm>
 </project>
