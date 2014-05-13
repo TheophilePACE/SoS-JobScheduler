@@ -3,7 +3,7 @@
 	<groupId>com.github.bigloupe</groupId>
 	<artifactId>jobscheduler-pom</artifactId>
 	<name>JobScheduler :: POM</name>
-	<version>0.2</version>
+	<version>0.3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<parent>
