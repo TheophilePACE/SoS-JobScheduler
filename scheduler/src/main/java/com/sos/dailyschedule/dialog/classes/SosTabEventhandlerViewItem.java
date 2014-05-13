@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -573,7 +588,7 @@ public class SosTabEventhandlerViewItem extends CTabItem {
 		new Label(parent, SWT.NONE);
 		msg = new Label(parent, SWT.NONE);
 		msg.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
-		msg.setText("…");
+		msg.setText("ï¿½");
 		final Label schedulerIdLabel = new Label(parent, SWT.NONE);
 		schedulerIdLabel.setText("Scheduler Id");
 		lbSchedulerId = new Label(parent, SWT.NONE);

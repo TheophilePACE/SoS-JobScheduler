@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -34,13 +49,13 @@ package com.sos.JSHelper.Options;
 import java.util.Vector;
 
 /**
- * \class JSOptionValueList - Klasse für eine Option mit Einem String-Array als Wertemenge
+ * \class JSOptionValueList - Klasse fï¿½r eine Option mit Einem String-Array als Wertemenge
  *
- * \brief JSOptionValueList - Klasse für eine Option mit Einem String-Array als Wertemenge
+ * \brief JSOptionValueList - Klasse fï¿½r eine Option mit Einem String-Array als Wertemenge
  *
  * \details
  *
- * Mit dieser Klasse wird eine Möglichkeit implementiert, eine aufzählbare
+ * Mit dieser Klasse wird eine Mï¿½glichkeit implementiert, eine aufzï¿½hlbare
  * Menge von Strings in einer Option als Wert zu halten und
  * abzufragen bzw. auszuwerten.
  *
@@ -126,7 +141,7 @@ public class JSOptionValueList extends SOSOptionString {
 	 * Initialisiert das String-Array anhand des IndexedKey
 	 * IndexedKey ist eine Option in den Settings, die unter diesem Key mehrfach vorkommen kann.
 	 * Die Keys aller Optionen haben den Aufbau: IndexedKey, IndexedKey1 .. IndexedKeyN
-	 * Lücken im Index sind nicht zugelassen.
+	 * Lï¿½cken im Index sind nicht zugelassen.
 	 *
 	 * @param pPobjParent
 	 * @param pPstrKey
@@ -170,7 +185,7 @@ public class JSOptionValueList extends SOSOptionString {
 	 *
 	 * \details
 	 * Die Methode liefert das n-te Element aus der Liste.
-	 * Falls der Index ausserhalb des gültigen gültigen Bereichs ist,
+	 * Falls der Index ausserhalb des gï¿½ltigen gï¿½ltigen Bereichs ist,
 	 * wird ein leerer String geliefert.
 	 *
 	 * \return String - Der Inhalt des n-ten Elementes
@@ -195,11 +210,11 @@ public class JSOptionValueList extends SOSOptionString {
 	 *
 	 * \details
 	 * Mit dieser Methode wird ein einzelner Wertestring, bei dem
-	 * die Einzelwerte durch ";" oder "|" getrennt sind, übergeben.
+	 * die Einzelwerte durch ";" oder "|" getrennt sind, ï¿½bergeben.
 	 *
-	 * Die Einzelwerte werden in der ValueList (abzurufen über die Methode "value")
+	 * Die Einzelwerte werden in der ValueList (abzurufen ï¿½ber die Methode "value")
 	 * gespeichert.
-	 * Der Wertestring bleibt über die Methode "Value" erreichbar.
+	 * Der Wertestring bleibt ï¿½ber die Methode "Value" erreichbar.
 	 *
 	 * Ein Beispiel:
 	 * \code
@@ -323,7 +338,7 @@ public class JSOptionValueList extends SOSOptionString {
 	// - <remark who='EQALS' when='Freitag, 8. Mai 2009' id='MehrereExportSQL' >
 	/**
 	 * \change Freitag, 8. Mai 2009 EQALS MehrereExportSQL
-	 * Mehr als ExportSQLs verarbeiten können
+	 * Mehr als ExportSQLs verarbeiten kï¿½nnen
 	 */
 	// - <newcode>
 	public String concatenatedValue(final String pstrDelimiter) {
@@ -351,13 +366,13 @@ public class JSOptionValueList extends SOSOptionString {
 	 * \brief contains
 	 *
 	 * \details
-	 * Mit dieser Methode wird geprüft, ob in der ValueList ein bestimmter, als
+	 * Mit dieser Methode wird geprï¿½ft, ob in der ValueList ein bestimmter, als
 	 * Parameter anzugebender, String enthalten ist.
 	 *
 	 * Der String wird im Ganzen verglichen.
-	 * Reguläre Ausdrücke sind nicht vorgesehen.
+	 * Regulï¿½re Ausdrï¿½cke sind nicht vorgesehen.
 	 *
-	 * Es wird nicht zwischen Groß- und Kleinschreibung unterschieden.
+	 * Es wird nicht zwischen Groï¿½- und Kleinschreibung unterschieden.
 	 * Ein Beispiel:
 	 * \code
 	 * 			objVL.Value("Das|ist|das|Haus|vom|Nikolaus");
@@ -387,14 +402,14 @@ public class JSOptionValueList extends SOSOptionString {
 
 	/**
 	 *
-	 * \brief IndexOf - liefert den Index des Elements für einen Wert
+	 * \brief IndexOf - liefert den Index des Elements fï¿½r einen Wert
 	 *
 	 * \details
-	 * Der Index eines anzugebenden Wertes wird zurückgegeben.
+	 * Der Index eines anzugebenden Wertes wird zurï¿½ckgegeben.
 	 * Ist der Wert nicht in der ValueList enthalten, so
-	 * wird -1 zurückgegeben.
+	 * wird -1 zurï¿½ckgegeben.
 	 *
-	 * Es wird nicht zwischen Groß- und Kleinschreibung unterschieden.
+	 * Es wird nicht zwischen Groï¿½- und Kleinschreibung unterschieden.
 	 * \return int - Index oder -1
 	 *
 	 * @param pstrValue2Find

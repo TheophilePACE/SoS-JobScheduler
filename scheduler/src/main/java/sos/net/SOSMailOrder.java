@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -146,7 +161,7 @@ protected SOSPlainTextProcessor mailPlainTextProcessor                      = nu
      * Konstruktor
      * @param sosSettings SOSSettings Einstellungen aus Profile Settings oder Connection Settings
      * @param conn Datenbankverbindung
-     * @param language Sprache für Einstellungen
+     * @param language Sprache fï¿½r Einstellungen
      * @throws java.lang.Exception
      */
 	public SOSMailOrder(SOSSettings sosSettings, String language, SOSConnection conn) throws Exception{
@@ -746,15 +761,15 @@ protected SOSPlainTextProcessor mailPlainTextProcessor                      = nu
 		this.bodyTemplateType = bodyTemplateType;
 	}
 	/**
-	 * Fügt eine Ersetzung für body und subject hinzu
+	 * Fï¿½gt eine Ersetzung fï¿½r body und subject hinzu
 	 */
 	public void addReplacement(String key, String value){
 		replacements.put(key,value);
 	}
 	
 	/**
-	 * Gibt Ersetzungsstring für einen Schlüssel zurück
-	 * @param key Schlüssel
+	 * Gibt Ersetzungsstring fï¿½r einen Schlï¿½ssel zurï¿½ck
+	 * @param key Schlï¿½ssel
 	 * @return Ersetzungsstring oder null
 	 */
 	public String getReplacement(String key){

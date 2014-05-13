@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -45,7 +60,7 @@ import sos.util.SOSLogger;
 import sos.util.SOSSchedulerLogger;
 
 /**
- * <p>ASKJob ist die Basisklasse für Job-Implementierungen und stellt Methoden zur Verfügung:</p>  
+ * <p>ASKJob ist die Basisklasse fï¿½r Job-Implementierungen und stellt Methoden zur Verfï¿½gung:</p>  
  * <p>- getJobProperties(), getJobSettings(): Lesen von Einstellungen aus Job-Konfigurationsdateien (factory.ini)</p>
  * <p>- getConnection(): Datenbankverbindungen des Jobs</p>
  * <p>- getSchedulerConnection(): Datenbankverbindung des Job Schedulers</p>
@@ -82,7 +97,7 @@ public class ProcessJob extends Job_impl {
     /** Attribut jobTitle: Job-Title im Scheduler */
     private String jobTitle = null;
 
-    /** Attribut application: Name der Applikation für Einstellungen */
+    /** Attribut application: Name der Applikation fï¿½r Einstellungen */
     protected String application = new String("");
     
     
@@ -315,7 +330,7 @@ public class ProcessJob extends Job_impl {
 
     
     /**
-     * Gibt die Settings des Job Schedulers als SOSSettings Objekt zurück
+     * Gibt die Settings des Job Schedulers als SOSSettings Objekt zurï¿½ck
      * @param factoryIni Pfad zur Datei factory.ini (wird von der Methode ini_path()
      * des spooler Objekts geliefert)
      * @throws Exception
@@ -328,7 +343,7 @@ public class ProcessJob extends Job_impl {
     
     /**
      * Gibt ein SOSConnection Objekt mit der Datenbankverbindung des Job Schedulers
-     * zurück. Die Verbindung muss noch mit connect() geöffnet und disconnect() wieder
+     * zurï¿½ck. Die Verbindung muss noch mit connect() geï¿½ffnet und disconnect() wieder
      * geschlossen werden.
      * @param schedulerSettings Settings des Schedulers       
      * @throws Exception
@@ -340,7 +355,7 @@ public class ProcessJob extends Job_impl {
     
     /**
      * Gibt ein SOSConnection Objekt mit der Datenbankverbindung des Job Schedulers
-     * zurück. Die Verbindung muss mit connect() geöffnet und disconnect() wieder
+     * zurï¿½ck. Die Verbindung muss mit connect() geï¿½ffnet und disconnect() wieder
      * geschlossen werden.
      * 
      * @param schedulerSettings Settings des Schedulers

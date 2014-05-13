@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -74,10 +89,10 @@ public class SOSFTPHistoryJob extends JobSchedulerJobAdapter {
 	/** hostWare file name prefix for info file */
 	private String							_filePrefix						= "-in tab -csv -field-names";
 	/** Anzahl Wiederholungen, um die File Position in der DB zu lesen*/
-	/** kann als paramater "position_repeat_count" übergeben werden */
+	/** kann als paramater "position_repeat_count" ï¿½bergeben werden */
 	private final int						_positionRepeatCount			= 3;
 	/** Zeit (in Sekunden) zwischen der Wiederholundgen */
-	/** kann als paramater "position_repeat_interval" übergeben werden */
+	/** kann als paramater "position_repeat_interval" ï¿½bergeben werden */
 	private final int						_positionRepeatInterval			= 1;
 	private LinkedHashMap<String, String>	_mappings						= null;
 	private LinkedHashMap<String, String>	_recordExcludedParameterNames	= null;
@@ -88,12 +103,12 @@ public class SOSFTPHistoryJob extends JobSchedulerJobAdapter {
 	private boolean							_exit							= false;
 	/** zum Switchen source-target */
 	private final String					_operationSend					= "send";
-	/** wenn diese parameter gesetz - import file ausführen, sonst import order */
+	/** wenn diese parameter gesetz - import file ausfï¿½hren, sonst import order */
 	// private String _paramFileName = "sosftp_history_file";
 	private final String					_paramFileName					= "scheduler_file_path";
 	/** fehlende Werte bei den einigen Spalten
 	 * (remote_host_ip,localhost_ip,local_filename,remote_filename,file_size,md5)
-	 * mit diesem Wert füllen */
+	 * mit diesem Wert fï¿½llen */
 	private final String					_nullValue						= "null";
 	/**Status in der letzten import Zeil : success oder error */
 	private String							_lastStatus						= "";
@@ -142,7 +157,7 @@ public class SOSFTPHistoryJob extends JobSchedulerJobAdapter {
 	/**
 	* Feldermapping
 	*
-	* Auflistung von Felder, die immer geliefert werden müssen - per UDP(als Auftragparameter) oder .CSV
+	* Auflistung von Felder, die immer geliefert werden mï¿½ssen - per UDP(als Auftragparameter) oder .CSV
 	*/
 	private void initRecordMappings() {
 		_mappings = new LinkedHashMap<String, String>();
@@ -179,7 +194,7 @@ public class SOSFTPHistoryJob extends JobSchedulerJobAdapter {
 	}
 
 	/**
-	 * bei SOSFTP ist es möglich "custom" Felder zu definieren, die bei UDP als Auftragsparameter mitgeschickt werden.
+	 * bei SOSFTP ist es mï¿½glich "custom" Felder zu definieren, die bei UDP als Auftragsparameter mitgeschickt werden.
 	 * Damit man diese Felder identifizieren kann, werden hier Parameter defininiert, die beim Auftrag dabei sind, aber keine
 	 * "custom" Felder sind
 	 *
@@ -486,7 +501,7 @@ public class SOSFTPHistoryJob extends JobSchedulerJobAdapter {
 	}
 
 	/**
-	 * Prüfen, ob "custom" Felder in der Datenbank vorhanden sind
+	 * Prï¿½fen, ob "custom" Felder in der Datenbank vorhanden sind
 	 *
 	 * @param recordExtraParameters
 	 * @return
@@ -749,10 +764,10 @@ public class SOSFTPHistoryJob extends JobSchedulerJobAdapter {
 	}
 
 	/**
-	* Prüfung ob bestimmte Felder leer, numerisch ... sind
-	* Der Wert wird an die Tabellenfeldlänge abgeschnitten(manuell definiert todo - Metadaten lesen)
+	* Prï¿½fung ob bestimmte Felder leer, numerisch ... sind
+	* Der Wert wird an die Tabellenfeldlï¿½nge abgeschnitten(manuell definiert todo - Metadaten lesen)
 	*
-	* Folgende Felder dürfen leer sein:
+	* Folgende Felder dï¿½rfen leer sein:
 	*
 	* remote_host_ip
 	* localhost_ip

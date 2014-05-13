@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -98,7 +113,7 @@ public class TestFTPProfile {
 
 			//butConnect dient nur zum Testen
 			final Button butConnect = new Button(testFtpProfileShell, SWT.NONE);
-			//hier: Listener, wenn ein neuer Profile aus dem Combobox ausgewählt wird
+			//hier: Listener, wenn ein neuer Profile aus dem Combobox ausgewï¿½hlt wird
 			ftpProfilePicker.addSelectionListener((new SelectionAdapter() {
 				public void widgetSelected(final SelectionEvent e) {
 					System.out.println("test 2");
@@ -136,13 +151,13 @@ public class TestFTPProfile {
 						
 						
 						
-						//Mögliche aufrufen zum holen von Dateien
+						//Mï¿½gliche aufrufen zum holen von Dateien
 						
 						/*String l = profile1.openFile("/home/test/temp/1.txt", "1");
 						
 						System.out.println("Datei per FTP holen und in Verzeichnis(=profile1.getRoot() + 1) ablegen: " + l);
 						
-						//dritte Parameter steht für append 
+						//dritte Parameter steht fï¿½r append 
 						long j = sosfileTransfer.getFile("/home/test/temp/1.txt", "c:/temp/1/1.txt", false);
 						System.out.println("Datei per FTP holen und in Verzeichnis(=c:/temp/1/1.txt) ablegen: Bytes " + j);
 						
@@ -153,7 +168,7 @@ public class TestFTPProfile {
 						System.out.println("Datei per FTP holen und in Verzeichnis ablegen: Bytes " + k);
 						
 						long m = profile1.appendFile("/home/test/temp/1.txt", "c:/temp/1/2.txt");
-						System.out.println("Datei per FTP holen und in die Datei c:/temp/1/2.txt hinten anhängen: Bytes " + j);
+						System.out.println("Datei per FTP holen und in die Datei c:/temp/1/2.txt hinten anhï¿½ngen: Bytes " + j);
 						
 						
 						long z = profile1.saveAs("c:/temp/config/1.txt", "1.txt");

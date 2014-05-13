@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -121,10 +136,10 @@ public class JSDataElementDouble extends JSDataElementNumeric {
 		 * 3 Nachkommstellen
 		 */
 //- <oldcode>
-//		super.FormatString(",15.2f");  // minus weggelassen, weil steht für "left justi"
+//		super.FormatString(",15.2f");  // minus weggelassen, weil steht fï¿½r "left justi"
 //- </oldcode>
 //- <newcode>
-		super.FormatString("15.3f");  // minus weggelassen, weil steht für "left justi"
+		super.FormatString("15.3f");  // minus weggelassen, weil steht fï¿½r "left justi"
 //- </newcode>
 //- </remark>      <!-- id=<Korrektur>  -->
 		super.Description("Double");
@@ -137,7 +152,7 @@ public class JSDataElementDouble extends JSDataElementNumeric {
 		return dblValue ;
 	}
 	/**
-	 * \change Donnerstag, 5. März 2009 EQCPN FORM
+	 * \change Donnerstag, 5. Mï¿½rz 2009 EQCPN FORM
 	 * Konvertierung verschiedener Zahlenformate
 	 */
 //	protected void toDouble () {
@@ -146,7 +161,7 @@ public class JSDataElementDouble extends JSDataElementNumeric {
 //			dblValue = 0;
 //		}
 //		else {
-//			//- <remark who='EQCPN' when='Donnerstag, 5. März 2009' id='FORM' >
+//			//- <remark who='EQCPN' when='Donnerstag, 5. Mï¿½rz 2009' id='FORM' >
 //			//-   <para>
 //			//-   Konvertierung verschiedener Zahlenformate
 //			//-   </para>
@@ -154,8 +169,8 @@ public class JSDataElementDouble extends JSDataElementNumeric {
 //			// dblValue = new Double(this.Value());
 //			//- </oldcode>
 //			//- <newcode>
-//			// Zunächst wird versucht die Zahl nach deutschem Format zu interpretieren (das , ist
-//			// Dezimaltrennzeichen, der . für die Tausender. Klappt das nicht versuchen wir es mit
+//			// Zunï¿½chst wird versucht die Zahl nach deutschem Format zu interpretieren (das , ist
+//			// Dezimaltrennzeichen, der . fï¿½r die Tausender. Klappt das nicht versuchen wir es mit
 //			// dem amerikanischen Format.
 //		    try {
 //		        Number number = NumberFormat.getNumberInstance(Locale.GERMAN).parse(strT);
@@ -181,12 +196,12 @@ public class JSDataElementDouble extends JSDataElementNumeric {
 	 * \brief FormattedValue - Liefert den Wert des Elements formatiert
 	 *
 	 * \details
-	 * das Format (die Edit-Maske) wird über die Eigenschaft FormatString
+	 * das Format (die Edit-Maske) wird ï¿½ber die Eigenschaft FormatString
 	 * definiert.
-	 * Die Ausrichtung ist linksbündig.
+	 * Die Ausrichtung ist linksbï¿½ndig.
 	 *
 	 * Wenn kein Format-String definiert ist, so wird der Wert als String
-	 * zurückgegeben.
+	 * zurï¿½ckgegeben.
 	 *
 	 * \return String
 	 *

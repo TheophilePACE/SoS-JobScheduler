@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -59,11 +74,11 @@ import netscape.ldap.LDAPv2;
 
 /**
  * <p>Title: </p>
- * <p>Description: Basisklasse für LDAP Server Verbindung</p>
+ * <p>Description: Basisklasse fï¿½r LDAP Server Verbindung</p>
  * <p>Copyright: Copyright (c) 2003</p>
  * <p>Company: SOS GmbH</p>
  * @author <a href="mailto:robert.ehrlich@sos-berlin.com">Robert Ehrlich</a>
- * @author <a href="mailto:mueruevet.oeksuez@sos-berlin.com">Mürüvet Öksüz</a>
+ * @author <a href="mailto:mueruevet.oeksuez@sos-berlin.com">Mï¿½rï¿½vet ï¿½ksï¿½z</a>
  * @resource ldapjdk.jar
  * @version 1.0 $
  */
@@ -94,8 +109,8 @@ public class SOSLDAPConnection {
     * Bestimmt wie tief soll die Suche gehen
     * 
     * LDAPv2.SCOPE_BASE		nur die base wiedergeben
-    * LDAPv2.SCOPE_ONE 		nur auf einer Ebene suchen, nicht in Äste verzweigen
-    * LDAPv2.SCOPE_SUB		alle (unter) Ebenen zurückgeben
+    * LDAPv2.SCOPE_ONE 		nur auf einer Ebene suchen, nicht in ï¿½ste verzweigen
+    * LDAPv2.SCOPE_SUB		alle (unter) Ebenen zurï¿½ckgeben
     **/ 
 	private int _scope						= LDAPv2.SCOPE_SUB;
 	
@@ -501,7 +516,7 @@ public class SOSLDAPConnection {
 	
 	
 	/**
-     * Ändern eines Eintrages auf der LDAAP-Server
+     * ï¿½ndern eines Eintrages auf der LDAAP-Server
      * 
      * @param attrKey
      * @param value
@@ -513,8 +528,8 @@ public class SOSLDAPConnection {
     }
 	
     /**
-     * Ändern eines Eintrages auf der LDAAP-Server.
-     * Der base_ muß genau die Pfadangabe geben
+     * ï¿½ndern eines Eintrages auf der LDAAP-Server.
+     * Der base_ muï¿½ genau die Pfadangabe geben
      * @param attrKey
      * @param value
      * @param base_
@@ -722,8 +737,8 @@ public class SOSLDAPConnection {
     * Bestimmt wie tief soll die Suche gehen
     * 
     * 0 - LDAPv2.SCOPE_BASE	nur die base wiedergeben
-    * 1 - LDAPv2.SCOPE_ONE 	nur auf einer Ebene suchen, nicht in Äste verzweigen
-    * 2 - LDAPv2.SCOPE_SUB		alle (unter) Ebenen zurückgeben
+    * 1 - LDAPv2.SCOPE_ONE 	nur auf einer Ebene suchen, nicht in ï¿½ste verzweigen
+    * 2 - LDAPv2.SCOPE_SUB		alle (unter) Ebenen zurï¿½ckgeben
     * 
     * @param scope  0, 1 oder 2
     * 
@@ -796,7 +811,7 @@ public class SOSLDAPConnection {
             // lc.connection.bind(3,"cn=Manager,dc=my-domain,dc=com","secret");
             
             
-            // alle Objekte zurückgeben
+            // alle Objekte zurï¿½ckgeben
             if(argAttributes.equalsIgnoreCase("objects")){
                 lc.getSchemaObjects();
             }
@@ -860,11 +875,11 @@ public class SOSLDAPConnection {
                     */
                     
                     System.out.println("");
-                    System.out.println("Anmeldung für "+cn+" mit kennwort "+pass+" erfolgreich");
+                    System.out.println("Anmeldung fï¿½r "+cn+" mit kennwort "+pass+" erfolgreich");
                 }
                 catch(Exception e){
                     System.out.println("");
-                    System.out.println("Anmeldung für "+cn+" mit kennwort "+pass+" fehlgeschlagen : "+e);
+                    System.out.println("Anmeldung fï¿½r "+cn+" mit kennwort "+pass+" fehlgeschlagen : "+e);
                 }
               
             }
@@ -902,16 +917,16 @@ public class SOSLDAPConnection {
                 lc.setFilter(filter.toString());
             
                 //lc.search(ldapAttributes);
-                // alle Attribute zurückgeben
+                // alle Attribute zurï¿½ckgeben
                 ArrayList entries = lc.search(null);
             
                 System.out.println("");
             
                 if(entries == null || entries.size() == 0){
-                    System.out.println("LDAP Server hat keinen Eintrag gefunden für "+searchParametrs.toString());
+                    System.out.println("LDAP Server hat keinen Eintrag gefunden fï¿½r "+searchParametrs.toString());
                 }
                 else{
-                    System.out.println("LDAP Server hat "+entries.size()+" Eintrag(e) gefunden für "+searchParametrs.toString());
+                    System.out.println("LDAP Server hat "+entries.size()+" Eintrag(e) gefunden fï¿½r "+searchParametrs.toString());
                 
                     int j=1;
                     for(int i=0;i<entries.size();i++){

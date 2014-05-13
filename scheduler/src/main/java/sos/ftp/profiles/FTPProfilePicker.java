@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -48,24 +63,24 @@ import java.io.File;
 
 /**
  * 
- * In dieser Klasse können FTP Zugänge verwaltet werden.
+ * In dieser Klasse kï¿½nnen FTP Zugï¿½nge verwaltet werden.
  * 
  * <br/><br/>Diese Klasse besteht aus einer Auswahlbox und einem Button.
  * 
- * <br/><br/>Beim Klicken auf den Button wird Dialog zur Erstellen, Bearbeiten und Löschen 
- * von FTP Zugänge geöffnet.
+ * <br/><br/>Beim Klicken auf den Button wird Dialog zur Erstellen, Bearbeiten und Lï¿½schen 
+ * von FTP Zugï¿½nge geï¿½ffnet.
  * 
- * <br/><br/>In der Auswahlbox stehen alle Zugänge die im Dialog erfasst wurden.
+ * <br/><br/>In der Auswahlbox stehen alle Zugï¿½nge die im Dialog erfasst wurden.
  * 
- * <br/>Mit den Zugangsdaten können FTP Verbindungen aufgebaut und Dateien transferiert werden.
+ * <br/>Mit den Zugangsdaten kï¿½nnen FTP Verbindungen aufgebaut und Dateien transferiert werden.
  * 
  * <br/><br/>Beispielaufruf:
  * 
  * <br/><br/> Folgende Bibliotheken werden verwendet: 
  *       swt.jar, sos.util.jar, sos.settings.jar, sos.net.jar, commons-net-1.2.2.jar, trilead-ssh2-build211.jar, jce-jdk13-129.jar
  *   
- *  <br/><br/> //Übergabe einer Logger Object. @see sos.util.SOSLogger
- *  <br/> //Wenn kein Logger Object übergeben wurde, dann wird alles in Standardausgabe geschrieben.
+ *  <br/><br/> //ï¿½bergabe einer Logger Object. @see sos.util.SOSLogger
+ *  <br/> //Wenn kein Logger Object ï¿½bergeben wurde, dann wird alles in Standardausgabe geschrieben.
  *  <br/> final SOSLogger  logger = new SOSStandardLogger(SOSLogger.DEBUG9);
  *   
  *   <br/><br/>//FTPProfilePicker Object instanzieren
@@ -74,10 +89,10 @@ import java.io.File;
  *   <br/><br/>//der Profile Auswahlbox soll auch einen leeren item haben
  *   <br/>ftpProfilePicker.addEmptyItem();
  *   
- *   <br/><br/>//ggf. Logger Object übergeben
+ *   <br/><br/>//ggf. Logger Object ï¿½bergeben
  *   <br/>ftpProfilePicker.setLogger(logger);
  *   
- *   <br/><br/>//hier: Listener, wenn ein neuer Profile aus dem Combobox ausgewählt wird
+ *   <br/><br/>//hier: Listener, wenn ein neuer Profile aus dem Combobox ausgewï¿½hlt wird
  *   <br/>ftpProfilePicker.addSelectionListener((new SelectionAdapter() {
  *   <br/>public void widgetSelected(final SelectionEvent e) {
  *   <br/>		System.out.println("e ist das abgefangene event");
@@ -109,7 +124,7 @@ public class FTPProfilePicker extends Composite {
 
 
 
-	/** Button: öffnet einen Dialog zur Erstellen, Bearbeiten und löschen von FTP Zugänge und */
+	/** Button: ï¿½ffnet einen Dialog zur Erstellen, Bearbeiten und lï¿½schen von FTP Zugï¿½nge und */
 	private        Button               button       = null;
 
 	/** Auswahl der konfigurierten Zugangsdaten */
@@ -121,7 +136,7 @@ public class FTPProfilePicker extends Composite {
 	/**  @see sos.ftp.profiles.FTPDialogListener*/
 	private        FTPDialogListener    listener     = null;
 
-	/** Dilaog zum anlegen, bearbeiten und löschen von FTP Zugängen*/
+	/** Dilaog zum anlegen, bearbeiten und lï¿½schen von FTP Zugï¿½ngen*/
 	private        FTPProfileDialog     profileDialog= null;
 
 
@@ -129,7 +144,7 @@ public class FTPProfilePicker extends Composite {
 	 * Konstruktor
 	 * @param parent 
 	 * @param style
-	 * @param configFile_ -> Konfigurationsdatei, indem die FTP Zugänge gespeichert sind
+	 * @param configFile_ -> Konfigurationsdatei, indem die FTP Zugï¿½nge gespeichert sind
 	 */
 	public FTPProfilePicker(Composite parent, int style, String configFile_) {
 		super(parent, style);
@@ -150,7 +165,7 @@ public class FTPProfilePicker extends Composite {
 	/**
 	 * Konstruktor
 	 * 
-	 * configFile_ -> Konfigurationsdatei, indem die FTP Zugänge gespeichert sind.
+	 * configFile_ -> Konfigurationsdatei, indem die FTP Zugï¿½nge gespeichert sind.
 	 * Wenn die Konfigurationsdatei nicht existiert, dann wird dieser neu angelegt.
 	 * 
 	 * @param parent 
@@ -290,7 +305,7 @@ public class FTPProfilePicker extends Composite {
 	}
 
 	/**
-	 * Ändern der Button Text
+	 * ï¿½ndern der Button Text
 	 * @param txt
 	 */
 	public void setButtonText(String txt){
@@ -361,7 +376,7 @@ public class FTPProfilePicker extends Composite {
 	}
 
 	/**
-	 * Wurde ein Text als Parameter übergeben dann werden alle FTP Server antworten 
+	 * Wurde ein Text als Parameter ï¿½bergeben dann werden alle FTP Server antworten 
 	 * hier geschrieben.
 	 * 
 	 * @param Text text_
@@ -395,7 +410,7 @@ public class FTPProfilePicker extends Composite {
 	}
 
 	/**
-	 * Events beim Änderen der Auswahlbox  
+	 * Events beim ï¿½nderen der Auswahlbox  
 	 * @param listener
 	 */
 	public void addModifyListener(ModifyListener listener) {
@@ -403,7 +418,7 @@ public class FTPProfilePicker extends Composite {
 	}
 
 	/**
-	 * Event, beim Auswählen einer neuen Profile
+	 * Event, beim Auswï¿½hlen einer neuen Profile
 	 * @param listener
 	 */
 	public void addSelectionListener(SelectionAdapter listener){
@@ -412,7 +427,7 @@ public class FTPProfilePicker extends Composite {
 	}
 
 	/**
-	 * Erlaubt das hinzufügen einer leeren Eintrag in den Auswahlbox
+	 * Erlaubt das hinzufï¿½gen einer leeren Eintrag in den Auswahlbox
 	 * @throws Exception
 	 */
 	public void addEmptyItem() throws Exception{

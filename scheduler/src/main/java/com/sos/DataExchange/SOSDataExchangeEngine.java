@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -223,7 +238,7 @@ public class SOSDataExchangeEngine extends JadeBaseEngine implements Runnable {
 		final String conMethodName = conClassName + "::sendNotifications";
 
 		// TODO Nagios anbinden
-		// TODO Status über MQ senden
+		// TODO Status ï¿½ber MQ senden
 		// TODO Fehler an JIRA, Peregrine, etc. senden. Ticket aufmachen.
 		SOSSmtpMailOptions objO = objOptions.getMailOptions();
 		if (objOptions.mail_on_success.isTrue() && objSourceFileList.FailedTransfers() <= 0 || objO.FileNotificationTo.isDirty() == true) {
@@ -626,7 +641,7 @@ public class SOSDataExchangeEngine extends JadeBaseEngine implements Runnable {
 							objSourceFileList.List().remove(objEntry);
 						}
 						else {
-							// TODO Datei (nicht mehr) da? Fehler auslösen, weil in Liste enthalten.
+							// TODO Datei (nicht mehr) da? Fehler auslï¿½sen, weil in Liste enthalten.
 						}
 					}
 				} // (zeroByteFiles == false)
@@ -702,7 +717,7 @@ public class SOSDataExchangeEngine extends JadeBaseEngine implements Runnable {
 		}
 	}
 
-	// TODO in die DataSource verlagern? Oder in die FileList? Multithreaded ausführen?
+	// TODO in die DataSource verlagern? Oder in die FileList? Multithreaded ausfï¿½hren?
 	public boolean checkSteadyStateOfFiles() {
 
 		@SuppressWarnings("unused")
@@ -777,7 +792,7 @@ public class SOSDataExchangeEngine extends JadeBaseEngine implements Runnable {
 		@SuppressWarnings("unused")
 		final String conMethodName = conClassName + "::setTextProperties";
 
-		// TODO das muß beim JobScheduler-Job in die Parameter zurück, aber nur da
+		// TODO das muï¿½ beim JobScheduler-Job in die Parameter zurï¿½ck, aber nur da
 		// siehe hierzu das Interface ...
 
 		if (objSourceFileList != null) {
@@ -862,7 +877,7 @@ public class SOSDataExchangeEngine extends JadeBaseEngine implements Runnable {
 		return cd;
 	}
 
-	// TODO prüfen, ob eine Verlagerung in SOSFileList die bessere Lösung ist. Stichwort: Multithreading
+	// TODO prï¿½fen, ob eine Verlagerung in SOSFileList die bessere Lï¿½sung ist. Stichwort: Multithreading
 	private void sendFiles(final SOSFileList pobjFileList) {
 		@SuppressWarnings("unused")
 		final String conMethodName = conClassName + "::sendFiles";
@@ -1029,7 +1044,7 @@ public class SOSDataExchangeEngine extends JadeBaseEngine implements Runnable {
 	}
 
 	/**
-	 * Statt ein Verzeichnis können ein oder mehrere - mit semikolen getrennt - dateien zum transferieren angegeben werden
+	 * Statt ein Verzeichnis kï¿½nnen ein oder mehrere - mit semikolen getrennt - dateien zum transferieren angegeben werden
 	 * @return
 	 */
 	private String[] getSingleFileNames() {

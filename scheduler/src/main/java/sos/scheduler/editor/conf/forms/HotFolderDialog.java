@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -241,13 +256,13 @@ public class HotFolderDialog{
 						String path = f.getParent();
 						
 						if(type == SCHEDULER_HOST && txtName.getText().length() > 0 && txtPort.getText().length() == 0) {
-//							host ändern
+//							host ï¿½ndern
 							changeHost(path);														
 							return;	
 						} else if(type == SCHEDULER_HOST && txtName.getText().length() > 0 && txtPort.getText().length() > 0 
 								&& tree.getSelection()[0].getParentItem().getText().equals(sType) ) {
 							//ein host wurde selektiert und ein neuer port wurde eingegeben
-							//dann soll diese neu hinzugefügt werden
+							//dann soll diese neu hinzugefï¿½gt werden
 							addItem();
 							return;
 						} else {
@@ -259,12 +274,12 @@ public class HotFolderDialog{
 
 						if(f.renameTo(new File(path))) {	
 							if(type == SCHEDULER_HOST) {
-								//port ändern
+								//port ï¿½ndern
 								tree.getSelection()[0].getParentItem().setText(txtName.getText());
 								tree.getSelection()[0].setText(txtPort.getText());											
 								tree.getSelection()[0].setData( path);
 							} else {
-								//scheduler id ändern
+								//scheduler id ï¿½ndern
 								//String changeName = tree.getSelection()[0].getText(); 
 								tree.getSelection()[0].setText(txtName.getText());											
 								tree.getSelection()[0].setData( path);
@@ -275,7 +290,7 @@ public class HotFolderDialog{
 								/*for(int i = 0; i < _item.getItemCount(); i++) {
 									TreeItem cItem = _item.getItem(i);
 									String data = sosString.parseToString(cItem.getData());
-									//hier data ändern
+									//hier data ï¿½ndern
 							        //data = data.replaceAll(changeName, path);
 							        data = data.substring(changeName.length());
 							        data = path + data;								}
@@ -512,7 +527,7 @@ public class HotFolderDialog{
 				String path = sosString.parseToString(tree.getSelection()[0].getData());
 				if((tree.getSelection()[0].getItemCount() > 0 && type == SCHEDULER_HOST && !tree.getSelection()[0].getText().equals(sType))
 						|| type == SCHEDULER_CLUSTER && tree.getSelection()[0].getText().equals(sType)) {
-					//host wurde ausgewählt -> enzsprechende Ports öffnen
+					//host wurde ausgewï¿½hlt -> enzsprechende Ports ï¿½ffnen
 					for (int i = 0; i < tree.getSelection()[0].getItemCount(); i++) {
 						path = sosString.parseToString(tree.getSelection()[0].getItem(i).getData());
 						if (MainWindow.getContainer().openDirectory(path) != null)
@@ -566,7 +581,7 @@ public class HotFolderDialog{
 	}
 
 	private void changeHost(String path) {
-		//host ändern
+		//host ï¿½ndern
 		try {
 
 			String filename = "";
@@ -727,7 +742,7 @@ public class HotFolderDialog{
 			for(int i = 0; i < _item.getItemCount(); i++) {
 				TreeItem cItem = _item.getItem(i);
 				String data = sosString.parseToString(cItem.getData());
-				//hier data ändern
+				//hier data ï¿½ndern
 				//data = data.replaceAll(changeName, path);
 				data = data.substring(changeName.length());
 				data = path + data;	

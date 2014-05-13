@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -88,7 +103,7 @@ public class SOSWriteXML {
     /** Alle Tag typen zu den Tagnamen */
     private HashMap allTagTypeForTagName = new HashMap();
 
-    /** Alle Minoccurs werte für Tagname */
+    /** Alle Minoccurs werte fï¿½r Tagname */
     private HashMap allMinOccurForTagName = new HashMap();
 
     /** Name der Tabelle, der exportiert werden soll */
@@ -104,7 +119,7 @@ public class SOSWriteXML {
     private String nameSpace = "";
 
     /**
-     * Hilfsvariable für den Namespace, damit er genau an der richtigen Position
+     * Hilfsvariable fï¿½r den Namespace, damit er genau an der richtigen Position
      * geschrieben wird
      */
     private boolean bNameSpace = true;
@@ -160,8 +175,8 @@ public class SOSWriteXML {
     }
 
     /**
-     * Erzeugen einer XML-Datei. Die information werden als Paramtern über setMethdoden übergeben.
-     * übergeben werden müssen Parameter über die Methoden:
+     * Erzeugen einer XML-Datei. Die information werden als Paramtern ï¿½ber setMethdoden ï¿½bergeben.
+     * ï¿½bergeben werden mï¿½ssen Parameter ï¿½ber die Methoden:
      * 
      * 1. setAllColumnNamefromTagname(HashMap allColumnNamefromTagname)   
      * 2. setNameSpace(String nameSpace) 
@@ -298,7 +313,7 @@ public class SOSWriteXML {
     }
 
     /**
-     * Ermitteln der Contentelementid für den Technical Information
+     * Ermitteln der Contentelementid fï¿½r den Technical Information
      * 
      * @throws Exception
      */
@@ -439,10 +454,10 @@ public class SOSWriteXML {
         String selVal = "";
         try {
 
-            boolean group = false; //vermeiden von Filtern der Datensätze durch
+            boolean group = false; //vermeiden von Filtern der Datensï¿½tze durch
             // Gruppierungen. Wenn groubable = 2 dann
             // soll der outbound_record_id mit zu groub
-            // by element gehören
+            // by element gehï¿½ren
             HashMap childrens = new HashMap();
             ArrayList parentsChildren = new ArrayList();
             if (allChildrenFromParent.get(String.valueOf(parent)) != null) {
@@ -557,7 +572,7 @@ public class SOSWriteXML {
                             // darf nichts geschrieben werden, wenn es sich um leeren Wert und tag minoccur = 0 ist
                             //System.out.println("tu nichts minoccur = 0 und
                             // tagwert = '" + rset2.getString(columnName) + "'
-                            // für tagname = " + t);
+                            // fï¿½r tagname = " + t);
                         } else {
                             output.write("<"
                                     + allTagnamefromColumnName.get(columnName)
@@ -698,7 +713,7 @@ public class SOSWriteXML {
 
     /**
      * Liefert den Wert zu den Key. Wenn Key keine Wert hat(value = null) dann
-     * wird ein leer string übergeben.
+     * wird ein leer string ï¿½bergeben.
      * 
      * @param hash
      * @param key

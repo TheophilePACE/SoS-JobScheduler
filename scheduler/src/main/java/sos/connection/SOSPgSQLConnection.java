@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -52,7 +67,7 @@ import sos.util.SOSString;
  * <p>Description: Implementation of SOSConnection for PostgreSQL</p>
  * <p>Copyright: Copyright (c) 2003</p>
  * <p>Company: SOS GmbH</p>
- * @author <a href="mailto:andreas.pueschel@sos-berlin.com">Andreas Püschel</a>
+ * @author <a href="mailto:andreas.pueschel@sos-berlin.com">Andreas Pï¿½schel</a>
  * @author <a href="mailto:ghassan.beydoun@sos-berlin.com">Ghassan Beydoun</a>
  * @resource postgresql*jdbc3.jar sos.util.jar
  */
@@ -307,7 +322,7 @@ public class SOSPgSQLConnection extends sos.connection.SOSConnection implements 
      	splitSB.append("\\$\\${1}[\\s]+(LANGUAGE|language){1}[\\s]+(plpgsql|PLPGSQL){1}[\\s]*;");
      	
         endSB.append("$$ LANGUAGE plpgsql;");
-        // endSB wird nur bei denen, die END; haben hinzugefügt(zB : functions), sonst leer
+        // endSB wird nur bei denen, die END; haben hinzugefï¿½gt(zB : functions), sonst leer
     return false;
     }
     

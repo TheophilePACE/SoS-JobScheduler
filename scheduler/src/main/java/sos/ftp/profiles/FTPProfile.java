@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -55,7 +70,7 @@ import sos.util.SOSString;
  * Beinhaltet alle FTP Zugangsdaten zu einer Profile.
  * 
  * Anhand der Zugangsdaten kann hier eine FTP Verbindung stattfinden. Hier
- * können Dateien per FTP transferiert werden.
+ * kï¿½nnen Dateien per FTP transferiert werden.
  * 
  * @author Mueruevet Oeksuez
  * 
@@ -72,7 +87,7 @@ public class FTPProfile {
     /** Host oder IP-Adresse, an die Dateien transferiert werden */
     private String host = null;
 
-    /** Port, über den Dateien transferiert werden */
+    /** Port, ï¿½ber den Dateien transferiert werden */
     private String port = null;
 
     /** Benutzername zur Anmeldung am FTP-Server */
@@ -101,36 +116,36 @@ public class FTPProfile {
 
     /**
      * Der Wert des Parameters ist der Hostname oder die IP-Adresse eines
-     * Proxies, über den die Verbindung zum SSH Server hergestellt wird. Die
+     * Proxies, ï¿½ber den die Verbindung zum SSH Server hergestellt wird. Die
      * Verwendung von Proxies ist optional.
      */
     private String proxy_server = null;
 
     /**
-     * Der Wert des Parameters ist der Port des Proxies, über den eine
+     * Der Wert des Parameters ist der Port des Proxies, ï¿½ber den eine
      * Verbindung zum SSH Server hergestellt wird.
      */
     private String proxy_port = null;
 
     /**
      * Der Parmeter spezifiziert die Authentifizierungsmethode am SSH Server,
-     * unterstützt werden publickey und password.
+     * unterstï¿½tzt werden publickey und password.
      */
     private String auth_method = null;
 
     /**
      * Der Parameter bestimmt den Pfad und Namen einer Datei mit dem Private Key
-     * des Benutzers, für den die Anmeldung am SSH Server erfolgt. Der Parameter
+     * des Benutzers, fï¿½r den die Anmeldung am SSH Server erfolgt. Der Parameter
      * muss angegeben werden, wenn mit dem Parameterauth_methoddie
      * Authentifizierungsmethodepublickeybestimmt wurde.1 Falls die Datei mit
-     * einem Kennwort geschützt ist, wird es mit dem Parameterpasswordangegeben.
+     * einem Kennwort geschï¿½tzt ist, wird es mit dem Parameterpasswordangegeben.
      * */
     private String auth_file = null;
 
     /** @see sos.util.SOSString Object */
     private SOSString sosString = new SOSString();
 
-    /** Hilfsvariable. Überprüft, ob die FTP Verbindung erfolgt wurde */
+    /** Hilfsvariable. ï¿½berprï¿½ft, ob die FTP Verbindung erfolgt wurde */
     private boolean isLoggedIn = false;
 
     /** Hilfsvariable. aktuelle Verzeichnis */
@@ -155,7 +170,7 @@ public class FTPProfile {
     protected static Text logtext = null;
 
     /**
-     * sFTP mit publickey und Passphares hat nicht geklappt, Rückfall auf nur
+     * sFTP mit publickey und Passphares hat nicht geklappt, Rï¿½ckfall auf nur
      * Password*
      */
     private boolean tryAgain = false;
@@ -214,7 +229,7 @@ public class FTPProfile {
     }
 
     /**
-     * Port, über den Dateien transferiert werden
+     * Port, ï¿½ber den Dateien transferiert werden
      * 
      * @return the port
      */
@@ -296,7 +311,7 @@ public class FTPProfile {
 
     /**
      * Der Wert des Parameters ist der Hostname oder die IP-Adresse eines
-     * Proxies, über den die Verbindung zum SSH Server hergestellt wird. Die
+     * Proxies, ï¿½ber den die Verbindung zum SSH Server hergestellt wird. Die
      * Verwendung von Proxies ist optional.
      * 
      * @return the proxy_server
@@ -306,7 +321,7 @@ public class FTPProfile {
     }
 
     /**
-     * Der Wert des Parameters ist der Port des Proxies, über den eine
+     * Der Wert des Parameters ist der Port des Proxies, ï¿½ber den eine
      * Verbindung zum SSH Server hergestellt wird.
      * 
      * @return the proxy_port
@@ -317,7 +332,7 @@ public class FTPProfile {
 
     /**
      * Der Parmeter spezifiziert die Authentifizierungsmethode am SSH Server,
-     * unterstützt werden publickey und password.
+     * unterstï¿½tzt werden publickey und password.
      * 
      * @return the auth_method
      */
@@ -327,10 +342,10 @@ public class FTPProfile {
 
     /**
      * Der Parameter bestimmt den Pfad und Namen einer Datei mit dem Private Key
-     * des Benutzers, für den die Anmeldung am SSH Server erfolgt. Der Parameter
+     * des Benutzers, fï¿½r den die Anmeldung am SSH Server erfolgt. Der Parameter
      * muss angegeben werden, wenn mit dem Parameterauth_methoddie
      * Authentifizierungsmethodepublickeybestimmt wurde.1 Falls die Datei mit
-     * einem Kennwort geschützt ist, wird es mit dem Parameterpasswordangegeben.
+     * einem Kennwort geschï¿½tzt ist, wird es mit dem Parameterpasswordangegeben.
      * 
      * @return the auth_file
      */
@@ -426,7 +441,7 @@ public class FTPProfile {
                 throw new Exception("no user was specified");
             password = sosString.parseToString(getPassword());
 
-            // entschlüsseln der Password
+            // entschlï¿½sseln der Password
             try {
 
                 String key = PROFILE_PREFIX;
@@ -728,7 +743,7 @@ public class FTPProfile {
 
     /**
      * 
-     * Wechselt in das Verzeichnis directory und liefert einen HahsMap zurück.
+     * Wechselt in das Verzeichnis directory und liefert einen HahsMap zurï¿½ck.
      * Folgende Bedeutung haben die Werte der HashMap.
      * 
      * [key, value] 1. [a.txt, file] bedeutet, in dem Verzeichnis (directory)
@@ -972,7 +987,7 @@ public class FTPProfile {
     }
 
     /**
-     * Holt eine Datei per ftp und hängt diese unterhalb vom targetFile
+     * Holt eine Datei per ftp und hï¿½ngt diese unterhalb vom targetFile
      * 
      * @param filename
      *            -> Datei, die auf der FTP Server liegt und abgeholt werden
@@ -980,7 +995,7 @@ public class FTPProfile {
      * @param targetfile
      *            -> pfad und Dateiname, die auf lokalem Rechner abgelegt werden
      *            soll
-     * @return long --> Dateigrösse
+     * @return long --> Dateigrï¿½sse
      * @throws Exception
      */
     public long appendFile(String filename, String targetfile) throws Exception {
@@ -1001,7 +1016,7 @@ public class FTPProfile {
     }
 
     /**
-     * Holt eine Datei per ftp und hängt diese unterhalb vom targetFile
+     * Holt eine Datei per ftp und hï¿½ngt diese unterhalb vom targetFile
      * 
      * @param filename
      *            -> Datei, die auf der FTP Server liegt und abgeholt werden
@@ -1009,7 +1024,7 @@ public class FTPProfile {
      * @param targetfile
      *            -> pfad und Dateiname, die auf lokalem Rechner abgelegt werden
      *            soll
-     * @return long --> Dateigrösse
+     * @return long --> Dateigrï¿½sse
      * @throws Exception
      */
     public long appendFile(String filename, File targetfile) throws Exception {
@@ -1031,8 +1046,8 @@ public class FTPProfile {
 
     /**
      * Holt eine Datei per FTP und speichert diese auf das lokalverzeichnis ab,
-     * soweit diese Konfiguriert wurde. Sonst wird eine temporäres Verzeichnis
-     * abgelegt. Wird ein Parameter subFolder übergeben, dann wird die Datei
+     * soweit diese Konfiguriert wurde. Sonst wird eine temporï¿½res Verzeichnis
+     * abgelegt. Wird ein Parameter subFolder ï¿½bergeben, dann wird die Datei
      * unter locallDirectory + subFolder abgelegt.
      * 
      * @param filename
@@ -1044,7 +1059,7 @@ public class FTPProfile {
         String targetfile = null;
         boolean deleteTmpFile = false;// wenn locahdirectory nicht angegeben
                                       // ist, dann temp Verzeichnis bilden und
-                                      // diese anschliessend löschen
+                                      // diese anschliessend lï¿½schen
         try {
 
             if (ftpClient == null) {
@@ -1101,7 +1116,7 @@ public class FTPProfile {
     }
 
     /**
-     * Löscht die Datei file auf der FTP Server.
+     * Lï¿½scht die Datei file auf der FTP Server.
      * 
      * @param file
      */
@@ -1126,7 +1141,7 @@ public class FTPProfile {
     }
 
     /**
-     * Speziell für den Scheduler Editor.
+     * Speziell fï¿½r den Scheduler Editor.
      * 
      * @param String
      *            source
@@ -1141,13 +1156,13 @@ public class FTPProfile {
      */
     public void saveHotFolderAs(String source, String target, ArrayList listOfHotFolderElements, HashMap changes) {
         try {
-            Vector listOfExistFiles = new Vector(); // überprüft ob das
+            Vector listOfExistFiles = new Vector(); // ï¿½berprï¿½ft ob das
                                                     // HotFolderElement
                                                     // existiert. das kann
                                                     // passieren, wenn ein
                                                     // Element neu angelegt wird
                                                     // und ohne zwischespeichern
-                                                    // der Name verändert wird.
+                                                    // der Name verï¿½ndert wird.
             if (ftpClient != null) {
                 HashMap h = changeDirectory(target);
                 java.util.Iterator i = h.keySet().iterator();
@@ -1165,7 +1180,7 @@ public class FTPProfile {
 
             ArrayList listOfRemovedFiles = new ArrayList(); // hilfsvariable:
                                                             // verhindert das
-                                                            // zweimal löschen
+                                                            // zweimal lï¿½schen
                                                             // der Hot Folder
                                                             // Element
 
@@ -1383,7 +1398,7 @@ public class FTPProfile {
     }
 
     /**
-     * Loggen. Wenn ein SOSLogger Objekt übergeben wurde, dann werden die
+     * Loggen. Wenn ein SOSLogger Objekt ï¿½bergeben wurde, dann werden die
      * Logausgaben im SOSLogger augegeben. Sonst in Standardausgaben
      * 
      * @param txt

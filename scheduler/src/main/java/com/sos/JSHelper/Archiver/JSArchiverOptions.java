@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -64,7 +79,7 @@ Archiver-Options
 <category>Options</category>
 </categories>
 <date>Samstag, 27. Oktober 2007</date>
-<copyright>© 2000, 2001 by SOS GmbH Berlin</copyright>
+<copyright>ï¿½ 2000, 2001 by SOS GmbH Berlin</copyright>
 <author>Klaus.Buettner@sos-berlin.com</author>
 <changes>
  <change who='KB' when='Samstag, 27. Oktober 2007' id='created'>
@@ -77,7 +92,7 @@ Archiver-Options
 </changes>
 </docu>
 ---------------------------------------------------------------------------- */
-@JSOptionClass(name = "JSArchiverOptions", description = "Optionen für die Archivierung von Dateien")
+@JSOptionClass(name = "JSArchiverOptions", description = "Optionen fï¿½r die Archivierung von Dateien")
 public class JSArchiverOptions extends JSOptionsClass {
 	private final String		conClassName							= "JSArchiverOptions";
 
@@ -89,7 +104,7 @@ public class JSArchiverOptions extends JSOptionsClass {
 	*/
 	@JSOptionDefinition(name = "ArchiveFolderName", value = "./archive/", description = "Name des Folder mit den archivierten Dateien", key = "ArchiveFolderName", type = "JSOptionFolderName", mandatory = true)
 	public SOSOptionFolderName	ArchiveFolderName						= new SOSOptionFolderName(this, // Verweis auf die SOSOptionClass-Instanz
-																				this.conClassName + ".ArchiveFolderName", // Schlüssel, i.d.r. identisch mit dem Namen der Option
+																				this.conClassName + ".ArchiveFolderName", // Schlï¿½ssel, i.d.r. identisch mit dem Namen der Option
 																				"Name des Folder mit den archivierten Dateien", // Kurzbeschreibung
 																				"./archive/", // Wert
 																				"./archive/", // defaultwert
@@ -235,7 +250,7 @@ public class JSArchiverOptions extends JSOptionsClass {
 	Name of Archive-Folder
 	</para>
 	<para>
-	Initial-Wert (Default) ist "./archive" (ohne Anführungszeichen).
+	Initial-Wert (Default) ist "./archive" (ohne Anfï¿½hrungszeichen).
 	</para>
 	<mandatory>true</mandatory>
 	</description>
@@ -343,7 +358,7 @@ public class JSArchiverOptions extends JSOptionsClass {
 	Compress archived file or not
 	</para>
 	<para>
-	Initial-Wert (Default) ist "false" (ohne Anführungszeichen).
+	Initial-Wert (Default) ist "false" (ohne Anfï¿½hrungszeichen).
 	</para>
 	<mandatory>true</mandatory>
 	</description>
@@ -392,7 +407,7 @@ public class JSArchiverOptions extends JSOptionsClass {
 	Delete File after archiving or not
 	</para>
 	<para>
-	Initial-Wert (Default) ist "true" (ohne Anführungszeichen).
+	Initial-Wert (Default) ist "true" (ohne Anfï¿½hrungszeichen).
 	</para>
 	<mandatory>true</mandatory>
 	</description>
@@ -441,7 +456,7 @@ public class JSArchiverOptions extends JSOptionsClass {
 	Create the archive-file-name using a timestamp
 	</para>
 	<para>
-	Initial-Wert (Default) ist "true" (ohne Anführungszeichen).
+	Initial-Wert (Default) ist "true" (ohne Anfï¿½hrungszeichen).
 	</para>
 	<mandatory>true</mandatory>
 	</description>
@@ -491,7 +506,7 @@ public class JSArchiverOptions extends JSOptionsClass {
 	File has to be archived after processing
 	</para>
 	<para>
-	Initial-Wert (Default) ist "true" (ohne Anführungszeichen).
+	Initial-Wert (Default) ist "true" (ohne Anfï¿½hrungszeichen).
 	</para>
 	<mandatory>true</mandatory>
 	</description>

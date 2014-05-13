@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -336,7 +351,7 @@ public class SchedulerForm extends SOSJOEMessageCodes implements ISchedulerUpdat
 	public void updateJobs() {
 		// if(tree.getSelection()[0].getText().startsWith("Job Chain")) {
 		if (!tree.getSelection()[0].getText().startsWith("Jobs")) {
-			// Assistent: Der Aufruf erfolgte über den Assistenten. Hier ist nicht das Element "Jobs" im Tree selektiert
+			// Assistent: Der Aufruf erfolgte ï¿½ber den Assistenten. Hier ist nicht das Element "Jobs" im Tree selektiert
 			// sondern das Element "Job Chains".
 			updateJobs_();
 		}
@@ -503,7 +518,7 @@ public class SchedulerForm extends SOSJOEMessageCodes implements ISchedulerUpdat
 			fontChange = true;
 			setChangedInItalicFont();
 		} else {
-			//zurücksetzen
+			//zurï¿½cksetzen
 			if (fontChange){
 				FontData fontDatas[] = tree.getFont().getFontData();
 				FontData fdata = fontDatas[0];
@@ -521,7 +536,7 @@ public class SchedulerForm extends SOSJOEMessageCodes implements ISchedulerUpdat
 		return dom.isChanged();
 	}
 
-	/*//Nur für Hot Foldern. Setz den Font vom kursiv auf normal
+	/*//Nur fï¿½r Hot Foldern. Setz den Font vom kursiv auf normal
 	private void setChangedFont(TreeItem item ) {
 		FontData fontDatas[] = tree.getFont().getFontData();
 		FontData fdata = fontDatas[0];
@@ -537,7 +552,7 @@ public class SchedulerForm extends SOSJOEMessageCodes implements ISchedulerUpdat
 
 
 
-	//Nur für Hot Foldern
+	//Nur fï¿½r Hot Foldern
 	private void setChangedInItalicFont() {
 		if (tree.getSelectionCount() > 0) {
 			TreeItem item = tree.getSelection()[0];

@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -39,10 +54,10 @@ import java.util.HashMap;
 
 /**
  * <p>Title: SOSSort.java </p>
- * <p>Description: Methoden zum Sortieren werden hier zur Verfügung gestellt</p>
+ * <p>Description: Methoden zum Sortieren werden hier zur Verfï¿½gung gestellt</p>
  * <p>Copyright: Copyright (c) 2005</p>
  * <p>Company: SOS GmbH</p>
- * @author Mürüvet Öksüz
+ * @author Mï¿½rï¿½vet ï¿½ksï¿½z
  * @version 1.0
  */
 
@@ -52,15 +67,15 @@ public class SOSSort {
 	/**
 	 * Sortiert eine Array von String in absteigender bzw. aufsteigender Reihenfolge. 
 	 * 	
-	 *  desc boolean = true ist für das Aufsteigende Sortierung
-	 *  desc boolean = false ist für das Absteigende Sortierung
+	 *  desc boolean = true ist fï¿½r das Aufsteigende Sortierung
+	 *  desc boolean = false ist fï¿½r das Absteigende Sortierung
 	 * @param a String[] eine Menge unsortierte String
 	 * @param desc , aufsteigend oder absteigend sortieren
 	 * @return String[] eine Menge der Sortierten String
 	 */  
 	public static String[] sortArrayOfString(String[] a, boolean desc) throws Exception {
 		String[] aa = null; //Hilfsvariable, wenn absteigen Sortiert werden soll
-		int len = -1; //Hilfsvariable, länge der Array
+		int len = -1; //Hilfsvariable, lï¿½nge der Array
 		try {
 			for (int i=0; i < a.length-1; i++) {
 				for (int j=i+1; j<a.length; j++) {
@@ -87,23 +102,23 @@ public class SOSSort {
 	}
 	
 	/**
-	 * Sortiert die ArrayListe nach den Einträgen der HashMap(key = object)
+	 * Sortiert die ArrayListe nach den Eintrï¿½gen der HashMap(key = object)
 	 * 
 	 * Beispiel: key = "name" <br>
 	 * 	ArrayListe<br>
 	 * 		|-> HashMap (name=Otto;vorname=Hans;gebdatum="01.01.2004");<br>
 	 * 		|-> HashMap (name=Schmidt;vorname=Hans;gebdatum="01.01.2004");<br>
-	 * 		|-> HashMap (name=Müller;vorname=Hans;gebdatum="01.01.2004");<br>
+	 * 		|-> HashMap (name=Mï¿½ller;vorname=Hans;gebdatum="01.01.2004");<br>
 	 * 		
-	 * wird folgendermaßen sortiert:<br>
+	 * wird folgendermaï¿½en sortiert:<br>
 	 * neue Arrayliste:<br>
-	 * 		|-> HashMap (name=Müller;vorname=Hans;gebdatum="01.01.2004");<br>
+	 * 		|-> HashMap (name=Mï¿½ller;vorname=Hans;gebdatum="01.01.2004");<br>
 	 * 		|-> HashMap (name=Otto;vorname=Hans;gebdatum="01.01.2004");<br>
 	 * 		|-> HashMap (name=Schmidt;vorname=Hans;gebdatum="01.01.2004");<br>
 	 * 
-	 * Achtung: Bytesortierung-> z.B. keyvalue="Günther" kommt vor keyvalue="andrea"
+	 * Achtung: Bytesortierung-> z.B. keyvalue="Gï¿½nther" kommt vor keyvalue="andrea"
 	 * @param list -> unsortierte Arrayliste. Ein Eintrag der ArrayListe besteht aus einen HashMap.
-	 * @param key -> Schlüssel in der Hashmap, nach dem sortiert werden soll.  
+	 * @param key -> Schlï¿½ssel in der Hashmap, nach dem sortiert werden soll.  
 	 * @return ArrayList -> sortierte Liste
 	 * @throws Exception
 	 */
@@ -152,13 +167,13 @@ public class SOSSort {
 			s[3] = "Stephan";
 			s[4] = "Arthur";
 			
-			//Ausgabe für Aufsteigende Sortierung
+			//Ausgabe fï¿½r Aufsteigende Sortierung
 			String[] erg1 = SOSSort.sortArrayOfString(s, true);
 			for (int i = 0; i < erg1.length; i++){
 				System.out.println(i + " " + erg1[i]);
 			}
 			
-			//Ausgabe für Aufsteigende Sortierung
+			//Ausgabe fï¿½r Aufsteigende Sortierung
 			String[] erg2 = SOSSort.sortArrayOfString(s, false);
 			for (int i = 0; i < erg2.length; i++){
 				System.out.println(i + " " + erg2[i]);
@@ -169,7 +184,7 @@ public class SOSSort {
 			System.out.println("/////////////////Testen der Methode: sortArrayList//////////////////////////////");
 			System.out.println("////////////////////////////////////////////////////////////////////////////////");
 			
-			//Testdaten erzeugen. Ein ArrayList mit n HashMap Einträgen.
+			//Testdaten erzeugen. Ein ArrayList mit n HashMap Eintrï¿½gen.
 			ArrayList list = new ArrayList();
 			HashMap h = new HashMap();
 			h.put("object", "x");

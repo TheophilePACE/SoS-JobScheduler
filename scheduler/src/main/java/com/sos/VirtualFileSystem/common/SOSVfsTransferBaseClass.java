@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -123,7 +138,7 @@ public abstract class SOSVfsTransferBaseClass extends SOSVfsBaseClass implements
 	} // private int DoPWD
 
 	/**
-	 * wird überschrieben
+	 * wird ï¿½berschrieben
 	 *
 	 *
 	 * \brief getCurrentPath
@@ -367,7 +382,7 @@ public abstract class SOSVfsTransferBaseClass extends SOSVfsBaseClass implements
 	}
 
 	/**
-	 * wird überschrieben
+	 * wird ï¿½berschrieben
 	 *
 	 * \brief listNames
 	 *
@@ -625,7 +640,7 @@ public abstract class SOSVfsTransferBaseClass extends SOSVfsBaseClass implements
 	}
 
 	/**
-	 * wird überschrieben
+	 * wird ï¿½berschrieben
 	 *
 	 * \brief fileExists
 	 *
@@ -641,7 +656,7 @@ public abstract class SOSVfsTransferBaseClass extends SOSVfsBaseClass implements
 	}
 
 	/**
-	 * wird überschrieben
+	 * wird ï¿½berschrieben
 	 *
 	 * \brief changeWorkingDirectory
 	 *
@@ -689,7 +704,7 @@ public abstract class SOSVfsTransferBaseClass extends SOSVfsBaseClass implements
 	}
 
 	/**
-	 * wird überschrieben
+	 * wird ï¿½berschrieben
 	 *
 	 * \brief isConnected
 	 *
@@ -878,7 +893,7 @@ public abstract class SOSVfsTransferBaseClass extends SOSVfsBaseClass implements
 	}
 
 	/**
-	 * wird überschrieben
+	 * wird ï¿½berschrieben
 	 *
 	 * \brief getFileHandle
 	 *
@@ -1103,7 +1118,7 @@ public abstract class SOSVfsTransferBaseClass extends SOSVfsBaseClass implements
 	}
 
 	/**
-	 * wird überschrieben
+	 * wird ï¿½berschrieben
 	 *
 	 * \brief rename
 	 *

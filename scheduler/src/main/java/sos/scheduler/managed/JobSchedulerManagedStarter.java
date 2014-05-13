@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -295,7 +310,7 @@ public class JobSchedulerManagedStarter extends JobSchedulerJob {
          
       if(once){
 	      //Wenn ein Repeat-Intervall angegeben ist, nicht starten.
-	      //Repeat für bestimmte Tage werden nicht ausgewertet.
+	      //Repeat fï¿½r bestimmte Tage werden nicht ausgewertet.
       	
         SOSXMLXPath xpath = new SOSXMLXPath(new StringBuffer(xml));
         SOSXMLXPath xpath_answer = new SOSXMLXPath(new StringBuffer(answer));
@@ -703,13 +718,13 @@ private void initialize(String id) throws Exception {
 	        if (matcher.matches()) {
 	          sectionName = matcher.group(1);
 	          if (sectionName.equalsIgnoreCase(section)) {
-	          	sectionStart = true;  //Damit Sektion überlesen werden kann.
+	          	sectionStart = true;  //Damit Sektion ï¿½berlesen werden kann.
 	          	otherSectionStart = false;
 	          } else otherSectionStart = true;
 	        }
 	        if (sectionStart) {
 	        	haveSection=true;
-	        	if (entries.isEmpty()){//Sektion löschen
+	        	if (entries.isEmpty()){//Sektion lï¿½schen
 	        		getLog().debug3("Found section "+section+". Deleting section...");
 	        	} else{
 	        		getLog().debug3("Found section "+section+". Modifying section...");
@@ -721,7 +736,7 @@ private void initialize(String id) throws Exception {
 	        			newIni += keyName + "=" + keyValue + "\n";
 	        		}
 	        	}
-	        	sectionStart = false; //Jetzt werden die bisherigen Einträge der Sektion geschrieben oder gelöscht
+	        	sectionStart = false; //Jetzt werden die bisherigen Eintrï¿½ge der Sektion geschrieben oder gelï¿½scht
 	        }else {
 	        	if (haveSection && !otherSectionStart) {
 	        		//Die Entries aus den Properties nicht schreiben
@@ -731,10 +746,10 @@ private void initialize(String id) throws Exception {
 	        		   StringTokenizer t = new StringTokenizer(line, "=");
 	        		   if (t.hasMoreTokens()){
 	        			   String token = t.nextToken();
-	        			   if (!entries.containsKey(token) && !entries.isEmpty()){// entries empty: Sektion soll gelöscht werden
+	        			   if (!entries.containsKey(token) && !entries.isEmpty()){// entries empty: Sektion soll gelï¿½scht werden
 	        				   newIni += line + "\n";
 	        			   }
-	        		   } else{ //keine name=wert Zeile-->uebernehmen, ausser wenn Sektion gelöscht wird
+	        		   } else{ //keine name=wert Zeile-->uebernehmen, ausser wenn Sektion gelï¿½scht wird
 	        			   if (!entries.isEmpty()){
 	        				   newIni += line + "\n";
 	        			   }

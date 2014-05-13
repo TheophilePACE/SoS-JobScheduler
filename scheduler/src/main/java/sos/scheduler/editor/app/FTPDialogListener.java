@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -92,7 +107,7 @@ public class FTPDialogListener {
 
 	private              boolean                hasError                      = false;
 
-	//sFTP mit publickey und Passphares hat nicht geklappt, Rückfall auf nur Password
+	//sFTP mit publickey und Passphares hat nicht geklappt, Rï¿½ckfall auf nur Password
 	private              boolean                tryAgain                      = false;
 	
 	private              Text                   txtPath                       = null;
@@ -292,7 +307,7 @@ public class FTPDialogListener {
 
 	public String getFile(String filename, String subFolder) {
 		String targetfile = null;
-		boolean deleteTmpFile = false;//wenn locahdirectory nicht angegeben ist, dann temp Verzeichnis bilden und diese anschliessend löschen
+		boolean deleteTmpFile = false;//wenn locahdirectory nicht angegeben ist, dann temp Verzeichnis bilden und diese anschliessend lï¿½schen
 		try { 			
 
 			targetfile = sosString.parseToString(currProfile.get("localdirectory" ));
@@ -370,7 +385,7 @@ public class FTPDialogListener {
 	public HashMap changeDirectory(String directory) {	
 
 		HashMap listnames = new HashMap();
-		//String curWD = workingDirectory; //hilsvariable. Um im Fehlerfall wird dieser zurückgesetzt
+		//String curWD = workingDirectory; //hilsvariable. Um im Fehlerfall wird dieser zurï¿½ckgesetzt
 
 		try {
 			directory = directory.replaceAll("\\\\", "/");
@@ -811,12 +826,12 @@ public class FTPDialogListener {
 
 	public void saveHotFolderAs(String source, String target, ArrayList listOfHotFolderElements, HashMap changes) {
 		try {
-			Vector listOfExistFiles = new Vector(); //überprüft ob das HotFolderElement existiert. das kann passieren, wenn ein Element neu angelegt wird und ohne zwischespeichern der Name verändert wird. 
+			Vector listOfExistFiles = new Vector(); //ï¿½berprï¿½ft ob das HotFolderElement existiert. das kann passieren, wenn ein Element neu angelegt wird und ohne zwischespeichern der Name verï¿½ndert wird. 
 			if(ftpClient != null) {
 				listOfExistFiles = ftpClient.nList(target);
 			}
 			
-			ArrayList listOfRemovedFiles = new ArrayList(); // hilfsvariable: verhindert das zweimal löschen der Hot Folder Element
+			ArrayList listOfRemovedFiles = new ArrayList(); // hilfsvariable: verhindert das zweimal lï¿½schen der Hot Folder Element
 
 			source = source.endsWith("/") ? source : source + "/"; 
 			target = target.endsWith("/") ? target : target + "/";

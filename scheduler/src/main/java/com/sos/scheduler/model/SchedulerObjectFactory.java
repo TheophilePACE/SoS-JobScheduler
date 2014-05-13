@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -247,7 +262,7 @@ public class SchedulerObjectFactory extends ObjectFactory implements Runnable {
 		try {
 			logger.trace(Messages.getMsg("JOM_D_0010", conMethodName, strT)); // JOM_D_0010=%1$s: Request: %n%2$s
 			if (isJSJobUtilitiesChanged()) {
-				// TODO Ausführen des Kommandos über das interne API
+				// TODO Ausfï¿½hren des Kommandos ï¿½ber das interne API
 				// IJSCommands.
 			}
 			else {
@@ -329,7 +344,7 @@ public class SchedulerObjectFactory extends ObjectFactory implements Runnable {
 		com.sos.scheduler.model.answers.Spooler objSpooler = null;
 		try {
 			/**
-			 * den speziellen Context fü½r die Answer brauchen wir, solange die Answer nicht in der scheduler.xsd enthalten ist.
+			 * den speziellen Context fï¿½r die Answer brauchen wir, solange die Answer nicht in der scheduler.xsd enthalten ist.
 			 * dadurch ist das dann ein anderer Namespace und das passt nicht zusammen.
 			 */
 			if (jc4Answers == null) {

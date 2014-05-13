@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -233,8 +248,8 @@ public class SOSFTPCommandReceive extends SOSFTPCommand {
 				throw new RuntimeException("could not process job parameters: " + e.getMessage());
 			}
 
-			// es wird nicht transferiert. Der jump host soll die ANzahl der Dateien auf der ftp server überprüfen.
-			// Der filelist soll auch mit Dateinamen im targethost gefüllt werden. Dieses
+			// es wird nicht transferiert. Der jump host soll die ANzahl der Dateien auf der ftp server ï¿½berprï¿½fen.
+			// Der filelist soll auch mit Dateinamen im targethost gefï¿½llt werden. Dieses
 			// passiert in der methode execute.
 			if (skipTransfer && flgJumpTransferDefined)
 				return true;
@@ -452,8 +467,8 @@ public class SOSFTPCommandReceive extends SOSFTPCommand {
 				}
 				/**
 				 * \change kb 2011-05-12
-				 * nach dem polling muß die filelist nocheinmal aufgebaut werden, damit die
-				 * in der Zwischenzeit eingetroffenen Files auch berücksichtigt werden können.
+				 * nach dem polling muï¿½ die filelist nocheinmal aufgebaut werden, damit die
+				 * in der Zwischenzeit eingetroffenen Files auch berï¿½cksichtigt werden kï¿½nnen.
 				 * Sonst: wird Meldung "no matching files" gebracht.
 				 */
 				// else if (pollTimeout > 0 ) {
@@ -470,7 +485,7 @@ public class SOSFTPCommandReceive extends SOSFTPCommand {
 				try {
 					receiveFiles(filelist);
 					/**
-					 * austauschen. Erst auf dem Zielserver umbenennen, dann im source-server löschen
+					 * austauschen. Erst auf dem Zielserver umbenennen, dann im source-server lï¿½schen
 					 * kb 2011-06-07
 					 */
 					// getDeleteTransferFiles();//nur wenn transactional=yes ist
@@ -724,7 +739,7 @@ public class SOSFTPCommandReceive extends SOSFTPCommand {
 	/**
 	 * Es wurde ein Jump Host angegeben.
 	 *
-	 *  Alle temporären Verzeichnisse auf der Remote Host sollen gelöscht werden.
+	 *  Alle temporï¿½ren Verzeichnisse auf der Remote Host sollen gelï¿½scht werden.
 	 *
 	 * @param rc
 	 * @param filelist
@@ -732,10 +747,10 @@ public class SOSFTPCommandReceive extends SOSFTPCommand {
 	 * @throws Exception
 	 */
 	private void doPostCommands() throws Exception {
-		// Auf den jump host wurde ein temporäres Verzeichnis generiert. Diese unbedingt löschen
+		// Auf den jump host wurde ein temporï¿½res Verzeichnis generiert. Diese unbedingt lï¿½schen
 		getLogger().debug9("postCommands:  " + normalizedPassword(postCommands));
 		if (getBool(conParameterREMOVE_AFTER_JUMP_TRANSFER) && sosString.parseToString(postCommands).length() > 0) {
-			// Erst nach erfolgereichen Transfer können die Dateien auf dem target Rechner gelöscht werden, wenn der
+			// Erst nach erfolgereichen Transfer kï¿½nnen die Dateien auf dem target Rechner gelï¿½scht werden, wenn der
 			// Parameter remove_files=yes angegeben wurde.
 
 			if (transActional) {
@@ -844,7 +859,7 @@ public class SOSFTPCommandReceive extends SOSFTPCommand {
 				sshBasedProtocol = true;
 				// use other defaults
 				// warum wird hier einfach der port gesetzt? so ein scheiss.
-				// damit wird der vom Nutzer vorgegebene Port einfach und simple überschrieben ....
+				// damit wird der vom Nutzer vorgegebene Port einfach und simple ï¿½berschrieben ....
 				port = 22;
 				// arguments.put("port", "22");
 			}
@@ -869,7 +884,7 @@ public class SOSFTPCommandReceive extends SOSFTPCommand {
 				}
 			}
 
-			// und was ist das für ein Trick? Scheiss
+			// und was ist das fï¿½r ein Trick? Scheiss
 			if (sosString.parseToString(arguments.get("port")).length() == 0)
 				arguments.put("port", String.valueOf(port));
 
@@ -1336,9 +1351,9 @@ public class SOSFTPCommandReceive extends SOSFTPCommand {
 			 * \Change
 			 *
 			 * kb 2011-03-18
-			 * Da der Wert für "file_spec" sich nur auf den FileNamen beziehen darf entfernen wir hier aus
+			 * Da der Wert fï¿½r "file_spec" sich nur auf den FileNamen beziehen darf entfernen wir hier aus
 			 * dem Namen in der FileList einen eventuell vorhandenen Pfad bezieht und damit das Ergebnis
-			 * verfälscht und Dateien nicht gefunden werden.
+			 * verfï¿½lscht und Dateien nicht gefunden werden.
 			 */
 			String strFileName4Matcher = fileName;
 			if (flgUsePathAndFileName4Matching == false) {
@@ -1436,7 +1451,7 @@ public class SOSFTPCommandReceive extends SOSFTPCommand {
 						bytesSent = ftpClient.size(file.getName());
 						this.getLogger().debug7(" Processing file " + file.getName());
 						// loc
-						if (!removeFiles && !testmode) {// wenn eine Datei gelöscht werden soll, dann braucht es auch nicht umbennant zu
+						if (!removeFiles && !testmode) {// wenn eine Datei gelï¿½scht werden soll, dann braucht es auch nicht umbennant zu
 														// werden
 							if (replacement != null && replacing != null && replacing.length() > 0) {
 								ftpClient.rename(file.getName(), transferFile.getName());
@@ -1661,7 +1676,7 @@ public class SOSFTPCommandReceive extends SOSFTPCommand {
 		try {
 			if (testmode && flgJumpTransferDefined && filelist.isEmpty()) {
 				// wenn ein jump Host angegeben ist und testmode=yes ist, dann werden keine Dateien transferiert
-				// Also ist hier eine Überprüfung sinnlos, weil auf der jump_host auch keine transferierten Dateien liegen.
+				// Also ist hier eine ï¿½berprï¿½fung sinnlos, weil auf der jump_host auch keine transferierten Dateien liegen.
 				// Eine Info mit der Anzahl der gefundenen dateien auf der Ziel Rechner wird in der Methode execute ausgegeben
 				return true;
 			}
@@ -1782,7 +1797,7 @@ public class SOSFTPCommandReceive extends SOSFTPCommand {
 	}
 
 	/**
-	 * Erst wenn alle Dateien erfolgreich transferieriert wurden, dann sollen die remote Dateien gelöscht werden.
+	 * Erst wenn alle Dateien erfolgreich transferieriert wurden, dann sollen die remote Dateien gelï¿½scht werden.
 	 * Parameter = transactional = yes und remove_files=yes
 	 * @throws Exception
 	 */
@@ -1869,8 +1884,8 @@ public class SOSFTPCommandReceive extends SOSFTPCommand {
 	}
 
 	/**
-	 * Bei einer transfer Fehler müssen alle bereits transferierte Dateien gelöscht werden.
-	 * Gilt für Parameter transActional = yes
+	 * Bei einer transfer Fehler mï¿½ssen alle bereits transferierte Dateien gelï¿½scht werden.
+	 * Gilt fï¿½r Parameter transActional = yes
 	 *
 	 * @throws Exception
 	 */
@@ -1939,7 +1954,7 @@ public class SOSFTPCommandReceive extends SOSFTPCommand {
 	private boolean receiveSimpleTransfer() throws Exception {
 		try {
 
-			// einfaches transferieren einer Datei. Hier finden auch keine Überprüfung statt
+			// einfaches transferieren einer Datei. Hier finden auch keine ï¿½berprï¿½fung statt
 			getLogger().debug9("..filepath: " + filePath);
 
 			if (sosString.parseToString(remoteDir).length() > 0 && sosString.parseToString(remoteDir).equals("./")) {

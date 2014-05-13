@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -67,12 +82,12 @@ public class JarMerge {
 	private boolean add = false;
 	
 	// Schalter
-	private boolean silent = false; // unterdrückt bei check die Ausgabe, falls keine Duplikate gefunden werden
-	private boolean oldOverwrites = false; // bei unzip: wenn true, alte Dateien überschreiben neue
+	private boolean silent = false; // unterdrï¿½ckt bei check die Ausgabe, falls keine Duplikate gefunden werden
+	private boolean oldOverwrites = false; // bei unzip: wenn true, alte Dateien ï¿½berschreiben neue
 	private boolean standardManifestToCreate = false;
 	private Pattern fileFilterPattern = Pattern.compile(".*");
 	private int compression = -1;
-	// löst die Dateien des jars von der Paketstruktur => Dateien werden direkt ins Zielverzeichnis entpackt
+	// lï¿½st die Dateien des jars von der Paketstruktur => Dateien werden direkt ins Zielverzeichnis entpackt
 	private boolean detach = false;
 	
 	// Dateiparameter
@@ -245,7 +260,7 @@ public class JarMerge {
 		// das Kommando aus der Argumentliste enfernen
 		arguments.remove(0);
 		
-		// Anzahl der restlichen Argumente überprüfen
+		// Anzahl der restlichen Argumente ï¿½berprï¿½fen
 		if ( arguments.size()<minNrOfArgs ) throw new Exception("arguments missing");
 		if ( arguments.size()>maxNrOfArgs ) throw new Exception("too many arguments");
 		
@@ -364,8 +379,8 @@ public class JarMerge {
 	}
 	
 	/**
-	 * Filtert aus einer Liste von Dateien alle Dateien, die dem regulären Ausdruck pattern genügen heraus.
-	 * Unabhängig davon werden das zu erstellende jar und META-INF/MANIFEST.MF entfernt.
+	 * Filtert aus einer Liste von Dateien alle Dateien, die dem regulï¿½ren Ausdruck pattern genï¿½gen heraus.
+	 * Unabhï¿½ngig davon werden das zu erstellende jar und META-INF/MANIFEST.MF entfernt.
 	 * @return gefilterte Liste von Dateien
 	 */
 	private File[] fileFilter(File[] list, Pattern pattern) throws Exception {
@@ -379,7 +394,7 @@ public class JarMerge {
 		
 		for (int i=0; i<list.length; i++) {
 			// die zu erstellende jardatei soll auch weggefiltert werden
-			// das Manifest wird extra hinzugefügt => hier wegfiltern
+			// das Manifest wird extra hinzugefï¿½gt => hier wegfiltern
 			if ( list[i]==null
 					|| list[i].getCanonicalPath().equals(newjarPath)
 					|| Pattern.matches(".*META-INF[/\\\\]MANIFEST[.]MF", list[i].getPath())
@@ -470,11 +485,11 @@ public class JarMerge {
 								if ( Long.parseLong(firstSize) < 0 )
 									firstSize = "unknown";
 								
-								// die größte Stringlänge ermitteln
+								// die grï¿½ï¿½te Stringlï¿½nge ermitteln
 								gap = Math.max(firstFile.length(), firstDate.length());
 								gap = Math.max(gap, firstSize.length());
 								
-								// und Stringlänge normalisieren
+								// und Stringlï¿½nge normalisieren
 								while ( firstFile.length()<gap ) firstFile += " ";
 								while ( firstDate.length()<gap ) firstDate += " ";
 								while ( firstSize.length()<gap ) firstSize += " ";
@@ -482,7 +497,7 @@ public class JarMerge {
 								this.logln("\n duplicate class found: "+classFile);
 								this.logln(" "+ firstFile +"   "+ list[i] );	// Dateiname
 								this.logln(" "+ firstDate +"   "+ ( lDate < 0 ? "unknown" : sdf.format(new Date(lDate)) ) );	// Datum								
-								this.logln(" "+ firstSize +"   "+ ( size < 0 ? "unknown" : String.valueOf(size) ) );	// Dateigröße
+								this.logln(" "+ firstSize +"   "+ ( size < 0 ? "unknown" : String.valueOf(size) ) );	// Dateigrï¿½ï¿½e
 								
 								duplicates++;
 							}
@@ -517,9 +532,9 @@ public class JarMerge {
 			
 			String filename = jarEntry.getName();
 			
-			// Paketstruktur auflösen und Datei ohne Unterverzeichnisse direkt nach targetPath entpacken
+			// Paketstruktur auflï¿½sen und Datei ohne Unterverzeichnisse direkt nach targetPath entpacken
 			if ( this.detach ) {
-				int index = filename.lastIndexOf('/') + 1; // behandelt Rückgabewert -1 implizit mit
+				int index = filename.lastIndexOf('/') + 1; // behandelt Rï¿½ckgabewert -1 implizit mit
 				filename = filename.substring(index);
 			}
 			
@@ -692,11 +707,11 @@ public class JarMerge {
 					
 					if ( !(classFile.charAt(classFile.length()-1)=='/' || classFile.toUpperCase().equals("META-INF/MANIFEST.MF")) ) {
 						
-						index = classFile.lastIndexOf('/')+1; // behandelt Rückgabewert -1 implizit mit
-						// Dateiname muss vom regulären Ausdruck erfasst werden
+						index = classFile.lastIndexOf('/')+1; // behandelt Rï¿½ckgabewert -1 implizit mit
+						// Dateiname muss vom regulï¿½ren Ausdruck erfasst werden
 						if ( this.fileFilterPattern.matcher(classFile.substring(index)).matches() ) {
 							
-							// Paketstruktur auflösen?
+							// Paketstruktur auflï¿½sen?
 							if ( this.detach )
 								filename = classFile.substring(index);
 							else
@@ -713,7 +728,7 @@ public class JarMerge {
 								if ( (!this.oldOverwrites && (archiveDate > hdDate)) || (this.oldOverwrites && (archiveDate < hdDate)) ) {
 									this.unpackJarEntry(jar, entry, this.targetPath);
 									
-									// für Manifest individuelle Sektionen
+									// fï¿½r Manifest individuelle Sektionen
 									if ( iSecName.contains(filename) ) {
 										index = iSecName.indexOf(filename);
 										
@@ -780,7 +795,7 @@ public class JarMerge {
 			
 			byte buffer[] = new byte[BUFFER_SIZE];
 			
-			// Archiv öffnen
+			// Archiv ï¿½ffnen
 			FileOutputStream stream = new FileOutputStream(jarFile);
 			
 			Manifest manifest = readManifestFile(manifestFile);
@@ -796,7 +811,7 @@ public class JarMerge {
 				sbuf.append("Created-By: "+System.getProperty("java.vm.version")+" ("+System.getProperty("java.vm.vendor")+")\n");
 				sbuf.append("\n");
 				
-				// Den String in InputStream überführen
+				// Den String in InputStream ï¿½berfï¿½hren
 				InputStream is = new ByteArrayInputStream(sbuf.toString().getBytes("UTF-8"));
 				
 				// Manifest erzeugen
@@ -890,19 +905,19 @@ public class JarMerge {
 			sbuf.append("Created-By: "+System.getProperty("java.vm.version")+" ("+System.getProperty("java.vm.vendor")+")\n");
 			sbuf.append("\n");
 			
-			// Den String in InputStream überführen
+			// Den String in InputStream ï¿½berfï¿½hren
 			InputStream is = new ByteArrayInputStream(sbuf.toString().getBytes("UTF-8"));
 			
 			// Manifest erzeugen
 			manifest = new Manifest(is);
 		}
 		
-		// Zufallszahl als Teil des Namens für die temporäre Datei
+		// Zufallszahl als Teil des Namens fï¿½r die temporï¿½re Datei
 		String rand1 = String.valueOf(Math.random()).substring(2);
 		String rand2 = String.valueOf(Math.random()).substring(2);
 		String randomName = jarFile.getName()+".tmp."+rand1+rand2;
 		
-		// Namen für temporäre Datei setzen
+		// Namen fï¿½r temporï¿½re Datei setzen
 		String tempfile = jarFile.getCanonicalPath(); 
 		tempfile = tempfile.substring(0,tempfile.length()-jarFile.getName().length())+randomName;
 		
@@ -988,7 +1003,7 @@ public class JarMerge {
 		jarOut.close();
 		jarIn.close();
 		
-	// altes jar löschen und neue Datei umbenennen
+	// altes jar lï¿½schen und neue Datei umbenennen
 		File oldJar = new File(this.targetPath);
 		try {
 			if ( !jarFile.delete() )
@@ -1031,7 +1046,7 @@ public class JarMerge {
 		
 		try {
 			
-		// jar-Archiv überprüfen
+		// jar-Archiv ï¿½berprï¿½fen
 			file = new File(this.targetPath);
 			
 			if ( file.isFile() )
@@ -1075,16 +1090,16 @@ public class JarMerge {
 	}
 	
 	// Falls das Zieljar nicht existiert, wie zip
-	// ansonsten ausgewählte Dateien zu jar hinzufügen
+	// ansonsten ausgewï¿½hlte Dateien zu jar hinzufï¿½gen
 	private void executeAdd() throws Exception {
 		
 		File file = null;
 		ArrayList content;
 		
-		// jar-Archiv überprüfen
+		// jar-Archiv ï¿½berprï¿½fen
 		file = new File(this.targetPath);
 		
-		// wenn Datei noch nicht exisitert => executeZip() ausführen
+		// wenn Datei noch nicht exisitert => executeZip() ausfï¿½hren
 		if ( !file.exists() ) {
 			this.executeZip();
 			return;
@@ -1097,7 +1112,7 @@ public class JarMerge {
 			}
 		}
 		
-	// ausgewählte Dateien zu bestehendem jar hinzufügen
+	// ausgewï¿½hlte Dateien zu bestehendem jar hinzufï¿½gen
 		
 		File directory = new File(this.source);
 		content = new ArrayList();
@@ -1128,7 +1143,7 @@ public class JarMerge {
 	
 	private void execute() {
 		
-	// Pfad- und Dateiangaben auf Korrektheit überprüfen
+	// Pfad- und Dateiangaben auf Korrektheit ï¿½berprï¿½fen
 		try {
 			
 			File file = new File(this.source);
@@ -1163,7 +1178,7 @@ public class JarMerge {
 					this.source += "/";
 			}
 			
-		// zusätzlich für unzip optionales Zielverzeichnis testen
+		// zusï¿½tzlich fï¿½r unzip optionales Zielverzeichnis testen
 			if ( this.unzip ) {
 				if ( this.targetPath!=null ) {
 					try {
@@ -1195,17 +1210,17 @@ public class JarMerge {
 				}
 			}
 			
-		// zusätzlich für zip Manifest und Ziel-Archiv testen
+		// zusï¿½tzlich fï¿½r zip Manifest und Ziel-Archiv testen
 			if ( this.zip || this.add ) {
 				
-				// Manifest überprüfen
+				// Manifest ï¿½berprï¿½fen
 				if ( this.manifestFile!=null ) {
 					file = new File(this.manifestFile);
 					if ( !file.canRead() )
 						throw new Exception("manifest file "+file.getCanonicalPath()+" not found or not readable");
 				}
 				
-				// jar-Archiv überprüfen
+				// jar-Archiv ï¿½berprï¿½fen
 				file = new File(this.targetPath);
 				
 				if ( file.isDirectory() )
@@ -1217,7 +1232,7 @@ public class JarMerge {
 			System.exit(-1);
 		}
 		
-	// spezifizierte Aufgabe ausführen
+	// spezifizierte Aufgabe ausfï¿½hren
 		try {
 			
 			if ( this.check ) this.executeCheck(); else

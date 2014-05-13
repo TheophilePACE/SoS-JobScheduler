@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -714,7 +729,7 @@ public class Utils {
 	}
 
 	/**
-	 * Element ist schreibgeschützt
+	 * Element ist schreibgeschï¿½tzt
 	 * @param dom
 	 * @param elem
 	 * @return
@@ -773,7 +788,7 @@ public class Utils {
 
 	/*
 	 * liefert den Hotfolder Vaterknoten 
-	 * mögliche Vaterknoten
+	 * mï¿½gliche Vaterknoten
 	 * "job", "job_chain", "add_order", "order", process_class, schedule, lock
 	 */
 	public static Element getHotFolderParentElement(Element elem) {
@@ -897,7 +912,7 @@ public class Utils {
 	}
 
 
-	//löscht alle Kinder der Element elem, wenn diese einen Attribut name haben  
+	//lï¿½scht alle Kinder der Element elem, wenn diese einen Attribut name haben  
 	public static void removeChildrensWithName(Element elem, String name) {    	    	
 		Element child = elem.getChild(name);
 		java.util.ArrayList nl = new java.util.ArrayList();
@@ -943,17 +958,17 @@ public class Utils {
 	}
 
 	/**
-	 * Überprüft die Abhängigkeiten der Elementen 
-	 * @param name -> Names des Element, der gelöscht bzw. geändert wurde
+	 * ï¿½berprï¿½ft die Abhï¿½ngigkeiten der Elementen 
+	 * @param name -> Names des Element, der gelï¿½scht bzw. geï¿½ndert wurde
 	 * @param _dom
-	 * @param type -> Im welchen Formular wurde geändert
-	 * @param which -> Wenn type nicht ausreicht:  z.B. im Job Formular (type=JOB) wird einmal beim Schliessen und einmal beim Ändern der
-	 * Name des Jobs überprüft.
+	 * @param type -> Im welchen Formular wurde geï¿½ndert
+	 * @param which -> Wenn type nicht ausreicht:  z.B. im Job Formular (type=JOB) wird einmal beim Schliessen und einmal beim ï¿½ndern der
+	 * Name des Jobs ï¿½berprï¿½ft.
 	 * 
-	 * @return boolean true alles im grünen Bereich. 
+	 * @return boolean true alles im grï¿½nen Bereich. 
 	 */
 	public static boolean checkElement(String name, SchedulerDom _dom, int type, String which ) {
-		boolean onlyWarning = false;//-> true: Gibt nur eine Warnung aus. Sonst Warnung mit Yes- und No- Button um ggf. die Änderungen zurückzunehmen
+		boolean onlyWarning = false;//-> true: Gibt nur eine Warnung aus. Sonst Warnung mit Yes- und No- Button um ggf. die ï¿½nderungen zurï¿½ckzunehmen
 
 		try {
 			if(which == null) which ="";				
@@ -983,14 +998,14 @@ public class Utils {
 				List listOfElement_3 = x3.selectNodes(_dom.getDoc());
 				if(!listOfElement_3.isEmpty())
 					//throw new Exception ("Die Jobkette [job_chain=" + name + "] wird in einem Auftrag verwendet. " +
-					//"Soll die Jobkette trotzdem gelöscht werden");
+					//"Soll die Jobkette trotzdem gelï¿½scht werden");
 					throw new Exception (strException);
 
 				XPath x4 = XPath.newInstance("//add_order[@job_chain='"+ name + "']");				 
 				List listOfElement_4 = x4.selectNodes(_dom.getDoc());
 				if(!listOfElement_4.isEmpty())
 					//throw new Exception ("Die Jobkette [job_chain=" + name + "] wird in einem Auftrag verwendet. " +
-					//"Soll die Jobkette trotzdem gelöscht werden");
+					//"Soll die Jobkette trotzdem gelï¿½scht werden");
 					throw new Exception (strException);
 
 			} else if(type==Editor.JOB) {
@@ -1132,7 +1147,7 @@ public class Utils {
 	public static void setChangedForDirectory(Element elem, SchedulerDom dom) {
 
 		if(dom.isDirectory() || dom.isLifeElement()) {
-			//mögliche hot folder element
+			//mï¿½gliche hot folder element
 			Element e = Utils.getHotFolderParentElement(elem);
 
 			if(e.getName().equals("order") || e.getName().equals("add_order")) {
@@ -1208,7 +1223,7 @@ public class Utils {
 
 	/**
 	 * Generiert einen Help Button. 
-	 * Beim Klicken wird ein Fenster geöffnet, indem der text steht 
+	 * Beim Klicken wird ein Fenster geï¿½ffnet, indem der text steht 
 	 */
 	public static Button createHelpButton(Composite composite, String text, Shell shell) {
 

@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -160,7 +175,7 @@ public boolean spooler_process_after(final boolean arg0) throws Exception {
       String[] fp   = file.split("/");
       localFilename = fp[fp.length-1];
 
-      //bei FTP Übertragung original Datei wird umbenannt
+      //bei FTP ï¿½bertragung original Datei wird umbenannt
         //aus "1.csv" wird 1{sos20081218132248123sos}.csv
         //{sos + timestamp + sos}
       //siehe spooler_process_before#

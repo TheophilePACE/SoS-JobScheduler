@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -51,7 +66,7 @@ import sos.util.SOSLogger;
 /**
  * Baut die SQL-Anweisung INSERT oder UPDATE zusammen. 
  * 
- * Oberklasse für {@link Insert_cmd} und {@link Update_cmd}.
+ * Oberklasse fï¿½r {@link Insert_cmd} und {@link Update_cmd}.
  * 
  * @author Joacim Zschimmer
  *
@@ -137,7 +152,7 @@ public abstract class Write_cmd extends Cmd
     //------------------------------------------------------------------------------------------set
     /** Setzt ein Feld. 
       * 
-      * Wenn das Feld bereits gesetzt worden ist, wird es überschrieben.
+      * Wenn das Feld bereits gesetzt worden ist, wird es ï¿½berschrieben.
       * @param field_name
       * @param value Timestamp wird erkannt. Sonst wird toString() gerufen.
       */
@@ -169,7 +184,7 @@ public abstract class Write_cmd extends Cmd
         set( field_name, value, Field_value.type_string );    
     }    
     /**
-     * Schneidet den Wert rechts ab, wenn er länger als field_size ist.
+     * Schneidet den Wert rechts ab, wenn er lï¿½nger als field_size ist.
      * 
      * @param field_name
      * @param value

@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -70,12 +85,12 @@ public class MergeAllXMLinDirectory {
 
 	private HashMap listOfChanges = null;
 
-	/* Liste der SChreibgeschützen Dateien */
+	/* Liste der SChreibgeschï¿½tzen Dateien */
 	private ArrayList listOfReadOnly = null;
 
 	/*
 	 * Wenn dateiname ungleich der Element Attribute Name ist, dann wird der
-	 * Dateiname als name-Attribut gesetzt und * für save
+	 * Dateiname als name-Attribut gesetzt und * fï¿½r save
 	 */
 	private ArrayList listOfChangeElementNames = null;
 
@@ -220,7 +235,7 @@ public class MergeAllXMLinDirectory {
 										.equalsIgnoreCase(Utils
 												.getAttributeValue("name",
 														xmlRoot))) {
-							// life Dateiname und Element-Attribute-name müssen
+							// life Dateiname und Element-Attribute-name mï¿½ssen
 							// gleich sein. Wenn dieser ungleich sind,
 							// dann umbennen wie der Dateiname
 							listOfChangeElementNames.add(xmlRoot.getName()
@@ -230,7 +245,7 @@ public class MergeAllXMLinDirectory {
 						}
 						if (Utils.getAttributeValue("name", xmlRoot).length() == 0) {
 							// In der Formular sieht man den Namen. Beim
-							// speichern soll es nicht zurückgeschrieben werden
+							// speichern soll es nicht zurï¿½ckgeschrieben werden
 							xmlRoot.setAttribute("name",
 									jobXMLNameWithoutExtension);
 						}
@@ -302,7 +317,7 @@ public class MergeAllXMLinDirectory {
 					if (Utils.getAttributeValue("job_chain", xmlRoot).length() > 0
 							&& !jobChainname.equalsIgnoreCase(Utils
 									.getAttributeValue("job_chain", xmlRoot))) {
-						// life Dateiname und Element-Attribute-name müssen
+						// life Dateiname und Element-Attribute-name mï¿½ssen
 						// gleich sein. Wenn dieser ungleich sind,
 						// dann umbennen wie der Dateiname
 						listOfChangeElementNames.add(xmlRoot.getName() + "_"
@@ -313,7 +328,7 @@ public class MergeAllXMLinDirectory {
 					if (Utils.getAttributeValue("id", xmlRoot).length() > 0
 							&& !orderId.equalsIgnoreCase(Utils
 									.getAttributeValue("id", xmlRoot))) {
-						// life Dateiname und Element-Attribute-name müssen
+						// life Dateiname und Element-Attribute-name mï¿½ssen
 						// gleich sein. Wenn dieser ungleich sind,
 						// dann umbennen wie der Dateiname
 						listOfChangeElementNames.add(xmlRoot.getName() + "_"
@@ -376,7 +391,7 @@ public class MergeAllXMLinDirectory {
 	}
 
 	/**
-	 * Speichert das Dokument in die einzelnen Dateien wieder zurück
+	 * Speichert das Dokument in die einzelnen Dateien wieder zurï¿½ck
 	 */
 	public void saveXMLDirectory(Document doc, HashMap listOfChanges_) {
 		Element jobs = null;
@@ -574,7 +589,7 @@ public class MergeAllXMLinDirectory {
 				String xml = Utils.getElementAsString(_elem);
 				saveXML(xml, filename);
 
-				// attribute wieder zurückschreiben zum weiterverarbeiten
+				// attribute wieder zurï¿½ckschreiben zum weiterverarbeiten
 				if (name.equals("order")) {
 					Utils.setAttribute("job_chain", attrName.substring(0,
 							attrName.indexOf(",")), e);
@@ -667,12 +682,12 @@ public class MergeAllXMLinDirectory {
 								+ " could not delete.", SWT.ICON_WARNING
 								| SWT.OK | SWT.CANCEL);
 					} else {
-						// System.out.println(filename + " wurde gelöscht.");
+						// System.out.println(filename + " wurde gelï¿½scht.");
 					}
 				} else {
 
 					// System.out.println(filename +
-					// " zum löschen gibts nicht.");
+					// " zum lï¿½schen gibts nicht.");
 				}
 			}
 

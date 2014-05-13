@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -260,8 +275,8 @@ public class SOSFTPCommandSend extends SOSFTPCommand {
 			if (!sosString.parseToString(arguments.get("operation")).startsWith("install") || flgJumpTransferDefined) {// argumente wurden
 																														// in install
 																														// gelesen
-				// und verändert. Es darf nicht
-				// nochmals überschrieben werden
+				// und verï¿½ndert. Es darf nicht
+				// nochmals ï¿½berschrieben werden
 				readSettings(true);
 			}
 
@@ -275,7 +290,7 @@ public class SOSFTPCommandSend extends SOSFTPCommand {
 				throw new Exception("could not process job parameters: " + e.getMessage());
 			}
 
-			if (!arguments.contains("port"))// falls noch execute anschliessend ausgeführt werden soll
+			if (!arguments.contains("port"))// falls noch execute anschliessend ausgefï¿½hrt werden soll
 				setParam("port", String.valueOf(port));
 
 			try { // to check parameters
@@ -517,7 +532,7 @@ public class SOSFTPCommandSend extends SOSFTPCommand {
 						sendFiles(filelist);
 						// if (transActional) {
 						/**
-						 * austauschen. Erst auf dem Zielserver umbenennen, dann im source-server löschen
+						 * austauschen. Erst auf dem Zielserver umbenennen, dann im source-server lï¿½schen
 						 * kb 2011-06-07
 						 */
 						// getDeleteTransferFiles();//nur wenn transactional=yes ist
@@ -596,8 +611,8 @@ public class SOSFTPCommandSend extends SOSFTPCommand {
 						} // no error handling
 					}
 				}
-				if (flgJumpTransferDefined) {// jump host ist angegeben, hier müssen z.B. temporär generierte Verzeichnisse auf Remote host
-												// gelöscht werden
+				if (flgJumpTransferDefined) {// jump host ist angegeben, hier mï¿½ssen z.B. temporï¿½r generierte Verzeichnisse auf Remote host
+												// gelï¿½scht werden
 					rc = doPostCommands(rc, filelist);
 				}
 			}
@@ -956,7 +971,7 @@ public class SOSFTPCommandSend extends SOSFTPCommand {
 	}
 
 	/**
-	 * Überprüfen der Parameter
+	 * ï¿½berprï¿½fen der Parameter
 	 * @throws Exception
 	 */
 	private void checkParameter() throws Exception {
@@ -968,7 +983,7 @@ public class SOSFTPCommandSend extends SOSFTPCommand {
 		 * kb
 		 * weil bei transactional der atomic_suffix umgebogen wird auf replacement (!) kommt es hier zu einer Fehlermeldung,
 		 * die der Nutzer beim besten willen nicht versteht, weil er doch gar kein "replacement" angegeben hat.
-		 * Deshalb: Prüfung hier rausnehmen. Kann nicht schaden.
+		 * Deshalb: Prï¿½fung hier rausnehmen. Kann nicht schaden.
 		 */
 		// if (replacing == null && replacement != null) {
 		// RaiseException("parameter is missing for specified parameter [replacement=" + replacement + "]: [replacing]");
@@ -1228,7 +1243,7 @@ public class SOSFTPCommandSend extends SOSFTPCommand {
 				}
 
 				if (recursive && !isFilePath) {
-					// Überprüfen, ob das Verzeichnis auf den FTP Server existiert, wenn nicht dann soll das gleiche Verzeichnis generiert
+					// ï¿½berprï¿½fen, ob das Verzeichnis auf den FTP Server existiert, wenn nicht dann soll das gleiche Verzeichnis generiert
 					// werden
 					if (localFile.getParent() != null && localFile.getParentFile().isDirectory()) { // es existieren Vaterknoten
 						/**
@@ -1442,7 +1457,7 @@ public class SOSFTPCommandSend extends SOSFTPCommand {
 	/**
 	 * Es wurde ein Jump Host angegeben.
 	 *
-	 *  Alle temporären Verzeichnisse auf der Remote Host sollen gelöscht werden.
+	 *  Alle temporï¿½ren Verzeichnisse auf der Remote Host sollen gelï¿½scht werden.
 	 *
 	 * @param rc
 	 * @param filelist
@@ -1461,7 +1476,7 @@ public class SOSFTPCommandSend extends SOSFTPCommand {
 						RaiseException("error occurred processing command:" + normalizedPassword(postCommands));
 				}
 			}
-			// Auf jeden fall soll das Temporäre Verzeichnis gelöscht werde
+			// Auf jeden fall soll das Temporï¿½re Verzeichnis gelï¿½scht werde
 			// jump_command nicht ausgelesen //
 			String com = sosString.parseToString(arguments.get("jump_command")) + " -operation=remove_temp_directory -input=\"" + tempJumpRemoteDir + "\"";
 			this.setCommands(com.split(getCommandDelimiter()));
@@ -1473,7 +1488,7 @@ public class SOSFTPCommandSend extends SOSFTPCommand {
 
 			if (rc) {
 				// jump_host hat erfolgreich alle Dateien an target_host weitergegeben. Jetzt
-				// können die lokalen Dateien gelöscht werden, wenn der Parameter remove_files=yes angegeben ist
+				// kï¿½nnen die lokalen Dateien gelï¿½scht werden, wenn der Parameter remove_files=yes angegeben ist
 				if (!transActional && sosString.parseToBoolean(arguments.get("remove_after_jump_transfer"))) {
 					for (int i = 0; i < filelist.size(); i++) {
 						File f = new File(sosString.parseToString(filelist.get(i)));
@@ -1513,7 +1528,7 @@ public class SOSFTPCommandSend extends SOSFTPCommand {
 	}
 
 	/**
-	 * Statt ein Verzeichnis können eine oder mehrere - mit semikolen getrennte - dateien zum transferieren angegeben werden
+	 * Statt ein Verzeichnis kï¿½nnen eine oder mehrere - mit semikolen getrennte - dateien zum transferieren angegeben werden
 	 * @return
 	 * @throws Exception
 	 */
@@ -1596,9 +1611,9 @@ public class SOSFTPCommandSend extends SOSFTPCommand {
 
 	@Override
 	public boolean install() throws Exception {
-		// Hier werden alle Bibliotheken (jar-Dateien) in installpaths (parameter classpath_base) übertragen.
+		// Hier werden alle Bibliotheken (jar-Dateien) in installpaths (parameter classpath_base) ï¿½bertragen.
 		// Existiert ein sosftp.sh oder/und sosftp.sh, dann werden diese Dateien in ihrem CLASSPATH_BASE angepasst
-		// und mit übertragen.
+		// und mit ï¿½bertragen.
 		//
 		getLogger().debug1("calling " + sos.util.SOSClassUtil.getMethodName());
 
@@ -1706,7 +1721,7 @@ public class SOSFTPCommandSend extends SOSFTPCommand {
 	}
 
 	/**
-	 * Liefert alle Dateinamen die für die Installation auf den Remote Host hgebraucht werden.
+	 * Liefert alle Dateinamen die fï¿½r die Installation auf den Remote Host hgebraucht werden.
 	 *
 	 * @param classPathBase
 	 * @return alle zu transferierende Dateinamen mit semikolon getrennt
@@ -1720,7 +1735,7 @@ public class SOSFTPCommandSend extends SOSFTPCommand {
 		String cmd = "";
 		File sosftpSH = null;
 		File sosftpCMD = null;
-		// String classPath = "CLASSPATH_BASE=";//script wurde verändert
+		// String classPath = "CLASSPATH_BASE=";//script wurde verï¿½ndert
 		String classPath = "INSTALL_PATH=";
 		try {
 
@@ -1762,7 +1777,7 @@ public class SOSFTPCommandSend extends SOSFTPCommand {
 						shellscript = shellscript.substring(0, pos1) + classPath + classPathBase + shellscript.substring(pos2);
 					getLogger().debug("shell script: " + shellscript);
 
-					// für sh datei
+					// fï¿½r sh datei
 					String currShellscript = shellscript;
 					sosftpSH = new File(path, "sosftp.sh");
 					sosftpSH.deleteOnExit();
@@ -1774,7 +1789,7 @@ public class SOSFTPCommandSend extends SOSFTPCommand {
 					getLogger().info("there is no Shell Script to install: " + new File(localDir1, "sosftp.sh"));
 				}
 
-				// für cmd Datei
+				// fï¿½r cmd Datei
 				File fcmd = new File(localDir1, "sosftp.cmd");
 				if (fcmd.exists()) {
 					cmd = sos.util.SOSFile.readFile(fcmd);
@@ -1818,7 +1833,7 @@ public class SOSFTPCommandSend extends SOSFTPCommand {
 	}
 
 	/**
-	 * Erst wenn alle Dateien erfolgreich transferieriert wurden, dann sollen die lokalen Dateien gelöscht werden.
+	 * Erst wenn alle Dateien erfolgreich transferieriert wurden, dann sollen die lokalen Dateien gelï¿½scht werden.
 	 * Parameter = transactional = yes und remove_files=yes
 	 * @throws Exception
 	 */
@@ -1828,7 +1843,7 @@ public class SOSFTPCommandSend extends SOSFTPCommand {
 				return;
 
 			getLogger().debug(".. mark transactional files for removal: " + transActionalLocalFiles);
-			// transActional LocalFiles löschen
+			// transActional LocalFiles lï¿½schen
 			Properties p = new Properties();
 			p.put("operation", "delete_local_files");
 			p.put("files", transActionalLocalFiles);
@@ -1837,8 +1852,8 @@ public class SOSFTPCommandSend extends SOSFTPCommand {
 	}
 
 	/**
-	 * Bei einer transfer Fehler müssen alle bereits transferierte Dateien gelöscht werden.
-	 * Gilt für Parameter transActional = yes
+	 * Bei einer transfer Fehler mï¿½ssen alle bereits transferierte Dateien gelï¿½scht werden.
+	 * Gilt fï¿½r Parameter transActional = yes
 	 *
 	 * @throws Exception
 	 */
@@ -1893,7 +1908,7 @@ public class SOSFTPCommandSend extends SOSFTPCommand {
 				}
 
 				p.put("operation", "remove");
-				// merke Parameter für send
+				// merke Parameter fï¿½r send
 				p.put("file_path", transActionalRemoteFiles);
 				p.put("skip_transfer", "yes");
 				p.put("remove_files", "yes");
@@ -2140,7 +2155,7 @@ public class SOSFTPCommandSend extends SOSFTPCommand {
 				this.getLogger().debug("..ftp server reply [cd] [remoteDir=" + remoteDir + "]: " + ftpClient.getReplyString());
 			}
 
-			// einfaches transferieren einer Datei. Hier finden auch keine Überprüfung statt
+			// einfaches transferieren einer Datei. Hier finden auch keine ï¿½berprï¿½fung statt
 			getLogger().debug9("..filepath: " + filePath);
 			if (sosString.parseToString(remoteDir).length() > 0 && sosString.parseToString(remoteDir).equals("./")) {
 				remoteDir = "";

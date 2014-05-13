@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -74,29 +89,29 @@ import com.sos.i18n.annotation.I18NResourceBundle;
 
 /**
  * \class JSOptionsClass
- * Super-Klasse für alle JS-Option-Klassen.
+ * Super-Klasse fï¿½r alle JS-Option-Klassen.
  *
  * \brief
  *
  * \section intro_sec Introduction
- * Diese Klasse bietet Optionen (Parameter) für die Ausführung eines Jobs an,
+ * Diese Klasse bietet Optionen (Parameter) fï¿½r die Ausfï¿½hrung eines Jobs an,
  * die allen JS-Jobs gemeinsam sind.
  *
- * \subsection optionen_definieren Wie werden Werte für Optionen definiert?
+ * \subsection optionen_definieren Wie werden Werte fï¿½r Optionen definiert?
  *
- * Optionen werden definiert über eine HashMap vom Typ <String, String>.
- * Dabei ist der erste "String" der Name (Schlüssel) und der zweite "String" der Wert
- * für die Option.
+ * Optionen werden definiert ï¿½ber eine HashMap vom Typ <String, String>.
+ * Dabei ist der erste "String" der Name (Schlï¿½ssel) und der zweite "String" der Wert
+ * fï¿½r die Option.
  * Die HashMap wird (normalerweise) in der super-Klasse
  * BasicWorkFlow:: aufgebaut und dann an diese Klasse "durchgereicht".
  *
- * Optionen können auch direkt durch Verwendung der Properties dieser Klasse gesetzt
+ * Optionen kï¿½nnen auch direkt durch Verwendung der Properties dieser Klasse gesetzt
  * und auch abgefragt werden.
  *
  *
- * Optionen, die durch Environment-Variable des Job-Environment gesetzt werden, überschreiben
+ * Optionen, die durch Environment-Variable des Job-Environment gesetzt werden, ï¿½berschreiben
  * dabei die durch die HashMap gesetzten Werte.
- * Environment-Variablen werden ausgewertet, wenn alle Optionen über die HashMap gesetzt werden
+ * Environment-Variablen werden ausgewertet, wenn alle Optionen ï¿½ber die HashMap gesetzt werden
  * (und nur dann).
  * Die Auswertung geschieht in der Methode {@link #getEnvironmentVariables()}.
  * Die Environment-Variablen (siehe weiter unten) werden jedoch nicht ausgewertet, wenn
@@ -138,7 +153,7 @@ import com.sos.i18n.annotation.I18NResourceBundle;
  * <TD>int</TD>
  * <TD>0</TD>
  * <TD>
- * Diagnosemeldungen werden über eine Level-Nummer klassifiziert.
+ * Diagnosemeldungen werden ï¿½ber eine Level-Nummer klassifiziert.
  * '9' bedeutet dabei am wenigstens wichtig und '0' kennzeichnet wichtige
  * Diagnosemeldungen.
  * Es werden alle Meldungen ausgegeben, deren Level-Nummer kleiner oder gleich
@@ -184,7 +199,7 @@ import com.sos.i18n.annotation.I18NResourceBundle;
  *
  * </TABLE>
  *
- * \subsection env-example Ein Beispiel für die Verwendung der Variablen
+ * \subsection env-example Ein Beispiel fï¿½r die Verwendung der Variablen
  *
  * \code
  * export JS_SERVERNAME="JSLevDevel"
@@ -240,7 +255,7 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 		 * \brief Code
 		 *
 		 * \details
-		 * Liefert den Wert (S oder V) für einen PriceType.
+		 * Liefert den Wert (S oder V) fï¿½r einen PriceType.
 		 *
 		 * \return String
 		 *
@@ -496,7 +511,7 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 		XmlId.Value(pstrValue);
 		return this;
 	} // public JSOptionsClass setXmlId
-	@JSOptionDefinition(name = "ArchiverOptions", value = "", description = "Optionen für die Dateiarchivierung", key = "", type = "JSOptionClass", mandatory = false)
+	@JSOptionDefinition(name = "ArchiverOptions", value = "", description = "Optionen fï¿½r die Dateiarchivierung", key = "", type = "JSOptionClass", mandatory = false)
 	private JSArchiverOptions	objArchiverOptions	= null;
 	/**
 	 * \brief TestMode - Option: Test Modus schalten
@@ -507,7 +522,7 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 	@JSOptionDefinition(name = "TestMode", value = "false", description = "Test Modus schalten ", key = "TestMode", type = "JSOptionBoolean", mandatory = false)
 	public SOSOptionBoolean		TestMode			= new SOSOptionBoolean(this, // Verweis auf die
 															// SOSOptionClass-Instanz
-															conClassName + ".TestMode", // Schlüssel, i.d.r. identisch
+															conClassName + ".TestMode", // Schlï¿½ssel, i.d.r. identisch
 															// mit dem Namen der Option
 															"Test Modus schalten ", // Kurzbeschreibung
 															"false", // Wert
@@ -523,7 +538,7 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 	@JSOptionDefinition(name = "Debug", value = "false", description = "Debug-Modus schalten (true/false)", key = "Debug", type = "JSOptionBoolean", mandatory = false)
 	public SOSOptionBoolean		Debug				= new SOSOptionBoolean(this, // Verweis auf die
 															// SOSOptionClass-Instanz
-															conClassName + ".Debug", // Schlüssel, i.d.r. identisch mit
+															conClassName + ".Debug", // Schlï¿½ssel, i.d.r. identisch mit
 															// dem Namen der Option
 															"Debug-Modus schalten (true/false)", // Kurzbeschreibung
 															"false", // Wert
@@ -539,7 +554,7 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 	@JSOptionDefinition(name = "DebugLevel", value = "0", description = "DebugLevel", key = "DebugLevel", type = "JSOptionInteger", mandatory = false)
 	public SOSOptionInteger		DebugLevel			= new SOSOptionInteger(this, // Verweis auf die
 															// SOSOptionClass-Instanz
-															conClassName + ".DebugLevel", // Schlüssel, i.d.r. identisch
+															conClassName + ".DebugLevel", // Schlï¿½ssel, i.d.r. identisch
 															// mit dem Namen der Option
 															"DebugLevel", // Kurzbeschreibung
 															"0", // Wert
@@ -553,20 +568,20 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 	/**
 	 * \option log_filename
 	 * \type SOSOptionFileName
-	 * \brief log_filename - Name der Datei mit den Logging Einträgen
+	 * \brief log_filename - Name der Datei mit den Logging Eintrï¿½gen
 	 *
 	 * \details
-	 * Name der Datei mit den Logging-Einträgen
+	 * Name der Datei mit den Logging-Eintrï¿½gen
 	 *
 	 * \mandatory: false
 	 *
 	 * \created 20.01.2012 10:24:18 by KB
 	 */
-	@JSOptionDefinition(name = "log_filename", description = "Name der Datei mit den Logging-Einträgen", key = "log_filename", type = "SOSOptionFileName", mandatory = false)
+	@JSOptionDefinition(name = "log_filename", description = "Name der Datei mit den Logging-Eintrï¿½gen", key = "log_filename", type = "SOSOptionFileName", mandatory = false)
 	public SOSOptionLogFileName	log_filename		= new SOSOptionLogFileName( // ...
 															this, // ....
 															conClassName + ".log_filename", // ...
-															"Name der Datei mit den Logging-Einträgen", // ...
+															"Name der Datei mit den Logging-Eintrï¿½gen", // ...
 															"stdout", // ...
 															"stdout", // ...
 															false);
@@ -632,7 +647,7 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 	protected boolean					flgSetAllOptions				= false;
 	private final String				strOptionNamePrefix				= "-";
 	private String						strCommandLineArgs[];
-	/** String CurrentNodeName: Logischer Name für eine System-Instanz */
+	/** String CurrentNodeName: Logischer Name fï¿½r eine System-Instanz */
 	private String						strCurrentNodeName				= "";
 	private final String				conFilePathSeparator			= File.separator;
 	public final static String newLine = System.getProperty("line.separator");
@@ -793,22 +808,22 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 	} // Settings(HashMap pobjSettings)
 
 	/**
-	 * \brief getItem - Wert für eine Option liefern
+	 * \brief getItem - Wert fï¿½r eine Option liefern
 	 *
 	 * \details
-	 * Ermittelt den Wert für eine angegebene Option
+	 * Ermittelt den Wert fï¿½r eine angegebene Option
 	 *
 	 * Der Name der Option [CurrentNodeName/][classname.]optionname kann entweder in
-	 * kompletter Groß-/Kleinschreibung
-	 * oder in vollständiger Kleinschreibung geschrieben werden. Dann wird
+	 * kompletter Groï¿½-/Kleinschreibung
+	 * oder in vollstï¿½ndiger Kleinschreibung geschrieben werden. Dann wird
 	 * er auch erkannt.
 	 * classname darf weggelassen werden.
 	 * 'CurrentNodeName' darf auch weggelassen werden.
 	 *
-	 * Durch die HashMap wird sequentiell durchgegangen, um auch MixedCase Schlüsselworte zu erwischen
-	 * zusätzlich evtl. bereits beim Schreiben in die HashMap alles auf reine Kleinschreibung umsetzen.
+	 * Durch die HashMap wird sequentiell durchgegangen, um auch MixedCase Schlï¿½sselworte zu erwischen
+	 * zusï¿½tzlich evtl. bereits beim Schreiben in die HashMap alles auf reine Kleinschreibung umsetzen.
 	 *
-	 * \return String der Wert für die angeforderte Option oder null
+	 * \return String der Wert fï¿½r die angeforderte Option oder null
 	 *
 	 * \see getIntItem
 	 * \see getBoolItem
@@ -826,8 +841,8 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 		}
 		strKey = strKey.replaceAll("_", "");
 		/**
-		 * durch die HashMap sequentiell durchgehen, um auch MixedCase Schlüsselworte zu erwischen
-		 * zusätzlich evtl. bereits beim Schreiben in die HashMap alles auf reine Kleinschreibung umsetzen.
+		 * durch die HashMap sequentiell durchgehen, um auch MixedCase Schlï¿½sselworte zu erwischen
+		 * zusï¿½tzlich evtl. bereits beim Schreiben in die HashMap alles auf reine Kleinschreibung umsetzen.
 		 */
 		String strLSKey = "";
 		if (strCurrentNodeName.length() > 0) {
@@ -864,8 +879,8 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 			}
 		}
 		/**
-		 * wenn wir hier angekommen sind, dann wurde mit dem "richtigen" Wert (in Groß-/Kleinschreibung und
-		 * mit Klassennamen) nichts gefunden. Jetzt wird ohne Klassenname im Schlüssel gesucht.
+		 * wenn wir hier angekommen sind, dann wurde mit dem "richtigen" Wert (in Groï¿½-/Kleinschreibung und
+		 * mit Klassennamen) nichts gefunden. Jetzt wird ohne Klassenname im Schlï¿½ssel gesucht.
 		 */
 		int i = strKey.indexOf('.'); // KlassenName . Name
 		if (i > 0) { // Key contains/started with ClassName ...
@@ -917,7 +932,7 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 				}
 			} // for (Iterator iterator = objSettings.entrySet().iterator(); iterator.hasNext();)
 		} // (i > 0)
-			// hier kann es nur noch "null" sein, also Schlüssel nicht gefunden in den Optionen
+			// hier kann es nur noch "null" sein, also Schlï¿½ssel nicht gefunden in den Optionen
 		if (strTemp == null || strTemp.length() <= 0) {
 			strTemp = null;
 		}
@@ -978,19 +993,19 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 	} // public void addProcessedOptions
 
 	/**
-	 * \brief getItem - Wert oder Vorbesetzung für eine Option liefern
+	 * \brief getItem - Wert oder Vorbesetzung fï¿½r eine Option liefern
 	 *
 	 * \details
-	 * Ermittelt den Wert für eine angegebene Option
+	 * Ermittelt den Wert fï¿½r eine angegebene Option
 	 *
-	 * Der Name der Option [classname.]optionname kann entweder in kompletter Groß-/Kleinschreibung
-	 * oder in vollständiger Kleinschreibung geschrieben werden. Dann wird
+	 * Der Name der Option [classname.]optionname kann entweder in kompletter Groï¿½-/Kleinschreibung
+	 * oder in vollstï¿½ndiger Kleinschreibung geschrieben werden. Dann wird
 	 * er auch erkannt. classname darf weggelassen werden.
 	 *
-	 * Wenn die Option nicht definiert wurde (in der HasMap), dann wird der Wert für die Vorbesetzung
-	 * zurückgeliefert.
+	 * Wenn die Option nicht definiert wurde (in der HasMap), dann wird der Wert fï¿½r die Vorbesetzung
+	 * zurï¿½ckgeliefert.
 	 *
-	 * \return String der Wert für die angeforderte Option oder Vorbesetzung oder null
+	 * \return String der Wert fï¿½r die angeforderte Option oder Vorbesetzung oder null
 	 *
 	 * @see getItem
 	 * \see getIntItem
@@ -1008,18 +1023,18 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 	}
 
 	/**
-	 * \brief getIntItem - IntegerWert für eine Option liefern
+	 * \brief getIntItem - IntegerWert fï¿½r eine Option liefern
 	 *
 	 * \details
-	 * Ermittelt den Integer-Wert für eine angegebene Option
+	 * Ermittelt den Integer-Wert fï¿½r eine angegebene Option
 	 *
-	 * Der Name der Option [classname.]optionname kann entweder in kompletter Groß-/Kleinschreibung
-	 * oder in vollständiger Kleinschreibung geschrieben werden. Dann wird
+	 * Der Name der Option [classname.]optionname kann entweder in kompletter Groï¿½-/Kleinschreibung
+	 * oder in vollstï¿½ndiger Kleinschreibung geschrieben werden. Dann wird
 	 * er auch erkannt. classname darf weggelassen werden.
 	 *
 	 * \exception NumberFormatException
 	 *
-	 * \return String der Wert für die angeforderte Option oder null
+	 * \return String der Wert fï¿½r die angeforderte Option oder null
 	 *
 	 * \see getItem
 	 * \see getBoolItem
@@ -1055,16 +1070,16 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 	}
 
 	/**
-	 * \brief getBoolItem - Ermittelt den Boolean-Wert für eine angegebene Option
+	 * \brief getBoolItem - Ermittelt den Boolean-Wert fï¿½r eine angegebene Option
 	 *
-	 * Der Name der Option [classname.]optionname kann entweder in kompletter Groß-/Kleinschreibung
-	 * oder in vollständiger Kleinschreibung geschrieben werden. Dann wird
+	 * Der Name der Option [classname.]optionname kann entweder in kompletter Groï¿½-/Kleinschreibung
+	 * oder in vollstï¿½ndiger Kleinschreibung geschrieben werden. Dann wird
 	 * er auch erkannt. classname darf weggelassen werden.
 	 *
 	 * Die Strings "1" und "y" liefern den Wert "true", alle anderen Werte werden als "false"
 	 * interpretiert.
 	 *
-	 * \return String der Wert für die angeforderte Option oder null
+	 * \return String der Wert fï¿½r die angeforderte Option oder null
 	 *
 	 * \see getItem
 	 * \see getIntItem
@@ -1225,7 +1240,7 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 	}
 
 	/**
-	 * \brief setAllCommonOptions - Aus der HashMap werden die Werte übernommen
+	 * \brief setAllCommonOptions - Aus der HashMap werden die Werte ï¿½bernommen
 	 *
 	 * Optionen (auch Settings genannt) werden in Form einer HashMap mit den Paaren (Name, Wert)
 	 * gehalten. Hier werden diese den Werten der jeweiligen Property zugewiesen.
@@ -1247,10 +1262,10 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 		// this.TestMode(this.getBoolItem(this.conTestModeSettingsKey));
 		// this.Debug(this.getBoolItem(this.conDebugSettingsKey));
 		// this.DebugLevel(this.getIntItem(this.conDebugLevelSettingsKey));
-		UserDir.MapValue(); // Wert aus der HashTable übernehmen
+		UserDir.MapValue(); // Wert aus der HashTable ï¿½bernehmen
 		/**
-		 * Die folgenden Variablen werden über das Environment gesetzt
-		 * und überschreiben die in den Settings gemachten Angaben.
+		 * Die folgenden Variablen werden ï¿½ber das Environment gesetzt
+		 * und ï¿½berschreiben die in den Settings gemachten Angaben.
 		 *
 		 */
 		if (this.IgnoreEnvironmentVariables()) {
@@ -1293,10 +1308,10 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 	 * \brief CheckMandatory
 	 *
 	 * \details
-	 * Der Aufruf dieser Methode prüft alle obligatorisch anzugebenden Optionen.
-	 * Wird für eine Option kein Wert gefunden, so wird eine Exception ausgelöst.
+	 * Der Aufruf dieser Methode prï¿½ft alle obligatorisch anzugebenden Optionen.
+	 * Wird fï¿½r eine Option kein Wert gefunden, so wird eine Exception ausgelï¿½st.
 	 *
-	 * Die Methode wird grundsätzlich von der abgeleiteten Klasse überschrieben,
+	 * Die Methode wird grundsï¿½tzlich von der abgeleiteten Klasse ï¿½berschrieben,
 	 * da die obligatorsichen Optionen von Klasse zu Klasse unterschiedlich sind.
 	 *
 	 * \return void
@@ -1351,7 +1366,7 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 	 * \brief DebugLevel - Specify the Debug-Level
 	 *
 	 * \details
-	 * Diagnosemeldungen werden über eine Level-Nummer klassifiziert.
+	 * Diagnosemeldungen werden ï¿½ber eine Level-Nummer klassifiziert.
 	 * '9' bedeutet dabei am wenigstens wichtig und '0' kennzeichnet wichtige
 	 * Diagnosemeldungen.
 	 * Es werden alle Meldungen ausgegeben, deren Level-Nummer kleiner oder gleich
@@ -1440,7 +1455,7 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 
 	/**
 	 *
-	 * \brief CheckIsFileWritable - prüft ob eine Datei ge-/überschrieben werden darf
+	 * \brief CheckIsFileWritable - prï¿½ft ob eine Datei ge-/ï¿½berschrieben werden darf
 	 *
 	 * \return String
 	 *
@@ -1527,7 +1542,7 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 	 * \brief NormalizeDirectoryName - Directory-Name normalisieren und substituieren
 	 *
 	 * \details
-	 * Es wird ein "Path-Separator" an den Verzeichnisnamen angehängt, falls dieser
+	 * Es wird ein "Path-Separator" an den Verzeichnisnamen angehï¿½ngt, falls dieser
 	 * noch nicht als Zeichen vorhanden ist.
 	 *
 	 * Ausserdem werden Variable im Namen durch den aktuellen Wert ersetzt.
@@ -1587,7 +1602,7 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 
 	/**
 	 *
-	 * \brief AbsolutFileName - liefert einen absoluten Dateinamen für eine Datei
+	 * \brief AbsolutFileName - liefert einen absoluten Dateinamen fï¿½r eine Datei
 	 *
 	 * \details
 
@@ -1613,7 +1628,7 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 			return strT;
 		}
 		if (strT.startsWith("./")) {
-			strT = strT.substring(2); // beginnt mit "0" zu zählen
+			strT = strT.substring(2); // beginnt mit "0" zu zï¿½hlen
 		}
 		strT = new File(strT).toURI().toURL().toString();
 		if (strT.startsWith("file:")) {
@@ -1651,7 +1666,7 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 	Environment-Variable nicht auswerten
 	</para>
 	<para>
-	Initial-Wert (Default) ist "false" (ohne Anführungszeichen).
+	Initial-Wert (Default) ist "false" (ohne Anfï¿½hrungszeichen).
 	</para>
 	<mandatory>true</mandatory>
 	</description>
@@ -1704,7 +1719,7 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 	 *
 	 * \details
 	 * Ein String, der durch die Zeichen ",", "|" oder ";" (Komma, senkrechter Strich, Semikolon)
-	 * in Substrings unterteilt ist, wird als Array zurückgeliefert.
+	 * in Substrings unterteilt ist, wird als Array zurï¿½ckgeliefert.
 	 * Dabei ist jeder Substring ein Element des String-Arrays.
 	 *
 	 * \return String[]
@@ -1719,7 +1734,7 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 	}
 
 	/**
-	 * \brief CheckNull - Löst eine Exception aus, wenn wer Wert für eine Option "null" ist
+	 * \brief CheckNull - Lï¿½st eine Exception aus, wenn wer Wert fï¿½r eine Option "null" ist
 	 *
 	 * \return void
 	 *
@@ -1737,7 +1752,7 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 
 	/**
 	 *
-	 * \brief CommandLineArgs - Übernehmen der Options/Settings aus der Kommandozeile
+	 * \brief CommandLineArgs - ï¿½bernehmen der Options/Settings aus der Kommandozeile
 	 *
 	 * \details
 
@@ -1808,7 +1823,7 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 			message(conMethodName + ": Property-File loaded. " + strPropertyFileName);
 		}
 		DumpSettings();
-		// (hoffentlich) überschrieben von der erbenden Klasse
+		// (hoffentlich) ï¿½berschrieben von der erbenden Klasse
 		setAllOptions(objSettings);
 	}
 
@@ -1818,7 +1833,7 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 	 *
 	 * \details
 	 * Mit dieser MEthode werden die Kommando-Zeilen-Argumente, wie sie beim Start des Programms angegeben und an diese
-	 * Klasse übergeben wurden, an die rufende Routine zurückgegeben.
+	 * Klasse ï¿½bergeben wurden, an die rufende Routine zurï¿½ckgegeben.
 	 *
 	 * \return String[]
 	 *
@@ -1833,7 +1848,7 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 	 * \brief LoadProperties - Optionen aus Property-Datei laden
 	 *
 	 * \details
-	 * Lädt die Werte für die Optionen aus einer Java-Properties-Datei.
+	 * Lï¿½dt die Werte fï¿½r die Optionen aus einer Java-Properties-Datei.
 	 * Der Name der Datei ist als Parameter anzugeben.
 	 *
 	 * \return void
@@ -1858,7 +1873,7 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 				}
 			}
 		}
-		// (hoffentlich) überschrieben von der erbenden Klasse
+		// (hoffentlich) ï¿½berschrieben von der erbenden Klasse
 		message(conMethodName + ": Property-File loaded");
 		setAllOptions(objSettings);
 		setAllCommonOptions(objSettings);
@@ -1914,7 +1929,7 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 				}
 			}
 		}
-		// (hoffentlich) überschrieben von der erbenden Klasse
+		// (hoffentlich) ï¿½berschrieben von der erbenden Klasse
 		try {
 			setAllOptions(objSettings);
 		}
@@ -1954,10 +1969,10 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 	} // public void setAllOptions}
 
 	/*!
-	 * \brief CurrentNodeName - Logischer Name für eine System-Instanz
+	 * \brief CurrentNodeName - Logischer Name fï¿½r eine System-Instanz
 	 *
 	 * \details
-	 * Getter: Logischer Name für eine System-Instanz
+	 * Getter: Logischer Name fï¿½r eine System-Instanz
 	 *
 	 * Example:
 	 *
@@ -1970,9 +1985,9 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 	} // String CurrentNodeName()
 
 	/*!
-	 * CurrentNodeName - Logischer Name für eine System-Instanz
+	 * CurrentNodeName - Logischer Name fï¿½r eine System-Instanz
 	 *
-	 * Setter: Logischer Name für eine System-Instanz
+	 * Setter: Logischer Name fï¿½r eine System-Instanz
 	 *
 	 * @param pstrCurrentNodeName: The String CurrentNodeName to set.
 	 */
@@ -1988,8 +2003,8 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 	 * \brief OptionByName - dynamischer Aufruf eines getters der Option-Klasse
 	 *
 	 * \details
-	 * Liefert für eine als String übergebenen Namen einer Option das Resultat, das
-	 * geliefert würde, wenn der "getter" für diese Option gerufen worden wäre.
+	 * Liefert fï¿½r eine als String ï¿½bergebenen Namen einer Option das Resultat, das
+	 * geliefert wï¿½rde, wenn der "getter" fï¿½r diese Option gerufen worden wï¿½re.
 	 *
 	 * Diese Technik wird verwendet, um zum Beispiel in Werten von Optionen auf den
 	 * Wert einer anderen Option zu referenzieren (mit der Technik, den Namen des
@@ -2115,7 +2130,7 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 		getTextProperties();
 
 		try {
-			// zusätzliche Parameter generieren
+			// zusï¿½tzliche Parameter generieren
 			objP.put("date", SOSOptionTime.getCurrentDateAsString());
 			objP.put("time", SOSOptionTime.getCurrentTimeAsString("hh:mm:ss"));
 			objP.put("local_user", System.getProperty("user.name"));
@@ -2137,8 +2152,8 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 
 		/**
 		 * Problem hier:
-		 * Wenn der gesamte String verwendet wird, so ist spätestens beim file_spec
-		 * keine korrekte Substitution mehr möglich.
+		 * Wenn der gesamte String verwendet wird, so ist spï¿½testens beim file_spec
+		 * keine korrekte Substitution mehr mï¿½glich.
 		 * Liegt warscheinlich am regexp pattern.
 		 */
 		String strNewString = "";
@@ -2206,7 +2221,7 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 	// - <remark who='EQALS' when='Freitag, 8. Mai 2009' id='MehrereExportSQL' >
 	/**
 	 * \change Freitag, 8. Mai 2009 EQALS MehrereExportSQL
-	 * Mehr als ExportSQLs verarbeiten können
+	 * Mehr als ExportSQLs verarbeiten kï¿½nnen
 	 * @throws Exception
 	 */
 	// - <newcode>
@@ -2334,8 +2349,8 @@ public class JSOptionsClass extends I18NBase implements IJSArchiverOptions, Seri
 							/**
 							 * hier versuchen wir herauszubekommen, ob es
 							 * in dieser Instanz (weitere) geschachtelte Optionen gibt.
-							 * Falls ja, wird die geforderte Funktion auch für alle diese
-							 * Instanzen ausgeführt.
+							 * Falls ja, wird die geforderte Funktion auch fï¿½r alle diese
+							 * Instanzen ausgefï¿½hrt.
 							 */
 							IterateAllDataElementsByAnnotation(objDE.getClass(), objDE, enuIterate4What, pstrBuffer);
 						}

@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -208,7 +223,7 @@ public class JOEListener extends JSToolBox {
 		String lang = Options.getLanguage();
 		String url = helpKey;
 		try {
-			// TODO: überprüfen, ob Datei wirklich existiert
+			// TODO: ï¿½berprï¿½fen, ob Datei wirklich existiert
 			if (url.contains("http:")) {
 			}
 			else {
@@ -243,7 +258,7 @@ public class JOEListener extends JSToolBox {
 
 			if (strXmlText != null) {
 
-				// newXML ist null, wenn Änderungen nicht übernommen werden sollen
+				// newXML ist null, wenn ï¿½nderungen nicht ï¿½bernommen werden sollen
 				// if (newXML != null)
 				// applyXMLChange(newXML);
 

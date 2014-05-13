@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -343,23 +358,23 @@ public interface ISOSFtpOptions {
 	public abstract void setatomic_suffix(SOSOptionString p_atomic_suffix);
 
 	/**
-	     * \brief getbanner_footer : Name der Template-Datei für Protokoll-Ende This p
+	     * \brief getbanner_footer : Name der Template-Datei fï¿½r Protokoll-Ende This p
 	     *
 	     * \details
 	    This program logs output to stdout or to a file that has been specified by the parameter log_filename. A template can be used in order to organize the output that is created. The output is grouped into header, file list and footer. This parameter specifies a template file for footer output. Templates can use internal variables and parameters as placeholders in the form %{placeholder}. The standard footer template looks like this: ************************************************************************* execution status = %{status} successful transfers = %{successful_transfers} failed transfers = %{failed_transfers} last error = %{last_error} *************************************************************************
 	     *
-	     * \return Name der Template-Datei für Protokoll-Ende This p
+	     * \return Name der Template-Datei fï¿½r Protokoll-Ende This p
 	     *
 	     */
 	public abstract SOSOptionInFileName getbanner_footer();
 
 	/**
-	 * \brief setbanner_footer : Name der Template-Datei für Protokoll-Ende This p
+	 * \brief setbanner_footer : Name der Template-Datei fï¿½r Protokoll-Ende This p
 	 *
 	 * \details
 	This program logs output to stdout or to a file that has been specified by the parameter log_filename. A template can be used in order to organize the output that is created. The output is grouped into header, file list and footer. This parameter specifies a template file for footer output. Templates can use internal variables and parameters as placeholders in the form %{placeholder}. The standard footer template looks like this: ************************************************************************* execution status = %{status} successful transfers = %{successful_transfers} failed transfers = %{failed_transfers} last error = %{last_error} *************************************************************************
 	 *
-	 * @param banner_footer : Name der Template-Datei für Protokoll-Ende This p
+	 * @param banner_footer : Name der Template-Datei fï¿½r Protokoll-Ende This p
 	 */
 	public abstract void setbanner_footer(SOSOptionInFileName p_banner_footer);
 
@@ -1964,16 +1979,16 @@ public interface ISOSFtpOptions {
 	public abstract void setzero_byte_transfer(SOSOptionStringValueList p_zero_byte_transfer);
 
 	/**
-	* \brief setAllOptions - übernimmt die OptionenWerte aus der HashMap
+	* \brief setAllOptions - ï¿½bernimmt die OptionenWerte aus der HashMap
 	*
-	* \details In der als Parameter anzugebenden HashMap sind Schlüssel (Name)
-	* und Wert der jeweiligen Option als Paar angegeben. Ein Beispiel für den
+	* \details In der als Parameter anzugebenden HashMap sind Schlï¿½ssel (Name)
+	* und Wert der jeweiligen Option als Paar angegeben. Ein Beispiel fï¿½r den
 	* Aufbau einer solchen HashMap findet sich in der Beschreibung dieser
 	* Klasse (\ref TestData "setJobSchedulerSSHJobOptions"). In dieser Routine
-	* werden die Schlüssel analysiert und, falls gefunden, werden die
-	* dazugehörigen Werte den Properties dieser Klasse zugewiesen.
+	* werden die Schlï¿½ssel analysiert und, falls gefunden, werden die
+	* dazugehï¿½rigen Werte den Properties dieser Klasse zugewiesen.
 	*
-	* Nicht bekannte Schlüssel werden ignoriert.
+	* Nicht bekannte Schlï¿½ssel werden ignoriert.
 	*
 	* \see JSOptionsClass::getItem
 	*
@@ -1983,24 +1998,24 @@ public interface ISOSFtpOptions {
 	public abstract void setAllOptions(HashMap<String, String> pobjJSSettings) throws Exception; // public void setAllOptions (HashMap <String, String> JSSettings)
 
 	/**
-		* \brief CheckMandatory - prüft alle Muss-Optionen auf Werte
+		* \brief CheckMandatory - prï¿½ft alle Muss-Optionen auf Werte
 		*
 		* \details
 		* @throws Exception
 		*
 		* @throws Exception
-		* - wird ausgelöst, wenn eine mandatory-Option keinen Wert hat
+		* - wird ausgelï¿½st, wenn eine mandatory-Option keinen Wert hat
 		*/
 	public abstract void CheckMandatory() throws com.sos.JSHelper.Exceptions.JSExceptionMandatoryOptionMissing //
 	; // public void CheckMandatory ()
 
 	/**
 	*
-	* \brief CommandLineArgs - Übernehmen der Options/Settings aus der
+	* \brief CommandLineArgs - ï¿½bernehmen der Options/Settings aus der
 	* Kommandozeile
 	*
 	* \details Die in der Kommandozeile beim Starten der Applikation
-	* angegebenen Parameter werden hier in die HashMap übertragen und danach
+	* angegebenen Parameter werden hier in die HashMap ï¿½bertragen und danach
 	* den Optionen als Wert zugewiesen.
 	*
 	* \return void

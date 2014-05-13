@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -35,7 +50,7 @@ package sos.net;
 
 /**
  * <p>Title: </p>
- * <p>Description: Client für den Scheduler</p>
+ * <p>Description: Client fï¿½r den Scheduler</p>
  * <p>Copyright: Copyright (c) 2003</p>
  * <p>Company: SOS GmbH</p>
  * @author <a href="mailto:ghassan.beydoun@sos-berlin.com">Ghassan Beydoun</a>
@@ -63,7 +78,7 @@ public class SOSSchedulerCommand {
 
   private Socket socket = null;
 
-  /** timeout für getResponse in sekunden: default ist 5 sek. */
+  /** timeout fï¿½r getResponse in sekunden: default ist 5 sek. */
   private int timeout = 5;
 
 

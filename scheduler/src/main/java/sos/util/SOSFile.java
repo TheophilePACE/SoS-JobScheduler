@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -259,7 +274,7 @@ public class SOSFile {
 
 	/**
 	 * Kopiert eine Datei von Quelle zum Ziel. 
-	 * Hier kann zusätzlich angegeben werden, ob die Datei angehängt werden soll
+	 * Hier kann zusï¿½tzlich angegeben werden, ob die Datei angehï¿½ngt werden soll
 	 * 
 	 * @param dest
 	 * @param source
@@ -405,7 +420,7 @@ public class SOSFile {
 	}
 
 	/**
-	 * überprüft, ob die Datei in von einem anderen Prozess verwendet wird.
+	 * ï¿½berprï¿½ft, ob die Datei in von einem anderen Prozess verwendet wird.
 	 * Wenn ja, dann versucht es nochmal nach einer Sekunde. Die Anzahl der 
 	 * Versuche sind fnfmal.
 	 * @author mo

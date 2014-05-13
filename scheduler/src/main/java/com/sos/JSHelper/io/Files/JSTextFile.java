@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -65,7 +80,7 @@ plain-Text-File
 <category>File</category>
 </categories>
 <date>Samstag, 27. Oktober 2007</date>
-<copyright>© 2000, 2001 by SOS GmbH Berlin</copyright>
+<copyright>ï¿½ 2000, 2001 by SOS GmbH Berlin</copyright>
 <author>Klaus.Buettner@sos-berlin.com</author>
 <changes>
  <change who='KB' when='Samstag, 27. Oktober 2007' id='created'>
@@ -92,7 +107,7 @@ public class JSTextFile extends JSFile {
 	plain-Text-File
 	</para>
 	<para>
-	Initial-Wert (Default) ist "true" (ohne Anführungszeichen).
+	Initial-Wert (Default) ist "true" (ohne Anfï¿½hrungszeichen).
 	</para>
 	<mandatory>true</mandatory>
 	</description>
@@ -119,13 +134,13 @@ public class JSTextFile extends JSFile {
 	 * Die Methode ersetzt alle Vorkommen einer Zeichenfolge in der gesamten Datei
 	 * durch eine andere anzugebende Zeichenfolge.
 	 * 
-	 * @param pstrRegEx - zu ersetzende Zeichenfolge oder regulärer Ausdruck
+	 * @param pstrRegEx - zu ersetzende Zeichenfolge oder regulï¿½rer Ausdruck
 	 * @param pstrReplacement - einzusetzende Zeichenfolge
 	 * @throws IOException
 	 */
 	public void replaceString(String pstrRegEx, String pstrReplacement) throws IOException {
 
-		// TODO die zu ersetzenden Strings müssen als Stringpaare kommen
+		// TODO die zu ersetzenden Strings mï¿½ssen als Stringpaare kommen
 
 		String strFileN = this.getAbsolutePath();
 		File tempFile = new File(strFileN + "~");

@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -119,10 +134,10 @@ public class SOSExport {
         
         private boolean     dependent            = false;
         
-        /** Operation die durchgeführt wurde: Mögliche Operation ist insert, update oder delete*/
+        /** Operation die durchgefï¿½hrt wurde: Mï¿½gliche Operation ist insert, update oder delete*/
         private String     _operation            = null;
         
-        HashMap fieldsKeys = null; //Hilfsvariable: Beim operation delete werden hier Schlüsselfelder eingefügt
+        HashMap fieldsKeys = null; //Hilfsvariable: Beim operation delete werden hier Schlï¿½sselfelder eingefï¿½gt
 
         /**
          * Konstruktor
@@ -831,7 +846,7 @@ public class SOSExport {
      *            liefert
      *            
      * @param operation
-     *            welche operation wurde durchgeführt? insert, update oder delete
+     *            welche operation wurde durchgefï¿½hrt? insert, update oder delete
      *            
      * @return Lfd. Nr. der Abfrage
      * @throws java.lang.Exception
@@ -975,7 +990,7 @@ public class SOSExport {
      *            Inhalt in die unabh&auml;ngige Abfrage substituiert wird.
      *            
      * @param operation
-     *            welche operation wurde durchgeführt? insert, update oder delete
+     *            welche operation wurde durchgefï¿½hrt? insert, update oder delete
      *            
      * @param queryId
      *            Nr. der vorhergehenden Abfrage, die die Abfrageparameter
@@ -2014,14 +2029,14 @@ public class SOSExport {
     }
 
     /***************************************************************************
-     * Da es im SQL Statement Felder mit "AS" selektiert werden können, ordnet
+     * Da es im SQL Statement Felder mit "AS" selektiert werden kï¿½nnen, ordnet
      * diese Methode die originale Feldnamen zu dem neuen Feldnamen zu z.B :
      * select vorname as name,nachname from table [name] = vorname [nachname] =
      * nachname
      * 
      * @param stmt
      *            SQL Statement
-     * @return wenn select * leere HashMap, sonst HashMap mit dem Schlüssel
+     * @return wenn select * leere HashMap, sonst HashMap mit dem Schlï¿½ssel
      *         -neuer Feldname wert - alter Feldname
      **************************************************************************/
     private HashMap prepareGetFieldName(String stmt) throws Exception {
@@ -2063,7 +2078,7 @@ public class SOSExport {
     /**
      * da es vorkommen kann, dass mann einen Blob|Clob unter einem anderen Namen
      * selektiert, (select BLOB_FELD as BLOB ...) ermittelt diese Methode
-     * Blob|Clob Feldname für getBlob
+     * Blob|Clob Feldname fï¿½r getBlob
      * 
      * @param stmt
      *            gesamte SQL Statement

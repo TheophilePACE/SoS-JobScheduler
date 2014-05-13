@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -92,7 +107,7 @@ public class SOSVfsFtpFile extends SOSVfsCommonFile {
 		boolean flgResult = false;
 		logger.debug(SOSVfs_D_172.params(conMethodName, strFileName));
 		// TODO hier wird im aktuellen Verzeichnis gesucht. geht schief, wenn die datei im Subfolder ist
-		// TODO Der Dateiname darf hier nur aus dem Namen der Datei bestehen. Ist die Datei in einem Subfolder, dann muß der Subfolder
+		// TODO Der Dateiname darf hier nur aus dem Namen der Datei bestehen. Ist die Datei in einem Subfolder, dann muï¿½ der Subfolder
 		// ebenfalls Namensbestandteil sein.
 		// TODO im Moment kommt der Dateiname mal mit und mal ohne Pfadname hier an.
 		// TODO Methoden bauen: GibDateiNameOhnePFad und GibDateiNameMitPfad
@@ -502,15 +517,15 @@ public class SOSVfsFtpFile extends SOSVfsCommonFile {
 				try {
 					objInputStream.close();
 					objInputStream = null;
-					// nur rufen, wenn vorher ein FTP-Commando abgesetzt wurde. ansonsten hängt der Prozeß
+					// nur rufen, wenn vorher ein FTP-Commando abgesetzt wurde. ansonsten hï¿½ngt der Prozeï¿½
 					/**
-					 * nicht ganz klar, wann es notwendig, erlaubt und schädlich ist.
-					 * Hängt kein cmd, dann wird dieser Aufruf die Ftp-Session aufhängen.
+					 * nicht ganz klar, wann es notwendig, erlaubt und schï¿½dlich ist.
+					 * Hï¿½ngt kein cmd, dann wird dieser Aufruf die Ftp-Session aufhï¿½ngen.
 					 *
-					 * Auf alle Fälle muß es nach einem RETR und einem STOR kommen, andernfalls
+					 * Auf alle Fï¿½lle muï¿½ es nach einem RETR und einem STOR kommen, andernfalls
 					 * werden die Antworten auf Kommandos versetzt geliefert (es wird auf das vorletzte
-					 * Kommando geantwortet). Und das führt z.B. dazu, daß ein SIZE mit der NOOP-meldung
-					 * beantwortet wird. Folge: Datei nicht vorhanden, weil keine Größeninfo erkennbar.
+					 * Kommando geantwortet). Und das fï¿½hrt z.B. dazu, daï¿½ ein SIZE mit der NOOP-meldung
+					 * beantwortet wird. Folge: Datei nicht vorhanden, weil keine Grï¿½ï¿½eninfo erkennbar.
 					 */
 					objVFSHandler.CompletePendingCommand() ;
 				}
@@ -537,7 +552,7 @@ public class SOSVfsFtpFile extends SOSVfsCommonFile {
 				objO.flush();
 				objO.close();
 				objO = null;
-				// siehe kommentar bei closeInput (nur rufen, wenn vorher ein FTP-Commando abgesetzt wurde. ansonsten hängt der Prozeß
+				// siehe kommentar bei closeInput (nur rufen, wenn vorher ein FTP-Commando abgesetzt wurde. ansonsten hï¿½ngt der Prozeï¿½
 				objVFSHandler.CompletePendingCommand();
 				if (objVFSHandler.isNegativeCommandCompletion()) {
 					throw new JobSchedulerException(SOSVfs_E_175.params(strFileName, objVFSHandler.getReplyString()));

@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -68,7 +83,7 @@ import com.swtdesigner.SWTResourceManager;
  * 
  * Auswahl zwischen der Standalone Jobs und Auftragsgesteuerte Jobs.
  * 
- * Es werden im nächsten Dialog (Job Auswahl Dialoge) entsprechend Standalone Jobs oder 
+ * Es werden im nï¿½chsten Dialog (Job Auswahl Dialoge) entsprechend Standalone Jobs oder 
  * Auftragsgesteuerte Jobs zur Auswahl gestellt.
  * 
  * Die Kriterien stehen in der Job Dokumentation.
@@ -195,7 +210,7 @@ public class JobAssistentTypeForms {
 					butShow.setLayoutData(new GridData(GridData.END, GridData.CENTER, false, false));
 					butShow.addSelectionListener(new SelectionAdapter() {
 						public void widgetSelected(final SelectionEvent e) {
-							//dient nur für die Show Funktion 
+							//dient nur fï¿½r die Show Funktion 
 							Element job = new Element(conTagNameJOB);
 							Utils.setAttribute("order", isStandaloneJob ? "yes" : "no", job);
 							MainWindow.message(jobTypeShell, Utils.getElementAsString(job), SWT.OK );

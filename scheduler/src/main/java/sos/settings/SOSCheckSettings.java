@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -43,8 +58,8 @@ import sos.util.SOSString;
 
 /**
  * 
- * Diese Klasse interpretiert boolsche Ausdrücke.
- * Die Boolschen Ausdrücke bestehen aus den Operanten = "and" und "or". Die Klein- und Großschreibung
+ * Diese Klasse interpretiert boolsche Ausdrï¿½cke.
+ * Die Boolschen Ausdrï¿½cke bestehen aus den Operanten = "and" und "or". Die Klein- und Groï¿½schreibung
  * der Operanden ist unwichtig.
  * 
  * 
@@ -56,7 +71,7 @@ import sos.util.SOSString;
  * 
  * Konstruktor 1 und 2:
  * --------------------- 
- * zu den boolischen Ausdruck wird überprüft, ob ein Wert in der Hashtabelle existiert. Wenn ja, dann
+ * zu den boolischen Ausdruck wird ï¿½berprï¿½ft, ob ein Wert in der Hashtabelle existiert. Wenn ja, dann
  * wird dieses feld als true interpretiert. Sonst als False.
  * Z.B. 	boolische Austdruck: (name and vorname and strasse and plz) or kundennummer
  * 	   		HashMap besteht aus = (name="otto", vorname="hans", plz ="", kundennummer="123")
@@ -87,7 +102,7 @@ import sos.util.SOSString;
  * - sosLogger Objekt
  * 
  * 
- * @author Mürüvet Öksüz
+ * @author Mï¿½rï¿½vet ï¿½ksï¿½z
  *
  */
 public class SOSCheckSettings {
@@ -121,7 +136,7 @@ public class SOSCheckSettings {
 	/**
 	 * Konstruktor
 	 * @deprecated aus der Properties sectionMandatory_ wir nur ein Eintrag "mandatory" ausgelesen. In 
-	 * Zukunft kann nur der String als Parameter übergeben werden. Der Eintrag in sectionMandatory gibt  
+	 * Zukunft kann nur der String als Parameter ï¿½bergeben werden. Der Eintrag in sectionMandatory gibt  
 	 * den boolischen Ausdruck an.
 	 * @param Properties der Sektion Mandantory 
 	 * @param SOSLogger Objekt
@@ -247,7 +262,7 @@ public class SOSCheckSettings {
 	}
 	
 	/** 
-	 * Überprüft, ob das element in der condition existiert und einen
+	 * ï¿½berprï¿½ft, ob das element in der condition existiert und einen
 	 * Wert besitzt.
 	 * @param element
 	 * @return
@@ -286,7 +301,7 @@ public class SOSCheckSettings {
 	/**
 	 * Setzen der Werte der Condition. Die keys in der HashTable sind die Platzhalter 
 	 * in der condition. 
-	 * @param HashMap, dessen Keys Platzhalter für die Condition ist.  
+	 * @param HashMap, dessen Keys Platzhalter fï¿½r die Condition ist.  
 	 * @throws Exception
 	 */
 	public void setConditionValues(HashMap values_) throws Exception {
@@ -366,7 +381,7 @@ public class SOSCheckSettings {
 	
 	
 	/**
-	 * Die Einträge der Condition werden durch die Keys der conditionalValues ersetz.
+	 * Die Eintrï¿½ge der Condition werden durch die Keys der conditionalValues ersetz.
 	 * 
 	 * Ist ein Key nicht vorhanden, dann ist es ein false.
 	 * Ist der Key leer bzw. null, dann ist der Wert false
@@ -444,14 +459,14 @@ public class SOSCheckSettings {
 	
 	/**
 	 * 	Sort a String array using selection sort.
-	 *  desc boolean = true ist für das Aufsteigende Sortierung
-	 *  desc boolean = false ist für das Absteigende Sortierung
+	 *  desc boolean = true ist fï¿½r das Aufsteigende Sortierung
+	 *  desc boolean = false ist fï¿½r das Absteigende Sortierung
 	 * @param String[] eine Menge unsortierte String
 	 * @return String[] eine Menge der Sortierten String
 	 */  
 	private String[] sortDesc(String[] a, boolean desc) throws Exception {
 		String[] aa = null; //Hilfsvariable, wenn absteigen Sortiert werden soll
-		int len = -1; //Hilfsvariable, länge der Array
+		int len = -1; //Hilfsvariable, lï¿½nge der Array
 		try {
 			for (int i=0; i < a.length-1; i++) {
 				for (int j=i+1; j<a.length; j++) {
@@ -478,8 +493,8 @@ public class SOSCheckSettings {
 	}
 	
 	/**
-	 * Überprüft, ob der gegebene boolische Ausdruck ein gültiger Ausdruck ist.
-	 * 1. Überprüfung: Anzahl der geöffneten Klammer == Anzahl der geschlossene Klammern
+	 * ï¿½berprï¿½ft, ob der gegebene boolische Ausdruck ein gï¿½ltiger Ausdruck ist.
+	 * 1. ï¿½berprï¿½fung: Anzahl der geï¿½ffneten Klammer == Anzahl der geschlossene Klammern
 	 * 2. Grosschreibung in Kleinschreibung umwandeln
 	 */
 	private void checkCondition() throws Exception {

@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -42,11 +57,11 @@ Montag, 15. Oktober 2007, Klaus.Buettner@sos-berlin.com (KB)
 <docu type="smcw" version="1.0">
 <project>com.sos.IDocs</project>
 <name>JSFileListEntry.java</name>
-<title>Datenstruktur für Dateiverarbeitung
+<title>Datenstruktur fï¿½r Dateiverarbeitung
 </title>
 <description>
 <para>
-Diese Klasse repäsentiert eine Datenstruktur für die Dateiverarbeitung
+Diese Klasse repï¿½sentiert eine Datenstruktur fï¿½r die Dateiverarbeitung
 von lokalen und remote Dateien.
 </para>
 </description>
@@ -60,7 +75,7 @@ von lokalen und remote Dateien.
 <category>Datenstruktur</category>
 </categories>
 <date>Montag, 15. Oktober 2007</date>
-<copyright>© 2000, 2001 by SOS GmbH Berlin</copyright>
+<copyright>ï¿½ 2000, 2001 by SOS GmbH Berlin</copyright>
 <author>Klaus.Buettner@sos-berlin.com</author>
 <changes>
 <change who='KB' when='Montag, 15. Oktober 2007' id='created'>
@@ -81,14 +96,14 @@ APL/Software GmbH - Berlin
 Montag, 15. Oktober 2007, Klaus.Buettner@sos-berlin.com (KB)
 * <br />---------------------------------------------------------------------------
 * </p>
-* JSFileListEntry - Datenstruktur für Dateiverarbeitung
+* JSFileListEntry - Datenstruktur fï¿½r Dateiverarbeitung
 * <p>
-* Diese Klasse repäsentiert eine Datenstruktur für die Dateiverarbeitung
+* Diese Klasse repï¿½sentiert eine Datenstruktur fï¿½r die Dateiverarbeitung
 * von lokalen und remote Dateien.
 * </p>
 * <p>
 * Verwendung findet diese Struktur beim download von Dateien, deren Name
-* über einen (regulären) Ausdruck definiert ist und dabei dann mehr als
+* ï¿½ber einen (regulï¿½ren) Ausdruck definiert ist und dabei dann mehr als
 * eine Datei relevant ist.
 * </p>
 * @author Klaus.Buettner@sos-berlin.com

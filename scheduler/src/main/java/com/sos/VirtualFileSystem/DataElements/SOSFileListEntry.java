@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -72,14 +87,14 @@ APL/Software GmbH - Berlin
 Montag, 15. Oktober 2007, Klaus.Buettner@sos-berlin.com (KB)
 * <br />---------------------------------------------------------------------------
 * </p>
-* SOSFileListEntry - Datenstruktur für Dateiverarbeitung
+* SOSFileListEntry - Datenstruktur fï¿½r Dateiverarbeitung
 * <p>
-* Diese Klasse repräsentiert eine Datenstruktur für die Dateiverarbeitung
+* Diese Klasse reprï¿½sentiert eine Datenstruktur fï¿½r die Dateiverarbeitung
 * von lokalen und remote Dateien.
 * </p>
 * <p>
 * Verwendung findet diese Struktur beim download von Dateien, deren Name
-* über einen (regulären) Ausdruck definiert ist und dabei dann mehr als
+* ï¿½ber einen (regulï¿½ren) Ausdruck definiert ist und dabei dann mehr als
 * eine Datei relevant ist.
 * </p>
 * @author Klaus.Buettner@sos-berlin.com
@@ -688,14 +703,14 @@ public class SOSFileListEntry extends SOSVfsMessageCodes implements Runnable, IJ
 		objOptions = pobjOptions;
 	} // private void Options
 
-	// TODO polling über die File-Größe
+	// TODO polling ï¿½ber die File-Grï¿½ï¿½e
 
 	/**
-	 * Diese Routine prüft *nur* auf dem lokalen fileSystem und ist aus der "Send"-Klasse kopiert.
-	 * hier hat sie nichts zu suchen, da das polling für dateien in der Engine erfolgen muss,
-	 * unabhängig davon, wo die Dateien liegen. Es muß *immer* die Datasource gepollt werden.
+	 * Diese Routine prï¿½ft *nur* auf dem lokalen fileSystem und ist aus der "Send"-Klasse kopiert.
+	 * hier hat sie nichts zu suchen, da das polling fï¿½r dateien in der Engine erfolgen muss,
+	 * unabhï¿½ngig davon, wo die Dateien liegen. Es muï¿½ *immer* die Datasource gepollt werden.
 	 *
-	 * Auf alle Fälle muß hier über das Vfs auf die Datei(en) zugegriffen werden.
+	 * Auf alle Fï¿½lle muï¿½ hier ï¿½ber das Vfs auf die Datei(en) zugegriffen werden.
 	 */
 	public boolean CheckFileSizeIsChanging() throws Exception {
 		@SuppressWarnings("unused")
@@ -715,7 +730,7 @@ public class SOSFileListEntry extends SOSVfsMessageCodes implements Runnable, IJ
 			//				logger.info(SOSVfs_I_222.params(fileName));
 			//				// TODO in die Implementation des ISOSVirtualFile verschieben
 			//				File fleFile = new File(fileName);
-			//				// TODO über Option auf FileSize ausweichen, da MD5 bei großen dateien eine ziemliche Last erzeugt
+			//				// TODO ï¿½ber Option auf FileSize ausweichen, da MD5 bei groï¿½en dateien eine ziemliche Last erzeugt
 			//				lastmd5file = sos.util.SOSCrypt.MD5encrypt(fleFile);
 			//				Thread.sleep((long) delay * 1000);
 			//				for (int i = 0; i < nrOfTries; i++) {
@@ -790,10 +805,10 @@ public class SOSFileListEntry extends SOSVfsMessageCodes implements Runnable, IJ
 				throw new JobSchedulerException(SOSVfs_E_226.params(strSourceFileName));
 			}
 			/**
-			 * hier nicht verwenden, weil es zu spät kommt.
+			 * hier nicht verwenden, weil es zu spï¿½t kommt.
 			 */
 			// if (CheckFileSizeIsChanging() == false) {
-			// // TODO Exception auslösen
+			// // TODO Exception auslï¿½sen
 			// return;
 			// }
 
@@ -809,8 +824,8 @@ public class SOSFileListEntry extends SOSVfsMessageCodes implements Runnable, IJ
 			String localDir = objOptions.SourceDir.Value();
 			boolean flgIncludeSubdirectories = objOptions.recursive.value();
 			if (flgIncludeSubdirectories == true) {
-				// TODO Das Erstellen des Verzeichnis muß eine separate Methode werden
-				// Überprüfen, ob das Verzeichnis auf den Target (-Server) existiert, wenn nicht dann soll das gleiche Verzeichnis generiert
+				// TODO Das Erstellen des Verzeichnis muï¿½ eine separate Methode werden
+				// ï¿½berprï¿½fen, ob das Verzeichnis auf den Target (-Server) existiert, wenn nicht dann soll das gleiche Verzeichnis generiert
 				// werden
 				if (objSourceFile.getParentVfs() != null && objSourceFile.getParentVfsFile().isDirectory()) {
 					subPath = strSourceFileName.substring(localDir.length()); // Unterverzeichnisse sind alle Verzeichnisse unterhalb
@@ -820,11 +835,11 @@ public class SOSFileListEntry extends SOSVfsMessageCodes implements Runnable, IJ
 						subPath = adjustFileSeparator(subPath);
 						subPath = subPath.substring(0, subPath.length() - new File(strSourceFileName.toString()).getName().length() - 1);
 						// logger.debug(SOSVfs_D_227.params(subPath));
-						// TODO nur feststellen, ob es den schon gibt. Neue Methode einführen, evtl. FileExists/Folderexists
+						// TODO nur feststellen, ob es den schon gibt. Neue Methode einfï¿½hren, evtl. FileExists/Folderexists
 						// String[] ftpFiles = objDataTargetClient.listNames(strTargetFolderName + "/" + subPath);
 						// if (ftpFiles == null || ftpFiles.length == 0) {
 						
-						// File.separator führte zu Unterverzeichnissen mit führendem Backslash
+						// File.separator fï¿½hrte zu Unterverzeichnissen mit fï¿½hrendem Backslash
 						//objDataTargetClient.mkdir(strTargetFolderName + File.separator + subPath);
 						objDataTargetClient.mkdir(strTargetFolderName + "/" + subPath);
 						// }
@@ -835,7 +850,7 @@ public class SOSFileListEntry extends SOSVfsMessageCodes implements Runnable, IJ
 				}
 			}
 
-			this.getTargetFile(objOptions); // TODO Namen ändern
+			this.getTargetFile(objOptions); // TODO Namen ï¿½ndern
 
 			if (objOptions.transactional.value() == true) {
 				this.setTransactionalLocalFile();
@@ -923,8 +938,8 @@ public class SOSFileListEntry extends SOSVfsMessageCodes implements Runnable, IJ
 				if (objOptions.transactional.value() == false) {
 					flgFileExists = objTargetFile.FileExists();
 					if (objOptions.overwrite_files.value() == true & flgFileExists == true) {
-						// hier werden Dateien gelöscht, vor dem umbenennen.
-						// TODO Besser: auch erstmal umbenennen und dann erst löschen
+						// hier werden Dateien gelï¿½scht, vor dem umbenennen.
+						// TODO Besser: auch erstmal umbenennen und dann erst lï¿½schen
 						objTargetFile.delete();
 					}
 					RenameTargetFile(MakeFullPathName(objOptions.TargetDir.Value(), this.TargetFileName()));
@@ -1279,8 +1294,8 @@ public class SOSFileListEntry extends SOSVfsMessageCodes implements Runnable, IJ
 		objSchedulerOrderParameterSet.put("guid", guid); // 1- GUID
 		objSchedulerOrderParameterSet.put("mandator", mandator); // 2- mandator: default SOS
 		objSchedulerOrderParameterSet.put("transfer_timestamp", transfer_timestamp); // 3- timestamp: Zeitstempel im ISO-Format
-		objSchedulerOrderParameterSet.put("pid", pid); // 4- pid= Environment PID | 0 für Windows
-		objSchedulerOrderParameterSet.put("ppid", ppid); // 5- ppid= Environment PPID | 0 für Windows
+		objSchedulerOrderParameterSet.put("pid", pid); // 4- pid= Environment PID | 0 fï¿½r Windows
+		objSchedulerOrderParameterSet.put("ppid", ppid); // 5- ppid= Environment PPID | 0 fï¿½r Windows
 		objSchedulerOrderParameterSet.put("operation", operation); // 6- operation: send|receive
 		objSchedulerOrderParameterSet.put("localhost", localhost); // 7- local host
 		objSchedulerOrderParameterSet.put("localhost_ip", localhost_ip); // 8- local host IP adresse
@@ -1311,7 +1326,7 @@ public class SOSFileListEntry extends SOSVfsMessageCodes implements Runnable, IJ
 		objSchedulerOrderParameterSet.put("jump_user", jump_user); // 28
 		// TODO custom-fields einbauen
 		/**
-		 * bei SOSFTP ist es möglich "custom" Felder zu definieren, die in der Transfer History als Auftragsparameter mitgeschickt werden.
+		 * bei SOSFTP ist es mï¿½glich "custom" Felder zu definieren, die in der Transfer History als Auftragsparameter mitgeschickt werden.
 		 * Damit man diese Felder identifizieren kann, werden hier Parameter defininiert, die beim Auftrag dabei sind, aber keine
 		 * "custom" Felder sind
 		 *

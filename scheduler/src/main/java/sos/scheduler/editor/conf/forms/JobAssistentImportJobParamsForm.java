@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -129,7 +144,7 @@ public class JobAssistentImportJobParamsForm {
 	private String													xmlPaths									= null;
 	private Text													txtName										= null;
 	private JobListener												joblistener									= null;
-	// Tabelle aus der JobForm: Falls die Klasse über den Import Button vom JobFrom erfolgte
+	// Tabelle aus der JobForm: Falls die Klasse ï¿½ber den Import Button vom JobFrom erfolgte
 	private Table													tParameter									= null;
 	private Button													butFinish									= null;
 	private Button													butApply									= null;
@@ -150,8 +165,8 @@ public class JobAssistentImportJobParamsForm {
 	private Element													jobBackUp									= null;
 	private ScriptJobMainForm												jobForm										= null;
 	private JobDocumentationForm									jobDocForm									= null;
-	/** Hilsvariable für das Schliessen des Dialogs. 
-	 * Das wird gebraucht wenn das Dialog über den "X"-Botten (oben rechts vom Dialog) geschlossen wird .*/
+	/** Hilsvariable fï¿½r das Schliessen des Dialogs. 
+	 * Das wird gebraucht wenn das Dialog ï¿½ber den "X"-Botten (oben rechts vom Dialog) geschlossen wird .*/
 	private boolean													closeDialog									= false;
 	private sos.scheduler.editor.conf.listeners.ParameterListener	paramListener								= null;
 	private Text													refreshDetailsText							= null;
@@ -435,7 +450,7 @@ public class JobAssistentImportJobParamsForm {
 							}
 					if (Options.getPropertyBoolean("editor.job.show.wizard"))
 						Utils.showClipboard(Utils.getElementAsString(joblistener.getJob()), jobParameterShell, false, null, false, null, true);
-					// Event auslösen
+					// Event auslï¿½sen
 //					if (refreshDetailsText != null)
 //ur 2011-11-09						refreshDetailsText.setText("X");
 //					closeDialog = true;
@@ -649,7 +664,7 @@ public class JobAssistentImportJobParamsForm {
 						TableItem item = tblSelectedParams.getItem(i);
 						if (item.getBackground().equals(Options.getRequiredColor())) {
 							remItem = (remItem != null ? remItem : "") + "\n\t" + item.getText(0);
-							// merke die Parameter, die nicht gelöscht werden sollen, weil sie required sind
+							// merke die Parameter, die nicht gelï¿½scht werden sollen, weil sie required sind
 							HashMap<String, Object> h = new HashMap<String, Object>();
 							h.put(conParamNAME, item.getText(0));
 							h.put(conParamAttributeDEFAULT_VALUE, item.getText(1) != null ? item.getText(1) : "");
@@ -788,7 +803,7 @@ public class JobAssistentImportJobParamsForm {
 				}
 			}
 
-			//			eventuell vorhandene Parameters aus der Job Editor hinzufügen								
+			//			eventuell vorhandene Parameters aus der Job Editor hinzufï¿½gen								
 			paramListener.fillParams(jobP, tblSelectedParams, true);
 
 			for (int i = 0; i < listOfRequired.size(); i++) {
@@ -928,8 +943,8 @@ public class JobAssistentImportJobParamsForm {
 	}
 
 	/**
-	 * Der Wizard wurde für ein bestehende Job gestartet. 
-	 * Beim verlassen der Wizard ohne Speichern, muss der bestehende Job ohne Änderungen wieder zurückgesetz werden.
+	 * Der Wizard wurde fï¿½r ein bestehende Job gestartet. 
+	 * Beim verlassen der Wizard ohne Speichern, muss der bestehende Job ohne ï¿½nderungen wieder zurï¿½ckgesetz werden.
 	 * @param backUpJob
 	 */
 	public void setBackUpJob(final Element backUpJob, final ScriptJobMainForm jobForm_) {
@@ -1010,7 +1025,7 @@ public class JobAssistentImportJobParamsForm {
 	}
 
 	// Details hat einen anderen Aufbau der Parameter Description.
-	// Beim generieren der Parameter mit Wizard müssen die Parameterdescriptchen anders aufgebaut werden.
+	// Beim generieren der Parameter mit Wizard mï¿½ssen die Parameterdescriptchen anders aufgebaut werden.
 	public void setDetailsRefresh(final Text refreshDetailsText_) {
 		refreshDetailsText = refreshDetailsText_;
 	}

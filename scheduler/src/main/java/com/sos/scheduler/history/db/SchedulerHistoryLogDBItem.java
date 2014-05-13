@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -89,8 +104,8 @@ public class SchedulerHistoryLogDBItem extends  DbItem {
 	}
 
    //Wenn PGSQL verwendet wird, muss die Annotation LOB entfernt werden.
-   //Es gibt in der Auslieferung den JAR com.sos.hibernate_pgsql.jar, der nur diese eine Klasse ohne @LOB enthält
-   //com.sos.hibernate_pgsql.jar muss dann dem Klassenpfad hinzugefügt werden, wenn PGSQL verwendet wird.
+   //Es gibt in der Auslieferung den JAR com.sos.hibernate_pgsql.jar, der nur diese eine Klasse ohne @LOB enthï¿½lt
+   //com.sos.hibernate_pgsql.jar muss dann dem Klassenpfad hinzugefï¿½gt werden, wenn PGSQL verwendet wird.
   	
 	  @Lob
 	  @Column(name="`LOG`", nullable=true)

@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -83,7 +98,7 @@ public class SOSOptionFolderName extends SOSOptionFileName {
 	*/
 	@JSOptionDefinition(name = "CreateFolder", value = "true", description = "Folder anlegen, wenn noch nicht vorhanden", key = "CreateFolder", type = "JSOptionBoolean", mandatory = false)
 	public SOSOptionBoolean	CreateFolder	= new SOSOptionBoolean(objParentClass, // Verweis auf die SOSOptionClass-Instanz
-													".CreateFolder", // Schlüssel, i.d.r. identisch mit dem Namen der Option
+													".CreateFolder", // Schlï¿½ssel, i.d.r. identisch mit dem Namen der Option
 													"Folder anlegen, wenn noch nicht vorhanden", // Kurzbeschreibung
 													"true", // Wert
 													"true", // defaultwert
@@ -133,7 +148,7 @@ public class SOSOptionFolderName extends SOSOptionFileName {
 			}
 
 			if (objParentClass != null) {
-				// prüfen, ob es den Folder gibt ...
+				// prï¿½fen, ob es den Folder gibt ...
 //				this.strValue = this.objParentClass.CheckFolder(this.strValue, conMethodName, this.CreateFolder.flgValue);
 			}
 		}

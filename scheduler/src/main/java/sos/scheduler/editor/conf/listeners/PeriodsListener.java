@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -133,7 +148,7 @@ public class PeriodsListener {
 		if(job.getParentElement()==null)
 			return false;		
 
-		//mögliche Vaterknoten herausfinden
+		//mï¿½gliche Vaterknoten herausfinden
 		while (job != null 
 				&& !job.getName().equals("job") 
 				&& !job.getName().equals("add_order")
@@ -184,7 +199,7 @@ public class PeriodsListener {
 				String date = sAT.substring(0, 10);				
 				String time = sAT.substring((sAT.indexOf(" ") > -1 ? sAT.indexOf(" ") + 1 : sAT.length()));
 				if(time.length()==0) {
-					//at ohne Zeitangabe werden gelöscht
+					//at ohne Zeitangabe werden gelï¿½scht
 					remList.add(at);
 				} else {					
 					if(date.equalsIgnoreCase(Utils.getAttributeValue("date", _parent)) ||
@@ -236,7 +251,7 @@ public class PeriodsListener {
 				Element el = (Element)(_listOfAt.get(i));	
 
 				if(_list.size()==0 && _listOfAt.size()==1) {
-					//das letzte at Element wird gelöscht. Das Datum steht auf der Treeview
+					//das letzte at Element wird gelï¿½scht. Das Datum steht auf der Treeview
 					String[] date = Utils.getAttributeValue("at", el).substring(0, 10).split("-");
 
 					DateListener dateListener = new DateListener(_dom, _parent.getParentElement(), 1); 
@@ -344,7 +359,7 @@ public class PeriodsListener {
 
 
 	/**
-	 * Überprüft, ob ein das Period Element absolute_repeat oder repeat Attribute har.
+	 * ï¿½berprï¿½ft, ob ein das Period Element absolute_repeat oder repeat Attribute har.
 	 * Es ist nur eins erlaubt.
 	 * @return
 	 */
@@ -362,7 +377,7 @@ public class PeriodsListener {
 	}
 
 	/**
-	 * Überprüft, ob Element p ein repeat bzw. absolute_repeat Attribut har
+	 * ï¿½berprï¿½ft, ob Element p ein repeat bzw. absolute_repeat Attribut har
 	 * @param p
 	 * @return
 	 */

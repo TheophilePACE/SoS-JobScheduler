@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -35,10 +50,10 @@ package com.sos.JSHelper.DataElements;
 /**
  * \class JSDataElement
  *
- * \brief JSDataElement - Basisklasse für die Datenelement-Klassen des Dataswitch
+ * \brief JSDataElement - Basisklasse fï¿½r die Datenelement-Klassen des Dataswitch
  *
  * \details
- * Basisklasse (SuperKlasse) für die Datenelement-Klassen des Dataswitch
+ * Basisklasse (SuperKlasse) fï¿½r die Datenelement-Klassen des Dataswitch
  *
  * \section JSDataElement_intro_sec Introduction
  *
@@ -79,7 +94,7 @@ public class JSDataElement extends JSToolBox {
 	public static boolean	flgTrimValues					= false;
 	public static boolean	flgOmitEmptyXMLTags				= true;
 	/**
-	 * steuert, ob bei einem überschreiten der Feldlänge eine Exception ausgelöst werden soll
+	 * steuert, ob bei einem ï¿½berschreiten der Feldlï¿½nge eine Exception ausgelï¿½st werden soll
 	 */
 	public static boolean	flgExceptionOnFieldTruncation	= true;
 
@@ -95,16 +110,16 @@ public class JSDataElement extends JSToolBox {
 
 	private String			strXMLTagName					= "";
 	private boolean			flgOmitXMLTag					= false;
-	private String			strFormatString					= "";				// gehört in Integer, Double, etc Datenelement
+	private String			strFormatString					= "";				// gehï¿½rt in Integer, Double, etc Datenelement
 
-	// EQCPN-2009-04-25: Formatprüfung
-	private String			strFormatPattern				= "";				// Muster für die Formatierungsprüfung
+	// EQCPN-2009-04-25: Formatprï¿½fung
+	private String			strFormatPattern				= "";				// Muster fï¿½r die Formatierungsprï¿½fung
 	private boolean			flgAllowEmptyValue				= true;			// Leeres Feld erlaubt
 
 	private boolean			flgTrimValue					= false;
 
 	/**
-	 * \todo Werte(bereichs)prüfung mit dem regulären Ausdruck einbauen
+	 * \todo Werte(bereichs)prï¿½fung mit dem regulï¿½ren Ausdruck einbauen
 	 */
 
 	@SuppressWarnings("unused")
@@ -318,7 +333,7 @@ public class JSDataElement extends JSToolBox {
 			if (strValue.equals(pstrValue) == false) {
 				isDirty(true);
 				/**
-				 * \todo über den regexp prüfen, ob die Werte syntaktisch korrekt sind
+				 * \todo ï¿½ber den regexp prï¿½fen, ob die Werte syntaktisch korrekt sind
 				 */
 				strValue = pstrValue;
 				if (flgTrimValue || flgTrimValues) {
@@ -409,7 +424,7 @@ public class JSDataElement extends JSToolBox {
 	}
 
 	/**
-	 * \brief Size - Größe des Datenelements festlegen
+	 * \brief Size - Grï¿½ï¿½e des Datenelements festlegen
 	 *
 	 * \details
 	 *
@@ -427,7 +442,7 @@ public class JSDataElement extends JSToolBox {
 	}
 
 	/**
-	 * \brief Size - Größe des Datenelements liefern
+	 * \brief Size - Grï¿½ï¿½e des Datenelements liefern
 	 *
 	 * \details
 	 *
@@ -588,7 +603,7 @@ public class JSDataElement extends JSToolBox {
 				strFormatString = pstrFormatString;
 			}
 			else {
-				// Default-Initialisierung nicht überschreiben
+				// Default-Initialisierung nicht ï¿½berschreiben
 			}
 		}
 //- </newcode>
@@ -607,7 +622,7 @@ public class JSDataElement extends JSToolBox {
 
 	/**
 	 *
-	 * \brief FormatString - liefert den für das Datenelement definierten FormatString
+	 * \brief FormatString - liefert den fï¿½r das Datenelement definierten FormatString
 	 *
 	 * \details
 	 *
@@ -633,18 +648,18 @@ public class JSDataElement extends JSToolBox {
 	 * \brief FormattedValue - Liefert den Wert des Elements formatiert
 	 *
 	 * \details
-	 * das Format (die Edit-Maske) wird über die Eigenschaft FormatString
+	 * das Format (die Edit-Maske) wird ï¿½ber die Eigenschaft FormatString
 	 * definiert.
 	 *
 	 * Wenn kein Format-String definiert ist, so wird der Wert als String
-	 * zurückgegeben.
+	 * zurï¿½ckgegeben.
 	 *
 	 * \return String
 	 *
 	 * @return
 	 */
 	public String FormattedValue() {
-		// nur überschreibbar
+		// nur ï¿½berschreibbar
 
 		return this.Value();
 	}
@@ -770,8 +785,8 @@ public class JSDataElement extends JSToolBox {
 	 * \brief BuildRecord
 	 *
 	 * \details
-	 * Mit dieser Methode wird der aktuelle Wert für das Datenfeld in einen "festen" Record (z.B. das Segment eines IDocs)
-	 * an die definierte Stelle in der definierten Länge eingesetzt.
+	 * Mit dieser Methode wird der aktuelle Wert fï¿½r das Datenfeld in einen "festen" Record (z.B. das Segment eines IDocs)
+	 * an die definierte Stelle in der definierten Lï¿½nge eingesetzt.
 	 *
 	 * eigentlich nehmen wir den Wert wie er ist.
 	 * Ist allerdings ein format-string definiert, dann wird der
@@ -830,11 +845,11 @@ public class JSDataElement extends JSToolBox {
 	}
 
 	/**
-	 * \brief setFormatPattern - Muster für die Formatprüfung vorgeben
+	 * \brief setFormatPattern - Muster fï¿½r die Formatprï¿½fung vorgeben
 	 *
 	 * \details
-	 * Diese Methode setzt das Muster für einen regulären Ausdruck, der in der Methode
-	 * checkFormatPattern() zur formalen Prüfung des Feldwertes verwendet wird.
+	 * Diese Methode setzt das Muster fï¿½r einen regulï¿½ren Ausdruck, der in der Methode
+	 * checkFormatPattern() zur formalen Prï¿½fung des Feldwertes verwendet wird.
 	 *
 	 * @param pstrFormatPattern
 	 */
@@ -848,7 +863,7 @@ public class JSDataElement extends JSToolBox {
 	 * \brief allowEmptyValue - Leere Feldwerte erlauben
 	 *
 	 * \details
-	 * Bestimmt, ob die Formatprüfung auch bei leeren Felder stattfindet (pflgAllowEmptyValue = false).
+	 * Bestimmt, ob die Formatprï¿½fung auch bei leeren Felder stattfindet (pflgAllowEmptyValue = false).
 	 *
 	 * @param pflgAllowEmptyValue
 	 */
@@ -857,20 +872,20 @@ public class JSDataElement extends JSToolBox {
 	}
 
 	/**
-	 * \brief Formale Prüfung des Feldinhaltes
+	 * \brief Formale Prï¿½fung des Feldinhaltes
 	 *
 	 * \details
-	 * Vor Aufruf dieser Methode muß mit setFormatPattern() ein Muster zur Feldprüfung angegeben werden.
+	 * Vor Aufruf dieser Methode muï¿½ mit setFormatPattern() ein Muster zur Feldprï¿½fung angegeben werden.
 	 * Im Allgemeinen findet dies in der Methode doInit() der abgeleiteten Klasse statt.
 	 *
-	 * Das Muster gibt einen regulären Ausdruck vor, gegen den der Feldinhalt geprüft wird.
+	 * Das Muster gibt einen regulï¿½ren Ausdruck vor, gegen den der Feldinhalt geprï¿½ft wird.
 	 * Entspricht der Feldinhalt nicht dem vorgegebenen Muster wird eine FormatPatternException
-	 * ausgelöst.
+	 * ausgelï¿½st.
 	 *
 	 * @throws FormatPatternException
 	 */
 	public void checkFormatPattern() throws FormatPatternException {
-		if (isNotEmpty(strFormatPattern)) { // Keine Formatprüfung ohne Pattern
+		if (isNotEmpty(strFormatPattern)) { // Keine Formatprï¿½fung ohne Pattern
 			if (flgAllowEmptyValue == false || !this.Value().trim().equals("")) {
 				final Pattern objP = Pattern.compile(strFormatPattern);
 				final Matcher objM = objP.matcher(this.Value());
@@ -924,9 +939,9 @@ public class JSDataElement extends JSToolBox {
 	 * anderen DatenElements.
 	 * 
 	 * Ist der Parameter nicht vom Typ String oder JSDataElement, so wird ein Objektvergleich
-	 * durchgeführt.
+	 * durchgefï¿½hrt.
 	 * 
-	 * \return true = Identität, false = keine Identität
+	 * \return true = Identitï¿½t, false = keine Identitï¿½t
 	 *
 	 * @param pobjO (String, JSDataElement, Object)
 	 */

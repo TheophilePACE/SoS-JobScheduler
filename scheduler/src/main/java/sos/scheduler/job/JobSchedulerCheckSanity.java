@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -52,11 +67,11 @@ import sos.util.SOSString;
 
 
 /**
- * <p>Job zum Überprüfen von Resourcen, die der Scheduler benötigt</p>
+ * <p>Job zum ï¿½berprï¿½fen von Resourcen, die der Scheduler benï¿½tigt</p>
  * <h3>Konfiguration:</h3>
  * <p>
- * Der Job kann über die Datenbank des Schedulers, Einstellungen aus der factory.ini-Datei
- * und über Job-Parameter konfiguriert werden. Dabei gilt folgende Hierarchie:
+ * Der Job kann ï¿½ber die Datenbank des Schedulers, Einstellungen aus der factory.ini-Datei
+ * und ï¿½ber Job-Parameter konfiguriert werden. Dabei gilt folgende Hierarchie:
  * Job-Parameter haben Vorrang vor factory.ini, factory.ini vor Datenbank, 
  * Datenbank vor defaults</p>
  * 
@@ -66,26 +81,26 @@ import sos.util.SOSString;
  * <p>Je nach Konfigurationsort sind die Einstellungen wie folgt anzugeben:</p>
  * <h4>Job-Parameter, ini-Datei:</h4>
  * <p>
- * Jeweils drei Settings gehören zusammen. Diese tragen die Namen 
- * "category_n", "subtype_n", "value_n" mit gleicher Zahl n für alle drei
- * Für weitere Einstellungen ist n zu inkrementieren. n muss bei 1 
- * anfangen, die Werte dürfen keine Lücken aufweisen.</p>
+ * Jeweils drei Settings gehï¿½ren zusammen. Diese tragen die Namen 
+ * "category_n", "subtype_n", "value_n" mit gleicher Zahl n fï¿½r alle drei
+ * Fï¿½r weitere Einstellungen ist n zu inkrementieren. n muss bei 1 
+ * anfangen, die Werte dï¿½rfen keine Lï¿½cken aufweisen.</p>
  * 
  * <h4>Datenbank:</h4>
  * <p>
  * In der Tabelle SCHEDULER_SANITY_REFERENCES existieren entsprechende Felder
- * "CATEGORY", "SUBTYPE", "VALUE". Zusaätzlich sollte die ID des entsprechenden
- * Schedulers angegeben werden, ist sie null, gelten die Einstellungen für alle
+ * "CATEGORY", "SUBTYPE", "VALUE". Zusaï¿½tzlich sollte die ID des entsprechenden
+ * Schedulers angegeben werden, ist sie null, gelten die Einstellungen fï¿½r alle
  * Scheduler, die diese Datenbank verwenden.</p>
  * 
  * <h4>Kategorien:</h4>
  * 
- * <p><strong>disk_space:</strong> Überprüfung des Festplattenplatzes, SUBTYPE gibt das Verzeichnis 
- * 			   an, dessen Platz geprüft werden soll, Value gibt den minimal
+ * <p><strong>disk_space:</strong> ï¿½berprï¿½fung des Festplattenplatzes, SUBTYPE gibt das Verzeichnis 
+ * 			   an, dessen Platz geprï¿½ft werden soll, Value gibt den minimal
  * 			   erlaubten Wert an, bevor eine Warnung ausgegeben wird.
  * </p>
  * 
- * <p><strong>free_memory:</strong> Überprüfung des Speichers. Value gibt den minmal erlaubten Wert
+ * <p><strong>free_memory:</strong> ï¿½berprï¿½fung des Speichers. Value gibt den minmal erlaubten Wert
  * 				in Bytes an. SUBTYPE kann sein:
  * 				<ul> 
  * 				<li>jvm: Freier Speicher innerhalb der java virtual machine</li>
@@ -111,7 +126,7 @@ public class JobSchedulerCheckSanity extends JobSchedulerJob {
     //private Connection connection = null;    
      
     
-    /** Prüfungskategorien */
+    /** Prï¿½fungskategorien */
     private Properties checkReferences = null;
     
     /** Parameter: check disk space */
@@ -130,10 +145,10 @@ public class JobSchedulerCheckSanity extends JobSchedulerJob {
     /** Parameter: check minimum available memory */
     private long minMemorySize = 0;
     
-    /** Attribut: maxRetryConnectCount: Maximale Anzahl Versuche für Verbindungsaufbau bis Fehlerzustand erreicht ist */
+    /** Attribut: maxRetryConnectCount: Maximale Anzahl Versuche fï¿½r Verbindungsaufbau bis Fehlerzustand erreicht ist */
     private int maxRetry			= 20; 
 
-    /** Attribut: maxRetryConnectInterval: Zeitintervall für Wiederholungsversuche für Verbindungsaufbau wenn Fehlerzustand erreicht ist */
+    /** Attribut: maxRetryConnectInterval: Zeitintervall fï¿½r Wiederholungsversuche fï¿½r Verbindungsaufbau wenn Fehlerzustand erreicht ist */
     private int maxRetryInterval			= 14400; // alle 4 Stunden 
     
     private HashMap diskChecks;
@@ -422,9 +437,9 @@ public class JobSchedulerCheckSanity extends JobSchedulerJob {
     }
     
     /**
-     * Überprüft den Platz auf den in der Hashmap diskChecks(User)
+     * ï¿½berprï¿½ft den Platz auf den in der Hashmap diskChecks(User)
      * angegebenen Verzeichnissen
-     * @param user bei true wird der für den Scheduler user verfügbare Platz überprüft
+     * @param user bei true wird der fï¿½r den Scheduler user verfï¿½gbare Platz ï¿½berprï¿½ft
      * @throws Exception
      */
     private void checkDiskSpace(boolean user) throws Exception{
@@ -518,7 +533,7 @@ public class JobSchedulerCheckSanity extends JobSchedulerJob {
     private long getFreeSpaceOnUnix(String path) throws Exception
     {
         long bytesFree = -1;
-        // -B 1 block Größe 1 Byte
+        // -B 1 block Grï¿½ï¿½e 1 Byte
         Process p = Runtime.getRuntime().exec("df -B 1 " + "/" + path);
         InputStream reader = new BufferedInputStream(p.getInputStream());
         StringBuffer buffer = new StringBuffer();

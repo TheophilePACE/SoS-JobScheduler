@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -43,18 +58,18 @@ package com.sos.jitl.eventing;
 
 
 // TODO <start_job> started auch jobs, die gestopped oder suspended sind. Abhilfe: start-job ausprogrammieren
-// TODO Events im PostProcessing löschen komt zu spät. Im actions.xml sofort ein Rename auf die Events und dann auch die renamed events löschen
+// TODO Events im PostProcessing lï¿½schen komt zu spï¿½t. Im actions.xml sofort ein Rename auf die Events und dann auch die renamed events lï¿½schen
 // TODO Process class erzeugen mit "30"
-// TODO Events ohne Vorgänger werden im postprocessing nicht gelöscht. sollten aber.
-// TODO Für die externen Events jeweils einen Job schreiben, der die setzt.
-// TODO state-text für shell-scripte über eine Datei im monitor holen und dann setzen
+// TODO Events ohne Vorgï¿½nger werden im postprocessing nicht gelï¿½scht. sollten aber.
+// TODO Fï¿½r die externen Events jeweils einen Job schreiben, der die setzt.
+// TODO state-text fï¿½r shell-scripte ï¿½ber eine Datei im monitor holen und dann setzen
 // TODO JS Objete als Job, JC und Order erzeugen.
 // TODO Jobs generieren als SSH-Jobs
-// TODO JOC -> knopf, um eine Task-Queue komplett zu löschen
+// TODO JOC -> knopf, um eine Task-Queue komplett zu lï¿½schen
 
 // TODO eine "echte" Event-Queue implementieren. Im Moment sind die "Events" nur reine Statuse.
-// TODO im actions.xml Variable erlauben (z.B. die LOADID). Dann läuft ein event-handler z.B. für eine bestimmte LoadID
-// in der Order ein Tooken mitgeben was dann als ID für die Variable verwendet werden kann (ähnlich ODAT z.B.).
+// TODO im actions.xml Variable erlauben (z.B. die LOADID). Dann lï¿½uft ein event-handler z.B. fï¿½r eine bestimmte LoadID
+// in der Order ein Tooken mitgeben was dann als ID fï¿½r die Variable verwendet werden kann (ï¿½hnlich ODAT z.B.).
 // woher bekommt das Tooken seinen Wert? evtl. doch mit Job,JC und Order arbeiten
 
 

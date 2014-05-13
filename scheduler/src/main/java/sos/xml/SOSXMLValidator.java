@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -57,7 +72,7 @@ import sos.util.SOSFile;
  * <p>Title: Schema</p>
  * <p>Description: Die Struktur des Schemas wird in der Datenbank abgebildet</p>
  * Dieses Programm interpretiert ein XSD-Schema und erzeugt ein Insert Script.
- * Sechs Parametern müssen übergeben werden.
+ * Sechs Parametern mï¿½ssen ï¿½bergeben werden.
  * 1. Parameter: Pfad + Name der XSD-Datei
  * 2. Parameter: Content_ID (M, S oder P)
  * 3. Parameter: Pfad + Name der script Datei, der hier erzeugt werden soll
@@ -66,7 +81,7 @@ import sos.util.SOSFile;
  * 6. Parameter: Richtung der Datenstrom (INBOUND oder OUTBOUND; Default INBOUND)
  * <p>Copyright: Copyright (c) 2003</p>
  * <p>Company: SOS GmbH</p>
- * @author Mürüvet Öksüz
+ * @author Mï¿½rï¿½vet ï¿½ksï¿½z
  * @version 1.0
  * @resource sos.util.jar
  */
@@ -107,8 +122,8 @@ public class SOSXMLValidator implements ContentHandler, ErrorHandler, DTDHandler
 
 
     /**
-	 * Validiert die übergebene XML-Datei. Ist die übergebene XML-Datei nicht valide,
-	 * dann wird eine Exception ausgelöst.
+	 * Validiert die ï¿½bergebene XML-Datei. Ist die ï¿½bergebene XML-Datei nicht valide,
+	 * dann wird eine Exception ausgelï¿½st.
 	 * @param  fileName
 	 * @throws Exception
 	 */
@@ -121,8 +136,8 @@ public class SOSXMLValidator implements ContentHandler, ErrorHandler, DTDHandler
 	}
 
     /**
-	 * Validiert die übergebene XML-Datei. Ist die übergebene XML-Datei nicht valide,
-	 * dann wird eine Exception ausgelöst.
+	 * Validiert die ï¿½bergebene XML-Datei. Ist die ï¿½bergebene XML-Datei nicht valide,
+	 * dann wird eine Exception ausgelï¿½st.
 	 * @param  fileName
 	 * @throws Exception
 	 */
@@ -132,8 +147,8 @@ public class SOSXMLValidator implements ContentHandler, ErrorHandler, DTDHandler
 	}
 
   /**
-   * Validiert die übergebene XML-Datei. Ist die übergebene XML-Datei nicht valide,
-   * dann wird eine Exception ausgelöst.
+   * Validiert die ï¿½bergebene XML-Datei. Ist die ï¿½bergebene XML-Datei nicht valide,
+   * dann wird eine Exception ausgelï¿½st.
    * @param  fileName
    * @throws Exception
    */
@@ -171,8 +186,8 @@ public class SOSXMLValidator implements ContentHandler, ErrorHandler, DTDHandler
   }
   
   /**
-   * Validiert die übergebene InputSource. Ist sie nicht valide,
-   * dann wird eine Exception ausgelöst.
+   * Validiert die ï¿½bergebene InputSource. Ist sie nicht valide,
+   * dann wird eine Exception ausgelï¿½st.
    * @param  is InputSource
    * @throws Exception
    */
@@ -209,8 +224,8 @@ public class SOSXMLValidator implements ContentHandler, ErrorHandler, DTDHandler
   }
   
    /**
-   * Validiert die übergebene XML-Datei. Ist die übergebene XML-Datei nicht valide,
-   * dann wird eine Exception ausgelöst.
+   * Validiert die ï¿½bergebene XML-Datei. Ist die ï¿½bergebene XML-Datei nicht valide,
+   * dann wird eine Exception ausgelï¿½st.
    * @param  fileName
    * @throws Exception
    */
@@ -220,8 +235,8 @@ public class SOSXMLValidator implements ContentHandler, ErrorHandler, DTDHandler
   
 
   /**
-   * Validiert die übergebene XML-Datei. Ist die übergebene XML-Datei nicht valide,
-   * dann wird eine Exception ausgelöst.
+   * Validiert die ï¿½bergebene XML-Datei. Ist die ï¿½bergebene XML-Datei nicht valide,
+   * dann wird eine Exception ausgelï¿½st.
    * @param  fileName
    * @throws Exception
    */
@@ -267,8 +282,8 @@ public class SOSXMLValidator implements ContentHandler, ErrorHandler, DTDHandler
   }
   
   /**
-   * Validiert die übergebene InputSource. Ist sie nicht valide,
-   * dann wird eine Exception ausgelöst.
+   * Validiert die ï¿½bergebene InputSource. Ist sie nicht valide,
+   * dann wird eine Exception ausgelï¿½st.
    * @param  is InputSource
    * @throws Exception
    */

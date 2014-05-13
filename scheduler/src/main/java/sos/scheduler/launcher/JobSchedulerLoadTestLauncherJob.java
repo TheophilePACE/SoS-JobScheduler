@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -46,14 +61,14 @@ import sos.util.SOSString;
 /**
  * 
  * Klasse JobSchedulerLoadTestLauncherJob
- * Diese Job kann die Ausführung paralleler Jobs skalieren und beliebig viele Jobs können parallel laufen.
+ * Diese Job kann die Ausfï¿½hrung paralleler Jobs skalieren und beliebig viele Jobs kï¿½nnen parallel laufen.
  * Der Job kann beliebig viele individuelle Jobs startet und kann mit dem Namen eines anderen Jobs oder
  * Auftrags parametrisiert werden, die gestartet werden soll.
- * Die Anzahl zu startender Jobs in konfigurierbaren Zeitabständen sowie die Erhöhung der Anzahl zu startenden Jobs beim Erreichen
+ * Die Anzahl zu startender Jobs in konfigurierbaren Zeitabstï¿½nden sowie die Erhï¿½hung der Anzahl zu startenden Jobs beim Erreichen
  * jedes Intervalls sind konfigurierbar.
  *
  *
- * @author Mürüvet Öksüz
+ * @author Mï¿½rï¿½vet ï¿½ksï¿½z
  * @version 1.0
  * 
  * email: mueruevet.oeksuez@sos-berlin.com
@@ -64,15 +79,15 @@ import sos.util.SOSString;
  *  
  *   * 2. Parameter
  *
- * 2.1 Allgemeine Parameter für den Launcher
+ * 2.1 Allgemeine Parameter fï¿½r den Launcher
  *
  * a) <param name="scheduler_launcher_host" value="localhost"/>
  *
- * Der Host des Job Schedulers, der den Job ausführt, Default: localhost
+ * Der Host des Job Schedulers, der den Job ausfï¿½hrt, Default: localhost
  *
  * b) <param name="scheduler_launcher_port" value="4444"/>
  *
- * Der Port des Job Schedulers, der den Job ausführt, Default: 4444
+ * Der Port des Job Schedulers, der den Job ausfï¿½hrt, Default: 4444
  *
  * c) <param name="scheduler_launcher_protocol" value="tcp|udp"/>
  *
@@ -80,22 +95,22 @@ import sos.util.SOSString;
  *
  * c) <param name="scheduler_launcher_min_starts" value="5"/>
  *
- * Die minimale Anzahl von Jobs oder Aufträgen, die gleichzeitig gestartet wird. Default=1
+ * Die minimale Anzahl von Jobs oder Auftrï¿½gen, die gleichzeitig gestartet wird. Default=1
  *
  * d) <param name="scheduler_launcher_max_starts" value="100"/>
  *
- * Die maximale Anzahl von Jobs oder Aufträgen, die gleichzeitig gestartet werden.
+ * Die maximale Anzahl von Jobs oder Auftrï¿½gen, die gleichzeitig gestartet werden.
  *
  *  e) <param name="scheduler_launcher_start_increment" value="+10|*2"/>
  *
- *  Die Anzahl zu startender Job oder Aufträge wird pro Start um diese Zahl erhöht. Ein Wert 3 ist gleichbedeutend mit +3, d.h. die Zahl wird um 3 erhöht.
- *  Ein Wert *2 bedeutet, dass sich die Anzahl verdoppelt. Das Inkrement gilt nicht beim ersten Start. Die mit dem Parameter max_starts gesetzte Anzahl darf nicht überschritten werden. Wird sie überschritten, dann werden alle weiteren Starts mit dem Wert von max_starts ausgeführt.
+ *  Die Anzahl zu startender Job oder Auftrï¿½ge wird pro Start um diese Zahl erhï¿½ht. Ein Wert 3 ist gleichbedeutend mit +3, d.h. die Zahl wird um 3 erhï¿½ht.
+ *  Ein Wert *2 bedeutet, dass sich die Anzahl verdoppelt. Das Inkrement gilt nicht beim ersten Start. Die mit dem Parameter max_starts gesetzte Anzahl darf nicht ï¿½berschritten werden. Wird sie ï¿½berschritten, dann werden alle weiteren Starts mit dem Wert von max_starts ausgefï¿½hrt.
  *
  *  f) alle Parameter, deren Namen nicht mit scheduler_launcher_ beginnen, werden an den Job oder Auftrag durchgereicht.
  *
- *  2.2 Spezielle Parameter für Jobs, siehe Beispiel
+ *  2.2 Spezielle Parameter fï¿½r Jobs, siehe Beispiel
  *  <param name="scheduler_launcher_job" value="job_name"/>
- *  Wenn dieser Parameter übergeben wurde, dann handelt es sich um einen Job. Der hier übergebene 
+ *  Wenn dieser Parameter ï¿½bergeben wurde, dann handelt es sich um einen Job. Der hier ï¿½bergebene 
  *  Job-Name ist der Wert des Attributs job= in <start_job job="..."/>
  *
  *  In diesem Fall werden ausgewertet:
@@ -103,21 +118,21 @@ import sos.util.SOSString;
  *  a) mandatory
  *  keine
  *
- *  b) optional, d.h. bitte keine eigenen Defaults, sondern im Fall des Fehlens einfach nicht übergeben
+ *  b) optional, d.h. bitte keine eigenen Defaults, sondern im Fall des Fehlens einfach nicht ï¿½bergeben
  *  <param name="scheduler_launcher_job_after" value="..."/>
  *  <param name="scheduler_launcher_job_at" value="..."/>
  *  <param name="scheduler_launcher_job_web_service" value="..."/>
  *
- *  2.3 Spezielle Parameter für Aufträge, siehe Beispiel
+ *  2.3 Spezielle Parameter fï¿½r Auftrï¿½ge, siehe Beispiel
  *  <param name="scheduler_launcher_order" value="order_id"/>
- *  Wenn dieser Parameter übergeben wurde, dann handelt es sich um einen Auftrag. Die hier übergebene Auftragskennung ist der Wert des Attributs id= in <add_order id="..."/>
+ *  Wenn dieser Parameter ï¿½bergeben wurde, dann handelt es sich um einen Auftrag. Die hier ï¿½bergebene Auftragskennung ist der Wert des Attributs id= in <add_order id="..."/>
  *
  *  In diesem Fall werden ausgewertet:
  *
  *  a) mandatory
  *  <param name="scheduler_launcher_order_job_chain" value="..."/>
  *
- *  b) optional, d.h. bitte keine eigenen Defaults, sondern im Fall des Fehlens einfach nicht übergeben
+ *  b) optional, d.h. bitte keine eigenen Defaults, sondern im Fall des Fehlens einfach nicht ï¿½bergeben
  *  <param name="scheduler_launcher_order_replace" value="yes|no"/>
  *  <param name="scheduler_launcher_order_state" value="..."/>
  *  <param name="scheduler_launcher_order_title" value="..."/>
@@ -128,7 +143,7 @@ import sos.util.SOSString;
  *  
  *
  *  2.4 Alle anderen Parameter werden durchgereicht. Genauer: alle Parameter, die nicht mit
- *  scheduler_launcher_ beginnen, werden den Jobs übergeben, die gestartet werden sollen.
+ *  scheduler_launcher_ beginnen, werden den Jobs ï¿½bergeben, die gestartet werden sollen.
  * 
  */
 

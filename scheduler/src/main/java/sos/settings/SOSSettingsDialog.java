@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -67,8 +82,8 @@ import sos.util.SOSStandardLogger;
 
 /**
  * Title: SOSSettingsDialog<br>
- * Description: Dialogklasse um Einstellungen für eine Applikation zu verarbeiten<br>
- * im ACL-Betrieb werden zusätzlich sos.user.jar und sos.acl.jar benötigt<br>
+ * Description: Dialogklasse um Einstellungen fï¿½r eine Applikation zu verarbeiten<br>
+ * im ACL-Betrieb werden zusï¿½tzlich sos.user.jar und sos.acl.jar benï¿½tigt<br>
  * Copyright: Copyright (c) 2004<br>
  * Company: SOS Berlin GmbH<br>
  * @author <a href="mailto:robert.ehrlich@sos-berlin.com">Robert Ehrlich</a>
@@ -113,49 +128,49 @@ public class SOSSettingsDialog {
     /** Titel der Liste aller Applikationen */
     private String dialogApplicationsTitle = "(Alle Einstellungen)";
 
-    /** Titel für neue Applikation */
+    /** Titel fï¿½r neue Applikation */
     private String dialogApplicationsNewTitle = "(Neuer Bereich)";
 
-    /** Titel für Export einer Applikation */
-    private String dialogApplicationsExportTitle = "(Alle Einträge dieses Bereichs)";
+    /** Titel fï¿½r Export einer Applikation */
+    private String dialogApplicationsExportTitle = "(Alle Eintrï¿½ge dieses Bereichs)";
 
     /** Titel der Liste aller Sektionen */
     private String dialogSectionsTitle = "Einstellungen des Bereichs";
 
-    /** Titel für neue Sektion */
+    /** Titel fï¿½r neue Sektion */
     private String dialogSectionsNewTitle = "(Neue Sektion)";
 
-    /** Titel für Export einer Sektion */
-    private String dialogSectionsExportTitle = "(Alle Einträge dieser Sektion)";
+    /** Titel fï¿½r Export einer Sektion */
+    private String dialogSectionsExportTitle = "(Alle Eintrï¿½ge dieser Sektion)";
 
-    /** Titel für neue Zähler-Sektion */
-    private String dialogSectionsCounterTitle = "Nr. des letzten Eintrags für Tabelle";
+    /** Titel fï¿½r neue Zï¿½hler-Sektion */
+    private String dialogSectionsCounterTitle = "Nr. des letzten Eintrags fï¿½r Tabelle";
 
-    /** Titel für neue Schema-Sektion */
+    /** Titel fï¿½r neue Schema-Sektion */
     private String dialogSectionsSchemaTitle = "(Schema des Bereichs)";
 
-    /** Titel der Liste aller Einträge */
+    /** Titel der Liste aller Eintrï¿½ge */
     private String dialogEntriesTitle = "Einstellungen der Sektion";
 
-    /** Titel für neuen Eintrag */
+    /** Titel fï¿½r neuen Eintrag */
     private String dialogEntriesNewTitle = "(Neuer Eintrag)";
 
     /** Verzeichnis der Graphiken */
     private String imgDir = "images/settings/";
 
-    /** Graphik für Navigation */
+    /** Graphik fï¿½r Navigation */
     private String imgNavigation = "arr_rightlr.gif";
 
-    /** Graphik für Aktionen */
+    /** Graphik fï¿½r Aktionen */
     private String imgAction = "arr_rightb.gif";
 
-    /** Graphik für Seitenanfang */
+    /** Graphik fï¿½r Seitenanfang */
     private String imgTop = "arr_upb.gif";
 
-    /** Graphik für Seitenende */
+    /** Graphik fï¿½r Seitenende */
     private String imgBottom = "arr_downb.gif";
 
-    /** Graphik für Hilfe-Symbol */
+    /** Graphik fï¿½r Hilfe-Symbol */
     private String imgHelp = "icon_help.gif";
 
     /** Navigieren in Applikationen zulassen */
@@ -173,10 +188,10 @@ public class SOSSettingsDialog {
     /** Listenverwaltung zulassen */
     private boolean enableListManager = true;
 
-    /** Anzeige der Namen von Einträgen in Listen zulassen */
+    /** Anzeige der Namen von Eintrï¿½gen in Listen zulassen */
     private boolean enableEntryNames = true;
 
-    /** Ändern der Werte von Einträgen in Listen zulassen */
+    /** ï¿½ndern der Werte von Eintrï¿½gen in Listen zulassen */
     private boolean enableEntryValues = true;
 
     /** Zwischenablage zulassen */
@@ -194,46 +209,46 @@ public class SOSSettingsDialog {
     /** Import-Funktion zulassen */
     private boolean enableImport = true;
 
-    /** Import-Funktion: Dateigröße beschränken, -1 = beliebig */
+    /** Import-Funktion: Dateigrï¿½ï¿½e beschrï¿½nken, -1 = beliebig */
     private long importMaxSize = -1;
 
     /** Name des Formular-Elements */
     private String form = "sos_settings";
 
-    /** Name des Formular-Elements für Zusatzaktionen */
+    /** Name des Formular-Elements fï¿½r Zusatzaktionen */
     private String formActions = "sos_settings_actions";
 
     /** Name der Web-Seite */
     private String site = "";
 
-    /** Query-Parameter für Session-ID */
+    /** Query-Parameter fï¿½r Session-ID */
     private String sessionVAR = "JSESSIONID";
 
-    /** Query-Parameterwert für Session-ID */
+    /** Query-Parameterwert fï¿½r Session-ID */
     private String sessionID = "";
 
-    /** Session-ID wird von PHP automatisch übergeben: aus php.ini */
+    /** Session-ID wird von PHP automatisch ï¿½bergeben: aus php.ini */
     private boolean sessionUseTransSID = true;
 
-    /** CSS-Klasse für Aktionen via Link */
+    /** CSS-Klasse fï¿½r Aktionen via Link */
     private String styleLinkAction = "settingsLinkAction";
 
-    /** CSS-Klasse für Aktionen via Link */
+    /** CSS-Klasse fï¿½r Aktionen via Link */
     private String styleLinkNavigation = "settingsLinkNavigation";
 
-    /** CSS-Klasse für Aktionen via Link */
+    /** CSS-Klasse fï¿½r Aktionen via Link */
     private String styleLinkInactiveNavigation = "settingsLinkGrey";
 
-    /** CSS-Klasse für Aktionen via Font */
+    /** CSS-Klasse fï¿½r Aktionen via Font */
     private String styleFontAction = "settingsFontAction";
 
-    /** CSS-Klasse für Aktionen via Font */
+    /** CSS-Klasse fï¿½r Aktionen via Font */
     private String styleFontNavigation = "settingsFontNavigation";
 
     /** CSS-Style TABLE.settings = { .... } */
     private String styleTable = "settingsTable";
 
-    /** CSS-Style: Tabellenränder 1/0 */
+    /** CSS-Style: Tabellenrï¿½nder 1/0 */
     private String styleBorder = "1";
 
     /** CSS-Style TR.settings = { .... } */
@@ -257,10 +272,10 @@ public class SOSSettingsDialog {
     /** Inhalt des Headers */
     private String headerContent = "<p>";
 
-    /** Default: Anzahl Zeichen für Eingabe eines Eintrags */
+    /** Default: Anzahl Zeichen fï¿½r Eingabe eines Eintrags */
     private String defaultInputSize = "250";
 
-    /** Default: Anzahl Pixel für Anzeige eines Eintrags */
+    /** Default: Anzahl Pixel fï¿½r Anzeige eines Eintrags */
     private String defaultDisplaySize = "50";
 
     /** Benutzername */
@@ -278,40 +293,40 @@ public class SOSSettingsDialog {
     /** Breite des JS-Hilfefensters */
     private int helpWinWidth = 600;
 
-    /** Höhe des JS-Hilfefensters */
+    /** Hï¿½he des JS-Hilfefensters */
     private int helpWinHeight = 500;
 
     /** Breite des JS-Hilfefensters */
     private int helpsWinWidth = 600;
 
-    /** Höhe des JS-Hilfefensters */
+    /** Hï¿½he des JS-Hilfefensters */
     private int helpsWinHeight = 500;
 
-    /** Template für die Generierung der Dokumentation */
+    /** Template fï¿½r die Generierung der Dokumentation */
     private String documentationFile = "settings_show_docu.jsp";
 
-    /** ORDER BY für die Doku-Anzeige */
+    /** ORDER BY fï¿½r die Doku-Anzeige */
     private String documentationSort = "\"APPLICATION\" asc, \"SECTION\" asc, \"NAME\" asc";
 
     /** Breite des JS-Hilfefensters */
     private int docuWinWidth = 1000;
 
-    /** Höhe des JS-Hilfefensters */
+    /** Hï¿½he des JS-Hilfefensters */
     private int docuWinHeight = 500;
 
-    /** Liste der verfügbaren Applikationen */
+    /** Liste der verfï¿½gbaren Applikationen */
     private Vector dialogApplications = new Vector();
 
     /** aktuell selektierte Applikation */
     private Integer dialogApplicationIndex = new Integer(-1);
 
-    /** Liste der verfügbaren Sektionen */
+    /** Liste der verfï¿½gbaren Sektionen */
     private Vector dialogSections = new Vector();
 
     /** aktuell selektierte Sektion */
     private Integer dialogSectionIndex = new Integer(-1);
 
-    /** Liste der verfügbaren Einträge */
+    /** Liste der verfï¿½gbaren Eintrï¿½ge */
     private Vector dialogEntries = new Vector();
 
     /** aktuell selektierter Eintrag */
@@ -330,7 +345,7 @@ public class SOSSettingsDialog {
     private int importDocumentation = 0;
 
     /**
-     * Funktionsnamen für die Dokugestaltung in der Template Datei
+     * Funktionsnamen fï¿½r die Dokugestaltung in der Template Datei
      * "$this->documentation_template_file"
      */
     private String docuFuncNameApplication = "docu_application";
@@ -339,7 +354,7 @@ public class SOSSettingsDialog {
 
     private String docuFuncNameEntry = "docu_entry";
 
-    /** Flag für neue Datensätze */
+    /** Flag fï¿½r neue Datensï¿½tze */
     private boolean isNew = false;
 
     /** Aktion der Transaktion: show, new, insert, store, delete */
@@ -354,7 +369,7 @@ public class SOSSettingsDialog {
     /** Eingabeformat aus Schemasektion */
     private int applicationType = 0;
 
-    /** Eingabeformat für Listen */
+    /** Eingabeformat fï¿½r Listen */
     private int sectionType = 0;
 
     /** Clipboard-Objekt (SOS_Clipboard) */
@@ -390,7 +405,7 @@ public class SOSSettingsDialog {
     /** Schreibrecht */
     private boolean hasWriteRight = true;
 
-    /** Recht zum Löschen */
+    /** Recht zum Lï¿½schen */
     private boolean hasDeleteRight = true;
 
     /** Create Recht */
@@ -417,7 +432,7 @@ public class SOSSettingsDialog {
     /** Bereich der ACL */
     private String aclRange = "application";
 
-    /** Zeichen für alle Applikationen|Sektionen|Entries für eine ACL */
+    /** Zeichen fï¿½r alle Applikationen|Sektionen|Entries fï¿½r eine ACL */
     private String allAclNote = "*";
 
     /**
@@ -441,7 +456,7 @@ public class SOSSettingsDialog {
     /** Names des Editors - Request variable */
     private String editorName = "sos_fckeditor";
 
-    /** FCK Web Editor Höhe */
+    /** FCK Web Editor Hï¿½he */
     private String editorHeight = "300px";
 
     /** FCK Web Editor Breite - wird an td Element angewandt, daswegen in % */
@@ -467,7 +482,7 @@ public class SOSSettingsDialog {
     private boolean enableAutoSetLongValues = false;
 
     /**
-     * Upload Element für Document binary anzeigen, benutzt wird als
+     * Upload Element fï¿½r Document binary anzeigen, benutzt wird als
      * style="display:none"
      */
     private String displayBinaryUpload = "none";
@@ -475,7 +490,7 @@ public class SOSSettingsDialog {
     /** long_value bei binary Dokumenten */
     private Hashtable hasBinaryValue = new Hashtable();
 
-    /** Fleck für show_dialog_value */
+    /** Fleck fï¿½r show_dialog_value */
     private boolean isShowEntries = false;
     
     /** aktuelle Request, Session Daten anzeigen */
@@ -496,7 +511,7 @@ public class SOSSettingsDialog {
      * @param sosConnection
      *            ein SOSConnection-Objekt
      * @param source
-     *            Name der Tabelle für Einstellungen
+     *            Name der Tabelle fï¿½r Einstellungen
      * @param servletRequest
      *            Request Objekt
      * @param servletResponse
@@ -531,7 +546,7 @@ public class SOSSettingsDialog {
      * @param sosConnection
      *            ein SOSConnection-Objekt
      * @param source
-     *            Name der Tabelle für Einstellungen
+     *            Name der Tabelle fï¿½r Einstellungen
      * @param logger
      *            Das Logger-Objekt
      * @param servletRequest
@@ -649,11 +664,11 @@ public class SOSSettingsDialog {
         this.dialogApplicationsTitle = this.rb
                 .getMessage("sos.settings.dialog.dialog_applications_title");
 
-        /* Titel für neue Applikation */
+        /* Titel fï¿½r neue Applikation */
         this.dialogApplicationsNewTitle = this.rb
                 .getMessage("sos.settings.dialog.dialog_applications_new_title");
 
-        /* Titel für Export einer Applikation */
+        /* Titel fï¿½r Export einer Applikation */
         this.dialogApplicationsExportTitle = this.rb
                 .getMessage("sos.settings.dialog.dialog_applications_export_title");
 
@@ -661,27 +676,27 @@ public class SOSSettingsDialog {
         this.dialogSectionsTitle = this.rb
                 .getMessage("sos.settings.dialog.dialog_sections_title");
 
-        /* Titel für neue Sektion */
+        /* Titel fï¿½r neue Sektion */
         this.dialogSectionsNewTitle = this.rb
                 .getMessage("sos.settings.dialog.dialog_sections_new_title");
 
-        /* Titel für Export einer Sektion */
+        /* Titel fï¿½r Export einer Sektion */
         this.dialogSectionsExportTitle = this.rb
                 .getMessage("sos.settings.dialog.dialog_sections_export_title");
 
-        /* Titel für neue Zähler-Sektion */
+        /* Titel fï¿½r neue Zï¿½hler-Sektion */
         this.dialogSectionsCounterTitle = this.rb
                 .getMessage("sos.settings.dialog.dialog_sections_counter_title");
 
-        /* Titel für neue Schema-Sektion */
+        /* Titel fï¿½r neue Schema-Sektion */
         this.dialogSectionsSchemaTitle = this.rb
                 .getMessage("sos.settings.dialog.dialog_sections_schema_title");
 
-        /* Titel der Liste aller Einträge */
+        /* Titel der Liste aller Eintrï¿½ge */
         this.dialogEntriesTitle = this.rb
                 .getMessage("sos.settings.dialog.dialog_entries_title");
 
-        /* Titel für neuen Eintrag */
+        /* Titel fï¿½r neuen Eintrag */
         this.dialogEntriesNewTitle = this.rb
                 .getMessage("sos.settings.dialog.dialog_entries_new_title");
 
@@ -1142,13 +1157,13 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Einträge im Profil suchen
+     * Eintrï¿½ge im Profil suchen
      * 
      * @param query
      *            Suchstring
      * @param range
      * @param replaceQuery 		Replacement
-     * @return int Grösse der dialogEntries
+     * @return int Grï¿½sse der dialogEntries
      * @throws Exception
      * @see #queryEntries(String, int)
      */
@@ -1399,7 +1414,7 @@ public class SOSSettingsDialog {
 
     
     /**
-     * Datensatz einfügen
+     * Datensatz einfï¿½gen
      * 
      * @return boolean Fehlerzustand
      * @throws Exception
@@ -1509,7 +1524,7 @@ public class SOSSettingsDialog {
             boolean isInserted = false;
            
            /* 
-           !!!!!!!!!!!schema ist nicht berücksichtigt 
+           !!!!!!!!!!!schema ist nicht berï¿½cksichtigt 
             try{
             	String count = this.connection.getSingleValue("select count(\"APPLICATION\") from "+this.settings.source+" where \"APPLICATION\" = "+this.dbQuoted(this.record.get("name").toString())+" and \"SECTION\" = \"APPLICATION\" and \"NAME\" = \"APPLICATION\"");
             	if(!count.equals("0")){
@@ -1830,7 +1845,7 @@ public class SOSSettingsDialog {
                 // unter
 
                 if (!ok) {
-                    ok = (this.applicationType > 0); // Übernahme aus einer
+                    ok = (this.applicationType > 0); // ï¿½bernahme aus einer
                     // Schema-Sektion
                     if (ok) {
                         this.settings.section = this.settings.entrySchemaSection;
@@ -2089,7 +2104,7 @@ public class SOSSettingsDialog {
         			}
         			
         		}
-        		else if(inputType.equals("6")){// Dokument binär
+        		else if(inputType.equals("6")){// Dokument binï¿½r
         			this.record.put("input_size","");
         			this.record.put("display_type","4"); // Hidden
         			this.record.put("value","");
@@ -2162,7 +2177,7 @@ public class SOSSettingsDialog {
                             }
 
 														String input_type = this.record.get("input_type").toString();
-                            if (input_type.equals("5") || input_type.equals("6")) { // dokument oder dokument binär
+                            if (input_type.equals("5") || input_type.equals("6")) { // dokument oder dokument binï¿½r
                                 e_v = "NULL";
                             } 
                             else {
@@ -2817,7 +2832,7 @@ public class SOSSettingsDialog {
         }// end section 
         else {
         		
-        		if(this.getRequestValue("binary_value") != null){ // checkbox binäre inhalt leeren
+        		if(this.getRequestValue("binary_value") != null){ // checkbox binï¿½re inhalt leeren
           		this.record.put("value","");
         			emptyLongValue 				= true;
         		}
@@ -2872,7 +2887,7 @@ public class SOSSettingsDialog {
               	this.record.put("value","");
 							}
 						}// input_type = 5 
-						else if(input_type.equals("6")){ // Dokument binär
+						else if(input_type.equals("6")){ // Dokument binï¿½r
 
 								this.record.put("value","");   
              		this.record.put("input_size","");
@@ -3194,7 +3209,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Liste von Datensätzen speichern
+     * Liste von Datensï¿½tzen speichern
      * 
      * @return boolean Fehlerzustand
      * @throws Exception
@@ -3247,7 +3262,7 @@ public class SOSSettingsDialog {
             sections.put(new Integer(cnt), this.getRequestValue("section_" + i));
             names.put(new Integer(cnt), this.getRequestValue("name_" + i));
             
-            // binäre dokumente leeren
+            // binï¿½re dokumente leeren
       			if(has_binary_value) { binary_values.put(new Integer(cnt++), "1");  }
       			else                 { values.put(new Integer(cnt++), this.getRequestValue("value_"+ i));  }
     				
@@ -3901,7 +3916,7 @@ public class SOSSettingsDialog {
     
     
   /**
-  * Sourcecode bei binären Dokumenten
+  * Sourcecode bei binï¿½ren Dokumenten
   * 
   * @return   boolean  Fehlerzustand
   * @access   public
@@ -3947,8 +3962,8 @@ public class SOSSettingsDialog {
     
     String header_ext = "application/octet-stream";
     
-    // da beim Download getOutputStream benutz wird(damit schreibt man binäre Sachen)
-	// kommt es ohne aufzuräumen zu einer Exception (nur in Tomcate LOGs),
+    // da beim Download getOutputStream benutz wird(damit schreibt man binï¿½re Sachen)
+	// kommt es ohne aufzurï¿½umen zu einer Exception (nur in Tomcate LOGs),
 	// weil out bereits aktiv ist(es kann entweder OutputStream oder Writer geben)
     // muss auch in der jsp Datei gesetzt werden
     this.out.clear();
@@ -4007,10 +4022,10 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Template für die Anzeige der Applikationsdoku
+     * Template fï¿½r die Anzeige der Applikationsdoku
      * 
      * @param settings
-     *            Werte für die Doku
+     *            Werte fï¿½r die Doku
      * @see #docuApplication(HashMap)
      */
     private void docuApplication(HashMap settings) throws Exception {
@@ -4035,10 +4050,10 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Template für die Anzeige der Sektionsdoku
+     * Template fï¿½r die Anzeige der Sektionsdoku
      * 
      * @param settings
-     *            Werte für die Doku
+     *            Werte fï¿½r die Doku
      * @see #docuSection(HashMap)
      */
 
@@ -4069,10 +4084,10 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Template für die Anzeige der Entriesdoku
+     * Template fï¿½r die Anzeige der Entriesdoku
      * 
      * @param settings
-     *            Werte für die Doku
+     *            Werte fï¿½r die Doku
      * @see #docuEntry(HashMap)
      */
 
@@ -4209,7 +4224,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Alle Einträge einer Sektion anzeigen
+     * Alle Eintrï¿½ge einer Sektion anzeigen
      * 
      * @param entriesTitle
      *            Titel
@@ -4226,7 +4241,7 @@ public class SOSSettingsDialog {
         this.debug(3, "showDialogEntries : entriesTitle = " + entriesTitle
                 + " entries = " + entries);
 
-        // Fleck für showDialogValues()
+        // Fleck fï¿½r showDialogValues()
         this.isShowEntries = true;
 
         if (entriesTitle != null) {
@@ -4946,8 +4961,8 @@ public class SOSSettingsDialog {
                             this.out
                                     .println("   <td align=\"right\">&nbsp;</td>");
                         }
-                    } else { // Dokument binär oder wir machen zum Dokument
-                             // binär
+                    } else { // Dokument binï¿½r oder wir machen zum Dokument
+                             // binï¿½r
                         this.out.println(" <td>");
                         this.out.println("[ " + input_type_entries[6] + " ]");
                         this.out.println(" </td>");
@@ -6653,7 +6668,7 @@ public class SOSSettingsDialog {
                             return false;
                         }
                     } else if (this.record.get("input_type").toString().equals(
-                            "6")) { // Dokument binär
+                            "6")) { // Dokument binï¿½r
                         String bv = this.connection
                                 .getSingleValue("select count(\"APPLICATION\") from "
                                         + this.settings.source
@@ -6974,7 +6989,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * JS Code zum öffnen von Hifsfenster
+     * JS Code zum ï¿½ffnen von Hifsfenster
      *  
      */
 
@@ -7007,7 +7022,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * JS Code zum öffnen von Hilfetexten Fenster
+     * JS Code zum ï¿½ffnen von Hilfetexten Fenster
      *  
      */
 
@@ -7035,7 +7050,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * JS Code zum öffnen von Hilfetexten Fenster
+     * JS Code zum ï¿½ffnen von Hilfetexten Fenster
      *  
      */
 
@@ -7208,16 +7223,16 @@ public class SOSSettingsDialog {
      * Diese Funktion vermeidet Inhalt von inkonsistenten Daten.
      * 
      * Hintergrund : da es als Wert entweder "VALUE" oder "LONG_VALUE" benutzt
-     * werden können, dient "INPUT_TYPE" Feld als Flag , um zu unterscheiden -
-     * welches von den beiden Felder gerade aktiv ist. bei "LONG_VALUE" müssen
-     * "INPUT_TYPE" = 5(Dokument) oder 6(Dokument binär) und "VALUE" = null
+     * werden kï¿½nnen, dient "INPUT_TYPE" Feld als Flag , um zu unterscheiden -
+     * welches von den beiden Felder gerade aktiv ist. bei "LONG_VALUE" mï¿½ssen
+     * "INPUT_TYPE" = 5(Dokument) oder 6(Dokument binï¿½r) und "VALUE" = null
      * gesetzt werden. und ausserdem "DISPLAY_TYPE" 3(Textarea) bzw 4(Versteckt)
      * sein
      * 
      * bei Settingsaktualisierung durch die fremden Schnittstellen, kann
      * vorkommen , dass die "LONG_VALUE"s aktualisiert werden, ohne das
      * "INPUT_TYPE" auf 5,6 und "DISPLAY_TYPE" auf 3(Textarea) bzw 4(Versteckt)
-     * zu setzen : das wird dazu führen, dass die BLOBs dann (ohne diese
+     * zu setzen : das wird dazu fï¿½hren, dass die BLOBs dann (ohne diese
      * Funktion) als eine Zeichenkette betrachtet werden und verloren gehen.
      *  
      */
@@ -7302,7 +7317,7 @@ public class SOSSettingsDialog {
                                 + this.record.get("name").toString(), "1");
                     }
                 }//inputType = 5
-                else if (inputType.equals("6")) { // Dokument binär
+                else if (inputType.equals("6")) { // Dokument binï¿½r
                     if (displayType.equals("4")) {
                         //Versteckt - alles in Ordnung
                     } else {
@@ -7350,7 +7365,7 @@ public class SOSSettingsDialog {
                             + this.record.get("section").toString()
                             + this.record.get("name").toString(), "1");
 
-                } else {// wir machen Dokument Binär Versteckt
+                } else {// wir machen Dokument Binï¿½r Versteckt
                     sql = new StringBuffer(" update " + this.settings.source
                             + " ").append(
                             " set 	\"" + this.settings.entryValue
@@ -8684,7 +8699,7 @@ public class SOSSettingsDialog {
 
         switch (entry.get("display_type").toString().charAt(0)) {
 
-      case '4': // hidden bei Document binär
+      case '4': // hidden bei Document binï¿½r
               
               String has_binary_value = "";
               try{
@@ -8891,7 +8906,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Alle Einträge einer Sektion lesen
+     * Alle Eintrï¿½ge einer Sektion lesen
      * 
      * @param application
      *            Name der Applikation
@@ -8941,7 +8956,7 @@ public class SOSSettingsDialog {
     /**
      * Tabellenkopf ausgeben
      * 
-     * Um gleichmässige Einrückungen auf einer Seite zu erhalten, wird ein
+     * Um gleichmï¿½ssige Einrï¿½ckungen auf einer Seite zu erhalten, wird ein
      * Tabellenkopf geschrieben und nicht beendet
      */
 
@@ -8961,9 +8976,9 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Tabellenfuß ausgeben
+     * Tabellenfuï¿½ ausgeben
      * 
-     * Um gleichmässige Einrückungen auf einer Seite zu erhalten, wird ein
+     * Um gleichmï¿½ssige Einrï¿½ckungen auf einer Seite zu erhalten, wird ein
      * Tabellenkopf beendet, der zuvor begonnen wurde
      */
 
@@ -8978,7 +8993,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Einträge exportieren
+     * Eintrï¿½ge exportieren
      * 
      * @param file
      *            Ausgabedatei
@@ -9056,7 +9071,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Einträge importieren
+     * Eintrï¿½ge importieren
      * 
      * @param string
      *            $file Eingabedatei
@@ -9106,7 +9121,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Klasseneigenschaften zurücksetzen
+     * Klasseneigenschaften zurï¿½cksetzen
      *  
      */
     private void destroy() throws Exception {
@@ -9196,7 +9211,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Fehler auslösen
+     * Fehler auslï¿½sen
      * 
      * @param msg
      *            Text der Fehlernachricht
@@ -9208,7 +9223,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Fehler auslösen
+     * Fehler auslï¿½sen
      * 
      * @param msg
      *            Text der Fehlernachricht
@@ -9269,7 +9284,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Fehler zurücksetzen
+     * Fehler zurï¿½cksetzen
      *  
      */
 
@@ -9284,7 +9299,7 @@ public class SOSSettingsDialog {
      * Fehlermeldung anzeigen
      * 
      * @param msg
-     *            Text der Nachricht über fehlende Berechtigung
+     *            Text der Nachricht ï¿½ber fehlende Berechtigung
      * @see #showError(String)
      */
 
@@ -9299,7 +9314,7 @@ public class SOSSettingsDialog {
      * Nachricht anzeigen
      * 
      * @param msg
-     *            Text der Nachricht über fehlende Berechtigung
+     *            Text der Nachricht ï¿½ber fehlende Berechtigung
      * @see #showMsg(String)
      */
 
@@ -9317,29 +9332,29 @@ public class SOSSettingsDialog {
      *            ACL Identifier
      * @param settings
      *            HashMap der ACL Geltungsbereichen <br>
-     *            gültige HashMap Keys : "application","section","entry" <br>
+     *            gï¿½ltige HashMap Keys : "application","section","entry" <br>
      *            Beispiele :<br>
      *            <br>
-     *            1)für alle Applikationen <br>
+     *            1)fï¿½r alle Applikationen <br>
      *            settings.put("application","*"); <br>
      *            setAcl("acl_name",settings); <br>
-     *            um die Anzeige von allen Applikationen zu schützen <br>
+     *            um die Anzeige von allen Applikationen zu schï¿½tzen <br>
      * @see #setTopLevelAcl(String) <br>
      *      <br>
-     *      2) eine Bestimmte Applikation schützen <br>
+     *      2) eine Bestimmte Applikation schï¿½tzen <br>
      *      settings.put("application","applikation_name"); <br>
      *      setAcl("acl_name",settings); <br>
      *      <br>
-     *      3)eine bestimmte Sektion einer bestimmten Applikation schützen <br>
-     *      für alle Sektionen einer Applikation kann statt "section_name" ->
+     *      3)eine bestimmte Sektion einer bestimmten Applikation schï¿½tzen <br>
+     *      fï¿½r alle Sektionen einer Applikation kann statt "section_name" ->
      *      "*" angegeben werden <br>
      *      settings.put("application","applikation_name"); <br>
      *      settings.put("section","section_name"); <br>
      *      setAcl("acl_name",settings); <br>
      *      <br>
      *      4)einen bestimmten Wert einer bestimmten Sektion einer bestimmten
-     *      Applikation schützen <br>
-     *      für alle Entries einer Sektion einer Applikation kann statt
+     *      Applikation schï¿½tzen <br>
+     *      fï¿½r alle Entries einer Sektion einer Applikation kann statt
      *      "entrie_name" -> "*" angegeben werden <br>
      *      settings.put("application","applikation_name"); <br>
      *      settings.put("section","section_name"); <br>
@@ -9410,7 +9425,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Rechte für die erste Ebene (Alle Applikationen) lesen
+     * Rechte fï¿½r die erste Ebene (Alle Applikationen) lesen
      * 
      * @return boolean Fehlerzustand
      */
@@ -9575,7 +9590,7 @@ public class SOSSettingsDialog {
                         throw new Exception(e.getMessage());
                     }
 
-                } // Rechte für alle Applikationen
+                } // Rechte fï¿½r alle Applikationen
                 else if (this.allAcls.containsKey("[" + this.allAclNote
                         + "][application]")) {
                     String identifier = this.allAcls.get(
@@ -9606,7 +9621,7 @@ public class SOSSettingsDialog {
 
             }// range application
             else if (this.aclRange.equals("section")) {
-                // Rechte für eine bestimmte Sektion einer bestimmten
+                // Rechte fï¿½r eine bestimmte Sektion einer bestimmten
                 // Applikation
                 if (this.allAcls.containsKey("[" + application + "][section]["
                         + section + "]")) {
@@ -9634,7 +9649,7 @@ public class SOSSettingsDialog {
                     } catch (Exception e) {
                         throw new Exception(e.getMessage());
                     }
-                }//Rechte für alle Sektionen einer bestimmten Applikation
+                }//Rechte fï¿½r alle Sektionen einer bestimmten Applikation
                 else if (this.allAcls.containsKey("[" + application
                         + "][section][" + this.allAclNote + "]")) {
                     String identifier = this.allAcls.get(
@@ -9687,7 +9702,7 @@ public class SOSSettingsDialog {
                     } catch (Exception e) {
                         throw new Exception(e.getMessage());
                     }
-                } // Rechte für alle Applikationen
+                } // Rechte fï¿½r alle Applikationen
                 else if (this.allAcls.containsKey("[" + this.allAclNote
                         + "][application]")) {
                     String identifier = this.allAcls.get(
@@ -9717,7 +9732,7 @@ public class SOSSettingsDialog {
                 }
             }// range section
             else if (this.aclRange.equals("entry")) {
-                //Rechte für einen bestimmten Entry in einer bestimmten Sektion
+                //Rechte fï¿½r einen bestimmten Entry in einer bestimmten Sektion
                 // einer bestimmten Applikation
                 if (this.allAcls.containsKey("[" + application + "][entry]["
                         + section + "][" + entry + "]")) {
@@ -9745,7 +9760,7 @@ public class SOSSettingsDialog {
                     } catch (Exception e) {
                         throw new Exception(e.getMessage());
                     }
-                }//  Rechte für alle Entry in einer bestimmten Sektion einer
+                }//  Rechte fï¿½r alle Entry in einer bestimmten Sektion einer
                 // bestimmten Applikation
                 else if (this.allAcls.containsKey("[" + application
                         + "][entry][" + section + "][" + this.allAclNote + "]")) {
@@ -9773,7 +9788,7 @@ public class SOSSettingsDialog {
                     } catch (Exception e) {
                         throw new Exception(e.getMessage());
                     }
-                }// Rechte für eine bestimmte Sektion einer bestimmten
+                }// Rechte fï¿½r eine bestimmte Sektion einer bestimmten
                 // Applikation
                 else if (this.allAcls.containsKey("[" + application
                         + "][section][" + section + "]")) {
@@ -9801,7 +9816,7 @@ public class SOSSettingsDialog {
                     } catch (Exception e) {
                         throw new Exception(e.getMessage());
                     }
-                }//Rechte für alle Sektionen einer bestimmten Applikation
+                }//Rechte fï¿½r alle Sektionen einer bestimmten Applikation
                 else if (this.allAcls.containsKey("[" + application
                         + "][section][" + this.allAclNote + "]")) {
                     String identifier = this.allAcls.get(
@@ -9854,7 +9869,7 @@ public class SOSSettingsDialog {
                     } catch (Exception e) {
                         throw new Exception(e.getMessage());
                     }
-                } // Rechte für alle Applikationen
+                } // Rechte fï¿½r alle Applikationen
                 else if (this.allAcls.containsKey("[" + this.allAclNote
                         + "][application]")) {
                     String identifier = this.allAcls.get(
@@ -9924,7 +9939,7 @@ public class SOSSettingsDialog {
 
 
     /**
-     * !!! unter Produktion muß nich verwendet werden <br/>Anzeige von aktuellen
+     * !!! unter Produktion muï¿½ nich verwendet werden <br/>Anzeige von aktuellen
      * Request,Session usw Variablen
      * 
      * @param request
@@ -10089,7 +10104,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Liefert Voreinstellung für created_name, modified_name bei Änderung von
+     * Liefert Voreinstellung fï¿½r created_name, modified_name bei ï¿½nderung von
      * Einstellungen
      * 
      * @return Name des Autors.
@@ -10099,7 +10114,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Voreinstellung für created_name, modified_name bei Änderung von
+     * Voreinstellung fï¿½r created_name, modified_name bei ï¿½nderung von
      * Einstellungen
      * 
      * @param author
@@ -10149,7 +10164,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Liefert Titel für neue Applikation
+     * Liefert Titel fï¿½r neue Applikation
      * 
      * @return dialogApplicationsNewTitle Titel z.B: (Neuer Bereich)
      */
@@ -10158,7 +10173,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Titel für neue Applikation setzen
+     * Titel fï¿½r neue Applikation setzen
      * 
      * @param dialogApplicationsNewTitle
      *            Titel z.B: (Neuer Bereich)
@@ -10187,7 +10202,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Liefert Titel für neue Sektion
+     * Liefert Titel fï¿½r neue Sektion
      * 
      * @return dialogSectionsNewTitle Titel z.B: (Neue Sektion)
      */
@@ -10196,7 +10211,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Titel für neue Sektion setzen
+     * Titel fï¿½r neue Sektion setzen
      * 
      * @param dialogSectionsNewTitle
      *            Titel z.B: (Neue Sektion)
@@ -10206,7 +10221,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Setzt Titel für neue Schema-Sektion
+     * Setzt Titel fï¿½r neue Schema-Sektion
      * 
      * @return dialogSectionsSchemaTitle Titel z.B: (Schema des Bereichs)
      */
@@ -10215,7 +10230,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Titel für neue Schema-Sektion setzen
+     * Titel fï¿½r neue Schema-Sektion setzen
      * 
      * @param dialogSectionsSchemaTitle
      *            Titel z.B: (Schema des Bereichs)
@@ -10225,27 +10240,27 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Liefert Titel für neue Zähler-Sektion
+     * Liefert Titel fï¿½r neue Zï¿½hler-Sektion
      * 
      * @return dialogSectionsCounterTitle Titel z.B: Nr. des letzten Eintrags
-     *         für Tabelle
+     *         fï¿½r Tabelle
      */
     public String getDialogSectionsCounterTitle() {
         return dialogSectionsCounterTitle;
     }
 
     /**
-     * Titel für neue Zähler-Sektion setzen
+     * Titel fï¿½r neue Zï¿½hler-Sektion setzen
      * 
      * @param dialogSectionsCounterTitle
-     *            Titel z.B: Nr. des letzten Eintrags für Tabelle
+     *            Titel z.B: Nr. des letzten Eintrags fï¿½r Tabelle
      */
     public void setDialogSectionsCounterTitle(String dialogSectionsCounterTitle) {
         this.dialogSectionsCounterTitle = dialogSectionsCounterTitle;
     }
 
     /**
-     * Liefert Titel der Liste aller Einträge
+     * Liefert Titel der Liste aller Eintrï¿½ge
      * 
      * @return dialogEntriesTitle Titel z.B: Einstellungen der Sektion
      */
@@ -10254,7 +10269,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Titel der Liste aller Einträge setzen
+     * Titel der Liste aller Eintrï¿½ge setzen
      * 
      * @param dialogEntriesTitle
      *            Titel z.B: Einstellungen der Sektion
@@ -10264,7 +10279,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Liefert Titel für neuen Eintrag
+     * Liefert Titel fï¿½r neuen Eintrag
      * 
      * @return dialogEntriesNewTitle Titel z.B: (Neuer Eintrag)
      */
@@ -10273,7 +10288,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Titel für neuen Eintrag setzen
+     * Titel fï¿½r neuen Eintrag setzen
      * 
      * @param dialogEntriesNewTitle
      *            Titel z.B: (Neuer Eintrag)
@@ -10283,9 +10298,9 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Liefert Titel für Export einer Applikation
+     * Liefert Titel fï¿½r Export einer Applikation
      * 
-     * @return dialogApplicationsExportTitle Titel z.B: (Alle Einträge dieses
+     * @return dialogApplicationsExportTitle Titel z.B: (Alle Eintrï¿½ge dieses
      *         Bereichs)
      */
     public String getDialogApplicationsExportTitle() {
@@ -10293,10 +10308,10 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Titel für Export einer Applikation setzen
+     * Titel fï¿½r Export einer Applikation setzen
      * 
      * @param dialogApplicationsExportTitle
-     *            Titel z.B: (Alle Einträge dieses Bereichs)
+     *            Titel z.B: (Alle Eintrï¿½ge dieses Bereichs)
      */
     public void setDialogApplicationsExportTitle(
             String dialogApplicationsExportTitle) {
@@ -10304,9 +10319,9 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Liefert Titel für Export einer Sektion
+     * Liefert Titel fï¿½r Export einer Sektion
      * 
-     * @return dialogSectionsExportTitle Titel z.B: (Alle Einträge dieser
+     * @return dialogSectionsExportTitle Titel z.B: (Alle Eintrï¿½ge dieser
      *         Sektion)
      */
     public String getDialogSectionsExportTitle() {
@@ -10314,10 +10329,10 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Titel für Export einer Sektion setzen
+     * Titel fï¿½r Export einer Sektion setzen
      * 
      * @param dialogSectionsExportTitle
-     *            Titel z.B: (Alle Einträge dieser Sektion)
+     *            Titel z.B: (Alle Eintrï¿½ge dieser Sektion)
      */
     public void setDialogSectionsExportTitle(String dialogSectionsExportTitle) {
         this.dialogSectionsExportTitle = dialogSectionsExportTitle;
@@ -10362,7 +10377,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Liefert Name der JSP Datei für die Anzeige der Dokumentation
+     * Liefert Name der JSP Datei fï¿½r die Anzeige der Dokumentation
      * 
      * @return documentationFile default settings_show_docu.jsp
      */
@@ -10371,7 +10386,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * JSP Datei für die Anzeige der Dokumentation
+     * JSP Datei fï¿½r die Anzeige der Dokumentation
      * 
      * @param documentationFile
      *            default settings_show_docu.jsp
@@ -10401,19 +10416,19 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Liefert Höhe des Dokufensters
+     * Liefert Hï¿½he des Dokufensters
      * 
-     * @return docuWinHeight Höhe in px
+     * @return docuWinHeight Hï¿½he in px
      */
     public int getDocuWinHeight() {
         return docuWinHeight;
     }
 
     /**
-     * Höhe des Dokufensters
+     * Hï¿½he des Dokufensters
      * 
      * @param docuWinHeight
-     *            Höhe in px
+     *            Hï¿½he in px
      */
     public void setDocuWinHeight(int docuWinHeight) {
         this.docuWinHeight = docuWinHeight;
@@ -10439,7 +10454,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Template CSS Datei für die Dokuanzeige importieren
+     * Template CSS Datei fï¿½r die Dokuanzeige importieren
      * 
      * @return enableTemplateCss default false : nicht importieren
      */
@@ -10448,7 +10463,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Template CSS Datei für die Dokuanzeige importieren
+     * Template CSS Datei fï¿½r die Dokuanzeige importieren
      * 
      * @param enableTemplateCss
      *            default false : nicht importieren
@@ -10458,7 +10473,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * JSP Datei für die Anzeige von Hilfetexten
+     * JSP Datei fï¿½r die Anzeige von Hilfetexten
      * 
      * @return helpFile Name der Datei default : settings_show_help.jsp
      */
@@ -10467,7 +10482,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * JSP Datei für die Anzeige von Hilfetexten
+     * JSP Datei fï¿½r die Anzeige von Hilfetexten
      * 
      * @param helpFile
      *            Name der Datei default : settings_show_help.jsp
@@ -10477,19 +10492,19 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Höhe des Hilfefensters
+     * Hï¿½he des Hilfefensters
      * 
-     * @return helpWinHeight Höhe in px
+     * @return helpWinHeight Hï¿½he in px
      */
     public int getHelpWinHeight() {
         return helpWinHeight;
     }
 
     /**
-     * Höhe des Hilfefensters
+     * Hï¿½he des Hilfefensters
      * 
      * @param helpWinHeight
-     *            Höhe in px
+     *            Hï¿½he in px
      */
     public void setHelpWinHeight(int helpWinHeight) {
         this.helpWinHeight = helpWinHeight;
@@ -10592,7 +10607,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Anzeige der Namen von Einträgen in Listen zulassen
+     * Anzeige der Namen von Eintrï¿½gen in Listen zulassen
      * 
      * @return enableEntryNames default true : zulassen
      */
@@ -10601,7 +10616,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Anzeige der Namen von Einträgen in Listen zulassen
+     * Anzeige der Namen von Eintrï¿½gen in Listen zulassen
      * 
      * @param enableEntryNames
      *            default true : zulassen
@@ -10611,7 +10626,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Ändern der Werte von Einträgen in Listen zulassen
+     * ï¿½ndern der Werte von Eintrï¿½gen in Listen zulassen
      * 
      * @return enableEntryValues default true : zulassen
      */
@@ -10620,7 +10635,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Ändern der Werte von Einträgen in Listen zulassen
+     * ï¿½ndern der Werte von Eintrï¿½gen in Listen zulassen
      * 
      * @param enableEntryValues
      *            default true : zulassen
@@ -10678,16 +10693,16 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Liefert Anzahl Pixel für Anzeige eines Eintrags (default 50)
+     * Liefert Anzahl Pixel fï¿½r Anzeige eines Eintrags (default 50)
      * 
-     * @return Default: Anzahl Pixel für Anzeige eines Eintrags
+     * @return Default: Anzahl Pixel fï¿½r Anzeige eines Eintrags
      */
     public String getDefaultDisplaySize() {
         return defaultDisplaySize;
     }
 
     /**
-     * Anzahl Pixel für Anzeige eines Eintrags setzen (default 50)
+     * Anzahl Pixel fï¿½r Anzeige eines Eintrags setzen (default 50)
      * 
      * @param defaultDisplaySize
      *            Anzahl Pixel.
@@ -10697,7 +10712,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Liefert Anzahl Zeichen für Eingabe eines Eintrags (default 250)
+     * Liefert Anzahl Zeichen fï¿½r Eingabe eines Eintrags (default 250)
      * 
      * @return defaultInputSize Anzahl Zeichen.
      */
@@ -10706,7 +10721,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Anzahl Zeichen für Eingabe eines Eintrags setzen (default 250)
+     * Anzahl Zeichen fï¿½r Eingabe eines Eintrags setzen (default 250)
      * 
      * @param defaultInputSize
      *            Anzahl Zeichen.
@@ -10773,7 +10788,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Graphik für Aktionen
+     * Graphik fï¿½r Aktionen
      * 
      * @return imgAction Dateiname
      */
@@ -10782,7 +10797,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Graphik für Aktionen
+     * Graphik fï¿½r Aktionen
      * 
      * @param imgAction
      *            Dateiname
@@ -10792,7 +10807,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Graphik für Seitenende
+     * Graphik fï¿½r Seitenende
      * 
      * @return imgBottom Dateiname
      */
@@ -10801,7 +10816,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Graphik für Seitenende
+     * Graphik fï¿½r Seitenende
      * 
      * @param imgBottom
      *            Dateiname
@@ -10811,7 +10826,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Graphik für Hilfe
+     * Graphik fï¿½r Hilfe
      * 
      * @return imgHelp Dateiname
      */
@@ -10820,7 +10835,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Graphik für Hilfe
+     * Graphik fï¿½r Hilfe
      * 
      * @param imgHelp
      *            Dateiname
@@ -10830,7 +10845,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Graphik für Navigation
+     * Graphik fï¿½r Navigation
      * 
      * @return imgNavigation The imgNavigation to set.
      */
@@ -10839,7 +10854,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Graphik für Navigation
+     * Graphik fï¿½r Navigation
      * 
      * @param imgNavigation
      *            The imgNavigation to set.
@@ -10849,7 +10864,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Graphik für Seitenanfang
+     * Graphik fï¿½r Seitenanfang
      * 
      * @return imgTop Dateiname
      */
@@ -10858,7 +10873,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Graphik für Seitenanfang
+     * Graphik fï¿½r Seitenanfang
      * 
      * @param imgTop
      *            Dateiname
@@ -10868,7 +10883,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * CSS-Style: Tabellenränder 1/0
+     * CSS-Style: Tabellenrï¿½nder 1/0
      * 
      * @return styleBorder default : 1
      */
@@ -10877,7 +10892,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * CSS-Style: Tabellenränder 1/0
+     * CSS-Style: Tabellenrï¿½nder 1/0
      * 
      * @param styleBorder
      *            default : 1
@@ -10887,7 +10902,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * CSS-Klasse für Aktionen via Font
+     * CSS-Klasse fï¿½r Aktionen via Font
      * 
      * @return styleFontAction CSS-Klasse
      */
@@ -10896,7 +10911,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * CSS-Klasse für Aktionen via Font
+     * CSS-Klasse fï¿½r Aktionen via Font
      * 
      * @param styleFontAction
      *            CSS-Klasse
@@ -10906,7 +10921,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * CSS-Klasse für Aktionen via Font
+     * CSS-Klasse fï¿½r Aktionen via Font
      * 
      * @return styleFontNavigation CSS-Klasse
      */
@@ -10915,7 +10930,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * CSS-Klasse für Aktionen via Font
+     * CSS-Klasse fï¿½r Aktionen via Font
      * 
      * @param styleFontNavigation
      *            CSS-Klasse
@@ -10944,7 +10959,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * CSS-Klasse für Aktionen via Link
+     * CSS-Klasse fï¿½r Aktionen via Link
      * 
      * @return styleLinkAction CSS-Klasse
      */
@@ -10953,7 +10968,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * CSS-Klasse für Aktionen via Link
+     * CSS-Klasse fï¿½r Aktionen via Link
      * 
      * @param styleLinkAction
      *            CSS-Klasse
@@ -10963,7 +10978,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * CSS-Klasse für Aktionen via Link
+     * CSS-Klasse fï¿½r Aktionen via Link
      * 
      * @return styleLinkInactiveNavigation CSS-Klasse
      */
@@ -10972,7 +10987,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * CSS-Klasse für Aktionen via Link
+     * CSS-Klasse fï¿½r Aktionen via Link
      * 
      * @param styleLinkInactiveNavigation
      *            CSS-Klasse
@@ -10983,7 +10998,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * CSS-Klasse für Aktionen via Link
+     * CSS-Klasse fï¿½r Aktionen via Link
      * 
      * @return styleLinkNavigation CSS-Klasse
      */
@@ -10992,7 +11007,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * CSS-Klasse für Aktionen via Link
+     * CSS-Klasse fï¿½r Aktionen via Link
      * 
      * @param styleLinkNavigation
      *            CSS-Klasse
@@ -11116,19 +11131,19 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Import-Funktion: Dateigröße beschränken, -1 = beliebig
+     * Import-Funktion: Dateigrï¿½ï¿½e beschrï¿½nken, -1 = beliebig
      * 
-     * @return importMaxSize Dateigrösse
+     * @return importMaxSize Dateigrï¿½sse
      */
     public long getImportMaxSize() {
         return importMaxSize;
     }
 
     /**
-     * Import-Funktion: Dateigröße beschränken, -1 = beliebig
+     * Import-Funktion: Dateigrï¿½ï¿½e beschrï¿½nken, -1 = beliebig
      * 
      * @param importMaxSize
-     *            Dateigrösse
+     *            Dateigrï¿½sse
      */
     public void setImportMaxSize(long importMaxSize) {
         this.importMaxSize = importMaxSize;
@@ -11144,7 +11159,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Setzt ACL für die Anzeige von allen Applikationen bzw "neue Applikation"
+     * Setzt ACL fï¿½r die Anzeige von allen Applikationen bzw "neue Applikation"
      * 
      * @param topLevelAcl
      *            ACL identifier.
@@ -11224,21 +11239,21 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Liefert Zeichen für alle Applikationen|Sektionen|Entries (default "*")
+     * Liefert Zeichen fï¿½r alle Applikationen|Sektionen|Entries (default "*")
      * bei der Verwendung von ACLs
      * 
-     * @return Returns the Zeichen für alle Applikationen|Sektionen|Entries.
+     * @return Returns the Zeichen fï¿½r alle Applikationen|Sektionen|Entries.
      */
     public String getAllAclNote() {
         return allAclNote;
     }
 
     /**
-     * Setzt Zeichen für alle Applikationen|Sektionen|Entries (default "*") bei
+     * Setzt Zeichen fï¿½r alle Applikationen|Sektionen|Entries (default "*") bei
      * der Verwendung von ACLs
      * 
      * @param allAclNote
-     *            Zeichen für alle Applikationen|Sektionen|Entries.
+     *            Zeichen fï¿½r alle Applikationen|Sektionen|Entries.
      */
     public void setAllAclNote(String allAclNote) {
         this.allAclNote = allAclNote;
@@ -11302,19 +11317,19 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Liefert Höhe des JS-Hilfefensters
+     * Liefert Hï¿½he des JS-Hilfefensters
      * 
-     * @return Höhe des JS-Hilfefensters.
+     * @return Hï¿½he des JS-Hilfefensters.
      */
     public int getHelpsWinHeight() {
         return helpsWinHeight;
     }
 
     /**
-     * Setzt Höhe des JS-Hilfefensters
+     * Setzt Hï¿½he des JS-Hilfefensters
      * 
      * @param helpsWinHeight
-     *            Höhe des JS-Hilfefensters.
+     *            Hï¿½he des JS-Hilfefensters.
      */
     public void setHelpsWinHeight(int helpsWinHeight) {
         this.helpsWinHeight = helpsWinHeight;
@@ -11359,38 +11374,38 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Liefert Query-Parameter für Session-ID (default JSESSIONID)
+     * Liefert Query-Parameter fï¿½r Session-ID (default JSESSIONID)
      * 
-     * @return Query-Parameter für Session-ID.
+     * @return Query-Parameter fï¿½r Session-ID.
      */
     public String getSessionVAR() {
         return sessionVAR;
     }
 
     /**
-     * Setzt Query-Parameter für Session-ID (default JSESSIONID)
+     * Setzt Query-Parameter fï¿½r Session-ID (default JSESSIONID)
      * 
      * @param sessionVAR
-     *            Query-Parameter für Session-ID.
+     *            Query-Parameter fï¿½r Session-ID.
      */
     public void setSessionVAR(String sessionVAR) {
         this.sessionVAR = sessionVAR;
     }
 
     /**
-     * Liefert Sortierfeld(er) für Anzeige der Einträge
+     * Liefert Sortierfeld(er) fï¿½r Anzeige der Eintrï¿½ge
      * 
-     * @return Sortierfeld(er) für Anzeige der Einträge.
+     * @return Sortierfeld(er) fï¿½r Anzeige der Eintrï¿½ge.
      */
     public String getEntryOrder() {
         return this.settings.getEntryOrder();
     }
 
     /**
-     * Setzt Sortierfeld(er) für Anzeige der Einträge
+     * Setzt Sortierfeld(er) fï¿½r Anzeige der Eintrï¿½ge
      * 
      * @param entryOrder
-     *            Sortierfeld(er) für Anzeige der Einträge. Default : NAME
+     *            Sortierfeld(er) fï¿½r Anzeige der Eintrï¿½ge. Default : NAME
      */
     public void setEntryOrder(String entryOrder) {
 
@@ -11417,64 +11432,64 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Liefert den Name der Applikation für Zählervariablen
+     * Liefert den Name der Applikation fï¿½r Zï¿½hlervariablen
      * 
-     * @return Name der Applikation für Zählervariablen.
+     * @return Name der Applikation fï¿½r Zï¿½hlervariablen.
      */
     public String getEntryCounterApplication() {
         return this.settings.getEntryCounterApplication();
     }
 
     /**
-     * Setzt den Name der Applikation für Zählervariablen
+     * Setzt den Name der Applikation fï¿½r Zï¿½hlervariablen
      * 
      * @param entryCounterApplication
-     *            Name der Applikation für Zählervariablen. Default : counter
+     *            Name der Applikation fï¿½r Zï¿½hlervariablen. Default : counter
      */
     public void setEntryCounterApplication(String entryCounterApplication) {
         this.settings.setEntryCounterApplication(entryCounterApplication);
     }
 
     /**
-     * Lifert den Name der Sektion für Zählervariablen
+     * Lifert den Name der Sektion fï¿½r Zï¿½hlervariablen
      * 
-     * @return Name der Sektion für Zählervariablen.
+     * @return Name der Sektion fï¿½r Zï¿½hlervariablen.
      */
     public String getEntryCounterSection() {
         return this.settings.getEntryCounterSection();
     }
 
     /**
-     * Setzt den Name der Sektion für Zählervariablen
+     * Setzt den Name der Sektion fï¿½r Zï¿½hlervariablen
      * 
      * @param entryCounterSection
-     *            Name der Sektion für Zählervariablen. Default : counter
+     *            Name der Sektion fï¿½r Zï¿½hlervariablen. Default : counter
      */
     public void setEntryCounterSection(String entryCounterSection) {
         this.settings.setEntryCounterSection(entryCounterSection);
     }
 
     /**
-     * Liefert den Name der Sektion für Master Schemata
+     * Liefert den Name der Sektion fï¿½r Master Schemata
      * 
-     * @return Name der Sektion für Master Schemata
+     * @return Name der Sektion fï¿½r Master Schemata
      */
     public String getEntrySchemaSection() {
         return this.settings.getEntrySchemaSection();
     }
 
     /**
-     * Setzt den Name der Sektion für Master Schemata
+     * Setzt den Name der Sektion fï¿½r Master Schemata
      * 
      * @param entrySchemaSection
-     *            Name der Sektion für Master Schemata. Default : **schema**
+     *            Name der Sektion fï¿½r Master Schemata. Default : **schema**
      */
     public void setEntrySchemaSection(String entrySchemaSection) {
         this.settings.setEntrySchemaSection(entrySchemaSection);
     }
 
     /**
-     * Liefert das Feld für Titels der Einträge
+     * Liefert das Feld fï¿½r Titels der Eintrï¿½ge
      * 
      * @return Returns the entrySettingTitle.
      */
@@ -11483,10 +11498,10 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Setzt das Feld für Titels der Einträge
+     * Setzt das Feld fï¿½r Titels der Eintrï¿½ge
      * 
      * @param entrySettingTitle
-     *            Feld für Titels der Einträge.
+     *            Feld fï¿½r Titels der Eintrï¿½ge.
      */
     public void setEntrySettingTitle(String entrySettingTitle) {
         this.settings.setEntrySettingTitle(entrySettingTitle);
@@ -11575,7 +11590,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * Setzt den Schalter für die Berücksichtigung von Groß/Kleinschreibung
+     * Setzt den Schalter fï¿½r die Berï¿½cksichtigung von Groï¿½/Kleinschreibung
      * 
      * @param ignoreCase
      */
@@ -11585,7 +11600,7 @@ public class SOSSettingsDialog {
     }
 
     /**
-     * liefert den Schalter für die Berücksichtigung von Groß/Kleinschreibung
+     * liefert den Schalter fï¿½r die Berï¿½cksichtigung von Groï¿½/Kleinschreibung
      * 
      * @param ignoreCase
      */

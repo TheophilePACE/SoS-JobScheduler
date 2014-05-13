@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -70,7 +85,7 @@ import com.sos.JSHelper.io.Files.JSFile;
  * 
  * !!!! Attention: this program is using the xml-paylod for making the changes
  * persistent !!!! die payload wird u.A. verwendet, um die configuration auch
- * für agenten verfügbar zu machen
+ * fï¿½r agenten verfï¿½gbar zu machen
  * 
  * 
  * @author andreas.pueschel@sos-berlin.com
@@ -191,7 +206,7 @@ public class ConfigurationBaseMonitor extends Monitor_impl {
 				}
 
 				// Damit die Agenten auch eine Konfiguration haben. Evt.
-				// Dummy-Step als ersten Node einfügen.
+				// Dummy-Step als ersten Node einfï¿½gen.
 				spooler_task.order().set_xml_payload(configurationBuffer.toString());
 
 				spooler_log.debug3("...Setting scheduler_order_configuration_loaded=true");

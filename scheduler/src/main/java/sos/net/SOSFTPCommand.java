@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -270,7 +285,7 @@ abstract public class SOSFTPCommand {
 	/** Program Arguments */
 	protected Properties			arguments								= null;
 	protected Properties			savedArguments							= null;
-	/** Hilfsvariable. Hier werden alle ursprüngliche/unveränderte Parametern zum Historienschreiben geschrieben.
+	/** Hilfsvariable. Hier werden alle ursprï¿½ngliche/unverï¿½nderte Parametern zum Historienschreiben geschrieben.
 	 * Es geht mehr um die Jump Parameter*/
 	private static Properties		originalParam							= null;
 
@@ -290,8 +305,8 @@ abstract public class SOSFTPCommand {
 	protected String				postCommands							= "";
 
 	/**
-	 * Anlegen einer temporären Historien Datei, die anschliessend in der globalen Historie Datei (siehe historyFile)
-	 * angehängt wird
+	 * Anlegen einer temporï¿½ren Historien Datei, die anschliessend in der globalen Historie Datei (siehe historyFile)
+	 * angehï¿½ngt wird
 	 */
 	private static File				tempHistoryFile							= null;
 
@@ -382,18 +397,18 @@ abstract public class SOSFTPCommand {
 	protected boolean				mlsdSupported							= false;
 	protected boolean				modezSupported							= false;
 	protected boolean				dataChannelEncrypted					= false;
-	// /** 1. Stelle: ist die Major Version. wir erhöhen Sie nur nach Absprache */
+	// /** 1. Stelle: ist die Major Version. wir erhï¿½hen Sie nur nach Absprache */
 	// private static int major = 1;
-	// /** 2. Stelle: ist die Minor Version: wir erhöhen Sie nur nach Absprache */
+	// /** 2. Stelle: ist die Minor Version: wir erhï¿½hen Sie nur nach Absprache */
 	// private static int minor = 0;
-	// /**3. Stelle: ist die Bug Fix Nummer: Sie erhöhen Sie automatisch bei jeder Auslieferung
+	// /**3. Stelle: ist die Bug Fix Nummer: Sie erhï¿½hen Sie automatisch bei jeder Auslieferung
 	// * 1 = 23.01.2009
 	// * a) Erstellen der Versionsnummer;
 	// * b) Jeweils beim polling interval soll die Meldung ausgegeben werden.
 	// * c) -skip_transfer: falsche Ausgabe im Protokoll
 	// *
 	// * 2 = 26.01.2009
-	// * a) File Transfer Transactions -> transaktionsabhängige übertragung, d.h. löschen oder umbennen der transferierten dateien (atomic
+	// * a) File Transfer Transactions -> transaktionsabhï¿½ngige ï¿½bertragung, d.h. lï¿½schen oder umbennen der transferierten dateien (atomic
 	// suffx)
 	// * erfolgt erst dann, wenn alle Dateien transferiert wurden.
 	// *
@@ -409,33 +424,33 @@ abstract public class SOSFTPCommand {
 	// *
 	// * 6 = 20.02.2009
 	// *
-	// * a) schedulerMessages -> die mandantenspezifische Parameter werden an scheduler_meaages ohne den Präfix
-	// * history_entry_ übergeben
+	// * a) schedulerMessages -> die mandantenspezifische Parameter werden an scheduler_meaages ohne den Prï¿½fix
+	// * history_entry_ ï¿½bergeben
 	// *
 	// * 7 = 24.02.2009
 	// *
-	// * a) Die Integration eines neuen Mechanismus, um Kennwörter via Shell Script dynamisch einzulesen.
+	// * a) Die Integration eines neuen Mechanismus, um Kennwï¿½rter via Shell Script dynamisch einzulesen.
 	// *
 	// * 8 = 09.03.2009
 	// *
-	// * a) Erweiterung für 3: unterschiedliche Parametrisierun mit unterschiedliche operation (z.B. einmal mit send und einmal mit receive)
+	// * a) Erweiterung fï¿½r 3: unterschiedliche Parametrisierun mit unterschiedliche operation (z.B. einmal mit send und einmal mit receive)
 	// *
 	// * 9 = 12.03.2009
 	// *
 	// * a) neue Parameter: -transfer_success=parameter_set_1 und -transfer_error=parameter_set_1; Beim erfolgreichen transfer soll
 	// transfer_success
-	// * durchgeführt werden im Fehlerfall soll transfer_error durchgeführt werden
+	// * durchgefï¿½hrt werden im Fehlerfall soll transfer_error durchgefï¿½hrt werden
 	// *
 	// * 10 = 17.04.2009
 	// *
-	// * a) operation = install -> neues Unterordner "doc" für das Installieren der Unterverzeichnis;
+	// * a) operation = install -> neues Unterordner "doc" fï¿½r das Installieren der Unterverzeichnis;
 	// * b) operation = install -> neue Dateien readme.txt und ThirdParty.txt
 	// * c) Realisierung der Gross und Kleinschreiben der transferierten Dateinamen: Parameter -replacement=[filename:uppercase] bzw.
 	// -replacement=[filename:lowercase]
 	// *
 	// * 11 = 28.07.2009
 	// *
-	// * a) operation = send -> Parameter poll_interval und poll_timeout werden jetzt auch für operation=send verwendet
+	// * a) operation = send -> Parameter poll_interval und poll_timeout werden jetzt auch fï¿½r operation=send verwendet
 	// * b) neue Parameter: testmode=yes|no
 	// *
 	// * 12 = 04.09.2009
@@ -458,7 +473,7 @@ abstract public class SOSFTPCommand {
 	// * a) mergen von Scheduler Parameter
 	// *
 	// * 18 = 19.11.2009
-	// * a) parameter simulate_shell ... löschen
+	// * a) parameter simulate_shell ... lï¿½schen
 	// *
 	// * 18 -> 19 in sf 05.01.2010
 	// * a) Parameter include funktioniert nicht
@@ -491,20 +506,20 @@ abstract public class SOSFTPCommand {
 
 	/**
 	 * All files should appear in the target system as one atomic transaction.
-	 * Approach: Transfer all files using the –atomic_transfer parameter that
+	 * Approach: Transfer all files using the ï¿½atomic_transfer parameter that
 	 * add a suffix to the file names. Then, having transferred all files
 	 * successfully, they would be renamed. This is approx.
 	 * the same as the current operation for atomic transfers, however,
 	 * the renaming should be done for all files and not on a per file basis.
 	 *
-	 * This feature should consider the –remove_files parameter,
+	 * This feature should consider the ï¿½remove_files parameter,
 	 * i.e. files should be removed after successfule transfer of all files,
 	 * not on a per file basis
 	 */
 	protected static boolean		transActional							= false;
 
 	/**
-	 * Parameter die nicht an den jump Host übergeben werden dürfen
+	 * Parameter die nicht an den jump Host ï¿½bergeben werden dï¿½rfen
 	 */
 	private static ArrayList		noJumpParameter							= new ArrayList();
 
@@ -515,8 +530,8 @@ abstract public class SOSFTPCommand {
 
 	/**
 	 * -transfer_success=parameter_set_1 und -transfer_error=parameter_set_1; Beim erfolgreichen transfer soll transfer_success
-	 * durchgeführt werden im Fehlerfall soll transfer_error durchgeführt werden.
-	 * Die Argumente werden hier im listen gesammelt um im Fehlerfall bzw. Erfolgsplan alles auszuführen.
+	 * durchgefï¿½hrt werden im Fehlerfall soll transfer_error durchgefï¿½hrt werden.
+	 * Die Argumente werden hier im listen gesammelt um im Fehlerfall bzw. Erfolgsplan alles auszufï¿½hren.
 	 */
 	protected static ArrayList		listOfSuccessTransfer					= null;
 	protected static ArrayList		listOfErrorTransfer						= null;
@@ -529,7 +544,7 @@ abstract public class SOSFTPCommand {
 
 	/**
 	 * Falls der SOSFTP im scheduler umgebung betrieben wird, werden alle Scheduler parameter aus der Umgebungsvariable
-	 * SCHEDULER_PARAMS_<parameter> ausgelesen und den sosftp als Argument übergeben
+	 * SCHEDULER_PARAMS_<parameter> ausgelesen und den sosftp als Argument ï¿½bergeben
 	 */
 	private static Properties		schedulerParams							= new Properties();
 
@@ -838,7 +853,7 @@ abstract public class SOSFTPCommand {
 										else {
 											getLogger().debug1(line);
 										}
-							// Die Schreibweise bitte nicht verändern, da hier String vergleiche gemacht werden
+							// Die Schreibweise bitte nicht verï¿½ndern, da hier String vergleiche gemacht werden
 							if (line.indexOf("*******ftp transfer directory is:") > -1) {
 								int pos1 = line.indexOf("*******ftp transfer directory is:") + "*******ftp transfer directory is:".length();
 								int pos2 = line.indexOf("******************");
@@ -866,7 +881,7 @@ abstract public class SOSFTPCommand {
 						}
 
 						getLogger().debug1("output to stderr for remote command: " + normalizedPassword(this.getCommands()[i]));
-						// Beide StreamGobbler müssen hintereinander instanziiert werden
+						// Beide StreamGobbler mï¿½ssen hintereinander instanziiert werden
 						BufferedReader stderrReader = new BufferedReader(new InputStreamReader(stderr));
 						stderrOutput = new StringBuffer();
 						while (true) {
@@ -1112,8 +1127,8 @@ abstract public class SOSFTPCommand {
 	 */
 	public boolean remove() throws Exception {
 		getLogger().debug1("calling " + sos.util.SOSClassUtil.getMethodName());
-		// Das Löschen der Dateien per ftp ist identisch wie die Methode receive mit den Parameter
-		// skip_trasfer=yes (-> unterdrücken der transferieren der Dateien) und remove_files=yes
+		// Das Lï¿½schen der Dateien per ftp ist identisch wie die Methode receive mit den Parameter
+		// skip_trasfer=yes (-> unterdrï¿½cken der transferieren der Dateien) und remove_files=yes
 		arguments.put("skip_transfer", "yes");
 		arguments.put(conSettingREMOVE_FILES, "yes");
 
@@ -1316,7 +1331,7 @@ abstract public class SOSFTPCommand {
 			Properties arg = getEnvVars(logger);
 			retVal.putAll(arg);
 
-			// zusätzliche Parametern generieren
+			// zusï¿½tzliche Parametern generieren
 			retVal.put("date", sos.util.SOSDate.getCurrentDateAsString());
 			retVal.put("time", sos.util.SOSDate.getCurrentTimeAsString("hh:mm:ss"));
 			retVal.put("transfer_timestamp", sos.util.SOSDate.getCurrentTimeAsString());
@@ -1387,9 +1402,9 @@ abstract public class SOSFTPCommand {
 	/**
 	 *  Substitution von Environment-Variablen in Konfigurationsdateien
 	 *
-	 *  Für Unix und Windows soll bei allen Einstellungen in einer Konfigurationsdatei
-	 *  Substitution von Environment-Variablen unterstützt werden.
-	 *  Variablen müssen in der Form %VAR% bzw. ${VAR} geschrieben sein.
+	 *  Fï¿½r Unix und Windows soll bei allen Einstellungen in einer Konfigurationsdatei
+	 *  Substitution von Environment-Variablen unterstï¿½tzt werden.
+	 *  Variablen mï¿½ssen in der Form %VAR% bzw. ${VAR} geschrieben sein.
 	 *
 	 */
 	private static Properties substituteEnvironment(final Properties prop) throws Exception {
@@ -1459,7 +1474,7 @@ abstract public class SOSFTPCommand {
 
 					tempHistoryFile.deleteOnExit();
 
-					// überprüfen ob die Historien Felder Reihenfolge anders ist als in der Historiendatei.
+					// ï¿½berprï¿½fen ob die Historien Felder Reihenfolge anders ist als in der Historiendatei.
 					checkHistoryField(historyFields);
 
 					history = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(tempHistoryFile)));
@@ -1502,7 +1517,7 @@ abstract public class SOSFTPCommand {
 			if (getBool("testmode")) {
 				return false;
 			}
-			// Überprüfen, ob eine lock Datei existiert
+			// ï¿½berprï¿½fen, ob eine lock Datei existiert
 			lockHistoryFile = new File(System.getProperty("java.io.tmpdir"), historyFile.getName() + ".lock");
 
 			if (lockHistoryFile.exists()) {
@@ -1521,11 +1536,11 @@ abstract public class SOSFTPCommand {
 					getLogger().debug5("..history lock file exist.");
 					// wenn ja, pid ermitteln
 					bra = new BufferedReader(new FileReader(lockHistoryFile));
-					// überprüfen, ob dieser pid existiert
+					// ï¿½berprï¿½fen, ob dieser pid existiert
 
 					if ((pid = bra.readLine()) != null) {
 						getLogger().debug("reading from history lock file: pid = " + pid);
-						// Für Window
+						// Fï¿½r Window
 						Process proc = null;
 						if (System.getProperty("os.name").toLowerCase().indexOf("windows") > -1)
 							proc = Runtime.getRuntime().exec("tasklist /FI \"PID eq " + pid + "\"");
@@ -1553,7 +1568,7 @@ abstract public class SOSFTPCommand {
 
 			if (!existPID && sosString.parseToString(pid).trim().length() > 0) {
 				getLogger().debug("History lock File is deleting cause Process ID not exist.");
-				// Es existiert eine History Lock datei aber keine PID. Die Lock Datei kann gelöscht werden
+				// Es existiert eine History Lock datei aber keine PID. Die Lock Datei kann gelï¿½scht werden
 				if (lockHistoryFile.delete()) {
 					getLogger().info("History lock File successfully deleted, cause Process ID not exist.");
 				}
@@ -1565,7 +1580,7 @@ abstract public class SOSFTPCommand {
 
 			}
 
-			if (existPID)// History Datei existiert und der entsprechende pid ist aktuell. Andere Instanzen dürfen nicht schreiben.
+			if (existPID)// History Datei existiert und der entsprechende pid ist aktuell. Andere Instanzen dï¿½rfen nicht schreiben.
 				RaiseException("Could not write in History File, cause there is existing History Lock File.");
 
 			return existPID;
@@ -1583,7 +1598,7 @@ abstract public class SOSFTPCommand {
 	}
 
 	/**
-	 * Überprüft, ob die Historienfelder in der Historien datei identisch sind.
+	 * ï¿½berprï¿½ft, ob die Historienfelder in der Historien datei identisch sind.
 	 */
 	private void checkHistoryField(final String historyFields_) throws Exception {
 
@@ -1600,7 +1615,7 @@ abstract public class SOSFTPCommand {
 			int line = 0;
 			while ((thisLine = br.readLine()) != null) { // while loop begins here
 				if (line > 0 && !historyFilesChanged) {
-					return;// es hat sich nichts geändert, abbruchbedingung
+					return;// es hat sich nichts geï¿½ndert, abbruchbedingung
 				}
 
 				if (line == 0) {// erste zeile, Historienfelder aus der Datei lesen und vergleichen, ob alle Felder vorhanden sind
@@ -1612,7 +1627,7 @@ abstract public class SOSFTPCommand {
 					String[] splitnewHistoryFields = newHistoryFields.split(";");
 					for (int i = 0; i < splitnewHistoryFields.length; i++) {
 
-						// Überprüfe, ob die neuen Felder bereits in der HistorienDatei vorhanden sind
+						// ï¿½berprï¿½fe, ob die neuen Felder bereits in der HistorienDatei vorhanden sind
 						if (thisLine.indexOf(";" + splitnewHistoryFields[i] + ";") == -1 && !thisLine.startsWith(splitnewHistoryFields[i] + ";")
 								&& !thisLine.endsWith(splitnewHistoryFields[i])) {
 
@@ -1626,7 +1641,7 @@ abstract public class SOSFTPCommand {
 
 					if (historyFilesChanged) {
 						if (!existHistoryLockFile()) {
-							// lock Datei erzeugen, der verhindert, historien Einträge zu schreiben
+							// lock Datei erzeugen, der verhindert, historien Eintrï¿½ge zu schreiben
 							createHistoryLockFile();
 							bw = new BufferedWriter(new FileWriter(historyFile));
 							bw.write(thisLine);
@@ -1690,7 +1705,7 @@ abstract public class SOSFTPCommand {
 	/**
 	 * Beim Schreiben in die Historien Datei wird vorher eine lock Datei generiert. Das soll parallele
 	 * SOSFTP Instanzen verhindert gleichzeitig in die Historie Datei zu schreiben.
-	 * Hier soll die Lock Datei gelöscht werden, damit parallele SOSFTP Instanzen in die Historie schreiben können.
+	 * Hier soll die Lock Datei gelï¿½scht werden, damit parallele SOSFTP Instanzen in die Historie schreiben kï¿½nnen.
 	 * @throws Exception
 	 */
 	private void removeHistoryLockFile() throws Exception {
@@ -1714,10 +1729,10 @@ abstract public class SOSFTPCommand {
 	}
 
 	/**
-	 * Überprüft ob ein Jump Host angegeben wurde.
-	 * Hier wird auf dem jump host ein temporäres Verzeichnis erzeugt,
-	 * indem die Verzeichnisse temporär transferiert werden. Dieses verzeichnis wird anschliessend
-	 * gelöscht.
+	 * ï¿½berprï¿½ft ob ein Jump Host angegeben wurde.
+	 * Hier wird auf dem jump host ein temporï¿½res Verzeichnis erzeugt,
+	 * indem die Verzeichnisse temporï¿½r transferiert werden. Dieses verzeichnis wird anschliessend
+	 * gelï¿½scht.
 	 *
 	 * Hier werden neue Kommandos generiert.
 	 */
@@ -1728,7 +1743,7 @@ abstract public class SOSFTPCommand {
 			if (flgJumpTransferDefined == false)
 				return;
 
-			// Parameter die nicht an die SSH Commands übergeben werden sollen
+			// Parameter die nicht an die SSH Commands ï¿½bergeben werden sollen
 			noJumpParameter.add("transfer_timestamp");
 			noJumpParameter.add("date");
 			noJumpParameter.add("time");
@@ -1824,9 +1839,9 @@ abstract public class SOSFTPCommand {
 			}
 
 			if (getString(conSettingOPERATION).startsWith(conOperationRECEIVE) && getBool("skip_transfer")) {
-				// wenn jump host überprüfen soll, welche Dateien es im target host liegen, dann wird dieser in execute
-				// mit Hilfe String operationen ausgelesen. Damit sparen wird das Übertragen der Dateien auf jump Host um von Lokal Host
-				// die Dateien zu überprüfen. Diese Änderung ist notwendig, wenn SOSFTP vom JobSchedulerReceive.java mit der Parameter
+				// wenn jump host ï¿½berprï¿½fen soll, welche Dateien es im target host liegen, dann wird dieser in execute
+				// mit Hilfe String operationen ausgelesen. Damit sparen wird das ï¿½bertragen der Dateien auf jump Host um von Lokal Host
+				// die Dateien zu ï¿½berprï¿½fen. Diese ï¿½nderung ist notwendig, wenn SOSFTP vom JobSchedulerReceive.java mit der Parameter
 				// parallel = yes aufgerufen wird.
 				arg = arg + " -verbose=\"9\"";
 
@@ -1864,8 +1879,8 @@ abstract public class SOSFTPCommand {
 			else
 				if (getString(conSettingOPERATION).equalsIgnoreCase(conOperationSEND) || getString(conSettingOPERATION).startsWith("install")) {
 					arg = arg + " -remove_files=yes";
-					// - niemals bei 1. Transfer-Operation zum jump_host lokal löschen
-					// - erst nach 2. Transfer-Operation löschen, wenn erfolgreich
+					// - niemals bei 1. Transfer-Operation zum jump_host lokal lï¿½schen
+					// - erst nach 2. Transfer-Operation lï¿½schen, wenn erfolgreich
 					curCommands = getString(conSettingsJUMP_COMMAND) + " " + arg;
 					if (!getString(conSettingOPERATION).equalsIgnoreCase(conOperationREMOVE)) {
 						postCommands = curCommands;
@@ -1876,11 +1891,11 @@ abstract public class SOSFTPCommand {
 					curCommands = getString(conSettingsJUMP_COMMAND) + " " + arg + commandDelimiter;
 					/**
 					 * http://www.sos-berlin.com/jira/browse/SOSFTP-108
-					 * Das Kommando zum löschen aller Dateien auf dem source_server, die file_spec entsprechen, wird hier aufgebaut.
-					 * "remove_files" wirkt trotzdem, indem jede Datei direkt nach dem Transfer gelöscht wird :-((, wenn es nicht transaktional ist.
-					 * Damit kann das Kommando mächtig Unsinn anstellen, wenn während der Übertragung weitere Dateien, die file_spec entsprechen, im Verzeichnis auftauchen.
-					 * Die werden dann nämlich gelöscht, ohne daß diese übertragen worden sind.
-					 * Es dürfen grundsätzlich eigentlich nur die Dateien gelöscht werden, die auch übertragen worden sind.
+					 * Das Kommando zum lï¿½schen aller Dateien auf dem source_server, die file_spec entsprechen, wird hier aufgebaut.
+					 * "remove_files" wirkt trotzdem, indem jede Datei direkt nach dem Transfer gelï¿½scht wird :-((, wenn es nicht transaktional ist.
+					 * Damit kann das Kommando mï¿½chtig Unsinn anstellen, wenn wï¿½hrend der ï¿½bertragung weitere Dateien, die file_spec entsprechen, im Verzeichnis auftauchen.
+					 * Die werden dann nï¿½mlich gelï¿½scht, ohne daï¿½ diese ï¿½bertragen worden sind.
+					 * Es dï¿½rfen grundsï¿½tzlich eigentlich nur die Dateien gelï¿½scht werden, die auch ï¿½bertragen worden sind.
 					 *
 					 * kb 2012-05-25
 					 */
@@ -1894,11 +1909,11 @@ abstract public class SOSFTPCommand {
 
 			if (sosString.parseToString(postCommands).length() > 0) {
 				/**
-				 * Bei send/Receive darf das replacement nicht ausgeführt werden, weil dort der Client im Intranet
-				 * der Master ist. Der client in der DMZ muß die Dateien einfach nur so rumschieben.
+				 * Bei send/Receive darf das replacement nicht ausgefï¿½hrt werden, weil dort der Client im Intranet
+				 * der Master ist. Der client in der DMZ muï¿½ die Dateien einfach nur so rumschieben.
 				 *
-				 * Bei transactional und/oder atomic gibt es allerdings noch ein rename, wofür dann das replacement/replacing
-				 * benötigt wird. Deshalb sind die parameter replacement und replacing hier für den DMZ-Client wichtig.
+				 * Bei transactional und/oder atomic gibt es allerdings noch ein rename, wofï¿½r dann das replacement/replacing
+				 * benï¿½tigt wird. Deshalb sind die parameter replacement und replacing hier fï¿½r den DMZ-Client wichtig.
 				 *
 				 * kb 2012-06-06
 				 */
@@ -1915,24 +1930,24 @@ abstract public class SOSFTPCommand {
 
 			getLogger().debug1("curCommands:  " + normalizedPassword(curCommands));
 
-			// Anpassen der Parameter für einen jump transfer per ftp
-			// Löschen der Dateien erst nach erfolgreichen übertragen
+			// Anpassen der Parameter fï¿½r einen jump transfer per ftp
+			// Lï¿½schen der Dateien erst nach erfolgreichen ï¿½bertragen
 
 			/**
-			 * Bug: damit werden alle Dateien evtl. gelöscht, auch die, die nicht übertragen wurden, weil sie während der Übertragung erst eingetroffen sind.
+			 * Bug: damit werden alle Dateien evtl. gelï¿½scht, auch die, die nicht ï¿½bertragen wurden, weil sie wï¿½hrend der ï¿½bertragung erst eingetroffen sind.
 			 * http://www.sos-berlin.com/jira/browse/SOSFTP-108
 			 *
 			arguments.put(conParameterREMOVE_AFTER_JUMP_TRANSFER, getString("remove_files")));
 			arguments.put("remove_files", "no");
 			*/
-			arguments.put(conParamMAKE_DIRS, "yes");// erlaubt das Generieren eines Temporären verzeichnis auf dem lokalen Rechner
-			arguments.put("jump_remote_dir", tempJumpRemoteDir);// Name des temporären Verzeichnis als remote_dir angeben
+			arguments.put(conParamMAKE_DIRS, "yes");// erlaubt das Generieren eines Temporï¿½ren verzeichnis auf dem lokalen Rechner
+			arguments.put("jump_remote_dir", tempJumpRemoteDir);// Name des temporï¿½ren Verzeichnis als remote_dir angeben
 
 			if (!arguments.containsKey(conParamJUMP_PROTOCOL)) {
 				arguments.put(conParamJUMP_PROTOCOL, "sftp");
 			}
 
-			// jump Parameter jetzt in ftp Parameter umbennen um die Dateien temporär zu übertragen
+			// jump Parameter jetzt in ftp Parameter umbennen um die Dateien temporï¿½r zu ï¿½bertragen
 			Properties prop = new Properties();
 			java.util.Iterator keys2 = arguments.keySet().iterator();
 			while (keys2.hasNext()) {
@@ -2062,7 +2077,7 @@ abstract public class SOSFTPCommand {
 	}
 
 	/**
-	 * Löscht das Temporäres Verzeichnis
+	 * Lï¿½scht das Temporï¿½res Verzeichnis
 	 * @return boolean
 	 */
 	private boolean removeTempDirectory() {
@@ -2089,7 +2104,7 @@ abstract public class SOSFTPCommand {
 					return false;
 				}
 
-				// Verzeichnis kann nicht gelöscht werden, wenn eine Datei unterhalb dieses Verzeichnis besteht
+				// Verzeichnis kann nicht gelï¿½scht werden, wenn eine Datei unterhalb dieses Verzeichnis besteht
 				File[] listOfFiles = tmpDir.listFiles();
 				for (int j = 0; j < listOfFiles.length; j++) {
 					if (listOfFiles.length > 0) {
@@ -2119,7 +2134,7 @@ abstract public class SOSFTPCommand {
 	}
 
 	/**
-	 * Generiert ein Temporäres Verzeichnis für ftp transfer auf der Jump Host
+	 * Generiert ein Temporï¿½res Verzeichnis fï¿½r ftp transfer auf der Jump Host
 	 * @return
 	 */
 	private boolean makeTempDirectory() throws Exception {
@@ -2134,11 +2149,11 @@ abstract public class SOSFTPCommand {
 				output = File.createTempFile("sos_ftp", null, new File(System.getProperty("java.io.tmpdir"))).getCanonicalPath();
 			}
 			tempJumpRemoteDir = output;
-			// diese Logausgabe darf nicht verändert werden. Wenn doch dann auch in execute-Methode anpassen. Der Log Level muss INFO sein
+			// diese Logausgabe darf nicht verï¿½ndert werden. Wenn doch dann auch in execute-Methode anpassen. Der Log Level muss INFO sein
 			getLogger().info("*******ftp transfer directory is:" + output + "******************");
 			if (new File(output).getCanonicalFile().exists()) {
 				// nur ein tempname wird gebraucht File.createTempFile erzeugt automatisch eine Datei, wir brauchen nur einen
-				// eindeutigen Namen für einen Verzeichnis
+				// eindeutigen Namen fï¿½r einen Verzeichnis
 				new File(output).getCanonicalFile().delete();
 			}
 			if (!new File(output).getCanonicalFile().mkdirs())
@@ -2257,7 +2272,7 @@ abstract public class SOSFTPCommand {
 					}
 				}
 
-				// alle Platzhalter, die keinen Wert haben löschen
+				// alle Platzhalter, die keinen Wert haben lï¿½schen
 				curBannerFooter = clearBanner(curBannerFooter);
 				banner = curBannerFooter;
 				// arguments.remove("for_banner");
@@ -2270,7 +2285,7 @@ abstract public class SOSFTPCommand {
 	}
 
 	/**
-	 * Löschen von leeren Platzhalter
+	 * Lï¿½schen von leeren Platzhalter
 	 * @param str
 	 * @return
 	 */
@@ -2573,13 +2588,13 @@ abstract public class SOSFTPCommand {
 																																			// PID
 																																			// |
 																																			// 0
-																																			// für
+																																			// fï¿½r
 																																			// Windows
 			ppid = sosString.parseToString(arguments, "ppid").length() > 0 ? sosString.parseToString(arguments, "ppid") : "0"; // 3- ppid=
 																																// Environment
 																																// PPID
 																																// | 0
-																																// für
+																																// fï¿½r
 																																// Windows
 			operation = sosString.parseToString(arguments, conSettingOPERATION); // 4- operation: send|receive
 			localhost = sosString.parseToString(arguments, "localhost"); // 5- local host
@@ -2602,7 +2617,7 @@ abstract public class SOSFTPCommand {
 
 			port = sosString.parseToString(arguments, conParamPORT); // 10- port
 
-			// ab hier unterscheiden on der Fehler während dem Datei transfer oder vor dem datei transfer entstanden ist
+			// ab hier unterscheiden on der Fehler wï¿½hrend dem Datei transfer oder vor dem datei transfer entstanden ist
 			if (sosString.parseToString(arguments, conSettingOPERATION).equals(conOperationSEND)) {
 				local_dir = localFile != null && localFile.getParent() != null ? clearCRLF(localFile.getParent()) : clearCRLF(sosString.parseToString(
 						arguments, conSettingLOCAL_DIR)); // 11- local dir
@@ -2664,8 +2679,8 @@ abstract public class SOSFTPCommand {
 			objSchedulerOrderParameterSet.put("guid", guid); // 1- GUID
 			objSchedulerOrderParameterSet.put("mandator", mandator); // 2- mandator: default SOS
 			objSchedulerOrderParameterSet.put("transfer_timestamp", transfer_timestamp); // 3- timestamp: Zeitstempel im ISO-Format
-			objSchedulerOrderParameterSet.put("pid", pid); // 4- pid= Environment PID | 0 für Windows
-			objSchedulerOrderParameterSet.put("ppid", ppid); // 5- ppid= Environment PPID | 0 für Windows
+			objSchedulerOrderParameterSet.put("pid", pid); // 4- pid= Environment PID | 0 fï¿½r Windows
+			objSchedulerOrderParameterSet.put("ppid", ppid); // 5- ppid= Environment PPID | 0 fï¿½r Windows
 			objSchedulerOrderParameterSet.put(conSettingOPERATION, operation); // 6- operation: send|receive
 			objSchedulerOrderParameterSet.put("localhost", localhost); // 7- local host
 			objSchedulerOrderParameterSet.put("localhost_ip", localhost_ip); // 8- local host IP adresse
@@ -2893,7 +2908,7 @@ abstract public class SOSFTPCommand {
 	/**
 	 * sends a command to the scheduler
 	 *
-	 * Überprüft ob alle Parameter correkt angegeben sind
+	 * ï¿½berprï¿½ft ob alle Parameter correkt angegeben sind
 	 * @param command XML String containing the command
 	 * @throws java.lang.Exception
 	 */
@@ -3294,7 +3309,7 @@ abstract public class SOSFTPCommand {
 				stdOut += line;
 			}
 			getLogger().debug9("output to stderr for remote command: " + checkShellCommand);
-			// Beide StreamGobbler müssen hintereinander instanziiert werden
+			// Beide StreamGobbler mï¿½ssen hintereinander instanziiert werden
 			// InputStream stderr = new StreamGobbler(this.getSshSession().getStderr());
 			BufferedReader stderrReader = new BufferedReader(new InputStreamReader(stderr));
 			while (true) {
@@ -3438,8 +3453,8 @@ abstract public class SOSFTPCommand {
 	 *   -          changes to the initial parameters by a parameter set have local scope, i.e. a second parameter set makes use oft he initial parameters,
 	 *              and should not consider changes by a previous parameter set
 	 *
-	 *              sosftp.sh –file_spec=[regex1]:[regex2] –transfer_mode=ascii:binary
-	 *              sosftp.sh –file_spec=[regex1] –file_spec2=[regex2]::[parameter_set2] –parameter_set2=“transfer_mode=ascii::remote_directory=/tmp“
+	 *              sosftp.sh ï¿½file_spec=[regex1]:[regex2] ï¿½transfer_mode=ascii:binary
+	 *              sosftp.sh ï¿½file_spec=[regex1] ï¿½file_spec2=[regex2]::[parameter_set2] ï¿½parameter_set2=ï¿½transfer_mode=ascii::remote_directory=/tmpï¿½
 	 *
 	 *
 	 * @param arg
@@ -3467,17 +3482,17 @@ abstract public class SOSFTPCommand {
 
 				// unterschiedlich Parametrisierung
 				if (Check4MultipleFileSpecs(key)) { // ein multiples file_spec ist angegeben
-					String[] split = value.split("::"); // –file_spec2=[regex2]::[parameter_set2]
+					String[] split = value.split("::"); // ï¿½file_spec2=[regex2]::[parameter_set2]
 					Properties newArg = (Properties) arg.clone();
 					newArg.put(conSettingFILE_SPEC, split[0]);
 					logger.info("found multiple file_spec parameter. Actual is : " + split[0]);
-					noJumpParameter.add(key); // dürfen dem jump host nicht übergeben werden
+					noJumpParameter.add(key); // dï¿½rfen dem jump host nicht ï¿½bergeben werden
 
 					if (split.length > 1) {
-						noJumpParameter.add(split[1]); // dürfen dem jump host nicht übergeben werden
+						noJumpParameter.add(split[1]); // dï¿½rfen dem jump host nicht ï¿½bergeben werden
 						String newParameterSet = sosString.parseToString(arg, split[1]);
 						String[] splitParams = newParameterSet.split("::");// Bsp.
-																			// –parameter_set2=“transfer_mode=ascii:remote_directory=/tmp“
+																			// ï¿½parameter_set2=ï¿½transfer_mode=ascii:remote_directory=/tmpï¿½
 						for (String splitParam2 : splitParams) {
 							String s = sosString.parseToString(splitParam2);
 							if (s.length() > 0) {
@@ -3487,7 +3502,7 @@ abstract public class SOSFTPCommand {
 						}
 					}
 					String index = key != null && key.length() > conSettingFILE_SPEC.length() ? key.substring(conSettingFILE_SPEC.length()) : "";
-					newArg.put("index", index);// hilfsparameter, wird später wieder gelöscht
+					newArg.put("index", index);// hilfsparameter, wird spï¿½ter wieder gelï¿½scht
 					list.add(newArg);
 				}
 				else {
@@ -3495,7 +3510,7 @@ abstract public class SOSFTPCommand {
 						Properties newArg = (Properties) arg.clone();
 						String newParameterSet = sosString.parseToString(arg.get(value));
 						String[] splitParams = newParameterSet.split("::");// Bsp.
-																			// –parameter_set2=“transfer_mode=ascii:remote_directory=/tmp“
+																			// ï¿½parameter_set2=ï¿½transfer_mode=ascii:remote_directory=/tmpï¿½
 						for (String splitParam2 : splitParams) {
 							String s = sosString.parseToString(splitParam2);
 							String[] splitParam = s.split("=");
@@ -3509,7 +3524,7 @@ abstract public class SOSFTPCommand {
 							Properties newArg = (Properties) arg.clone();
 							String newParameterSet = sosString.parseToString(arg.get(value));
 							String[] splitParams = newParameterSet.split("::");// Bsp.
-																				// –parameter_set2=“transfer_mode=ascii:remote_directory=/tmp“
+																				// ï¿½parameter_set2=ï¿½transfer_mode=ascii:remote_directory=/tmpï¿½
 							for (String splitParam2 : splitParams) {
 								String s = sosString.parseToString(splitParam2);
 								String[] splitParam = s.split("=");
@@ -3545,8 +3560,8 @@ abstract public class SOSFTPCommand {
 	 *   -          changes to the initial parameters by a parameter set have local scope, i.e. a second parameter set makes use oft he initial parameters,
 	 *              and should not consider changes by a previous parameter set
 	 *
-	 *              sosftp.sh –file_spec=[regex1]:[regex2] –transfer_mode=ascii:binary
-	 *              sosftp.sh –file_spec=[regex1] –file_spec2=[regex2]::[parameter_set2] –parameter_set2=“transfer_mode=ascii::remote_directory=/tmp“
+	 *              sosftp.sh ï¿½file_spec=[regex1]:[regex2] ï¿½transfer_mode=ascii:binary
+	 *              sosftp.sh ï¿½file_spec=[regex1] ï¿½file_spec2=[regex2]::[parameter_set2] ï¿½parameter_set2=ï¿½transfer_mode=ascii::remote_directory=/tmpï¿½
 	 *
 	 *
 	 *              In addition to what is stated for the parameter file_spec additional parameters
@@ -3607,7 +3622,7 @@ abstract public class SOSFTPCommand {
 			// sortiert die Arrayliste nach index
 			sort = sortArrayList(list, "index");
 
-			// hilfsvariable index löschen
+			// hilfsvariable index lï¿½schen
 			for (int i = 0; i < sort.size(); i++) {
 				Properties p = (Properties) list.get(i);
 				if (sosString.parseToString(p.get("index")).length() > 0) {
@@ -3657,7 +3672,7 @@ abstract public class SOSFTPCommand {
 	}
 
 	/**
-	 * Vorbereitung für operation=install. Es findet zwei installationen - entspricht zwei send Aufufe statt.
+	 * Vorbereitung fï¿½r operation=install. Es findet zwei installationen - entspricht zwei send Aufufe statt.
 	 *
 	 *
 	 * @param list
@@ -4000,7 +4015,7 @@ abstract public class SOSFTPCommand {
 			if (str == null || str.trim().length() == 0)
 				return "";
 
-			// alle möglichen Passwortnamen, die gex't werden muss
+			// alle mï¿½glichen Passwortnamen, die gex't werden muss
 			ArrayList namesOfPassword = sosConfiguration.getPasswordnames();
 			if (!namesOfPassword.contains(conParamPASSWORD))
 				namesOfPassword.add(conParamPASSWORD);
@@ -4042,7 +4057,7 @@ abstract public class SOSFTPCommand {
 
 	/**
 	 * Ermittelt die PID.
-	 * Der PID wird ermittelt, wenn historien Einträge erwünscht sind und
+	 * Der PID wird ermittelt, wenn historien Eintrï¿½ge erwï¿½nscht sind und
 	 * nicht im Testmodus ist.
 	 *
 	 * @param GETPIDSEXE
@@ -4127,7 +4142,7 @@ abstract public class SOSFTPCommand {
 	 * @param GETPIDEXE -> Anwendung
 	 * @return String -> liefert die PID
 	 * @throws IOException
-	 * TODO: später vielleicht daraus einen statischen Method in SOS UTIL
+	 * TODO: spï¿½ter vielleicht daraus einen statischen Method in SOS UTIL
 	 */
 	public String getPID(final String GETPIDEXE) throws IOException {
 		String pid = "";
@@ -4205,7 +4220,7 @@ abstract public class SOSFTPCommand {
 	/**
 	 * Konvertiert ConfigurationsItem[] zu Properties.
 	 *
-	 * Berücksichtigen der include Parametern
+	 * Berï¿½cksichtigen der include Parametern
 	 *
 	 *
 	 * @return
@@ -4222,7 +4237,7 @@ abstract public class SOSFTPCommand {
 				arg_s.putAll(config_.getParameterAsProperties());
 			}
 
-			// Löschen der Argumente, weil dieser in sos.util.configuration.Configuration ausgelesen wurden
+			// Lï¿½schen der Argumente, weil dieser in sos.util.configuration.Configuration ausgelesen wurden
 			arg_s.remove("settings");
 			arg_s.remove("profile");
 			arg_s.remove("include");
@@ -4612,17 +4627,17 @@ abstract public class SOSFTPCommand {
 
 		// Zeichen Unicode
 		// ------------------------------
-		// Ä, ä \u00c4, \u00e4
-		// Ö, ö \u00d6, \u00f6
-		// Ü, ü \u00dc, \u00fc
-		// ß \u00df
+		// ï¿½, ï¿½ \u00c4, \u00e4
+		// ï¿½, ï¿½ \u00d6, \u00f6
+		// ï¿½, ï¿½ \u00dc, \u00fc
+		// ï¿½ \u00df
 
 		// see http://www.fileformat.info/info/unicode/char/search.htm
 
 		final String conUTF8UmlU = "\u00fc"; // "Ã¼";
-		final String conUTF8UmlBigA = "\u00c4"; // LATIN CAPITAL LETTER A WITH DIAERESIS "Ã\\?";
-		final String conUTF8UmlBigO = "\u00d6"; // "Ã\\?";
-		final String conUTF8UmlBigU = "\u00dc"; // "Ã\\?";
+		final String conUTF8UmlBigA = "\u00c4"; // LATIN CAPITAL LETTER A WITH DIAERESIS "ï¿½\\?";
+		final String conUTF8UmlBigO = "\u00d6"; // "ï¿½\\?";
+		final String conUTF8UmlBigU = "\u00dc"; // "ï¿½\\?";
 		final String conUTF8UmlA = "\u00e4"; // "Ã¤";
 		final String conUTF8UmlO = "\u00f6"; // "Ã¶";
 		final String conUTF8UmlS = "\u00DF";
@@ -4631,13 +4646,13 @@ abstract public class SOSFTPCommand {
 		if (pstrEncoding.length() > 0) {
 			byte[] iso88591Data = pstrStringToEncode.getBytes(Charset.forName(pstrEncoding));
 			strEncodedString = new String(iso88591Data, Charset.forName(pstrEncoding));
-			strEncodedString = strEncodedString.replaceAll(conUTF8UmlU, "ü");
-			strEncodedString = strEncodedString.replaceAll(conUTF8UmlBigA, "Ä");
-			strEncodedString = strEncodedString.replaceAll(conUTF8UmlBigU, "Ü");
-			strEncodedString = strEncodedString.replaceAll(conUTF8UmlBigO, "Ö");
-			strEncodedString = strEncodedString.replaceAll(conUTF8UmlA, "ä");
-			strEncodedString = strEncodedString.replaceAll(conUTF8UmlO, "ö");
-			strEncodedString = strEncodedString.replaceAll(conUTF8UmlS, "ß");
+			strEncodedString = strEncodedString.replaceAll(conUTF8UmlU, "ï¿½");
+			strEncodedString = strEncodedString.replaceAll(conUTF8UmlBigA, "ï¿½");
+			strEncodedString = strEncodedString.replaceAll(conUTF8UmlBigU, "ï¿½");
+			strEncodedString = strEncodedString.replaceAll(conUTF8UmlBigO, "ï¿½");
+			strEncodedString = strEncodedString.replaceAll(conUTF8UmlA, "ï¿½");
+			strEncodedString = strEncodedString.replaceAll(conUTF8UmlO, "ï¿½");
+			strEncodedString = strEncodedString.replaceAll(conUTF8UmlS, "ï¿½");
 			getLogger().debug(String.format("Encode String '%1$s' to/in '%2$s' using '%3$s'", pstrStringToEncode, strEncodedString, pstrEncoding));
 		}
 		return strEncodedString;
@@ -4650,17 +4665,17 @@ abstract public class SOSFTPCommand {
 
 		// Zeichen Unicode
 		// ------------------------------
-		// Ä, ä \u00c4, \u00e4
-		// Ö, ö \u00d6, \u00f6
-		// Ü, ü \u00dc, \u00fc
-		// ß \u00df
+		// ï¿½, ï¿½ \u00c4, \u00e4
+		// ï¿½, ï¿½ \u00d6, \u00f6
+		// ï¿½, ï¿½ \u00dc, \u00fc
+		// ï¿½ \u00df
 
-		final String conUTF8UmlU = "ü";
-		final String conUTF8UmlBigA = "\u00c4"; // "Ã\\?";
-		final String conUTF8UmlBigO = "\u00d6"; // "Ã\\?";
-		final String conUTF8UmlBigU = "\u00dc"; // "Ã\\?";
-		final String conUTF8UmlA = "ä";
-		final String conUTF8UmlO = "ö";
+		final String conUTF8UmlU = "ï¿½";
+		final String conUTF8UmlBigA = "\u00c4"; // "ï¿½\\?";
+		final String conUTF8UmlBigO = "\u00d6"; // "ï¿½\\?";
+		final String conUTF8UmlBigU = "\u00dc"; // "ï¿½\\?";
+		final String conUTF8UmlA = "ï¿½";
+		final String conUTF8UmlO = "ï¿½";
 		final String conUTF8UmlS = "\u00df";
 
 		String strEncodedString = pstrStringToEncode;

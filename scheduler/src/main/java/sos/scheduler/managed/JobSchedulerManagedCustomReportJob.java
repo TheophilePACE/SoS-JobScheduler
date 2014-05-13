@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -58,7 +73,7 @@ public class JobSchedulerManagedCustomReportJob extends
 	
 	private Factory_processor processor;
 	
-	// Konstanten für Scriptsprachen
+	// Konstanten fï¿½r Scriptsprachen
 	public static final int JAVASCRIPT = 1;
 	public static final int PERLSCRIPT = 2;
 	public static final int VBSCRIPT   = 3;
@@ -109,7 +124,7 @@ public class JobSchedulerManagedCustomReportJob extends
 		if (language.equalsIgnoreCase("perl") || language.equalsIgnoreCase("perlscript"))
 			iLanguage = PERLSCRIPT;
 		if (language.equalsIgnoreCase("vbscript")) iLanguage = VBSCRIPT;
-		// command aufteilen in Blöcke, deren Ergebnisse behalten werden
+		// command aufteilen in Blï¿½cke, deren Ergebnisse behalten werden
 		//String[] blocks = command.split("/\\*\\s*result2array\\(\\s*\"");
 		String[] blocks = command.split("/\\*\\s*(variable|VARIABLE)\\s*");
 		//String[] blocks = command.split("/\\*\\s*variable\\s*");
@@ -126,8 +141,8 @@ public class JobSchedulerManagedCustomReportJob extends
 			forerunscript = result2variables(results);
 		}
 		else{
-			// durch die Blöcke iterieren
-			// ausführen, dann in Variable schreiben
+			// durch die Blï¿½cke iterieren
+			// ausfï¿½hren, dann in Variable schreiben
 			int counter = 0;
 			while (counter<blocks.length){
 				super.executeStatements(conn, blocks[counter]);
@@ -158,7 +173,7 @@ public class JobSchedulerManagedCustomReportJob extends
 		processor.set_document_filename(reportFile.getAbsolutePath());
 		processor.set_language(language);
 		processor.set_template_filename( template.getAbsolutePath() );
-		// Zeichen für Variablenidentifizierung auf $ setzen
+		// Zeichen fï¿½r Variablenidentifizierung auf $ setzen
 		
 		processor.set_param("-var-char=$");
         if (getOrderPayload().var("scheduler_order_report_template") != null)
@@ -270,8 +285,8 @@ public class JobSchedulerManagedCustomReportJob extends
 			results=conn.get();
 		}
 		if (language==VBSCRIPT){
-			// Array für vbscript initialisieren
-			// aber erst, wenn größe bekannt.
+			// Array fï¿½r vbscript initialisieren
+			// aber erst, wenn grï¿½ï¿½e bekannt.
 			forerunscript = "Dim "+paramName+"("+(counter-1)+")\n" +forerunscript;
 		}
 		return forerunscript;

@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -34,14 +49,14 @@ package com.sos.JSHelper.io.Files;
 /**
 * \class JSFile
  *
- * \brief JSFile - Wrapper für die Klasse java.io.File
+ * \brief JSFile - Wrapper fï¿½r die Klasse java.io.File
  *
  * \section JSFile_intro_sec Introduction
  * Von dieser Klasse werden eine Reihe von anderen, spezielleren Klassen abgeleitet.
  * Diese Klasse stellt insbesondere die
  *
  * \li Listener- und
- * \li eine Archiver-Funktionalität
+ * \li eine Archiver-Funktionalitï¿½t
  *
  * sowie
  *
@@ -51,13 +66,13 @@ package com.sos.JSHelper.io.Files;
  * \li Text-Ersetzungsfunktionen
  * \li diverse Statistiken
  *
- *  zur Verfügung.
+ *  zur Verfï¿½gung.
  *
- * \subsection JSFile_Listener Listener-Funktionalität
+ * \subsection JSFile_Listener Listener-Funktionalitï¿½t
  *
- * \subsection JSFile_Archiver Archiver-Funktionalität
+ * \subsection JSFile_Archiver Archiver-Funktionalitï¿½t
  *
- * \subsection JSFile_Pushback Pushback-Funktionalität
+ * \subsection JSFile_Pushback Pushback-Funktionalitï¿½t
  *
  * \subsection JSFile_streamed-io Streamed-IO
  *
@@ -73,8 +88,8 @@ package com.sos.JSHelper.io.Files;
  *   .... code goes here ...
  * \endcode
  *
- * \todo Funktionalität für das Schreiben über temporäre Datei-Namen implementieren: beim beenden den
- * Namen dann auf permanent ändern (also file.x~ beschreiben und im Close auf file.x umbenennen).
+ * \todo Funktionalitï¿½t fï¿½r das Schreiben ï¿½ber temporï¿½re Datei-Namen implementieren: beim beenden den
+ * Namen dann auf permanent ï¿½ndern (also file.x~ beschreiben und im Close auf file.x umbenennen).
  *
  * <p style="text-align:center">
  * <br />---------------------------------------------------------------------------
@@ -314,7 +329,7 @@ public class JSFile extends java.io.File implements JSListener, IJSArchiver {
 
 	/**
 	 *
-	 * \brief Reader - liefert eine BufferedReader-Instanz für die Datei
+	 * \brief Reader - liefert eine BufferedReader-Instanz fï¿½r die Datei
 	 *
 	 * \details
 
@@ -373,7 +388,7 @@ public class JSFile extends java.io.File implements JSListener, IJSArchiver {
 	// - <newcode>
 	/**
 	 * \change Dienstag, 27. Oktober 2009 eqbfd Unicode
-	 * Unicode lesen können
+	 * Unicode lesen kï¿½nnen
 	 */
 
 	/**
@@ -467,7 +482,7 @@ public class JSFile extends java.io.File implements JSListener, IJSArchiver {
 
 		@SuppressWarnings("unused")
 		final String conMethodName = conClassName + "::CreateBackup";
-		// TODO Extension über eine Option sos.jsfile.extension.4.backupfile
+		// TODO Extension ï¿½ber eine Option sos.jsfile.extension.4.backupfile
 		String strExtension4BackupFile = System.getProperty(conPropertySOS_JSFILE_EXTENSION_4_BACKUPFILE, ConDefaultExtension4BackupFile);
 		String strR = this.doCreateBackUp(strExtension4BackupFile);
 		return strR;
@@ -566,7 +581,7 @@ public class JSFile extends java.io.File implements JSListener, IJSArchiver {
 				logger.info(Messages.getMsg(JSH_I_0090, getAbsoluteFile()));
 			}
 			catch (final Exception e) {
-				// TODO kopierte Datei wieder löschen, weil sonst doppelt
+				// TODO kopierte Datei wieder lï¿½schen, weil sonst doppelt
 				logger.error(Messages.getMsg(JSH_E_0090, getName()));
 				throw e;
 			}
@@ -593,7 +608,7 @@ public class JSFile extends java.io.File implements JSListener, IJSArchiver {
 
 	/**
 	 *
-	 * \brief MustExist - löst eine Exception aus, wenn die Datei nicht existiert.
+	 * \brief MustExist - lï¿½st eine Exception aus, wenn die Datei nicht existiert.
 	 *
 	 * \details
 
@@ -615,7 +630,7 @@ public class JSFile extends java.io.File implements JSListener, IJSArchiver {
 
 	/**
 	 *
-	 * \brief Writer - liefert eine BufferedWriter-Instanz für die Datei
+	 * \brief Writer - liefert eine BufferedWriter-Instanz fï¿½r die Datei
 	 *
 	 * \details
 
@@ -663,7 +678,7 @@ public class JSFile extends java.io.File implements JSListener, IJSArchiver {
 			// - </remark> <!-- id=<Unicode> -->
 			/**
 			 * \change Dienstag, 27. Oktober 2009 eqbfd Unicode
-			 * Unicode lesen können
+			 * Unicode lesen kï¿½nnen
 			 */
 		}
 
@@ -936,7 +951,7 @@ public class JSFile extends java.io.File implements JSListener, IJSArchiver {
 
 	/**
 	 *
-	 * \brief ReplaceWith - Textersetzungen in der Datei durchführen
+	 * \brief ReplaceWith - Textersetzungen in der Datei durchfï¿½hren
 	 *
 	 * \details
 
@@ -1576,11 +1591,11 @@ public class JSFile extends java.io.File implements JSListener, IJSArchiver {
 
 	/**
 	 *
-	 * \brief AppendFile - Hängt den Inhalt einer anzugebenden Datei an die aktuelle Datei
+	 * \brief AppendFile - Hï¿½ngt den Inhalt einer anzugebenden Datei an die aktuelle Datei
 	 *
 	 * \return long
 	 *
-	 * @param pstrFileName - Name der Datei, deren Inhalt angehängt werden soll
+	 * @param pstrFileName - Name der Datei, deren Inhalt angehï¿½ngt werden soll
 	 *
 	 * @throws Exception
 	 */
@@ -1769,7 +1784,7 @@ public class JSFile extends java.io.File implements JSListener, IJSArchiver {
 	 *
 	 * \details
 	 * Vergleicht den Inhalt der Datei mit der im Parameter angegebenen Datei.
-	 * Beide Dateien werden Zeichen für Zeichen verglichen
+	 * Beide Dateien werden Zeichen fï¿½r Zeichen verglichen
 	 *
 	 * \return boolean
 	 *

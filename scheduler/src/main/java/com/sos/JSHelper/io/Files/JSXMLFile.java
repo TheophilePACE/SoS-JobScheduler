@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -93,7 +108,7 @@ import com.sos.JSHelper.Options.SOSOptionFileName;
  <category>IDoc</category>
  </categories>
  <date>2007-09-10</date>
- <copyright>© 2006 by Klaus D. Buettner</copyright>
+ <copyright>ï¿½ 2006 by Klaus D. Buettner</copyright>
  <author>kb@sos-berlin.com</author>
  <changes>
  <change who='sgx2343' when='2007-09-10' id='created'>
@@ -160,10 +175,10 @@ public class JSXMLFile extends JSTextFile /* implements ErrorHandler */{
 	 </para>
 	 <para>
 	 Die Methode legt den XML-File an.
-	 Falls er bereits existiert, wird er zunächst gelöscht und dann neu angelegt.
+	 Falls er bereits existiert, wird er zunï¿½chst gelï¿½scht und dann neu angelegt.
 	 </para>
 	 <para>
-	 Die Namespace-Infos werden aus den IDoc-Optionen übernommen.
+	 Die Namespace-Infos werden aus den IDoc-Optionen ï¿½bernommen.
 	 </para>
 	 <para>
 	 Der Tag "TechnicalInformations" mit den Untertags wird angelegt.
@@ -300,7 +315,7 @@ public class JSXMLFile extends JSTextFile /* implements ErrorHandler */{
 			strValue = "";
 		}
 		else {
-			// TODO Änderung prüfen
+			// TODO ï¿½nderung prï¿½fen
 			// if (strValue.matches(".*[&<>].*")) {
 			if (strValue.matches(".*[&<>].*") && !pstrTagValue.contains("![CDATA[")) {
 				strValue = MakeCData(strValue);
@@ -321,7 +336,7 @@ public class JSXMLFile extends JSTextFile /* implements ErrorHandler */{
 		String strT = "";
 		if (!flgFileIsOpen) {
 			flgFileIsOpen = true;
-			// TODO version und encoding über Options steuern.
+			// TODO version und encoding ï¿½ber Options steuern.
 		}
 
 		if (flgIncrIndent) {

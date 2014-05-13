@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -122,7 +137,7 @@ public class SOSMail {
 
 	// --------------------------------------------------------------------------------class File_data_source
 
-	// Eigene Klasse für Attachments, damit close müglich ist.
+	// Eigene Klasse fï¿½r Attachments, damit close mï¿½glich ist.
 	class File_data_source extends My_data_source {
 		final File	file;
 
@@ -140,23 +155,23 @@ public class SOSMail {
 	}
 
 	/** Attribut: host:
-	 * - Wird im Konstruktor als Parameter übergeben.
-	 * - Kann über Settings-Objekt gesetzt werden.
+	 * - Wird im Konstruktor als Parameter ï¿½bergeben.
+	 * - Kann ï¿½ber Settings-Objekt gesetzt werden.
 	 * - mit .setHost kann Host gesetzt werden. Es wird dann eine auch eine neue Message-id vergeben.
 	*/
 	protected String				host							= "";
 
 	/** Attribut: port: Default=25
-	 * - Wird im Konstruktor als Parameter übergeben.
-	 * - Kann über Settings-Objekt gesetzt werden.
+	 * - Wird im Konstruktor als Parameter ï¿½bergeben.
+	 * - Kann ï¿½ber Settings-Objekt gesetzt werden.
 	 * - mit .setPort kann Port gesetzt werden. Es wird dann eine auch eine neue Message-id vergeben.
 	*/
 	protected String				port							= "25";
 
 	/** Attribut: user:
 	 * Zur Verwendung bei SMTP_Server, die eine Autentifizierung verlangen
-	 * - Wird im Konstruktor als Parameter übergeben.
-	 * - Kann über Settings-Objekt gesetzt werden.
+	 * - Wird im Konstruktor als Parameter ï¿½bergeben.
+	 * - Kann ï¿½ber Settings-Objekt gesetzt werden.
 	 * - mit .setUser kann User gesetzt werden. Es wird dann eine auch eine neue Message-id vergeben.
 	*/
 
@@ -164,16 +179,16 @@ public class SOSMail {
 
 	/** Attribut: password:
 	 * Zur Verwendung bei SMTP_Server, die eine Autentifizierung verlangen
-	 * - Wird im Konstruktor als Parameter übergeben.
-	 * - Kann über Settings-Objekt gesetzt werden.
+	 * - Wird im Konstruktor als Parameter ï¿½bergeben.
+	 * - Kann ï¿½ber Settings-Objekt gesetzt werden.
 	 * - mit .setPassword kann User gesetzt werden. Es wird dann eine auch eine neue Message-id vergeben.
 	*/
 	protected String				password						= "";
 
 	/** Attribut: timeout: Default=30000
 	 *
-	 * - Wird im Konstruktor als Parameter übergeben.
-	 * - Kann über Settings-Objekt gesetzt werden. Dort werden Sekunden angegeben
+	 * - Wird im Konstruktor als Parameter ï¿½bergeben.
+	 * - Kann ï¿½ber Settings-Objekt gesetzt werden. Dort werden Sekunden angegeben
 	 * - mit .setTimeout kann Timeout gesetzt werden. Es wird dann eine auch eine neue Message-id vergeben.
 	*/
 	protected int					timeout							= 30000;
@@ -197,11 +212,11 @@ public class SOSMail {
 	protected String				datetimeFormat					= "dd.MM.yyyy HH:mm";
 	protected HashMap				dateFormats						= new HashMap();
 	protected HashMap				datetimeFormats					= new HashMap();
-	/** Attribut: charSet: iso-8859-1, us-ascii für Attachments. Wenn leer
+	/** Attribut: charSet: iso-8859-1, us-ascii fï¿½r Attachments. Wenn leer
 	    Wird charset verwendet.
 	*/
 	protected String				attachmentCharset				= "iso-8859-1";
-	/** Attribut: charSet: iso-8859-1, us-ascii für Body.*/
+	/** Attribut: charSet: iso-8859-1, us-ascii fï¿½r Body.*/
 	protected String				charset							= "iso-8859-1";
 	protected String				alternativeCharset				= "iso-8859-1";
 
@@ -231,49 +246,49 @@ public class SOSMail {
 	/** attachment Liste */
 	protected TreeMap				attachmentList					= new TreeMap();
 
-	/** Muster für eMail-Texte */
+	/** Muster fï¿½r eMail-Texte */
 	protected Properties			templates						= new Properties();
 
 	/** sos settings object */
 	protected SOSSettings			sosSettings						= null;
 
-	/** Tabelle für Einstellungen */
+	/** Tabelle fï¿½r Einstellungen */
 	protected String				tableSettings					= "SETTINGS";
 
-	/** Tabelle für eMail Auftrüge und Historie */
+	/** Tabelle fï¿½r eMail Auftrï¿½ge und Historie */
 	public static String			tableMails						= "MAILS";
 
-	/** Tabelle für eMail Anhünge */
+	/** Tabelle fï¿½r eMail Anhï¿½nge */
 	public static String			tableMailAttachments			= "MAIL_ATTACHMENTS";
 
-	/** Sequenzname der IDs für die MAILS Tablle*/
+	/** Sequenzname der IDs fï¿½r die MAILS Tablle*/
 	public static String			mailsSequence					= "MAILS_ID_SEQ";
 
-	/** Applikationsname für eMail-Einstellungen */
+	/** Applikationsname fï¿½r eMail-Einstellungen */
 	protected String				applicationMail					= "email";
 
-	/** Sektionsname für eMail-Einstellungen */
+	/** Sektionsname fï¿½r eMail-Einstellungen */
 	protected String				sectionMail						= "mail_server";
 
-	/** Applikationsname für eMail-Templates in Settings */
+	/** Applikationsname fï¿½r eMail-Templates in Settings */
 	protected String				applicationMailTemplates		= "email_templates";
 
-	/** Sektionsname für eMail-Templates in Settings */
+	/** Sektionsname fï¿½r eMail-Templates in Settings */
 	protected String				sectionMailTemplates			= "mail_templates";
 
-	/** Applikationsname für eMail-Scripts in Settings */
+	/** Applikationsname fï¿½r eMail-Scripts in Settings */
 	protected String				applicationMailScripts			= "email";
 
-	/** Sektionsname für eMail-Scripts in Settings */
+	/** Sektionsname fï¿½r eMail-Scripts in Settings */
 	protected String				sectionMailScripts				= "mail_start_scripts_factory";
 
-	/** Applikationsname für eMail-Templates der Document Factory in Settings */
+	/** Applikationsname fï¿½r eMail-Templates der Document Factory in Settings */
 	protected String				applicationMailTemplatesFactory	= "email_templates_factory";
 
-	/** Sektionsname für eMail-Templates der Document Factory in Settings */
+	/** Sektionsname fï¿½r eMail-Templates der Document Factory in Settings */
 	protected String				sectionMailTemplatesFactory		= "mail_templates";
 
-	/** Email als byteArray verfügbar machen */
+	/** Email als byteArray verfï¿½gbar machen */
 	private boolean					sendToOutputStream				= false;
 	private byte[]					messageBytes;
 	private MimeMessage				message							= null;
@@ -294,7 +309,7 @@ public class SOSMail {
 	private int						priority						= -1;
 	private Session					session							= null;
 
-	// Konstanten für Prioritüten (in Settings und MAILS Tabelle)
+	// Konstanten fï¿½r Prioritï¿½ten (in Settings und MAILS Tabelle)
 	public static final int			PRIORITY_HIGHEST				= 1;
 	public static final int			PRIORITY_HIGH					= 2;
 	public static final int			PRIORITY_NORMAL					= 3;
@@ -391,7 +406,7 @@ public class SOSMail {
 	/**
 	 * Konstruktor
 	 * @param sosSettings SOSSettings Einstellungen aus Profile Settings oder Connection Settings
-	 * @param language Sprache für Einstellungen
+	 * @param language Sprache fï¿½r Einstellungen
 	 * @throws java.lang.Exception
 	 */
 	public SOSMail(final SOSSettings sosSettings, final String language) throws Exception {
@@ -452,10 +467,10 @@ public class SOSMail {
 	// --------------------------------------------------------------------------------initMessage
 	/**
 	 * Initialisierungen
-	 * -Autorisierung für smtp-Server
+	 * -Autorisierung fï¿½r smtp-Server
 	 * -Anlegen des Message-Objekts
-	 * -Lüschen der Empfänger- und der Attachmentliste
-	 * Wenn ein sosmail-Objekt mehrmach wiederverwendet werden sollen , muss für jede Nachricht
+	 * -Lï¿½schen der Empfï¿½nger- und der Attachmentliste
+	 * Wenn ein sosmail-Objekt mehrmach wiederverwendet werden sollen , muss fï¿½r jede Nachricht
 	 * .init() gerufen.
 	 *
 	 * @throws java.lang.Exception
@@ -469,10 +484,10 @@ public class SOSMail {
 	// --------------------------------------------------------------------------------createSession
 	/**
 	 * Initialisierungen
-	 * -Autorisierung für smtp-Server
+	 * -Autorisierung fï¿½r smtp-Server
 	 * -Anlegen des Message-Objekts
-	 * -Lüschen der Empfünger- und der Attachmentliste
-	 * Wenn ein sosmail-Objekt mehrmach wiederverwendet werden sollen , muss für jede Nachricht
+	 * -Lï¿½schen der Empfï¿½nger- und der Attachmentliste
+	 * Wenn ein sosmail-Objekt mehrmach wiederverwendet werden sollen , muss fï¿½r jede Nachricht
 	 * .init() gerufen.
 	 *
 	 * @throws java.lang.Exception
@@ -573,7 +588,7 @@ public class SOSMail {
 
 	// --------------------------------------------------------------------------------getSettings
 	/**
-	 * Einstellungen für eMail-Versand aus Settings
+	 * Einstellungen fï¿½r eMail-Versand aus Settings
 	 *
 	 * @param sosSettings SOSSettings Einstellungen aus Profile Settings oder Connection Settings
 	 * @param language Sprache fr Einstellungen
@@ -660,7 +675,7 @@ public class SOSMail {
 
 	// --------------------------------------------------------------------------------getTemplates
 	/**
-	 * Muster für eMail-Texte
+	 * Muster fï¿½r eMail-Texte
 	 *
 	 * @param sosSettings SOSSettings Einstellungen aus Profile Settings oder Connection Settings
 	 * @throws java.lang.Exception
@@ -674,7 +689,7 @@ public class SOSMail {
 
 	// --------------------------------------------------------------------------------getTemplates
 	/**
-	 * Muster für eMail-Texte
+	 * Muster fï¿½r eMail-Texte
 	 *
 	 * @param sosSettings SOSSettings Einstellungen aus Profile Settings oder Connection Settings
 	 * @throws java.lang.Exception
@@ -828,7 +843,7 @@ public class SOSMail {
 	// --------------------------------------------------------------------------------addRecipient
 	/**
 	 *
-	 * @param recipient eMail-Adresse des Empfüngers
+	 * @param recipient eMail-Adresse des Empfï¿½ngers
 	 * @throws java.lang.Exception
 	 */
 	public void addRecipient(String recipient) throws Exception {
@@ -855,7 +870,7 @@ public class SOSMail {
 	// --------------------------------------------------------------------------------addCC
 	/**
 	 *
-	 * @param recipient eMail-Adresse des cc Empfüngers
+	 * @param recipient eMail-Adresse des cc Empfï¿½ngers
 	 * @throws java.lang.Exception
 	 */
 	public void addCC(String recipient) throws Exception {
@@ -882,7 +897,7 @@ public class SOSMail {
 	// --------------------------------------------------------------------------------addBCC
 	/**
 	 *
-	 * @param recipient eMail-Adresse des bcc Empfüngers
+	 * @param recipient eMail-Adresse des bcc Empfï¿½ngers
 	 * @throws java.lang.Exception
 	 */
 	public void addBCC(String recipient) throws Exception {
@@ -1139,8 +1154,8 @@ public class SOSMail {
 			// --------------------------------------------------------------
 			if (!sendToOutputStream) {
 				// Hier kann nicht die statische Methode Transport.send verwendet werden, da diese ein
-				// implizites saveChanges macht. Das führt zu einer neuen Vergabe einer Message-Id, so dass diese
-				// möglicherweise nicht mit der aus dumpMessageToFile übereinstimmt.
+				// implizites saveChanges macht. Das fï¿½hrt zu einer neuen Vergabe einer Message-Id, so dass diese
+				// mï¿½glicherweise nicht mit der aus dumpMessageToFile ï¿½bereinstimmt.
 
 				Transport t = session.getTransport("smtp");
 				message.setSentDate(new Date());
@@ -1350,7 +1365,7 @@ public class SOSMail {
 				}
 
 				message.setContent(multipart);
-				// Encoding nur für Bodypart setzen
+				// Encoding nur fï¿½r Bodypart setzen
 				bodypart.setHeader("Content-Transfer-Encoding", encoding);
 				if (alternativeBodypart != null) {
 					alternativeBodypart.setHeader("Content-Transfer-Encoding", alternativeEncoding);
@@ -1543,7 +1558,7 @@ public class SOSMail {
 	}
 
 	// Liefert die Recipients aus dem Message-Objekt, wenn das Message-Objekt mit loadFile erzeugt wurde.
-	// Sonst werden die mit addRecipients hinzugefügten Empfünger geliefert.
+	// Sonst werden die mit addRecipients hinzugefï¿½gten Empfï¿½nger geliefert.
 
 	public String getRecipientsAsString() throws MessagingException {
 		String s = " ";
@@ -1569,7 +1584,7 @@ public class SOSMail {
 	}
 
 	// Liefert die Recipients aus dem Message-Objekt, wenn das Message-Objekt mit loadFile erzeugt wurde.
-	// Sonst werden die mit addRecipients hinzugefügten Empfünger geliefert.
+	// Sonst werden die mit addRecipients hinzugefï¿½gten Empfï¿½nger geliefert.
 
 	public String getCCsAsString() throws MessagingException {
 		String s = " ";
@@ -1595,7 +1610,7 @@ public class SOSMail {
 	}
 
 	// Liefert die Recipients aus dem Message-Objekt, wenn das Message-Objekt mit loadFile erzeugt wurde.
-	// Sonst werden die mit addRecipients hinzugefügten Empfünger geliefert.
+	// Sonst werden die mit addRecipients hinzugefï¿½gten Empfï¿½nger geliefert.
 
 	public String getBCCsAsString() throws MessagingException {
 		String s = " ";
@@ -1617,7 +1632,7 @@ public class SOSMail {
 	}
 
 	/**
-	 * setzt die eMail-Empfünger zurück
+	 * setzt die eMail-Empfï¿½nger zurï¿½ck
 	 */
 	public void clearRecipients() throws Exception {
 		log(SOSClassUtil.getMethodName(), SOSLogger.DEBUG9);
@@ -1629,7 +1644,7 @@ public class SOSMail {
 	}
 
 	/**
-	 * setzt die eMail-Attachments zurück
+	 * setzt die eMail-Attachments zurï¿½ck
 	 */
 	public void clearAttachments() {
 		attachmentList.clear();
@@ -1830,7 +1845,7 @@ public class SOSMail {
 	}
 
 	/**
-	 * setzt den Namen des Verzeichnisses für zwischengespeicherte eMails
+	 * setzt den Namen des Verzeichnisses fï¿½r zwischengespeicherte eMails
 	 * @param queueDir String Verzeichnis zum Zwischenspeichern von eMails
 	 */
 	public void setQueueDir(final String queueDir) {
@@ -1838,7 +1853,7 @@ public class SOSMail {
 	}
 
 	/**
-	 * liefert den Namen des Verzeichnisses für zwischengespeicherte eMails
+	 * liefert den Namen des Verzeichnisses fï¿½r zwischengespeicherte eMails
 	 */
 	public String getQueueDir() {
 		return queueDir;
@@ -1899,8 +1914,8 @@ public class SOSMail {
 	}
 
 	/**
-	 * setzt die eMail-Adresse für Rückantworten
-	 * @param replyTo Empfünger für Rückantworten
+	 * setzt die eMail-Adresse fï¿½r Rï¿½ckantworten
+	 * @param replyTo Empfï¿½nger fï¿½r Rï¿½ckantworten
 	 */
 	public void setReplyTo(final String replyTo) {
 		this.replyTo = replyTo;
@@ -1910,7 +1925,7 @@ public class SOSMail {
 	}
 
 	/**
-	 * liefert die eMail-Adresse für Rückantworten
+	 * liefert die eMail-Adresse fï¿½r Rï¿½ckantworten
 	 */
 	public String getReplyTo() {
 		return replyTo;
@@ -1984,7 +1999,7 @@ public class SOSMail {
 	}
 
 	/**
-	 * liefert den Namen der Applikation für eMail Vorlagen der Factory in der Tabelle der Einstellungen
+	 * liefert den Namen der Applikation fï¿½r eMail Vorlagen der Factory in der Tabelle der Einstellungen
 	 */
 	public String getApplicationMailTemplatesFactory() {
 		return applicationMailTemplatesFactory;
@@ -2006,45 +2021,45 @@ public class SOSMail {
 	}
 
 	/**
-	 * setzt den Namen der Sektion für eMail Vorlagen der Factory in der Tabelle der Einstellungen
-	 * @param sectionMailTemplates Name der Sektion für eMail Vorlagen der Factory in der Einstellungstabelle
+	 * setzt den Namen der Sektion fï¿½r eMail Vorlagen der Factory in der Tabelle der Einstellungen
+	 * @param sectionMailTemplates Name der Sektion fï¿½r eMail Vorlagen der Factory in der Einstellungstabelle
 	 */
 	public void setSectionMailTemplatesFactory(final String sectionMailTemplatesFactory) {
 		this.sectionMailTemplatesFactory = sectionMailTemplatesFactory;
 	}
 
 	/**
-	 * liefert den Namen der Sektion für eMail Vorlagen der Factory in der Tabelle der Einstellungen
+	 * liefert den Namen der Sektion fï¿½r eMail Vorlagen der Factory in der Tabelle der Einstellungen
 	 */
 	public String getSectionMailTemplatesFactory() {
 		return sectionMailTemplatesFactory;
 	}
 
 	/**
-	 * setzt den Namen der Sektion für Scripte in der Tabelle der Einstellungen
-	 * @param sectionMailTemplates Name der Sektion für eMail-Scripte in der Einstellungstabelle
+	 * setzt den Namen der Sektion fï¿½r Scripte in der Tabelle der Einstellungen
+	 * @param sectionMailTemplates Name der Sektion fï¿½r eMail-Scripte in der Einstellungstabelle
 	 */
 	public void setSectionMailScripts(final String sectionMailScripts) {
 		this.sectionMailScripts = sectionMailScripts;
 	}
 
 	/**
-	 * liefert den Namen der Sektion für eMail Scripte in der Tabelle der Einstellungen
+	 * liefert den Namen der Sektion fï¿½r eMail Scripte in der Tabelle der Einstellungen
 	 */
 	public String getSectionMailScripts() {
 		return sectionMailScripts;
 	}
 
 	/**
-	 * setzt den Namen der Applikation für Scripte in der Tabelle der Einstellungen
-	 * @param sectionMailTemplates Name der Applikation für eMail-Scripte in der Einstellungstabelle
+	 * setzt den Namen der Applikation fï¿½r Scripte in der Tabelle der Einstellungen
+	 * @param sectionMailTemplates Name der Applikation fï¿½r eMail-Scripte in der Einstellungstabelle
 	 */
 	public void setApplicationMailScripts(final String applicationMailScripts) {
 		this.applicationMailScripts = applicationMailScripts;
 	}
 
 	/**
-	 * liefert den Namen der Applikation für eMail Scripte in der Tabelle der Einstellungen
+	 * liefert den Namen der Applikation fï¿½r eMail Scripte in der Tabelle der Einstellungen
 	 */
 	public String getApplicationMailScripts() {
 		return applicationMailScripts;
@@ -2073,7 +2088,7 @@ public class SOSMail {
 	}
 
 	/**
-	 * Email nicht senden sondern als bytes [] verfügbar machen (message_bytes)
+	 * Email nicht senden sondern als bytes [] verfï¿½gbar machen (message_bytes)
 	 * @param sendToOutputStream The sendToOutputStream to set.
 	 */
 	public void setSendToOutputStream(final boolean sendToOutputStream) {

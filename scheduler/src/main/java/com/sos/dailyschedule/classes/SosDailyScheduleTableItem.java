@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -113,29 +128,29 @@ public class SosDailyScheduleTableItem extends SOSTableItem implements ISOSTable
 		if (dailyScheduleDBItem.getExecutionState().singleStart()) {
 			this.setForeground(black);  //SingleStart
 		}else {
-			this.setForeground(blue);   //Periodische Ausführung
+			this.setForeground(blue);   //Periodische Ausfï¿½hrung
 		}
 		
  
-		if (dailyScheduleDBItem.getScheduleExecuted() == null) {  //Keine Ausführung
-			if (dailyScheduleDBItem.getExecutionState().isLate()) { //Hätte ausgeführt werden müssen
+		if (dailyScheduleDBItem.getScheduleExecuted() == null) {  //Keine Ausfï¿½hrung
+			if (dailyScheduleDBItem.getExecutionState().isLate()) { //Hï¿½tte ausgefï¿½hrt werden mï¿½ssen
                 this.setBackground(0,magenta);
                 this.setForeground(0,white);
                 this.setBackground(STATUS_COLUMN_NUMBER,magenta);
                 this.setForeground(STATUS_COLUMN_NUMBER,white);
 			}else {
-                this.setBackground(0,gray);  //Ausführung in der Zukunft
-                this.setBackground(STATUS_COLUMN_NUMBER,gray);  //Ausführung in der Zukunft
+                this.setBackground(0,gray);  //Ausfï¿½hrung in der Zukunft
+                this.setBackground(STATUS_COLUMN_NUMBER,gray);  //Ausfï¿½hrung in der Zukunft
 			}
 		}else {
  			this.setBackground(white);
-			if (dailyScheduleDBItem.haveError()) { //Fehlerhafte Ausführung
+			if (dailyScheduleDBItem.haveError()) { //Fehlerhafte Ausfï¿½hrung
                 this.setBackground(0,red);
                 this.setForeground(0,white);
                 this.setBackground(ERROR_COLUMN_NUMBER,red);
                 this.setForeground(ERROR_COLUMN_NUMBER,white);
             }else {
-			if (dailyScheduleDBItem.getExecutionState().isLate()) { //Verspätete Ausführung
+			if (dailyScheduleDBItem.getExecutionState().isLate()) { //Verspï¿½tete Ausfï¿½hrung
                 this.setBackground(0,yellow);
                 this.setBackground(STATUS_COLUMN_NUMBER,yellow);
 			}

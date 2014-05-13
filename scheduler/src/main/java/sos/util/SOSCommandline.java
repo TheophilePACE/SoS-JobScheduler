@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -39,7 +54,7 @@ import java.util.Vector;
 import sos.util.SOSLogger;
 
 /**
- * @author Andreas Püschel <andreas.pueschel@sos-berlin.com>
+ * @author Andreas Pï¿½schel <andreas.pueschel@sos-berlin.com>
  * @since 2009-02-20
  * @version 1.0
  *
@@ -326,26 +341,26 @@ public class SOSCommandline {
 			//String password = "`c:/sosftp/getpassword.cmd \"ggg\"aa `";   		    		
 			String password = "`c:/sosftp/getpassword.cmd \"a\" \"b\" `";
 
-			//String password = "`c:/sosftp/getpassword.cmd \"a\" \"b\" `"; //resultvector hat drei einträge[c:/sosftp/getpassword.cmd, "a", "b"]
-			//String password = "`c:/sosftp/getpassword.cmd \"a\" b `"; //resultvector hat drei einträge[c:/sosftp/getpassword.cmd, "a", b]
-			//String password = "`c:/sosftp/getpassword.cmd a\'b `"; //resultvector hat zwei einträge [c:/sosftp/getpassword.cmd, a'b ]
-			//String password = "`c:/sosftp/getpassword.cmd 'a' 'b' `"; //resultvector hat drei einträge[c:/sosftp/getpassword.cmd, 'a', 'b' ]
+			//String password = "`c:/sosftp/getpassword.cmd \"a\" \"b\" `"; //resultvector hat drei eintrï¿½ge[c:/sosftp/getpassword.cmd, "a", "b"]
+			//String password = "`c:/sosftp/getpassword.cmd \"a\" b `"; //resultvector hat drei eintrï¿½ge[c:/sosftp/getpassword.cmd, "a", b]
+			//String password = "`c:/sosftp/getpassword.cmd a\'b `"; //resultvector hat zwei eintrï¿½ge [c:/sosftp/getpassword.cmd, a'b ]
+			//String password = "`c:/sosftp/getpassword.cmd 'a' 'b' `"; //resultvector hat drei eintrï¿½ge[c:/sosftp/getpassword.cmd, 'a', 'b' ]
 
-			//String password = "`a b`"; //resultvector hat zwei einträge [a, b]
+			//String password = "`a b`"; //resultvector hat zwei eintrï¿½ge [a, b]
 			//String password = "`a\"b`"; //resultvector hat ein eintrag  [a"b]
 
 
 			//ab hier test ok
 
-			//String password = "`c:/sosftp/getpassword.cmd 'a b' `";  //resultvector hat zwei einträge  [c:/sosftp/getpassword.cmd, 'a b']
-			//String password = "`cmd \"a b\"`"; //resultvector hat drei einträge  [c:/sosftp/getpassword.cmd, "a, b"] 
-			//String password = "`cmd a b`"; //resultvector hat 3 einträge  [cmd, a, b]
-			//String password = "`c:/sosftp/getpassword.cmd ggg\"aa `";//resultvector hat zwei einträge  [c:/sosftp/getpassword.cmd, ggg"aa]
-			//String password = "`c:/sosftp/getpassword.cmd 'ggg\"aa' `";//resultvector hat zwei einträge  [c:/sosftp/getpassword.cmd, 'ggg"aa']
-			//String password = "`c:/sosftp/getpassword.cmd \"a\" \"b\" xyz `"; //resultvector hat 4 einträge [c:/sosftp/getpassword.cmd, "a", "b", xyz]		
-			//String password = "`c:/sosftp/getpassword.cmd '\"a\" \"b\"' xyz `"; //resultvector hat 3 einträge [c:/sosftp/getpassword.cmd, '"a" "b"', xyz]		
+			//String password = "`c:/sosftp/getpassword.cmd 'a b' `";  //resultvector hat zwei eintrï¿½ge  [c:/sosftp/getpassword.cmd, 'a b']
+			//String password = "`cmd \"a b\"`"; //resultvector hat drei eintrï¿½ge  [c:/sosftp/getpassword.cmd, "a, b"] 
+			//String password = "`cmd a b`"; //resultvector hat 3 eintrï¿½ge  [cmd, a, b]
+			//String password = "`c:/sosftp/getpassword.cmd ggg\"aa `";//resultvector hat zwei eintrï¿½ge  [c:/sosftp/getpassword.cmd, ggg"aa]
+			//String password = "`c:/sosftp/getpassword.cmd 'ggg\"aa' `";//resultvector hat zwei eintrï¿½ge  [c:/sosftp/getpassword.cmd, 'ggg"aa']
+			//String password = "`c:/sosftp/getpassword.cmd \"a\" \"b\" xyz `"; //resultvector hat 4 eintrï¿½ge [c:/sosftp/getpassword.cmd, "a", "b", xyz]		
+			//String password = "`c:/sosftp/getpassword.cmd '\"a\" \"b\"' xyz `"; //resultvector hat 3 eintrï¿½ge [c:/sosftp/getpassword.cmd, '"a" "b"', xyz]		
 
-			//String password = "`c:/sosftp/getpassword.cmd \"'a b'\"`";  //resultvector hat 2 einträge [c:/sosftp/getpassword.cmd,  'a b']  
+			//String password = "`c:/sosftp/getpassword.cmd \"'a b'\"`";  //resultvector hat 2 eintrï¿½ge [c:/sosftp/getpassword.cmd,  'a b']  
 
             password = "`\\tmp\\lGetPasswd.cmd ssh wilma.sos sos`";
             System.out.println(getExternalPassword(password, logger));

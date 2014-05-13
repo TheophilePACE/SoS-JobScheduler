@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -79,8 +94,8 @@ public class SOSImportProcessor{
      * 
      * @param configFile			Datei, in der die Zugangsdaten zur Datenbank enthalten sind
      * @param logFile				Name der Protokolldatei
-     * @param logLevel				Log Level für die Protokolldatei 
-     * @param inputFile				Dateiname für Import
+     * @param logLevel				Log Level fï¿½r die Protokolldatei 
+     * @param inputFile				Dateiname fï¿½r Import
      * @throws Exception
      */
 	public SOSImportProcessor(  File configFile, 
@@ -125,7 +140,7 @@ public class SOSImportProcessor{
  	public SOSImportProcessor(){
         System.out.println("Syntax");
         System.out.println("Optionen :");
-        System.out.println("        -config     Namen der Konfigurationsdatei für die DB Verbindung angeben.");
+        System.out.println("        -config     Namen der Konfigurationsdatei fï¿½r die DB Verbindung angeben.");
         System.out.println("                    Default : sos_settings.ini");
         System.out.println("        -input      Namen der Import XML-Datei angeben.");
         System.out.println("                    Default : sos_export.xml ");
@@ -211,7 +226,7 @@ public class SOSImportProcessor{
     }
 	
 	/**
-    * Programm ausführen<br>
+    * Programm ausfï¿½hren<br>
 	* 
 	* @param args	Programmargumente<br><br>
 	* 

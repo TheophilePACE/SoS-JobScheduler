@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -127,12 +142,12 @@ public class SOSConnectionVersionLimiter {
 		
 	}
 	
-	// Konstanten für Kompatibilitätslevel
+	// Konstanten fï¿½r Kompatibilitï¿½tslevel
 	public static final int CHECK_OFF    = 0;
 	public static final int CHECK_NORMAL = 1;
 	public static final int CHECK_STRICT = 2;
 	
-	// Konstanten für Resultate der check funktion
+	// Konstanten fï¿½r Resultate der check funktion
 	public static final int VERSION_EXCLUDED  = 0;
 	public static final int VERSION_UNTESTED  = 1;
 	public static final int VERSION_SUPPORTED = 2;	
@@ -142,18 +157,18 @@ public class SOSConnectionVersionLimiter {
 	private HashSet supportedVersions = new HashSet();
 	
 	/**
-	 * kleinste unterstützte Version
+	 * kleinste unterstï¿½tzte Version
 	 */
 	private DBVersion minSupportedVersion = null;
 	
 	
 	/**
-	 * größte unterstützte Version
+	 * grï¿½ï¿½te unterstï¿½tzte Version
 	 */
 	private DBVersion maxSupportedVersion = null;
 	
 	/**
-	 * grösste nicht funktionierende Version
+	 * grï¿½sste nicht funktionierende Version
 	 * alle Versionen oberhalb und inclusive dieser Version werden als
 	 * nicht funktionierend angenommen
 	 */
@@ -168,9 +183,9 @@ public class SOSConnectionVersionLimiter {
 	
 	
 	/**
-	 * Fügt eine bekannterweise nicht funktionierende Version hinzu.
+	 * Fï¿½gt eine bekannterweise nicht funktionierende Version hinzu.
 	 * Diese wird auch dann als nicht funktionierend angesehen, wenn sie
-	 * sich im Bereich der unterstützten Versionen befindet.
+	 * sich im Bereich der unterstï¿½tzten Versionen befindet.
 	 * @param majorVersion
 	 * @param minorVersion
 	 */
@@ -180,16 +195,16 @@ public class SOSConnectionVersionLimiter {
 	}
 	
 	/**
-	 * Fügt eine bekannterweise nicht funktionierende Version hinzu.
+	 * Fï¿½gt eine bekannterweise nicht funktionierende Version hinzu.
 	 * Diese wird auch dann als nicht funktionierend angesehen, wenn sie
-	 * sich im Bereich der unterstützten Versionen befindet.
+	 * sich im Bereich der unterstï¿½tzten Versionen befindet.
 	 */
 	public void addExcludedVersion(String version){
 		excludedVersions.add(version);
 	}
 	
 	/**
-	 * Fügt eine bekannterweise funktionierende Version hinzu.
+	 * Fï¿½gt eine bekannterweise funktionierende Version hinzu.
 	 * Diese wird auch dann als funktionierend angesehen, wenn sie
 	 * sich im Bereich der excluded oder unsupported Versions befindet.
 	 * @param majorVersion
@@ -201,7 +216,7 @@ public class SOSConnectionVersionLimiter {
 	}
 	
 	/**
-	 * Fügt eine bekannterweise funktionierende Version hinzu.
+	 * Fï¿½gt eine bekannterweise funktionierende Version hinzu.
 	 * Diese wird auch dann als funktionierend angesehen, wenn sie
 	 * sich im Bereich der excluded oder unsupported Versions befindet.
 	 */
@@ -210,7 +225,7 @@ public class SOSConnectionVersionLimiter {
 	}
 
 	/**
-	 * Setzt die höchste unterstützte Version. Alle Versionen
+	 * Setzt die hï¿½chste unterstï¿½tzte Version. Alle Versionen
 	 * oberhalb dieser Version gelten als nicht getestet.
 	 */
 	public void setMaxSupportedVersion(int majorVersion, int minorVersion) {
@@ -218,15 +233,15 @@ public class SOSConnectionVersionLimiter {
 	}
 
 	/**
-	 * Setzt die höchste nicht unterstützte Version. Alle Versionen
-	 * unterhalb und inklusive dieser Version gelten als nicht unterstützt.
+	 * Setzt die hï¿½chste nicht unterstï¿½tzte Version. Alle Versionen
+	 * unterhalb und inklusive dieser Version gelten als nicht unterstï¿½tzt.
 	 */
 	public void setExcludedThroughVersion(int majorVersion, int minorVersion) {
 		this.excludedThroughVersion = new DBVersion(majorVersion, minorVersion);
 	}
 
 	/**
-	 * Setzt die kleinste unterstützte Version. Alle Versionen
+	 * Setzt die kleinste unterstï¿½tzte Version. Alle Versionen
 	 * unterhalb dieser Version gelten als nicht getestet.
 	 */
 	public void setMinSupportedVersion(int majorVersion, int minorVersion) {
@@ -234,44 +249,44 @@ public class SOSConnectionVersionLimiter {
 	}
 
 	/**
-	 * Setzt die kleinste nicht unterstützte Version. Alle Versionen
-	 * oberhalb dieser Version gelten als nicht unterstützt.
+	 * Setzt die kleinste nicht unterstï¿½tzte Version. Alle Versionen
+	 * oberhalb dieser Version gelten als nicht unterstï¿½tzt.
 	 */
 	public void setExcludedFromVersion(DBVersion excludedFromVersion) {
 		this.excludedFromVersion = excludedFromVersion;
 	}
 	
 	/**
-	 * Prüft ob eine Connection aufgrund der Versionsnummer ihrer Datenbank
+	 * Prï¿½ft ob eine Connection aufgrund der Versionsnummer ihrer Datenbank
 	 * benutzt werden darf. Die Datenbank muss bereits verbunden sein.
-	 * Der Kompatibilitätslevel wird aus der Connection gelesen
-	 * @param conn SOSConnection, die geprüft werden soll
+	 * Der Kompatibilitï¿½tslevel wird aus der Connection gelesen
+	 * @param conn SOSConnection, die geprï¿½ft werden soll
 	 * @param log SOSLogger Objekt
-	 * @return Wenn es keine Exception gab, wird je nach Ausgang der Prüfung eine der
+	 * @return Wenn es keine Exception gab, wird je nach Ausgang der Prï¿½fung eine der
 	 * folgenden Konstanten geliefert:<br/>
-	 * VERSION_EXCLUDED - Die Datenbankversion wird nicht unterstützt<br/>
+	 * VERSION_EXCLUDED - Die Datenbankversion wird nicht unterstï¿½tzt<br/>
 	 * VERSION_UNTESTED - Die Datenbankversion wurde nicht getestet<br/>
-	 * VERSION_SUPPORTED - Die Datenbankversion wird unterstützt
+	 * VERSION_SUPPORTED - Die Datenbankversion wird unterstï¿½tzt
 	 */
 	public int check(SOSConnection conn, SOSLogger log) throws BadDatabaseVersionException{
 		return check(conn, log, conn.getCompatibility());
 	}
 	
 	/**
-	 * Prüft ob eine Connection aufgrund der Versionsnummer ihrer Datenbank
+	 * Prï¿½ft ob eine Connection aufgrund der Versionsnummer ihrer Datenbank
 	 * benutzt werden darf. Die Datenbank muss bereits verbunden sein.
-	 * @param conn SOSConnection, die geprüft werden soll
+	 * @param conn SOSConnection, die geprï¿½ft werden soll
 	 * @param log SOSLogger Objekt
 	 * @param compatibility Eine der Konstanten:<br/>
 	 * CHECK_OFF - Es wird nur auf info Level geloggt, keine Exception wird geworfen <br/>
-	 * CHECK_NORMAL - Bei nicht unterstützten Versionen wird eine Exception geworfen <br/>
-	 * CHECK_STRICT - Bei nicht unterstützten und nicht getesteten Versionen 
+	 * CHECK_NORMAL - Bei nicht unterstï¿½tzten Versionen wird eine Exception geworfen <br/>
+	 * CHECK_STRICT - Bei nicht unterstï¿½tzten und nicht getesteten Versionen 
 	 * wird eine Exception geworfen
-	 * @return Wenn es keine Exception gab, wird je nach Ausgang der Prüfung eine der
+	 * @return Wenn es keine Exception gab, wird je nach Ausgang der Prï¿½fung eine der
 	 * folgenden Konstanten geliefert:<br/>
-	 * VERSION_EXCLUDED - Die Datenbankversion wird nicht unterstützt<br/>
+	 * VERSION_EXCLUDED - Die Datenbankversion wird nicht unterstï¿½tzt<br/>
 	 * VERSION_UNTESTED - Die Datenbankversion wurde nicht getestet<br/>
-	 * VERSION_SUPPORTED - Die Datenbankversion wird unterstützt
+	 * VERSION_SUPPORTED - Die Datenbankversion wird unterstï¿½tzt
 	 */
 	public int check(SOSConnection conn, SOSLogger log, int compatibility) throws BadDatabaseVersionException{
 		int major=-1;
@@ -313,7 +328,7 @@ public class SOSConnectionVersionLimiter {
 					/*String sDbVersion2 = sDbVersion;
 					
 					// Bei Oracle funktioniert je nach jdbc Treiber getDatabaseMajorVersion()
-					// nicht. sDBVersion enthält sehr langen String mit zu vielen Zahlen
+					// nicht. sDBVersion enthï¿½lt sehr langen String mit zu vielen Zahlen
 					if(sDbVersion2.startsWith("Oracle")){
 						String[] oraSplit = sDbVersion2.split("Release");
 						if (oraSplit.length>1) sDbVersion2=oraSplit[2];

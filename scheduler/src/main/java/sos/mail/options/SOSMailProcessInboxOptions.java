@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -41,7 +56,7 @@ import com.sos.JSHelper.Exceptions.JSExceptionMandatoryOptionMissing;
 import com.sos.JSHelper.Listener.JSListener;
 
 /**
- * \class 		Mail2ActionOptions - Pro Email eine oder mehrere Aktionen ausführen
+ * \class 		Mail2ActionOptions - Pro Email eine oder mehrere Aktionen ausfï¿½hren
  *
  * \brief
  * An Options as a container for the Options super class.
@@ -57,7 +72,7 @@ import com.sos.JSHelper.Listener.JSListener;
  * mechanicaly created by JobDocu2OptionsClass.xslt from http://www.sos-berlin.com at 20121019122956
  * \endverbatim
  */
-@JSOptionClass(name = "Mail2ActionOptions", description = "Pro Email eine oder mehrere Aktionen ausführen")
+@JSOptionClass(name = "Mail2ActionOptions", description = "Pro Email eine oder mehrere Aktionen ausfï¿½hren")
 public class SOSMailProcessInboxOptions extends SOSMailProcessInboxOptionsSuperClass {
 	/**
 	 *
@@ -87,13 +102,13 @@ public class SOSMailProcessInboxOptions extends SOSMailProcessInboxOptionsSuperC
 	} // public Mail2ActionOptions (HashMap JSSettings)
 
 	/**
-	 * \brief CheckMandatory - prüft alle Muss-Optionen auf Werte
+	 * \brief CheckMandatory - prï¿½ft alle Muss-Optionen auf Werte
 	 *
 	 * \details
 	 * @throws Exception
 	 *
 	 * @throws Exception
-	 * - wird ausgelöst, wenn eine mandatory-Option keinen Wert hat
+	 * - wird ausgelï¿½st, wenn eine mandatory-Option keinen Wert hat
 	 */
 	@Override
 	// Mail2ActionOptionsSuperClass

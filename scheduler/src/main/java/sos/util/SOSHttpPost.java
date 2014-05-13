@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -102,7 +117,7 @@ public class SOSHttpPost {
 		this.targetURL = url;
 		this.soslogger = soslogger;	
 		
-		// für HttpClient NULL-Logger setzen
+		// fï¿½r HttpClient NULL-Logger setzen
 		System.setProperty("org.apache.commons.logging.log", "sos.util.SOSJCLNullLogger");
 		//System.out.println("HttpClient Logger: "+System.getProperty("org.apache.commons.logging.log"));
 		
@@ -221,7 +236,7 @@ public class SOSHttpPost {
 			
 			responseCode = httpClient.executeMethod(post);
 			
-		// Response Code überprüfen			
+		// Response Code ï¿½berprï¿½fen			
 			// codes 200 - 399 gehen durch
 			if ( responseCode < 200 || responseCode >= 400)
 				throw new HttpException(this.targetURL.toString() +" returns "+post.getStatusLine().toString());
@@ -231,7 +246,7 @@ public class SOSHttpPost {
 			if ( outputFile!=null )
 				writeMsg = this.writeResponse(post.getResponseBodyAsStream(), outputFile);
 			
-		// abschließende Meldung
+		// abschlieï¿½ende Meldung
 			this.log_info(inputFile.getCanonicalPath()+" sent"+ writeMsg);
 			
 		} catch (UnknownHostException uhx) {
@@ -246,9 +261,9 @@ public class SOSHttpPost {
 	}
 	
 	/**
-	 * Sendet eine Datei an den Server, rekursiv für Verzeichnisse
+	 * Sendet eine Datei an den Server, rekursiv fï¿½r Verzeichnisse
 	 * @param file Datei oder Verzeichnis
-	 * @return liefert die Anzahl der gesendeten Dateien zurück
+	 * @return liefert die Anzahl der gesendeten Dateien zurï¿½ck
 	 * @throws Exception
 	 */
 	private int recursiveSend(File inputFile, String inputFileSpec, String outputFile) throws Exception {
@@ -293,7 +308,7 @@ public class SOSHttpPost {
 	
 	/**
 	 * Sendet die Eingabedatei oder den Inhalt des Eingabeverzeichnis an den Server.
-	 * Schreibt für jede gesendete Datei die Response des Servers in die Ausgabedatei bzw.
+	 * Schreibt fï¿½r jede gesendete Datei die Response des Servers in die Ausgabedatei bzw.
 	 * in eine gleichnamige Datei im Ausgabeverzeichnis.
 	 * Wenn inputFile eine Datei ist, dann muss auch outputFile eine Datei sein.
 	 * Wenn inputFile ein Verzeichnis ist, dann muss auch outputFile ein Verzeichnis sein.
@@ -335,7 +350,7 @@ public class SOSHttpPost {
 		if ( !inputFile.canRead() )
 			throw new Exception(inputFile.getCanonicalPath()+" not found or not readable");
 		
-		// test des outputFiles übergehen falls null
+		// test des outputFiles ï¿½bergehen falls null
 		if ( outputFile != null ) {
 			
 			// outputFile existiert nicht
@@ -369,7 +384,7 @@ public class SOSHttpPost {
 				throw new Exception(outputFile.getCanonicalPath() +" is not writable");
 		}
 		
-		// nach dem Test NEU angelegte Datei oder NEU angelegtes Verzeichnis löschen
+		// nach dem Test NEU angelegte Datei oder NEU angelegtes Verzeichnis lï¿½schen
 		if ( outputFileNewCreated ) {
 			outputFile.delete();
 		}
@@ -454,7 +469,7 @@ public class SOSHttpPost {
 			System.exit(-1);
 		}
 		
-	// Ausführen
+	// Ausfï¿½hren
 		try {
 			
 			httpsend.process(inputFile, outputFile);

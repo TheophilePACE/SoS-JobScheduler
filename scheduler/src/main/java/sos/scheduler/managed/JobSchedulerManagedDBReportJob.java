@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -47,18 +62,18 @@ import sos.spooler.Order;
 import sos.xml.SOSXMLTransformer;
 
 /**
- * Diese Klasse führt Datanbank-Statements für Managed Orders aus und
+ * Diese Klasse fï¿½hrt Datanbank-Statements fï¿½r Managed Orders aus und
  * verschickt einen Report im XML Format. Optional kann das xml mit Hilfe
  * eines Stylesheets in ein anderes Format gewandelt werden.<br>
  * Parameter:<br>
  * <ul>
  *   <li><strong>scheduler_order_report_stylesheet<strong>: Pfad zu einem Stylesheet, das
- * 		für die xslt Transformation verwendet werden soll</li>
- *   <li><strong>scheduler_order_report_mailto<strong>: email-Empfänger des
+ * 		fï¿½r die xslt Transformation verwendet werden soll</li>
+ *   <li><strong>scheduler_order_report_mailto<strong>: email-Empfï¿½nger des
  * 		 Reports.</li>
- *   <li><strong>scheduler_order_report_mailcc<strong>: email-cc-Empfänger des
+ *   <li><strong>scheduler_order_report_mailcc<strong>: email-cc-Empfï¿½nger des
  * 		 Reports.</li>
- *   <li><strong>scheduler_order_report_mailbcc<strong>: email-bcc-Empfänger des
+ *   <li><strong>scheduler_order_report_mailbcc<strong>: email-bcc-Empfï¿½nger des
  * 		 Reports.</li>
  *   <li><strong>scheduler_order_report_subject<strong>: email-subject des
  * 		 Reports.</li>
@@ -67,7 +82,7 @@ import sos.xml.SOSXMLTransformer;
  *   <li><strong>scheduler_order_report_asbody<strong>: Bei 1 wird der Report nicht
  * 		als Attachment, sondern als body der email verschickt.</li>
  * 	 <li><strong>scheduler_order_report_filename<strong>: Der gegebene Dateiname wird 
- *      für den Namen des Attachments verwendet und für die permanent
+ *      fï¿½r den Namen des Attachments verwendet und fï¿½r die permanent
  *      abgelegte Datei, falls ein Report-Pfad angegeben wird.</li>
  *   <li><strong>scheduler_order_report_path<strong>: Wird hier ein Pfad angegeben, so 
  *      wird der Report nicht nur per email verschickt, sondern auch hier abgelegt.</li>

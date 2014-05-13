@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -82,25 +97,25 @@ public class SOSExportProcessor {
      * @param logFile
      *            Name der Protokolldatei
      * @param logLevel
-     *            Log Level für die Protokolldatei
+     *            Log Level fï¿½r die Protokolldatei
      * @param outputFile
-     *            Name der XML-Datei für Export
+     *            Name der XML-Datei fï¿½r Export
      * @param tableNames
-     *            Tabellennamen für den Export. <br>
+     *            Tabellennamen fï¿½r den Export. <br>
      *            Es werden alle Daten der jeweiligen Tabelle exportiert <br>
      *            Mehrere Tabellen durch + Zeichen getrennt.
      * @param executeQuery
-     *            eigene SQL-Statement für eine Tabelle angeben. <br>
-     *            Muß in doppelten Hochkommas angegeben werden
+     *            eigene SQL-Statement fï¿½r eine Tabelle angeben. <br>
+     *            Muï¿½ in doppelten Hochkommas angegeben werden
      * @param keys
-     *            Schlüsselfelder für eine bzw mehreren Tabellen. <br>
+     *            Schlï¿½sselfelder fï¿½r eine bzw mehreren Tabellen. <br>
      *            Wird im Zusammenhang mit dem Parameter tableNames
-     *            berücksichtigt <br>
-     *            Schlüsselfelder sind wichtig, wenn eine Tabelle CLOB bzw BLOB
-     *            enthält. <br>
-     *            mehrere Schlüssel für eine Tabellen durch Komma getrennt <br>
-     *            für mehreren Tabellen durch + Zeichen getrennt <br>
-     *            für mehreren Tabellen : die Reihenfolge wie bei tableNames
+     *            berï¿½cksichtigt <br>
+     *            Schlï¿½sselfelder sind wichtig, wenn eine Tabelle CLOB bzw BLOB
+     *            enthï¿½lt. <br>
+     *            mehrere Schlï¿½ssel fï¿½r eine Tabellen durch Komma getrennt <br>
+     *            fï¿½r mehreren Tabellen durch + Zeichen getrennt <br>
+     *            fï¿½r mehreren Tabellen : die Reihenfolge wie bei tableNames
      * @throws Exception
      */
     public SOSExportProcessor(File configFile, File logFile, int logLevel,
@@ -149,20 +164,20 @@ public class SOSExportProcessor {
     public SOSExportProcessor() {
         System.out.println("Syntax");
         System.out.println("Optionen :");
-        System.out.println("        -config     Namen der Konfigurationsdatei für die DB Verbindung angeben.");
+        System.out.println("        -config     Namen der Konfigurationsdatei fï¿½r die DB Verbindung angeben.");
         System.out.println("                    Default : sos_settings.ini");
         System.out.println("        -output     Namen der Export XML-Datei angeben.");
         System.out.println("                    Default : sos_export.xml ");
-        System.out.println("        -tables     Tabellennamen für den Export.");
+        System.out.println("        -tables     Tabellennamen fï¿½r den Export.");
         System.out.println("                    Es werden alle Daten der jeweiligen Tabelle exportiert.");
         System.out.println("                    Mehrere Tabellen durch + Zeichen getrennt");
-        System.out.println("        -keys    	Schlüsselfelder für eine bzw mehreren Tabellen angeben.");
-        System.out.println("           			Wird im Zusammenhang mit der Option -tables berücksichtigt.");
-        System.out.println("                    Schlüsselfelder sind wichtig, wenn eine Tabelle CLOB bzw BLOB enthält.");
-        System.out.println("                    mehrere Schlüssel für eine Tabelle - durch Komma getrennt.");
-        System.out.println("                    für mehreren Tabellen durch + Zeichen getrennt.");
-        System.out.println("                    für mehreren Tabellen : die Reihenfolge wie bei -tables.");
-        System.out.println("        -execute    eigene SQL-Statement für eine Tabelle angeben.");
+        System.out.println("        -keys    	Schlï¿½sselfelder fï¿½r eine bzw mehreren Tabellen angeben.");
+        System.out.println("           			Wird im Zusammenhang mit der Option -tables berï¿½cksichtigt.");
+        System.out.println("                    Schlï¿½sselfelder sind wichtig, wenn eine Tabelle CLOB bzw BLOB enthï¿½lt.");
+        System.out.println("                    mehrere Schlï¿½ssel fï¿½r eine Tabelle - durch Komma getrennt.");
+        System.out.println("                    fï¿½r mehreren Tabellen durch + Zeichen getrennt.");
+        System.out.println("                    fï¿½r mehreren Tabellen : die Reihenfolge wie bei -tables.");
+        System.out.println("        -execute    eigene SQL-Statement fï¿½r eine Tabelle angeben.");
         System.out.println("                    SQL-Statement in doppelten Hochkommas.");
         System.out.println("        -log        Namen der Log-Datei angeben.");
         System.out.println("                    Default : sos_export.log");
@@ -170,23 +185,23 @@ public class SOSExportProcessor {
         System.out.println("                    Default : 0  keine Log-Datei schreiben");
         System.out.println("");
         System.out.println("");
-        System.out.println("Notiz : -execute und -tables dürfen nicht zusammen angegeben werden.");
+        System.out.println("Notiz : -execute und -tables dï¿½rfen nicht zusammen angegeben werden.");
         System.out.println("        eine von beiden Optionen muss angegeben sein");
         System.out.println("");
         System.out.println("");
         System.out.println("Beispiel 1 : alle Daten der Tabelle t1 exportieren und in die default Log-Datei loggen");
         System.out.println("         -config=config/sos_settings.ini -tables=t1 -log-level=9");
         System.out.println("");
-        System.out.println("Beispiel 2 : wie Beispiel 1 + Schlüsselfeld ID für die Tabelle t1 definieren");
+        System.out.println("Beispiel 2 : wie Beispiel 1 + Schlï¿½sselfeld ID fï¿½r die Tabelle t1 definieren");
         System.out.println("         -config=config/sos_settings.ini -tables=t1 -keys=ID -log-level=9");
         System.out.println("");
         System.out.println("Beispiel 3 : alle Daten der Tabellen t1 und t2 ohne zu loggen exportieren");
         System.out.println("         -config=config/sos_settings.ini -tables=t1+t2");
         System.out.println("");
-        System.out.println("Beispiel 4 : wie Beispiel 3 + Schlüsselfelder T1_ID und T1_NAME für die Tabelle t1 und Schlüsselfeld T2_ID für die Tabelle t2 definieren");
+        System.out.println("Beispiel 4 : wie Beispiel 3 + Schlï¿½sselfelder T1_ID und T1_NAME fï¿½r die Tabelle t1 und Schlï¿½sselfeld T2_ID fï¿½r die Tabelle t2 definieren");
         System.out.println("         -config=config/sos_settings.ini -tables=t1+t2 -keys=T1_ID,T1_NAME+T2_ID");
         System.out.println("");
-        System.out.println("Beispiel 5 : eigene SQL-Statement für die Tabelle t1 definieren");
+        System.out.println("Beispiel 5 : eigene SQL-Statement fï¿½r die Tabelle t1 definieren");
         System.out.println("         -config=config/sos_settings.ini -execute=\"select * from t1 where ID=1\"");
 
     }
@@ -242,7 +257,7 @@ public class SOSExportProcessor {
 
     /**
      * Export vorbereiten.<br>
-     * Die Methode setzt Tabellennamen, Schlüsselfelder usw für den Export. 
+     * Die Methode setzt Tabellennamen, Schlï¿½sselfelder usw fï¿½r den Export. 
      * 
      * @param export
      *            SOSExport Objekt
@@ -296,36 +311,36 @@ public class SOSExportProcessor {
     }
 
     /**
-     * Programm ausführen<br>
+     * Programm ausfï¿½hren<br>
      * 
      * @param args		Programmargumente<br><br>
      * 
      * Mit dem Argument "?" bzw "help"  kann mann sich Programm Usage anzeigen lassen.<br><br> 
      * 
-     * Weitere mögliche Argumente<br>
+     * Weitere mï¿½gliche Argumente<br>
      *  	-config		Datei, in der die Zugangsdaten zur Datenbank enthalten sind<br>
      * 					Default	: sos_settings.ini<br>
      *  	-log        Name der Protokolldatei<br>
      * 					Default : sos_export.log<br>
-     *  	-log-level  Log Level für die Protokolldatei<br>
+     *  	-log-level  Log Level fï¿½r die Protokolldatei<br>
      * 					Default : 0   keine Protokollierung<br>
-     *  	-output     Name der XML-Datei für Export<br>
+     *  	-output     Name der XML-Datei fï¿½r Export<br>
      * 					Default	: sos_export.xml<br>
-     * 		-tables		Tabellennamen für den Export. <br>
+     * 		-tables		Tabellennamen fï¿½r den Export. <br>
      *            		Es werden alle Daten der jeweiligen Tabelle exportiert <br>
      *            		Mehrere Tabellen durch + Zeichen getrennt.<br>
      * 					Default : Leerstring<br>
-     *  	-execute    eigene SQL-Statement für eine Tabelle angeben. <br>
-     *            		Muß in doppelten Hochkommas angegeben werden<br>
+     *  	-execute    eigene SQL-Statement fï¿½r eine Tabelle angeben. <br>
+     *            		Muï¿½ in doppelten Hochkommas angegeben werden<br>
      * 					Default : Leerstring<br>
-     * 		-keys       Schlüsselfelder für eine bzw mehreren Tabellen. <br>
-     *            		Wird im Zusammenhang mit dem Argument -tables berücksichtigt <br>
-     *            		Schlüsselfelder sind wichtig, wenn eine Tabelle CLOB bzw BLOB enthält. <br>
-     *            		mehrere Schlüssel für eine Tabelle -  durch Komma getrennt <br>
-     *            		für mehreren Tabellen durch + Zeichen getrennt <br>
-     *            		für mehreren Tabellen : die Reihenfolge wie bei -tables<br>
+     * 		-keys       Schlï¿½sselfelder fï¿½r eine bzw mehreren Tabellen. <br>
+     *            		Wird im Zusammenhang mit dem Argument -tables berï¿½cksichtigt <br>
+     *            		Schlï¿½sselfelder sind wichtig, wenn eine Tabelle CLOB bzw BLOB enthï¿½lt. <br>
+     *            		mehrere Schlï¿½ssel fï¿½r eine Tabelle -  durch Komma getrennt <br>
+     *            		fï¿½r mehreren Tabellen durch + Zeichen getrennt <br>
+     *            		fï¿½r mehreren Tabellen : die Reihenfolge wie bei -tables<br>
      * 					Default : Leerstring<br><br>
-     * -execute und -tables dürfen nicht zusammen angegeben werden.<br>
+     * -execute und -tables dï¿½rfen nicht zusammen angegeben werden.<br>
      * eine von beiden Optionen muss angegeben sein<br>
      * 
      * @throws Exception
@@ -361,18 +376,18 @@ public class SOSExportProcessor {
 
     
     /**
-     * Liefert den Zustand : Prüfen nach -execute Option
+     * Liefert den Zustand : Prï¿½fen nach -execute Option
      * 
-     * @return Liefert den Zustand : Prüfen nach -execute Option oder nicht.
+     * @return Liefert den Zustand : Prï¿½fen nach -execute Option oder nicht.
      */
     public boolean isEnableExecuteParametr() {
         return enableExecuteParametr;
     }
 
     /**
-     * Setzt Zustand : Prüfen nach -execute Option
+     * Setzt Zustand : Prï¿½fen nach -execute Option
      * 
-     * @param enableExecuteParametr  Prüfen nach -execute Option  oder nicht
+     * @param enableExecuteParametr  Prï¿½fen nach -execute Option  oder nicht
      *            
      */
     public void setEnableExecuteParametr(boolean enableExecuteParametr) {
@@ -380,19 +395,19 @@ public class SOSExportProcessor {
     }
 
     /**
-     * Liefert den Zustand : Prüfen nach -tables Option
+     * Liefert den Zustand : Prï¿½fen nach -tables Option
      * 
-     * @return Liefert den Zustand : Prüfen nach -tables Option oder nicht.
+     * @return Liefert den Zustand : Prï¿½fen nach -tables Option oder nicht.
      */
     public boolean isEnableTableParametr() {
         return enableTableParametr;
     }
 
     /**
-     * Setzt Zustand : Prüfen nach -tables Option
+     * Setzt Zustand : Prï¿½fen nach -tables Option
      * 
      * @param enableTableParametr
-     *            Prüfen nach -tables Option  oder nicht.
+     *            Prï¿½fen nach -tables Option  oder nicht.
      */
     public void setEnableTableParametr(boolean enableTableParametr) {
         this.enableTableParametr = enableTableParametr;

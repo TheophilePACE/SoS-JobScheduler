@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -227,7 +242,7 @@ public class DetailsListener {
 			if(_currOrderId != null && _currOrderId.length() > 0 ) {
 				File jobChainConfig = new File(xmlPaths + jobChainname+  ".config.xml");
 				if(jobChainConfig.exists() && !new File(xmlFilename).exists()) {
-					//int c = MainWindow.message("Es gibt bereits eine Konfiguration für die Jobkette. Soll diese für den Auftrag übernommen werden?", SWT.ICON_QUESTION | SWT.YES | SWT.NO );
+					//int c = MainWindow.message("Es gibt bereits eine Konfiguration fï¿½r die Jobkette. Soll diese fï¿½r den Auftrag ï¿½bernommen werden?", SWT.ICON_QUESTION | SWT.YES | SWT.NO );
 					int c = MainWindow.message("A configuration already exists for this job chain. Should this configuration be used for the order?", SWT.ICON_QUESTION | SWT.YES | SWT.NO );
 					if(c == SWT.YES) {
 						if(!sos.util.SOSFile.copyFile(jobChainConfig.getAbsolutePath(), xmlFilename))
@@ -407,7 +422,7 @@ public class DetailsListener {
 		if(text.indexOf("<") == -1) {			
 			div.setText(text);
 		} else {
-			//x-element wird temporär gebildet.
+			//x-element wird temporï¿½r gebildet.
 			Element newNote = createNewNoteElement("<x>" + text + "</x>");
 			if(newNote != null){
 				div.removeContent();
@@ -482,10 +497,10 @@ public class DetailsListener {
 				for (int j = 1; j < 3; j++) {
 					if(params.size() <= i+j)
 						return "";
-					//nur zweimal durchlaufen, weil die nächsten beiden Elemente note Knoten sein können					
+					//nur zweimal durchlaufen, weil die nï¿½chsten beiden Elemente note Knoten sein kï¿½nnen					
 					Element note = (Element)params.get(i+j);
 					if(note.getName().equals("param")) {
-						break;//die nächsten beiden Knoten der param Elemente sind nicht die note Elemente
+						break;//die nï¿½chsten beiden Knoten der param Elemente sind nicht die note Elemente
 					}
 					if(note.getName().equals("note") && Utils.getAttributeValue("language", note).equals(language)) {
 						return getNoteText(note);
@@ -535,7 +550,7 @@ public class DetailsListener {
 
 							if(elNote.getName().equals("param")) {
 								noNote = true;
-								break;//die nächsten beiden Knoten der param Elemente sind nicht die note Elemente
+								break;//die nï¿½chsten beiden Knoten der param Elemente sind nicht die note Elemente
 							}
 							if(elNote.getName().equalsIgnoreCase("note") && Utils.getAttributeValue("language", elNote).equalsIgnoreCase(language)) {
 								setNoteText(elNote, note);
@@ -727,7 +742,7 @@ public class DetailsListener {
 				if(pnde.getName().equals("note")) {
 					params.remove(i);//note de
 				} else {
-					break;//das nächste Element ist param, daher abbrechen-> dh. es ex. kein engl. Note
+					break;//das nï¿½chste Element ist param, daher abbrechen-> dh. es ex. kein engl. Note
 				}
 
 				Element pnen = (Element)params.get(i);
@@ -985,8 +1000,8 @@ public class DetailsListener {
 
 
 	/**
-	 * Wenn der State vom Details sich ändert, dann wird ggf. auch in der 
-	 * Details der state geändert.
+	 * Wenn der State vom Details sich ï¿½ndert, dann wird ggf. auch in der 
+	 * Details der state geï¿½ndert.
 	 */
 	public static void changeDetailsState(String oldstate, String newstate, String jobchainname, SchedulerDom _dom) {
 		try {
@@ -1006,7 +1021,7 @@ public class DetailsListener {
 			List listOfElementnew = xnew.selectNodes(detailListener.getDoc());
 			if(listOfElementnew.isEmpty()) {
 				if(!listOfElement.isEmpty()) {
-					//System.out.println("hier ändern");
+					//System.out.println("hier ï¿½ndern");
 					Element process = (Element)listOfElement.get(0);
 					process.setAttribute("state", newstate);
 					detailListener.save();
@@ -1026,7 +1041,7 @@ public class DetailsListener {
 	}
 	
 	/**
-	 * Wenn der Jobname vom Details sich ändert, dann wird auch in der Job Chain Node Parameter Datei der Attribut job chainname angepasst
+	 * Wenn der Jobname vom Details sich ï¿½ndert, dann wird auch in der Job Chain Node Parameter Datei der Attribut job chainname angepasst
 	 */
 	public static void changeDetailsJobChainname(String jobChainNewName, String jobchainName, SchedulerDom _dom) {
 		try {
@@ -1157,7 +1172,7 @@ public class DetailsListener {
 					}
 					
 					hotFolderfilename = hotFolderfile.getCanonicalPath();
-					//Unterscheiden, ob Hot Folder Element. Wenn ja, dann Hot Folder Datei öffnen. Wenn das Hot Folder Element bereits offen ist, dann verändern
+					//Unterscheiden, ob Hot Folder Element. Wenn ja, dann Hot Folder Datei ï¿½ffnen. Wenn das Hot Folder Element bereits offen ist, dann verï¿½ndern
 					List listOfElement2  = null;
 
 					if(dom.isLifeElement() || new File(jobname).getParent() != null ) {
@@ -1288,9 +1303,9 @@ public class DetailsListener {
 	}
 
 	/**
-	 * Ein neuer Job wurde den Jobkette hinzugefügt. Es wird jetzt überprüft, ob die Details Konfigurationsdatei
-	 * globale Parameter hat. Wenn ja, dann wird diesem Job monitoring hinzugefügt  
-	 * Details der state geändert.
+	 * Ein neuer Job wurde den Jobkette hinzugefï¿½gt. Es wird jetzt ï¿½berprï¿½ft, ob die Details Konfigurationsdatei
+	 * globale Parameter hat. Wenn ja, dann wird diesem Job monitoring hinzugefï¿½gt  
+	 * Details der state geï¿½ndert.
 	 */
 
 	public static boolean existDetailsParameter(String state , 
@@ -1334,9 +1349,9 @@ public class DetailsListener {
 		}
 	}
 	/**
-	 * Ein neuer Job wurde den Jobkette hinzugefügt. Es wird jetzt überprüft, ob die Details Konfigurationsdatei
-	 * globale Parameter hat. Wenn ja, dann wird diesem Job monitoring hinzugefügt  
-	 * Details der state geändert.
+	 * Ein neuer Job wurde den Jobkette hinzugefï¿½gt. Es wird jetzt ï¿½berprï¿½ft, ob die Details Konfigurationsdatei
+	 * globale Parameter hat. Wenn ja, dann wird diesem Job monitoring hinzugefï¿½gt  
+	 * Details der state geï¿½ndert.
 	 */
 
 	public static void checkDetailsParameter(String state , String jobchainname, String jobname, SchedulerDom dom, ISchedulerUpdate  update){
@@ -1357,7 +1372,7 @@ public class DetailsListener {
 
 
 				String hotFolderfilename = new File(Options.getSchedulerHotFolder(), jobname + ".job.xml").getCanonicalPath();
-				//Unterscheiden, ob Hot Folder Element. Wenn ja, dann Hot Folder Datei öffnen. Wenn der Hot Folder Element bereits offen ist, dann verändern
+				//Unterscheiden, ob Hot Folder Element. Wenn ja, dann Hot Folder Datei ï¿½ffnen. Wenn der Hot Folder Element bereits offen ist, dann verï¿½ndern
 				List listOfElement2  = null;
 
 				if(dom.isLifeElement() || new File(jobname).getParent() != null ) {

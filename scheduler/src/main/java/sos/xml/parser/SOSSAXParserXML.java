@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -62,7 +77,7 @@ import sos.util.SOSString;
  * <p>Title: SOSSAXParseXML</p>
  * <p>Description: Parsieren der XML-Datei und generieren von Insertstatements.
  * Diese  Insertstatements werden direkt in die Datenbank geschrieben, wenn 
- * SOSConnection) übergeben wurde und/oder in eine Datei geschrieben, wenn 
+ * SOSConnection) ï¿½bergeben wurde und/oder in eine Datei geschrieben, wenn 
  * eine Ausgabe Dateiname angegeben wurde.   </p>
  * 
  * 
@@ -85,7 +100,7 @@ import sos.util.SOSString;
  * <p>Die XML-Datei sollte so aufgebaut sein, das Komplextyps immer in der unteren
  * Ebenen liegen.</p>
  * 
- * z.B. Falsch wäre das Beispiel:  
+ * z.B. Falsch wï¿½re das Beispiel:  
  *  * <p>-------------------------------------</p>
  * <p>root                                </p>
  * <p>	  Familien </p>
@@ -99,7 +114,7 @@ import sos.util.SOSString;
  * <p> wird interpretiert als:</p>
  * <p> 1. Vater, Kind 1</p>
  * <p> 2. Vater, Kind 2, Mutter</p>
- * <p> Somit hat Kind 1 keine Mutter und das wäre ja traurig. </p>    
+ * <p> Somit hat Kind 1 keine Mutter und das wï¿½re ja traurig. </p>    
  * 
  * <p>verwendetet Libraries: xerces.jar, sos.util.jar, sos.connection.jar </p>
  * 
@@ -122,7 +137,7 @@ public class SOSSAXParserXML
   /** Attribut:  Name der Tabelle, in der insertet werden*/
   private static String tableName = new String();
   
-  /** Attribut:  HashTable für insert Tagsname und Tagsvalues*/
+  /** Attribut:  HashTable fï¿½r insert Tagsname und Tagsvalues*/
   private HashMap insertTags = new HashMap();
   
   /** Attribut: Name der letzten Tag.*/
@@ -138,24 +153,24 @@ public class SOSSAXParserXML
    * dannist die lastTagname ein Komplextyp */
   private boolean startTag = true;
   
-  /** Hilfsvariable: Die Methode character kann kein Exception auslösen. daher wird in der 
-   * Methode endelement nachträglich ein Exception ausgelöst. 
+  /** Hilfsvariable: Die Methode character kann kein Exception auslï¿½sen. daher wird in der 
+   * Methode endelement nachtrï¿½glich ein Exception ausgelï¿½st. 
    * */
   private String errorText = "";
 
-	/** Attribut: Beim bilden der insertStament können defaults übergeben werden */
+	/** Attribut: Beim bilden der insertStament kï¿½nnen defaults ï¿½bergeben werden */
     private static HashMap defaultFields = new HashMap();
     
     /** SOSString Objekt */
     private SOSString sosString = null;
     
 	/**
-     * Attribut: Wenn counter gesetz ist, dann wird ein Zähler zu den Statement
+     * Attribut: Wenn counter gesetz ist, dann wird ein Zï¿½hler zu den Statement
      * generiert
      */
     private static boolean counter = false;
     
-    /** Attribut: Zähler, wenn counter=true ist, dann wird zu den Statement ein Zähler geschrieben */
+    /** Attribut: Zï¿½hler, wenn counter=true ist, dann wird zu den Statement ein Zï¿½hler geschrieben */
     private static int count = 0;
     
     /** Attribut: Es soll eine Ausgabe Script Datei erzeugt werden */
@@ -315,7 +330,7 @@ public class SOSSAXParserXML
       //String absolutPath = "";
       try {   
           //Das Element wurde bereits durchlaufen. Also schreibe ein Statement auf.
-          //und lösche aus der Liste ab dem letzten Komplextyp.
+          //und lï¿½sche aus der Liste ab dem letzten Komplextyp.
           if (listOfTags.contains(name)) {
               writeInsertStatement();
               updateListOfTags(name);
@@ -360,13 +375,13 @@ public class SOSSAXParserXML
    */
   public void endElement(String string1, String name, String string2) throws
       SAXException {
-      //Die Methode charachter kann kein Exception auslösen. Daher hier nachträglich
+      //Die Methode charachter kann kein Exception auslï¿½sen. Daher hier nachtrï¿½glich
       try {
           if (errorText.length() > 0) {
               throw new SAXException (errorText);
           }
           if (name.equals(parent.get(parent.size() -1))) {
-              sosLogger.debug5("~~~~~~~~~~~~~~~~> Vaterknoten wird jetzt gelöscht: " + name);
+              sosLogger.debug5("~~~~~~~~~~~~~~~~> Vaterknoten wird jetzt gelï¿½scht: " + name);
               parent.remove(parent.size()-1);
           }
           sosLogger.debug5("endelement: " + name);    
@@ -508,7 +523,7 @@ public class SOSSAXParserXML
   
   /**
    * Die Liste der Tagname wird aktualsiert. Hier wird die Elemente der 
-   * der kleinste Komplextype aus der Liste gelöscht.
+   * der kleinste Komplextype aus der Liste gelï¿½scht.
    */
   private void updateListOfTags(String tagname) throws Exception {
       
@@ -534,8 +549,8 @@ public class SOSSAXParserXML
   
   /**
    * Formulierung einer insertStatement.
-   * Die Stament wird in die Datenbank geschrieben, wenn SOSConnection übergeben wurde.
-   * Die Stament wird in eine Datei geschrieben, wenn Dateiname übergeben wurde. 
+   * Die Stament wird in die Datenbank geschrieben, wenn SOSConnection ï¿½bergeben wurde.
+   * Die Stament wird in eine Datei geschrieben, wenn Dateiname ï¿½bergeben wurde. 
    * @throws Exception
    */
   private void writeInsertStatement() throws Exception {
@@ -621,7 +636,7 @@ public class SOSSAXParserXML
   
    /**
      * Auslesen der Hashtabelle, die mit in der insert-Stament stehen sollen.
-	 * Hier wurden Defaults übergeben , wie z.B. created, create_by etc.
+	 * Hier wurden Defaults ï¿½bergeben , wie z.B. created, create_by etc.
      * 
      * @return Returns the defaultFields.
      */
@@ -630,7 +645,7 @@ public class SOSSAXParserXML
     }
 
     /**
-     * Hier können Werte mitübergeben werden, die nicht in der XML-Datei sind,
+     * Hier kï¿½nnen Werte mitï¿½bergeben werden, die nicht in der XML-Datei sind,
      * aber mit in der insert-Stament stehen sollen. 
      * z.B. created, create_by etc.
      * 
@@ -642,7 +657,7 @@ public class SOSSAXParserXML
     }
     
     /**
-     * Auslesen, ob ein Zähler mitgeschrieben werden soll.
+     * Auslesen, ob ein Zï¿½hler mitgeschrieben werden soll.
      * 
      * @return Returns the counter.
      */
@@ -651,7 +666,7 @@ public class SOSSAXParserXML
     }
 
     /**
-     * Setzen einer Zähler für den Statement
+     * Setzen einer Zï¿½hler fï¿½r den Statement
      * 
      * @param counter
      *            The counter to set.
@@ -698,7 +713,7 @@ public class SOSSAXParserXML
     }
 
     /**
-     * Alle Großschreibungen von key werden in Kleinschreibung umgewandelt.
+     * Alle Groï¿½schreibungen von key werden in Kleinschreibung umgewandelt.
      * @param mappingTagNames
      *            The mappingTagNames to set.
      */
@@ -723,7 +738,7 @@ public class SOSSAXParserXML
     }
 
     /**
-     * Tabellenname, in die die Datensätze insertet werden soll
+     * Tabellenname, in die die Datensï¿½tze insertet werden soll
      * @param tableName_
      *            The tableName to set.
      */
@@ -805,7 +820,7 @@ public class SOSSAXParserXML
             
 //			Tagnamen zu Columnnamen mappen             
             HashMap mappingTagNames = new HashMap();                                    
-            mappingTagNames.put("counter", "RECORD_ID"); //count ist der Zähler, wenn setCounter = true ist            
+            mappingTagNames.put("counter", "RECORD_ID"); //count ist der Zï¿½hler, wenn setCounter = true ist            
             Properties p = conn.getArrayAsProperties("select tag_name, COLUMN_NAME from content_tags, content_columns where content_id = 'S' and content_tags.column_id=content_columns.column_id group by COLUMN_NAME, tag_name");            
             mappingTagNames.putAll(p);                                    
             saxXML.setMappingTagNames(mappingTagNames);
@@ -822,7 +837,7 @@ public class SOSSAXParserXML
             saxXML.setTableName("mo_test_2");
             
 //			SOSConnection Objekt. Es 
-//			wird in die Datenbank erst dann insertet, wenn SOSConnection Objekt übergeben wurde                         
+//			wird in die Datenbank erst dann insertet, wenn SOSConnection Objekt ï¿½bergeben wurde                         
             saxXML.setConnection(conn);
             */
             

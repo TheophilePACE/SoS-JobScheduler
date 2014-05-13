@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -36,7 +51,7 @@ package com.sos.JSHelper.DataElements;
  * \class JSDataElementNumeric
  *
  * \brief
- * Basisklasse für ein numerisches Datenelement
+ * Basisklasse fï¿½r ein numerisches Datenelement
  *
  * @author eqbfd
  *
@@ -89,12 +104,12 @@ public class JSDataElementNumeric extends JSDataElement {
 	 * \brief FormattedValue - Liefert den Wert des Elements formatiert
 	 *
 	 * \details
-	 * das Format (die Edit-Maske) wird über die Eigenschaft FormatString
+	 * das Format (die Edit-Maske) wird ï¿½ber die Eigenschaft FormatString
 	 * definiert.
-	 * Die Ausrichtung ist linksbündig.
+	 * Die Ausrichtung ist linksbï¿½ndig.
 	 *
 	 * Wenn kein Format-String definiert ist, so wird der Wert als String
-	 * zurückgegeben.
+	 * zurï¿½ckgegeben.
 	 *
 	 * \return String
 	 * @throws Exception
@@ -134,7 +149,7 @@ public class JSDataElementNumeric extends JSDataElement {
 	 * \brief Decimal
 	 *
 	 * \details
-	 * Setzt die max. Anzahl Dezimalstellen. Wird für die Darstellung im XML verwendet
+	 * Setzt die max. Anzahl Dezimalstellen. Wird fï¿½r die Darstellung im XML verwendet
 	 *
 	 * \return void
 	 *

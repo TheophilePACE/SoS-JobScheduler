@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -61,7 +76,7 @@ import java.util.*;
 import java.io.File;
 
 /**
- * Formular zur Erstellen, Beabeiten oder Löschen von FTP Zugängen.
+ * Formular zur Erstellen, Beabeiten oder Lï¿½schen von FTP Zugï¿½ngen.
  * 
  * 
  * @author Mueruevet Oeksuez
@@ -667,7 +682,7 @@ public class FTPProfileDialog {
 			init = true;
 			setToolTip();
 			String s = cboConnectname.getText();
-			cboConnectname.setItems(listener.getProfileNames());//löscht den Eintrag, daher mit s merken und wieder zurückschreiben
+			cboConnectname.setItems(listener.getProfileNames());//lï¿½scht den Eintrag, daher mit s merken und wieder zurï¿½ckschreiben
 			cboConnectname.setText(s);
 
 			//currProfile = listener.getProfiles().get(cboConnectname.getText()) != null ? (Properties)listener.getProfiles().get(cboConnectname.getText()) : new Properties();
@@ -821,7 +836,7 @@ public class FTPProfileDialog {
 			cboConnectname.setText(pName);
 			//initForm();
 			newProfile = false;
-			saveSettings = true;//Änderungen haben stattgefunden, d.h. in die ini Datei zurückschreiben
+			saveSettings = true;//ï¿½nderungen haben stattgefunden, d.h. in die ini Datei zurï¿½ckschreiben
 			butApply.setEnabled(false);
 			
 		} catch (Exception e) {

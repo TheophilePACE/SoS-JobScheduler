@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -95,7 +110,7 @@ public class SchedulerDom extends DomParser {
 	private static final String[]	SETTINGS_ELEMENTS			= { "mail_on_error", "mail_on_warning", "mail_on_success", "mail_on_process",
 			"mail_on_delay_after_error", "log_mail_to", "log_mail_cc", "log_mail_bcc", "log_level", "history", "history_on_process", "history_with_log" };
 
-	/** live Dateien: Schreibheschützte Dateien*/
+	/** live Dateien: Schreibheschï¿½tzte Dateien*/
 	private ArrayList<String>		listOfReadOnlyFiles			= null;
 
 	/** live Dateien: Wenn dateiname ungleich der Element Attribute Name ist, dann wird der Dateiname als Element name-Attribut gesetzt*/
@@ -113,7 +128,7 @@ public class SchedulerDom extends DomParser {
 
 	private boolean					isDirectory					= false;
 
-	/** Gilt nur für Hot Folder: Dient zur Überprüfeng ob ausserhalb einer der Hot Folder Dateien von einem  anderen Process verändert wurde*/
+	/** Gilt nur fï¿½r Hot Folder: Dient zur ï¿½berprï¿½feng ob ausserhalb einer der Hot Folder Dateien von einem  anderen Process verï¿½ndert wurde*/
 	private HashMap<String, Long>	hotFolderFiles				= null;
 
 	public SchedulerDom() {
@@ -616,8 +631,8 @@ public class SchedulerDom extends DomParser {
 	}
 
 	/**
-	 * Liest den letzten Änderungszeitpunkt (in long) der Konfigurationsdatei.
-	 * Wurde ausserhalb vom Editor etwas verändert?
+	 * Liest den letzten ï¿½nderungszeitpunkt (in long) der Konfigurationsdatei.
+	 * Wurde ausserhalb vom Editor etwas verï¿½ndert?
 	 * 
 	 */
 	public void readFileLastModified() {
@@ -647,7 +662,7 @@ public class SchedulerDom extends DomParser {
 					ArrayList<File> listOfhotFolderFiles = getHoltFolderFiles(f);
 					hotFolderFiles = new HashMap<String, Long>();
 
-					// die letzte Änderung merken
+					// die letzte ï¿½nderung merken
 					for (int i = 0; i < listOfhotFolderFiles.size(); i++) {
 						File fFile = listOfhotFolderFiles.get(i);
 						hotFolderFiles.put(fFile.getName(), fFile.lastModified());
@@ -710,9 +725,9 @@ public class SchedulerDom extends DomParser {
 	}
 
 	/**
-	 * Liefert alle Hot Folder Dateien mit der letzten Änderungen
+	 * Liefert alle Hot Folder Dateien mit der letzten ï¿½nderungen
 	 * key   = File Objekt -> Hot Folder Dateiname name
-	 * value = long -> letzte Änderung
+	 * value = long -> letzte ï¿½nderung
 	 *  @return the hotFolderFiles
 	 */
 	public HashMap<String, Long> getHotFolderFiles() {

@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -34,10 +49,10 @@ package com.sos.JSHelper.io.Files;
 /**
 * \class JSCsvFile
 *
-* \brief JSCsvFile - Die Klasse repräsentiert eine Csv-Datei
+* \brief JSCsvFile - Die Klasse reprï¿½sentiert eine Csv-Datei
 *
 * \details
-* Die Klasse repräsentiert eine Csv-Datei und bietet die typischen Operationen für eine solche Datei.
+* Die Klasse reprï¿½sentiert eine Csv-Datei und bietet die typischen Operationen fï¿½r eine solche Datei.
 *
 * \section JSCsvFile.intro_sec Introduction
 *
@@ -124,8 +139,8 @@ public class JSCsvFile extends JSTextFile {
 	private int					lngNoOfFieldsInBuffer				= 0;
 
 	/**
-	 * \change Donnerstag, 5. März 2009 EQCPN IGNORECOLS
-	 * Zeilen mit falscher Anzahl an Spalten überlesen
+	 * \change Donnerstag, 5. Mï¿½rz 2009 EQCPN IGNORECOLS
+	 * Zeilen mit falscher Anzahl an Spalten ï¿½berlesen
 	 */
 	private int					intFieldCount						= 0;
 	private int					intRecordCount						= 0;
@@ -241,15 +256,15 @@ public class JSCsvFile extends JSTextFile {
 	}
 
 	/**
-	 * \change Donnerstag, 5. März 2009 EQCPN IGNORECOLS
-	 * Zeilen mit falscher Anzahl an Spalten überlesen
+	 * \change Donnerstag, 5. Mï¿½rz 2009 EQCPN IGNORECOLS
+	 * Zeilen mit falscher Anzahl an Spalten ï¿½berlesen
 	 */
 	public String[] readCSVLine() throws IOException {
 		final ArrayList<String> list = new ArrayList<String>();
 		String str = null;
-		//- <remark who='EQCPN' when='Donnerstag, 5. März 2009' id='IGNORECOLS' >
+		//- <remark who='EQCPN' when='Donnerstag, 5. Mï¿½rz 2009' id='IGNORECOLS' >
 		//-   <para>
-		//-   Zeilen mit falscher Anzahl an Spalten überlesen
+		//-   Zeilen mit falscher Anzahl an Spalten ï¿½berlesen
 		//-   </para>
 		//- <oldcode>
 		//	while (true) {
@@ -269,7 +284,7 @@ public class JSCsvFile extends JSTextFile {
 		//- </oldcode>
 		//- <newcode>
 		int intColumnCount = 0; // Anzahl Spalten des aktuellen Satzes
-		intRecordCount++; // Satzzähler
+		intRecordCount++; // Satzzï¿½hler
 		while (true) {
 			str = readCSVField();
 			if (str == null) { // EOF
@@ -301,7 +316,7 @@ public class JSCsvFile extends JSTextFile {
 			//			if (intColumnCount > 0 && list.get(0).startsWith("#") == false) {
 			//				return null;
 			//			}
-			//TODO: Besser eine Exception werfen. Der Empfänger soll selbst entscheiden, was zu tun ist
+			//TODO: Besser eine Exception werfen. Der Empfï¿½nger soll selbst entscheiden, was zu tun ist
 		}
 		//- </newcode>
 		//- </remark>      <!-- id=<IGNORECOLS>  -->
@@ -523,7 +538,7 @@ public class JSCsvFile extends JSTextFile {
 	}
 
 	/**
-	 * AddCellValues Eine Liste mit Feldwerten in die Datei übernehmen
+	 * AddCellValues Eine Liste mit Feldwerten in die Datei ï¿½bernehmen
 	 *
 	 * @param fields
 	 * @return JSCsvFile
@@ -539,7 +554,7 @@ public class JSCsvFile extends JSTextFile {
 	}
 
 	/**
-	 * @brief AddCellValues Eine Liste mit Feldwerten in die Datei übernehmen
+	 * @brief AddCellValues Eine Liste mit Feldwerten in die Datei ï¿½bernehmen
 	 *
 	 * @param fields
 	 * @return JSCsvFile
@@ -554,10 +569,10 @@ public class JSCsvFile extends JSTextFile {
 	/**
 	 * @brief NewLine Abschluss der Zeile
 	 *
-	 * Am Ende einer Zeile (wenn also alle Felder für die Zeile mit Werten
-	 * gefüllt sind) ist diese Methode aufzurufen. Damit wird der bis dahin
+	 * Am Ende einer Zeile (wenn also alle Felder fï¿½r die Zeile mit Werten
+	 * gefï¿½llt sind) ist diese Methode aufzurufen. Damit wird der bis dahin
 	 * gepufferte Satz dann auf die Ausgabe geschrieben und es werden einige
-	 * interne Felder zurückgesetzt.
+	 * interne Felder zurï¿½ckgesetzt.
 	 *
 	 * @return JSCsvFile
 	 * @throws Exception
@@ -577,8 +592,8 @@ public class JSCsvFile extends JSTextFile {
 	 * @brief AddCellValue fuegt dem aktuellen Puffer eine Textzelle hinzu
 	 *
 	 * Der als Parameter uebergebene String wird dem aktuellen Textpuffer
-	 * hinzugefügt. Zwischen den einzelnen Werten im Puffer wird ein Feldtrenner
-	 * (ColumnDelimiter) eingefügt.
+	 * hinzugefï¿½gt. Zwischen den einzelnen Werten im Puffer wird ein Feldtrenner
+	 * (ColumnDelimiter) eingefï¿½gt.
 	 *
 	 * @param pstrS
 	 *            Feldwert
@@ -601,7 +616,7 @@ public class JSCsvFile extends JSTextFile {
 	/**
 	 * @brief MaskSpecialChars - Textbegrenzer einbauen
 	 *
-	 * Hier werden die Textbegrenzer (Standard ist doppelte Anführungszeichen
+	 * Hier werden die Textbegrenzer (Standard ist doppelte Anfï¿½hrungszeichen
 	 * '"'; siehe Option \c ColumnDelimiter) in den Text eingebaut, falls es
 	 * gefordert (Option \c AlwaysSurroundFielJSithQuotes) oder durch den Text
 	 * selbst erforderlich ist.
@@ -609,7 +624,7 @@ public class JSCsvFile extends JSTextFile {
 	 * Beginnt der Text bereits mit dem Textbegrenzer, so werden alle
 	 * Textbegrenzer verdoppelt und der gesamte Text nocheinmal in einfache
 	 * Begrenzer eingeschlossen. Ist der Text leer, werden Textbegrenzer
-	 * eingesetzt, auch dann nicht, wenn über die Option
+	 * eingesetzt, auch dann nicht, wenn ï¿½ber die Option
 	 * AlwaysSurroundFielJSithQuotes welche angefordert worden sind.
 	 *
 	 * @param strT zu modifizierender Text
@@ -662,7 +677,7 @@ public class JSCsvFile extends JSTextFile {
 	 * <method type="smcw" version="1.0"> <name>AlwaysSurroundFielJSithQuotes</name>
 	 * <title>AlwaysSurroundFielJSithQuotes</title> <description> <para>
 	 * AlwaysSurroundFielJSithQuotes </para> <para> Initial-Wert (Default) ist
-	 * "true" (ohne Anführungszeichen). </para> <mandatory>true</mandatory>
+	 * "true" (ohne Anfï¿½hrungszeichen). </para> <mandatory>true</mandatory>
 	 * </description> <params> <param name="param1" type=" "
 	 * ref="byref|byvalue|out" > <para> </para> </param> </params> <keywords>
 	 * <keyword>CSV</keyword> <keyword>Options</keyword> </keywords>
@@ -710,7 +725,7 @@ public class JSCsvFile extends JSTextFile {
 	Ignore Value Delimiter
 	</para>
 	<para>
-	Initial-Wert (Default) ist "false" (ohne Anführungszeichen).
+	Initial-Wert (Default) ist "false" (ohne Anfï¿½hrungszeichen).
 	</para>
 	<mandatory>true</mandatory>
 	</description>

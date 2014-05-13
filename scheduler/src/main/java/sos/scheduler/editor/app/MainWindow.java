@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -118,7 +133,7 @@ public class MainWindow {
 		// container = new TabbedContainer(groupmain);
 		// container = new TabbedContainer(groupmain);
 		sShell.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
-		// TODO: Ausserhalb des Job Editors veränderte Files sollten mit Hilfe einer "Aktualisieren" Funktion neu eingelesen werden können.
+		// TODO: Ausserhalb des Job Editors verï¿½nderte Files sollten mit Hilfe einer "Aktualisieren" Funktion neu eingelesen werden kï¿½nnen.
 		sShell.addShellListener(new ShellListener() {
 			public void shellActivated(ShellEvent event) {
 				shellActivated_();
@@ -811,14 +826,14 @@ public class MainWindow {
         return message(getSShell(), application, message, style);
     }
 	// /**
-	// * Erzeugt einen Confirm-Dialog, wenn der Button zum schließen des Fensters
-	// * betätigt wird.
+	// * Erzeugt einen Confirm-Dialog, wenn der Button zum schlieï¿½en des Fensters
+	// * betï¿½tigt wird.
 	// *
 	// * @see org.eclipse.jface.window.Window#handleShellCloseEvent()
 	// */
 	// @Override
 	// protected void handleShellCloseEvent () {
-	// if (MessageDialog.openConfirm(null, "Bestätigung",
+	// if (MessageDialog.openConfirm(null, "Bestï¿½tigung",
 	// "Wollen Sie das Programm beenden?")) {
 	// super.handleShellCloseEvent();
 	// }
@@ -1183,7 +1198,7 @@ public class MainWindow {
 	}
 
 	/**
-	 * Überprüfen, ob job Chain namen verändert wurden. Wenn ja, dann die job chain note parameter anpassen
+	 * ï¿½berprï¿½fen, ob job Chain namen verï¿½ndert wurden. Wenn ja, dann die job chain note parameter anpassen
 	 * Job Chain Note Parameter
 	 */
 	public void saveJobChainNoteParameter() {
@@ -1212,7 +1227,7 @@ public class MainWindow {
 									+ "Please try later by Hand.", SWT.ICON_WARNING);
 						}
 						else {
-							// Attribute in der config.xml Datei vderändern
+							// Attribute in der config.xml Datei vderï¿½ndern
 						}
 					}
 				}
@@ -1248,7 +1263,7 @@ public class MainWindow {
 							&& sosString.parseToString(container.getCurrentTab().getData("ftp_details_parameter_file")).length() > 0) {
 						// Details Parameter speichern
 						File source = new File(container.getCurrentTab().getData("ftp_details_parameter_file").toString());
-						String remoteDir_ = remoteDir; // remoteDir nicht verändern, da es unten weiterverarbeitet wird
+						String remoteDir_ = remoteDir; // remoteDir nicht verï¿½ndern, da es unten weiterverarbeitet wird
 						remoteDir_ = new File(remoteDir_).getCanonicalPath().endsWith(".xml") ? new File(remoteDir_).getParent() : remoteDir_;
 						remoteDir_ = remoteDir_ != null ? remoteDir_.replaceAll("\\\\", "/") : EMPTY;
 						if (source.exists()) {
@@ -1256,7 +1271,7 @@ public class MainWindow {
 						}
 						container.getCurrentTab().setData("ftp_details_parameter_file", EMPTY);
 						if (sosString.parseToString(container.getCurrentTab().getData("ftp_details_parameter_remove_file")).length() > 0) {
-							// Alte Jobkettenname wurde gelöscht.. Deshalb den alten Job Node Parametern auch löschen.
+							// Alte Jobkettenname wurde gelï¿½scht.. Deshalb den alten Job Node Parametern auch lï¿½schen.
 							String removeOldFilename = container.getCurrentTab().getData("ftp_details_parameter_remove_file").toString();
 							profile.removeFile(remoteDir_ + "/" + removeOldFilename);
 							container.getCurrentTab().setData("ftp_details_parameter_remove_file", EMPTY);
@@ -1266,7 +1281,7 @@ public class MainWindow {
 						String filename = container.getCurrentEditor().getFilename();
 						// if(!new File(remoteDir).getName().equalsIgnoreCase(new File(filename).getName())){
 						if (!new File(remoteDir).getName().equalsIgnoreCase(new File(filename).getName())) {
-							// Attribute "name" wurde geändert: Das bedeutet auch Änderungen der life Datei namen.
+							// Attribute "name" wurde geï¿½ndert: Das bedeutet auch ï¿½nderungen der life Datei namen.
 							profile.removeFile(remoteDir);
 							try {
 								String newName = sosString.parseToString(new File(remoteDir).getParent()) + "/" + new File(filename).getName();
@@ -1335,7 +1350,7 @@ public class MainWindow {
 			if (currdom instanceof SchedulerDom && ((SchedulerDom) currdom).isLifeElement()) {
 				String filename = container.getCurrentEditor().getFilename();
 				if (!new File(remoteDir).getName().equalsIgnoreCase(new File(filename).getName())) {
-					// Attribute "name" wurde geändert: Das bedeutet auch Änderungen der life Datei namen.
+					// Attribute "name" wurde geï¿½ndert: Das bedeutet auch ï¿½nderungen der life Datei namen.
 					webdavListener.removeFile(remoteDir);
 				}
 				remoteDir = remoteDir.substring(0, remoteDir.lastIndexOf("/")) + "/" + new File(filename).getName();
@@ -1478,24 +1493,24 @@ public class MainWindow {
 			DomParser dom = getSpecifiedDom();
 			if (dom.getFilename() != null) {
 				File f = new File(dom.getFilename());
-				ArrayList<File> changeFiles = new ArrayList<File>();// gilt für Hot Folder Dateien, die von einer anderen Process verändert
+				ArrayList<File> changeFiles = new ArrayList<File>();// gilt fï¿½r Hot Folder Dateien, die von einer anderen Process verï¿½ndert
 																	// wurden
 				ArrayList<File> newFFiles = new ArrayList<File>();
 				ArrayList<File> delFFiles = new ArrayList<File>();
 				HashMap<String, Long> hFFiles = new HashMap<String, Long>();
 				// System.out.println("file     = " + dom.getLastModifiedFile());
 				// System.out.println("dom file = " + f.lastModified() );
-				// Hot Folder. Hat sich ein Holt Folder Datei ausserhalb verändert?
+				// Hot Folder. Hat sich ein Holt Folder Datei ausserhalb verï¿½ndert?
 				long lastmod = 0;
 				if (dom.getFilename() != null) {
 					hFFiles = ((SchedulerDom) dom).getHotFolderFiles();
 					if (f.isDirectory()) {
 						ArrayList<File> listOfhotFolderFiles = ((SchedulerDom) dom).getHoltFolderFiles(new File(dom.getFilename()));
-						// wurden Veänderungen ausserhalb durchgeführt
+						// wurden Veï¿½nderungen ausserhalb durchgefï¿½hrt
 						for (int i = 0; i < listOfhotFolderFiles.size(); i++) {
 							File fFile = listOfhotFolderFiles.get(i);
 							try {
-								long current = fFile.lastModified();// aktuelle Änderungs Zeitstempel
+								long current = fFile.lastModified();// aktuelle ï¿½nderungs Zeitstempel
 								if (hFFiles.containsKey(fFile.getName())) {
 									long domc = Long.parseLong((hFFiles.get(fFile.getName()).toString()));// gespeicherte Zeitstempel
 									if (current != domc)
@@ -1520,7 +1535,7 @@ public class MainWindow {
 							}
 							lastmod = lastmod + fFile.lastModified();
 						}
-						// Überprüfen, ob Dateien ausserhalb gelöscht wurden
+						// ï¿½berprï¿½fen, ob Dateien ausserhalb gelï¿½scht wurden
 						Iterator<String> it = hFFiles.keySet().iterator();
 						while (it.hasNext()) {
 							String fName = it.next();
@@ -1595,7 +1610,7 @@ public class MainWindow {
 										pe.addContent((Element) n.clone());
 									}
 								}
-								// Es wurden ausserhalb vom Editor neue Hot Folder dateien hinzugefügt. In diesem Fall soll der Editor
+								// Es wurden ausserhalb vom Editor neue Hot Folder dateien hinzugefï¿½gt. In diesem Fall soll der Editor
 								// aktualisiert werden
 								for (int i = 0; i < newFFiles.size(); i++) {
 									File newHFFile = newFFiles.get(i);
@@ -1635,7 +1650,7 @@ public class MainWindow {
 							}
 							else {
 								if (delFFiles.size() > 0) {
-									// current Tabraiter soll geschlossen werden weil die Kpnfigurationsdatei ausserhalb gelöscht wurden
+									// current Tabraiter soll geschlossen werden weil die Kpnfigurationsdatei ausserhalb gelï¿½scht wurden
 									MainWindow.getContainer().getCurrentTab().dispose();
 									return;
 								}
@@ -1725,9 +1740,9 @@ public class MainWindow {
 			locale = "en_UK", //
 			explanation = "start the open dialog box ..." //
 			), //
-			@I18NMessage(value = "Öffnen", //
+			@I18NMessage(value = "ï¿½ffnen", //
 			locale = "de", //
-			explanation = "Den Dialog für das Öffnen einer Datei starten" //
+			explanation = "Den Dialog fï¿½r das ï¿½ffnen einer Datei starten" //
 			), //
 			@I18NMessage(value = "Open", locale = "es", //
 			explanation = "Open" //
@@ -1967,7 +1982,7 @@ public class MainWindow {
 			), //
 			@I18NMessage(value = "Datei", //
 			locale = "de", //
-			explanation = "Menü der Dateioperationen" //
+			explanation = "Menï¿½ der Dateioperationen" //
 			), //
 			@I18NMessage(value = "File", locale = "es", //
 			explanation = "File" //
@@ -1991,7 +2006,7 @@ public class MainWindow {
 			), //
 			@I18NMessage(value = "Einstellungen", //
 			locale = "de", //
-			explanation = "Einstellungen für JOE " //
+			explanation = "Einstellungen fï¿½r JOE " //
 			), //
 			@I18NMessage(value = "Options", locale = "es", //
 			explanation = "Options" //
@@ -2038,9 +2053,9 @@ public class MainWindow {
 			locale = "en_UK", //
 			explanation = "About" //
 			), //
-			@I18NMessage(value = "Über", //
+			@I18NMessage(value = "ï¿½ber", //
 			locale = "de", //
-			explanation = "Liefert Informationen über ..." //
+			explanation = "Liefert Informationen ï¿½ber ..." //
 			), //
 			@I18NMessage(value = "About", locale = "es", //
 			explanation = "About" //
@@ -2063,7 +2078,7 @@ public class MainWindow {
 	// locale = "en_UK", //
 	// explanation = "Reset Dialog" //
 	// ), //
-	// @I18NMessage(value = "Einstellung zurücksetzen", //
+	// @I18NMessage(value = "Einstellung zurï¿½cksetzen", //
 	// locale = "de", //
 	// explanation = "JOE wird neu initialisiert. Die Einstellungen werden neu geladen" //
 	// ), //

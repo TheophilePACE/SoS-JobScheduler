@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -102,8 +117,8 @@ import com.sos.localization.Messages;
 *
 * \section TestData Eine Hilfe zum Erzeugen einer HashMap mit Testdaten
 *
-* Die folgenden Methode kann verwendet werden, um für einen Test eine HashMap
-* mit sinnvollen Werten für die einzelnen Optionen zu erzeugen.
+* Die folgenden Methode kann verwendet werden, um fï¿½r einen Test eine HashMap
+* mit sinnvollen Werten fï¿½r die einzelnen Optionen zu erzeugen.
 *
 * \verbatim
 private HashMap <String, String> SetJobSchedulerSSHJobOptions (HashMap <String, String> pobjHM) {
@@ -2726,14 +2741,14 @@ public abstract class SOSFtpOptionsSuperClass extends JSOptionsClass implements 
 	}
 
 	/**
-	* \var banner_footer : Name der Template-Datei für Protokoll-Ende This p
+	* \var banner_footer : Name der Template-Datei fï¿½r Protokoll-Ende This p
 	*
 	This program logs output to stdout or to a file that has been specified by the parameter log_filename. A template can be used in order to organize the output that is created. The output is grouped into header, file list and footer. This parameter specifies a template file for footer output. Templates can use internal variables and parameters as placeholders in the form %{placeholder}. The standard footer template looks like this: ************************************************************************* execution status = %{status} successful transfers = %{successful_transfers} failed transfers = %{failed_transfers} last error = %{last_error} *************************************************************************
 	*
 	*/
-	@JSOptionDefinition(name = "banner_footer", description = "Name der Template-Datei für Protokoll-Ende This p", key = "banner_footer", type = "SOSOptionInFileName", mandatory = false)
+	@JSOptionDefinition(name = "banner_footer", description = "Name der Template-Datei fï¿½r Protokoll-Ende This p", key = "banner_footer", type = "SOSOptionInFileName", mandatory = false)
 	public SOSOptionInFileName	banner_footer	= new SOSOptionInFileName(this, conClassName + ".banner_footer", // HashMap-Key
-														"Name der Template-Datei für Protokoll-Ende This p", // Titel
+														"Name der Template-Datei fï¿½r Protokoll-Ende This p", // Titel
 														"", // InitValue
 														"", // DefaultValue
 														false // isMandatory

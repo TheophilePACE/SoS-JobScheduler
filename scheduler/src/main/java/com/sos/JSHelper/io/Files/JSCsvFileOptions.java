@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -35,15 +50,15 @@ package com.sos.JSHelper.io.Files;
 /**
 * \class JSCsvFileOptions
 *
-* \brief JSCsvFileOptions - Optionen-Klasse für einen CSV-File
+* \brief JSCsvFileOptions - Optionen-Klasse fï¿½r einen CSV-File
 *
 * \details
-* Optionen-Klasse für einen CSV-File
+* Optionen-Klasse fï¿½r einen CSV-File
 *
 * \section JSCsvFileOptions.intro_sec Introduction
 *
-* Diese Klasse repräsentiert alle Optionen (auch Settings oder Parameter genannt), die für die Bearbeitung
-* einer CSV-Datei benötigt werden.
+* Diese Klasse reprï¿½sentiert alle Optionen (auch Settings oder Parameter genannt), die fï¿½r die Bearbeitung
+* einer CSV-Datei benï¿½tigt werden.
 *
 * \section JSCsvFileOptions.samples Some Samples
 *
@@ -78,7 +93,7 @@ public class JSCsvFileOptions extends JSOptionsClass {
 	private final String	conDelimiterSettingsKey				= conClassName + ".Delimiter";
 	private final String	conCSVColumnDelimiterSettingsKey	= conClassName + ".CSVColumnDelimiter";
 
-	/** \var boolean SkipFirstLine: Erste Zeile als Überschrift interpretieren und überlesen */
+	/** \var boolean SkipFirstLine: Erste Zeile als ï¿½berschrift interpretieren und ï¿½berlesen */
 	private boolean			flgSkipFirstLine					= true;
 	private final String	conSkipFirstLineSettingsKey			= conClassName + ".Skip_First_Line";
 
@@ -92,10 +107,10 @@ public class JSCsvFileOptions extends JSOptionsClass {
 		<constructor type="smcw" version="1.0">
 		<classname>JSCsvFileOptions</classname>
 		<name></name>
-		<title>Optionen für CSV-Files</title>
+		<title>Optionen fï¿½r CSV-Files</title>
 		<description>
 		<para>
-		Optionen für CSV-Files
+		Optionen fï¿½r CSV-Files
 		</para>
 		</description>
 		<params>
@@ -174,7 +189,7 @@ public class JSCsvFileOptions extends JSOptionsClass {
 		String strT = conClassName + "\n";
 
 		strT += "Delimiter      Feld-Trennzeichen : " + this.Delimiter() + "\n";
-		strT += "SkipFirstLine  Erste Zeile als Überschrift interpretieren und überlesen : " + this.SkipFirstLine() + "\n";
+		strT += "SkipFirstLine  Erste Zeile als ï¿½berschrift interpretieren und ï¿½berlesen : " + this.SkipFirstLine() + "\n";
 		strT += "IgnoreValueDelimiter Ignore Value Delimiter : " + this.IgnoreValueDelimiter() + "\n";
 
 		return strT;
@@ -224,7 +239,7 @@ public class JSCsvFileOptions extends JSOptionsClass {
 	Feld-Trennzeichen
 	</para>
 	<para>
-	Initial-Wert (Default) ist "254" (ohne Anführungszeichen).
+	Initial-Wert (Default) ist "254" (ohne Anfï¿½hrungszeichen).
 	</para>
 	<mandatory>true</mandatory>
 	</description>
@@ -299,10 +314,10 @@ public class JSCsvFileOptions extends JSOptionsClass {
 	} // public void Delimiter(String pstrDelimiter)
 
 	/*!
-	 * \brief SkipFirstLine - Erste Zeile der Dateials Überschrift interpretieren und überlesen
+	 * \brief SkipFirstLine - Erste Zeile der Dateials ï¿½berschrift interpretieren und ï¿½berlesen
 	 *
 	 * \details
-	 * Getter: Erste Zeile als Überschrift interpretieren und überlesen
+	 * Getter: Erste Zeile als ï¿½berschrift interpretieren und ï¿½berlesen
 	 *
 	 * Example:
 	 *
@@ -315,10 +330,10 @@ public class JSCsvFileOptions extends JSOptionsClass {
 	} // boolean SkipFirstLine()
 
 	/*!
-	 * \brief SkipFirstLine - Erste Zeile als Überschrift interpretieren und überlesen
+	 * \brief SkipFirstLine - Erste Zeile als ï¿½berschrift interpretieren und ï¿½berlesen
 	 *
 	 * \details
-	 * Setter: Erste Zeile als Überschrift interpretieren und überlesen
+	 * Setter: Erste Zeile als ï¿½berschrift interpretieren und ï¿½berlesen
 	 *
 	 * @param pflgSkipFirstLine: The boolean SkipFirstLine to set.
 	 */

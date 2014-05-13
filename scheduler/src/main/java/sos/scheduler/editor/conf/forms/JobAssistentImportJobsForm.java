@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -95,28 +110,28 @@ import com.swtdesigner.SWTResourceManager;
  * Die Kriterien stehen in der Job Dokumentation.
  * Das bedeutet alle Job Dokumentationen aus der Verzeichnis <SCHEDULER_DATA>/jobs/*.xml werden parsiert.
  *
- * Folgen Funktionen können hier ausgeführt werden:
+ * Folgen Funktionen kï¿½nnen hier ausgefï¿½hrt werden:
  *
  *
  * show:
- * 		zeigt den Job mit den Informationen aus der ausgewählten Jobdokumentation aus der Liste im seperaten Fenster als XML.
+ * 		zeigt den Job mit den Informationen aus der ausgewï¿½hlten Jobdokumentation aus der Liste im seperaten Fenster als XML.
  *
  * next:
- * 		geht in das nächste Wizzard Formular Parameter.
- * 		Hier werden alle Parameter der ausgewählten Jobdokumentation aus der Liste übergeben.
+ * 		geht in das nï¿½chste Wizzard Formular Parameter.
+ * 		Hier werden alle Parameter der ausgewï¿½hlten Jobdokumentation aus der Liste ï¿½bergeben.
  *
  * finish:
- * 		Generiert einen Job. Übernimmt die Einstellungen der ausgewählten Job aus der Liste.
- *      Alle Defaulteinstellungen des Jobs werden hier mit übernommen.
+ * 		Generiert einen Job. ï¿½bernimmt die Einstellungen der ausgewï¿½hlten Job aus der Liste.
+ *      Alle Defaulteinstellungen des Jobs werden hier mit ï¿½bernommen.
  *
  * Help Button:
- * 		Öffnet einen Dialog mit Hilfetext
+ * 		ï¿½ffnet einen Dialog mit Hilfetext
  *
  * Description:
- * 		Öffnet einen neuen IE mit der ausgewählten JobDocumentation
+ * 		ï¿½ffnet einen neuen IE mit der ausgewï¿½hlten JobDocumentation
  *
  * Back:
- * 		geht einen Formular zurück
+ * 		geht einen Formular zurï¿½ck
  *
  * Cancel:
  * 		beendet den Wizzard
@@ -162,8 +177,8 @@ public class JobAssistentImportJobsForm {
 	private ScriptJobMainForm										jobForm				= null;
 	private sos.scheduler.editor.conf.listeners.ParameterListener	paramListener		= null;
 	private Text													refreshDetailsText	= null;
-	/** Hilfsvariable für das Schliessen des Dialogs.
-	 * Das wird gebraucht wenn das Dialog über den "X"-Botten (oben rechts vom Dialog) geschlossen wird .*/
+	/** Hilfsvariable fï¿½r das Schliessen des Dialogs.
+	 * Das wird gebraucht wenn das Dialog ï¿½ber den "X"-Botten (oben rechts vom Dialog) geschlossen wird .*/
 	private boolean													closeDialog			= false;
 	private boolean													flagBackUpJob		= true;
 	private final JobDocumentationForm									jobDocForm			= null;
@@ -337,7 +352,7 @@ public class JobAssistentImportJobsForm {
 					}
 				}
 				catch (Exception e) {
-					// Damit die nächste Datei verarbeitet wird, hier keine weitere Behandlung. Kaputte Dateien sind uns egal.
+					// Damit die nï¿½chste Datei verarbeitet wird, hier keine weitere Behandlung. Kaputte Dateien sind uns egal.
 				}
 			}
 		}
@@ -529,7 +544,7 @@ public class JobAssistentImportJobsForm {
 					Element job = null;
 					if (flagBackUpJob) {
 						if (assistentType == Editor.JOB_WIZARD) {
-							// Starten des Wizzards für bestehenden Job. Die Einstzellungen im Jobbeschreibungen mergen mit backUpJob wenn
+							// Starten des Wizzards fï¿½r bestehenden Job. Die Einstzellungen im Jobbeschreibungen mergen mit backUpJob wenn
 							// assistentype = Editor.Job_Wizzard
 							Element currJob = (Element) joblistener.getJob().clone();
 							job = listener.createJobElement(attr, currJob);
@@ -568,7 +583,7 @@ public class JobAssistentImportJobsForm {
 							// ArrayList listOfParams = defaultParams.parseDocuments(txtPath.getText(), "required");
 							// h.put("params", listOfParams);
 							if (assistentType == Editor.JOB_WIZARD) {
-								// Starten des Wizzards für bestehenden Job. Die Einstzellungen im Jobbeschreibungen mergen mit backUpJob
+								// Starten des Wizzards fï¿½r bestehenden Job. Die Einstzellungen im Jobbeschreibungen mergen mit backUpJob
 								// wenn
 								// assistentype = Editor.Job_Wizzard
 								Element job = joblistener.getJob();
@@ -581,7 +596,7 @@ public class JobAssistentImportJobsForm {
 							}
 							else
 								if (assistentType == Editor.PARAMETER) {
-									// Starten des Wizzards für bestehenden Job. Die Einstzellungen im Jobbeschreibungen mergen mit
+									// Starten des Wizzards fï¿½r bestehenden Job. Die Einstzellungen im Jobbeschreibungen mergen mit
 									// backUpJob
 									// wenn assistentype = Editor.Job_Wizzard
 									// joblistener.getJob().setContent(listener.createJobElement(h, joblistener.getJob()).cloneContent());
@@ -613,7 +628,7 @@ public class JobAssistentImportJobsForm {
 										Utils.showClipboard(Utils.getElementAsString(job), shell, false, null, false, null, true);
 								}
 							closeDialog = true;
-							// Event auslösen
+							// Event auslï¿½sen
 							if (refreshDetailsText != null)
 								refreshDetailsText.setText("X");
 							shell.dispose();
@@ -688,7 +703,7 @@ public class JobAssistentImportJobsForm {
 								}
 							}
 							else {
-								// der backUpJob wurde nicht verändert
+								// der backUpJob wurde nicht verï¿½ndert
 								job = joblistener.getJob().setContent(jobBackUp.cloneContent());
 							}
 							if (job == null) {
@@ -844,7 +859,7 @@ public class JobAssistentImportJobsForm {
 		    tree.removeAll();
 
 			final TreeItem newItemTreeItem_ = new TreeItem(tree, SWT.NONE);
-//          ermöglicht das Starten des Wizards ohne vorhandene Jobbeschreibung
+//          ermï¿½glicht das Starten des Wizards ohne vorhandene Jobbeschreibung
 /*            newItemTreeItem_.setText(0, SOSJOEMessageCodes.JOE_M_JobAssistent_NoJobDoc.label());
 			newItemTreeItem_.setText(1, "..");
 			newItemTreeItem_.setText(2, "..");
@@ -1111,8 +1126,8 @@ public class JobAssistentImportJobsForm {
 	}
 
 	/**
-	 * Der Wizzard wurde für ein bestehende Job gestartet.
-	 * Beim verlassen der Wizzard ohne Speichern, muss der bestehende Job ohne Änderungen wieder zurückgesetz werden.
+	 * Der Wizzard wurde fï¿½r ein bestehende Job gestartet.
+	 * Beim verlassen der Wizzard ohne Speichern, muss der bestehende Job ohne ï¿½nderungen wieder zurï¿½ckgesetz werden.
 	 * @param backUpJob
 	 */
 	public void setBackUpJob(final Element backUpJob, final ScriptJobMainForm jobForm_) {
@@ -1162,7 +1177,7 @@ public class JobAssistentImportJobsForm {
 	}
 
 	// Details hat einen anderen Aufbau der Parameter Description.
-	// Beim generieren der Parameter mit Wizzard müssen die Parameterdescriptchen anders aufgebaut werden.
+	// Beim generieren der Parameter mit Wizzard mï¿½ssen die Parameterdescriptchen anders aufgebaut werden.
 	public void setDetailsRefresh(final Text refreshDetailsText_) {
 		refreshDetailsText = refreshDetailsText_;
 	}

@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -57,7 +72,7 @@ import java.util.TimeZone;
  */
 public  class SOSCertificate { 
 
-    /** ausgestellt für */
+    /** ausgestellt fï¿½r */
     private static String subjectDN = "O=APL/SOS,C=DE";
 
     /** ausgestellt von CN=Robert Ehrlich,C=DE,O=APL/SOS */
@@ -134,7 +149,7 @@ public  class SOSCertificate {
 
             v3CertGen.setSerialNumber(SOSCertificate.serialNumber);
 
-            // ausgestellt für
+            // ausgestellt fï¿½r
             v3CertGen.setIssuerDN(new org.bouncycastle.asn1.x509.X509Name(
                     SOSCertificate.issuerDN));
             //      ausgestellt von
@@ -142,9 +157,9 @@ public  class SOSCertificate {
             v3CertGen.setSubjectDN(new org.bouncycastle.asn1.x509.X509Name(
                     SOSCertificate.subjectDN));
 
-            // gültig ab
+            // gï¿½ltig ab
             v3CertGen.setNotBefore(SOSCertificate.validFrom);
-            //gültig bis
+            //gï¿½ltig bis
             v3CertGen.setNotAfter(SOSCertificate.validTo);
 
             v3CertGen.setPublicKey(publicKey);
@@ -454,7 +469,7 @@ public  class SOSCertificate {
             //OU,DC=com
             // ohne CN bei SubjectDN - zeigt Signed by Unknown
             
-            // ausgestellt für
+            // ausgestellt fï¿½r
             //SOSCertificate.setSubjectDN("CN=Robert Ehrlich,C=DE,O=APL/SOS");
             // wenn sich subject von issuer unterscheiden dann ...
             SOSCertificate.setSubjectDN("CN=Andreas Liebert,C=DE,O=APL/SOS");

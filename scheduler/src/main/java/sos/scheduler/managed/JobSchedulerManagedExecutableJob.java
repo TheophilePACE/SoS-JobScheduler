@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -44,13 +59,13 @@ import sos.spooler.Variable_set;
  * 
  * order parameters:
  * ignore_error (optional): bei true werden Fehler des executables ignoriert
- * ignore_signal (optional): bei true werden Rückgabesignale des executables ignoriert
+ * ignore_signal (optional): bei true werden Rï¿½ckgabesignale des executables ignoriert
  * ignore_stderr (optional): bei true werden Zeichen in stdout nicht als Fehler behandelt
- * timeout (optional): timeout für die Ausführung des executables in Sekunden
+ * timeout (optional): timeout fï¿½r die Ausfï¿½hrung des executables in Sekunden
  * log_file (optional): Der Scheduler nimmt nach Beenden des Subprozesses den Inhalt
  * dieser Datei in sein Protokoll
  * 
- * environment variablen können über parameter mit dem Präfix env. gesetzt werden, z.B.:
+ * environment variablen kï¿½nnen ï¿½ber parameter mit dem Prï¿½fix env. gesetzt werden, z.B.:
  * env.LD_LIBRARY_PATH
  * 
  * @author andreas.pueschel@sos-berlin.com
@@ -223,12 +238,12 @@ public class JobSchedulerManagedExecutableJob extends JobSchedulerManagedJob {
 			}*/
 
 			// replace job-specific placeholders
-			command = command.replaceAll("(\\$|§)\\{scheduler_order_job_name\\}", this.getJobName());
-			command = command.replaceAll("(\\$|§)\\{scheduler_order_job_id\\}", Integer.toString(this.getJobId()));
-			command = command.replaceAll("(\\$|§)\\{scheduler_id\\}", spooler.id());
+			command = command.replaceAll("(\\$|ï¿½)\\{scheduler_order_job_name\\}", this.getJobName());
+			command = command.replaceAll("(\\$|ï¿½)\\{scheduler_order_job_id\\}", Integer.toString(this.getJobId()));
+			command = command.replaceAll("(\\$|ï¿½)\\{scheduler_id\\}", spooler.id());
 			if (orderJob)
 				if (order != null) {
-				    command = command.replaceAll("(\\$|§)\\{scheduler_order_id\\}", order.id());
+				    command = command.replaceAll("(\\$|ï¿½)\\{scheduler_order_id\\}", order.id());
 				}
 
 			// replace parameters

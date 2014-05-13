@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -40,7 +55,7 @@ package sos.settings;
  * @author <a href="mailto:ghassan.beydoun@sos-berlin.com">Ghassan Beydoun</a>
  * @resource sos.util.jar
  * @version $Id: SOSProfileSettings.java,v 1.1.1.1 2003/09/23 11:48:15 gb Exp $
- * @author <a href="mailto:andreas.pueschel@sos-berlin.com">Andreas Püschel</a>
+ * @author <a href="mailto:andreas.pueschel@sos-berlin.com">Andreas Pï¿½schel</a>
  * @since 2005-01-25
  * @version 1.1
  */
@@ -73,7 +88,7 @@ public class SOSProfileSettings extends sos.settings.SOSSettings {
 	/** stellt sections in der INI-Datei dar */
 	private ArrayList				sections		= new ArrayList();
 
-	/** stellt alle Einträge in der INI-Datei dar */
+	/** stellt alle Eintrï¿½ge in der INI-Datei dar */
 	private Properties				entries			= new Properties();
 
 	/** Feldnamen in Kleinschreibung (default) */
@@ -231,9 +246,9 @@ public class SOSProfileSettings extends sos.settings.SOSSettings {
 	}
 
 	/**
-	 * Liefert alle Einträge der eingegebenen Sektion zurück.
+	 * Liefert alle Eintrï¿½ge der eingegebenen Sektion zurï¿½ck.
 	 *
-	 * @return Properties Objekt, das alle Einträge der Sektion darstellt.
+	 * @return Properties Objekt, das alle Eintrï¿½ge der Sektion darstellt.
 	 * @throws java.lang.Exception
 	 * @see #getSection( String )
 	 */
@@ -258,9 +273,9 @@ public class SOSProfileSettings extends sos.settings.SOSSettings {
 	}
 
 	/**
-	 * Liefert alle Einträge einer Sektion zurück.
+	 * Liefert alle Eintrï¿½ge einer Sektion zurï¿½ck.
 	 *
-	 * @return Properties Objekt, das alle Einträge der Sektion darstellt.
+	 * @return Properties Objekt, das alle Eintrï¿½ge der Sektion darstellt.
 	 * @exception Exception
 	 * @see #getSection( String )
 	 */
@@ -274,9 +289,9 @@ public class SOSProfileSettings extends sos.settings.SOSSettings {
 	}
 
 	/**
-	 * Liefert alle Einträge einer Sektion zurück.
+	 * Liefert alle Eintrï¿½ge einer Sektion zurï¿½ck.
 	 *
-	 * @return Properties Objekt, das alle Einträge der Sektion darstellt.
+	 * @return Properties Objekt, das alle Eintrï¿½ge der Sektion darstellt.
 	 * @exception Exception
 	 * @see #getSection( String )
 	 */
@@ -290,7 +305,7 @@ public class SOSProfileSettings extends sos.settings.SOSSettings {
 	}
 
 	/**
-	 * Liefert alle Sektionen einer Anwendung zurück
+	 * Liefert alle Sektionen einer Anwendung zurï¿½ck
 	 *
 	 * @return ArrayList die alle Sektionen beinhaltet
 	 * @throws java.lang.Exception
@@ -300,7 +315,7 @@ public class SOSProfileSettings extends sos.settings.SOSSettings {
 	}
 
 	/**
-	 * Liefert nach Inkrementierung den Wert der eingegebenen Variable zurück.
+	 * Liefert nach Inkrementierung den Wert der eingegebenen Variable zurï¿½ck.
 	 *
 	 * @param section Name des Sektions
 	 * @param entry Name des Eintrags

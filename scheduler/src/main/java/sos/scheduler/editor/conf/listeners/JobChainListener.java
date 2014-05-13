@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -93,7 +108,7 @@ public class JobChainListener {
 
 		String oldjobChainName = Utils.getAttributeValue("name", _chain);
 
-		//Für job_chain node Parameter
+		//Fï¿½r job_chain node Parameter
 		if (_chain != null && _dom.getFilename() != null) {
 			org.eclipse.swt.custom.CTabItem currentTab = MainWindow.getContainer().getCurrentTab();
 
@@ -113,7 +128,7 @@ public class JobChainListener {
 					currentTab.setData("details_parameter", h);
 
 				}
-				//für das Speicher per FTP
+				//fï¿½r das Speicher per FTP
 				String filename = _dom.isLifeElement() ? new File(_dom.getFilename()).getParent() : _dom.getFilename();
 				currentTab.setData("ftp_details_parameter_file", filename + "/" + name + ".config.xml");
 				if (oldjobChainName != null && oldjobChainName.length() > 0 && new File(filename + "/" + oldjobChainName + ".config.xml").exists()) {
@@ -457,12 +472,12 @@ public class JobChainListener {
 		try {
 			Element node = null;
 
-			if (_node != null) {//Wenn der Knotentyp geändert wird, alten löschen und einen neuen anlegen.
+			if (_node != null) {//Wenn der Knotentyp geï¿½ndert wird, alten lï¿½schen und einen neuen anlegen.
 				//System.out.println("node != null, old state=" + Utils.getAttributeValue("state", _node) + ", new state=" + state);
 				String oldState = Utils.getAttributeValue("state", _node);
 
 				if (oldState != null && state != null && !oldState.equals(state)) {
-					//state hat sicg geändert. ggf die Details state auch ändern
+					//state hat sicg geï¿½ndert. ggf die Details state auch ï¿½ndern
 					DetailsListener.changeDetailsState(oldState, state, Utils.getAttributeValue("name", _chain), _dom);
 				}
 
@@ -605,7 +620,7 @@ public class JobChainListener {
 
 			List l = _chain.getContent();
 			int cIndex = -1;
-			boolean found = false;//Hilfsvariabkle für down
+			boolean found = false;//Hilfsvariabkle fï¿½r down
 			for (int i = 0; i < _chain.getContentSize(); i++) {
 				if (l.get(i) instanceof Element) {
 					Element elem_ = (Element) l.get(i);

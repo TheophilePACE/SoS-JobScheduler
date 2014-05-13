@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -53,7 +68,7 @@ import com.sos.localization.Messages;
  * \brief JSToolBox - Klasse mit kleinen Helferleins
  *
  * \details
- * Diese Klasse ist immer als SuperKlasse zu verwenden und stellt eine Reihe von Methoden bereit, die immer wieder benötigt werden
+ * Diese Klasse ist immer als SuperKlasse zu verwenden und stellt eine Reihe von Methoden bereit, die immer wieder benï¿½tigt werden
  *
  * \section JSToolBox_intro_sec Introduction
  *
@@ -356,7 +371,7 @@ public class JSToolBox extends JSListenerClass {
 	/**
 	 * \brief Liefert einen Zeitstempel in der Form YYYY-MM-DDTHH:MM:SS
 	 *
-	 * Für ein anzugebendes Datum und eine anzugebende Uhrzeit wird ein Zeitstempel im
+	 * Fï¿½r ein anzugebendes Datum und eine anzugebende Uhrzeit wird ein Zeitstempel im
 	 * ISO-Datumsformat geliefert.
 	 *
 	 * \return String - YYYY-MM-DDTHH:MM:SS
@@ -550,11 +565,11 @@ public class JSToolBox extends JSListenerClass {
 	 * @brief Helperfunktion - liefert true, wenn String weder null noch leer
 	 *
 	 * \details
-	 * StringObjekt auf null/empty prüfen
+	 * StringObjekt auf null/empty prï¿½fen
 	 *
-	 * @param pstrValue zu prüfendes Stringobjekt
+	 * @param pstrValue zu prï¿½fendes Stringobjekt
 	 *
-	 * @return boolean true, wenn String sinnvollen Wert enthält.
+	 * @return boolean true, wenn String sinnvollen Wert enthï¿½lt.
 	 */
 
 	public boolean isNotEmpty(final String pstrValue) {
@@ -575,7 +590,7 @@ public class JSToolBox extends JSListenerClass {
 	/**
 	 * \brief Helperfunktion - liefert true, wenn String null oder leer ist
 	 *
-	 * StringObjekt auf null/empty prüfen
+	 * StringObjekt auf null/empty prï¿½fen
 	 *
 	 * \return boolean
 	 *

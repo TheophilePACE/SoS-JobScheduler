@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -399,7 +414,7 @@ public class SOSFileList extends SOSVfsMessageCodes {
 		return null;
 	} // private SOSFileListEntry Find
 
-	// TODO Diese Methoden müssen in die SOSFileListEntry-Klasse, da sie nicht unmittelbar etwas mit FTP zu tun haben (Die FileListKlasse
+	// TODO Diese Methoden mï¿½ssen in die SOSFileListEntry-Klasse, da sie nicht unmittelbar etwas mit FTP zu tun haben (Die FileListKlasse
 	// wird auch noch an anderen Stellen verwendet als nur in dieser Klasse).
 	//	public void sendMails() throws Exception {
 	//		// if (zeroByteCount > 0 && fileZeroByteNotificationTo != null && fileZeroByteNotificationTo.length() > 0) {
@@ -422,7 +437,7 @@ public class SOSFileList extends SOSVfsMessageCodes {
 	} // private int getZeroByteCount
 
 	/**
-	 * Erst wenn alle Dateien erfolgreich transferieriert wurden, dann sollen die lokalen Dateien gelöscht werden.
+	 * Erst wenn alle Dateien erfolgreich transferieriert wurden, dann sollen die lokalen Dateien gelï¿½scht werden.
 	 * Parameter = objOptions.transactional.value() = yes und remove_files=yes
 	 * @throws Exception
 	 */
@@ -657,7 +672,7 @@ public class SOSFileList extends SOSVfsMessageCodes {
 		// TODO check out, on which stage the process was aborted. Example: 1) source2target, 2)
 		// renameAtomic, 3) DeleteSource, 4) deleteOnly, 5) renameOnly
 
-		// TODO löschen der Dateien mit Atomic-Prefix und -Suffix auf dem Target
+		// TODO lï¿½schen der Dateien mit Atomic-Prefix und -Suffix auf dem Target
 		if (objOptions.isAtomicTransfer()) {
 			for (SOSFileListEntry objListItem : objFileListEntries) {
 				String strAtomicFileName = objListItem.getAtomicFileName();

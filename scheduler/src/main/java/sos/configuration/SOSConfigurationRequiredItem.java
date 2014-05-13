@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -57,10 +72,10 @@ public class SOSConfigurationRequiredItem {
 	/** sos.xml.SOSXMLXPath Object */
 	private SOSXMLXPath		xPath									= null;
 
-	/** Hilfsvariable für Messages*/
+	/** Hilfsvariable fï¿½r Messages*/
 	private String			msgUnknownParameter						= "";
 
-	/** Liste der zu überprüfende Ids. Siehe Pfad in der XML ->
+	/** Liste der zu ï¿½berprï¿½fende Ids. Siehe Pfad in der XML ->
 	 * <Configurations>
 	 * 	<items>
 	 * 		<!-- Folgende Parameter kennt SOSFTP -->
@@ -71,7 +86,7 @@ public class SOSConfigurationRequiredItem {
 	 * ...
 	 * </items>
 	 * ...
-	 * <!-- überprüfen der Abhängigkeiten mit Hilfe der boolean Operationen wie and und or-->
+	 * <!-- ï¿½berprï¿½fen der Abhï¿½ngigkeiten mit Hilfe der boolean Operationen wie and und or-->
 	 * 	<checkParameter>
 	 * 		<check checkId="settings_and_profile_id" bool_operation="and">
 	 * 			<item itemId="settings_id"/>
@@ -82,8 +97,8 @@ public class SOSConfigurationRequiredItem {
 	 * */
 	private ArrayList		checkIds								= null;
 
-	/** Hilfsvariable für das schnelle zugreifen der einzelnen ConfigurationItem Objekte 
-	 * über den ItemId */
+	/** Hilfsvariable fï¿½r das schnelle zugreifen der einzelnen ConfigurationItem Objekte 
+	 * ï¿½ber den ItemId */
 	private HashMap			quickConfigurationsItem					= null;
 
 	/** sos.logger.SOSLogger Objekt*/
@@ -94,7 +109,7 @@ public class SOSConfigurationRequiredItem {
 
 	/** Sind Parameternamen erlaubt die nicht in der Konfigurationsdatei vorkommen?
 	 * 
-	 * //Configurations/items[@check_params_names='yes'] -> Es dürfen nur die Parameternamen vorkommen werden,
+	 * //Configurations/items[@check_params_names='yes'] -> Es dï¿½rfen nur die Parameternamen vorkommen werden,
 	 * die in der Konfigurations datei definiert sind.
 	 * 
 	 * */
@@ -141,14 +156,14 @@ public class SOSConfigurationRequiredItem {
 	}
 
 	/**
-	 * Folgende Überprüfungen finden statt:
+	 * Folgende ï¿½berprï¿½fungen finden statt:
 	 * 
 	 * 0.   Sollen Parameternamen, die nicht in der Configurations.xml vorkommen erlaubt sein?
 	 * a.	Existiert diese Parametername in der Configuration.xml 
-	 * b.	Ist der Parameterwert gültig
-	 * c.	Alle abhängigen Parameter, die keinen Wert haben werden ggf. mit Defaultwerten besetzt
-	 * d.	Muss dieser Parameter in Abhängigkeit zu einem anderen Parameter vorkommen (booleische Ausdruck)
-	 * e.	Existieren zu dieser Parameter andere abhängige Parameter. Wenn ja wiederhole für jeden Parameter ab 2a.
+	 * b.	Ist der Parameterwert gï¿½ltig
+	 * c.	Alle abhï¿½ngigen Parameter, die keinen Wert haben werden ggf. mit Defaultwerten besetzt
+	 * d.	Muss dieser Parameter in Abhï¿½ngigkeit zu einem anderen Parameter vorkommen (booleische Ausdruck)
+	 * e.	Existieren zu dieser Parameter andere abhï¿½ngige Parameter. Wenn ja wiederhole fï¿½r jeden Parameter ab 2a.
 	 * 
 	 *  
 	 * @param configurationItem
@@ -167,7 +182,7 @@ public class SOSConfigurationRequiredItem {
 //				getLogger().debug("created xml-Document (SOSXMLXPath)");
 			}
 
-			allowOtherParamsNames = true; /* checkParameterNames(configurationItem); */ // sollen Parameternamen überprüft werden
+			allowOtherParamsNames = true; /* checkParameterNames(configurationItem); */ // sollen Parameternamen ï¿½berprï¿½ft werden
 
 			for (int i = 0; i < configurationItem.length; i++) {
 				String name = configurationItem[i].getName();
@@ -189,7 +204,7 @@ public class SOSConfigurationRequiredItem {
 
 //			configurationItem = checkParameters(configurationItem);
 
-			// überprüft die abhängigkeit. Falls ein ConfigurationItem nicht existiert, dann wird ggf. dieser mit default_wert ersetzt
+			// ï¿½berprï¿½ft die abhï¿½ngigkeit. Falls ein ConfigurationItem nicht existiert, dann wird ggf. dieser mit default_wert ersetzt
 //			configurationItem = checkdependencies(configurationItem);
 
 //			checkRequiredItem();
@@ -207,7 +222,7 @@ public class SOSConfigurationRequiredItem {
 	}
 
 	/**
-	 * Abhängige Parameter überprüfen
+	 * Abhï¿½ngige Parameter ï¿½berprï¿½fen
 	 * 
 	 * <dependencies>
 	 * 		<item refId="operation_id">
@@ -241,10 +256,10 @@ public class SOSConfigurationRequiredItem {
 					Node child = list.item(j);
 					org.w3c.dom.NamedNodeMap cAtr = child.getAttributes();
 					for (int k = 0; k < cAtr.getLength(); k++) {
-						// getLogger().debug9(k + "'te ahhängige attribut : " + cAtr.item(k));
+						// getLogger().debug9(k + "'te ahhï¿½ngige attribut : " + cAtr.item(k));
 						String depItem = cAtr.item(k).getNodeValue();
 						boolean missingparam = false;
-						// --> Überprüfe, ob depItem in HashMap vorhanden ist. Wenn nicht nacht Defaults suchen
+						// --> ï¿½berprï¿½fe, ob depItem in HashMap vorhanden ist. Wenn nicht nacht Defaults suchen
 						if (!quickConfigurationsItem.containsKey(depItem)) {
 							SOSConfigurationItem item = getNewConfigurationItem(depItem);
 							if (sosString.parseToString(item.getValue()).trim().length() == 0
@@ -308,7 +323,7 @@ public class SOSConfigurationRequiredItem {
 				for (int i = 0; i < listOfMissingItemWithDefaults.size(); i++) {
 					newconfigurationItem[configurationsItem.length + i] = (SOSConfigurationItem) listOfMissingItemWithDefaults.get(i);
 				}
-				// Überprüfe weil Parameter sich durch die Abhängigkeit verändert haben
+				// ï¿½berprï¿½fe weil Parameter sich durch die Abhï¿½ngigkeit verï¿½ndert haben
 				getLogger().debug("check again, cause new Defaultvalues change the Conditions");
 				newconfigurationItem = check(newconfigurationItem);
 
@@ -378,7 +393,7 @@ public class SOSConfigurationRequiredItem {
 	}
 
 	/**
-	 * Überprüft die Abhängigkeiten der Parameter mit Hilfe der boolischen Ausdrücke
+	 * ï¿½berprï¿½ft die Abhï¿½ngigkeiten der Parameter mit Hilfe der boolischen Ausdrï¿½cke
 	 * 
 	 * entsprechende XML:
 	 * 
@@ -399,7 +414,7 @@ public class SOSConfigurationRequiredItem {
 		String boolStr = "";
 		HashMap values4condition = new HashMap();
 		ArrayList listOfMissingItemWithDefaults = new ArrayList(); // bool Operation kann Parametern haben, die nicht vorhanden sind. In
-																	// diesem fall müssen diese Parameter erstellt und ggf. mit Defaults
+																	// diesem fall mï¿½ssen diese Parameter erstellt und ggf. mit Defaults
 																	// belegt werden
 
 		try {
@@ -447,7 +462,7 @@ public class SOSConfigurationRequiredItem {
 								String newName = sosString.parseToString(newItem.getName());
 								String newValue = sosString.parseToString(newItem.getValue()).trim().length() == 0 ? sosString.parseToString(newItem.getDefaults())
 										: sosString.parseToString(newItem.getValue());
-								if (newValue.length() > 0) {// Neue Items dürfen nur berücksichtigt werden, wenn dieser auch einen Wert
+								if (newValue.length() > 0) {// Neue Items dï¿½rfen nur berï¿½cksichtigt werden, wenn dieser auch einen Wert
 															// haben.
 									listOfMissingItemWithDefaults.add(newItem);
 
@@ -491,16 +506,16 @@ public class SOSConfigurationRequiredItem {
 	}
 
 	/**
-	 * Überprüfen, ob auch Parameternamen erlaubt sind, die nicht in der XML Datei vorkommen.
+	 * ï¿½berprï¿½fen, ob auch Parameternamen erlaubt sind, die nicht in der XML Datei vorkommen.
 	 * 
-	 * Es gibt zwei Möglichkeiten das zu überprüfen:
+	 * Es gibt zwei Mï¿½glichkeiten das zu ï¿½berprï¿½fen:
 	 * 
-	 * 1. Wird als Parameter übergeben; SOSConfigurationItem[] configurationItem enthält einen Parametername = check_params_names=yes oder no  
+	 * 1. Wird als Parameter ï¿½bergeben; SOSConfigurationItem[] configurationItem enthï¿½lt einen Parametername = check_params_names=yes oder no  
 	 * 2. Im Meta Datei wie
 	 * 
 	 * <Configurations>
-	 * 	  <!-- Das Attribut check_params_names="no" ermöglich das auch weitere Parametername ohne Überprüfung akzeptiert werden. -->
-	 *    <!-- Wenn das Attribut check_params_names="yes" ist, dann dürfen nur die Parameter weiter übergeben werden, wenn       -->
+	 * 	  <!-- Das Attribut check_params_names="no" ermï¿½glich das auch weitere Parametername ohne ï¿½berprï¿½fung akzeptiert werden. -->
+	 *    <!-- Wenn das Attribut check_params_names="yes" ist, dann dï¿½rfen nur die Parameter weiter ï¿½bergeben werden, wenn       -->
 	 *    <!-- dieser in dieser XML Meta Datei vorkommen. Sonst wird ein Fehler verworfen -->
 	 *    <items check_params_names="no">
 	 * 
@@ -534,7 +549,7 @@ public class SOSConfigurationRequiredItem {
 	}
 
 	/**
-	 * Überprüfen, ob dieser Parametername ein gültiger Name ist
+	 * ï¿½berprï¿½fen, ob dieser Parametername ein gï¿½ltiger Name ist
 	 * 
 	 * beispiel XML:
 	 * <Configurations>
@@ -558,15 +573,15 @@ public class SOSConfigurationRequiredItem {
 			Node n = xPath.selectSingleNode("//Configurations/items/item[@name='" + name + "'] ");
 
 			if (n == null) {
-				// Beim SchedulerBetrieb können beliebige Auftragsparameter mit übergeben werden.
-				// Die Überprüfung der gültigen Parametername soll indem Fall ignoriert werden oder man kann die Konfigurationsdatei
+				// Beim SchedulerBetrieb kï¿½nnen beliebige Auftragsparameter mit ï¿½bergeben werden.
+				// Die ï¿½berprï¿½fung der gï¿½ltigen Parametername soll indem Fall ignoriert werden oder man kann die Konfigurationsdatei
 				// erweitern.
 				// FAll ignorieren
 				if (allowOtherParamsNames) {
 					item.setItemId(name + "_id");
 					return name + "_id";
 				}
-				// Parametername unbekannt. Überprüfe ob dieser parameter einen gültigen Präfix hat
+				// Parametername unbekannt. ï¿½berprï¿½fe ob dieser parameter einen gï¿½ltigen Prï¿½fix hat
 				String itemIdfromPrefix = validItemPrefix(name, item);
 				if (itemIdfromPrefix != null && itemIdfromPrefix.length() > 0) {
 					return itemIdfromPrefix;
@@ -617,11 +632,11 @@ public class SOSConfigurationRequiredItem {
 
 	/**
 	 * Parametername unbekannt. 
-	 * Überprüfe ob dieser parameter einen gültigen Präfix hat.
-	 * Überprüfung findet im XML wie folgt statt:
+	 * ï¿½berprï¿½fe ob dieser parameter einen gï¿½ltigen Prï¿½fix hat.
+	 * ï¿½berprï¿½fung findet im XML wie folgt statt:
 	 * <Configuration> 
 	 *  ...
-	 * 	 <!-- Alle Parameter die den Präfix haben sind gültige Parameter -->
+	 * 	 <!-- Alle Parameter die den Prï¿½fix haben sind gï¿½ltige Parameter -->
 	 * 	 <prefix>
 	 * 	    <item name="history_entry_"/>
 	 *      ...
@@ -655,9 +670,9 @@ public class SOSConfigurationRequiredItem {
 	}
 
 	/**
-	 * Überprüfen, ob dieser Parametername ein gültiger Name ist
+	 * ï¿½berprï¿½fen, ob dieser Parametername ein gï¿½ltiger Name ist
 	 * 
-	 * zu überprüfende XML:
+	 * zu ï¿½berprï¿½fende XML:
 	 * 
 	 * <Configurations>
 	 *      <checkParameterValue>
@@ -692,7 +707,7 @@ public class SOSConfigurationRequiredItem {
 	}
 
 	/**
-	 * Überprrüfen ob ein Pflichtfeld existieren muss:
+	 * ï¿½berprrï¿½fen ob ein Pflichtfeld existieren muss:
 	 * entsprechende XML:
 	 * <Configurations>
 	 * 	<items>

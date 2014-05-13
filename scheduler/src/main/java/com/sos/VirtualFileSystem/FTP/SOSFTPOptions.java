@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -115,7 +130,7 @@ public class SOSFTPOptions extends SOSFtpOptionsSuperClass {
 	public static final String	conURIPrefixFILE				= "file://";
 	// TODO this *must* be a static global constant
 	public static final String	conSchedulerEnvVarPrefix		= "scheduler_param_";
-	// TODO über einen Parameter vorgeben lassen
+	// TODO ï¿½ber einen Parameter vorgeben lassen
 	public static final String	conSOSFtpEnvVarPrefix			= "sosftp_";
 	public static final String	conVariableEND					= "}";
 	public static final String	conSystemPropertyFILE_SEPARATOR	= "file.separator";
@@ -536,10 +551,10 @@ public class SOSFTPOptions extends SOSFtpOptionsSuperClass {
 	 * @throws Exception
 	 */
 	private Properties getEnvVars() throws Exception {
-		// TODO raus hier. die Routine ist zu generell und muß in die Shell-Klasse
+		// TODO raus hier. die Routine ist zu generell und muï¿½ in die Shell-Klasse
 		try {
 			propSOSFtpEnvironmentVars = new Properties();
-			// TODO SchedulerParams hat hier nichts zu suchen. Die müssen "von oben" über den JS-Adapter in die Klassen gereicht werden
+			// TODO SchedulerParams hat hier nichts zu suchen. Die mï¿½ssen "von oben" ï¿½ber den JS-Adapter in die Klassen gereicht werden
 			schedulerParams = new Properties();
 			int intSOSFtpEnvVarPrefixLen = conSOSFtpEnvVarPrefix.length();
 			Map<String, String> objM = System.getenv();

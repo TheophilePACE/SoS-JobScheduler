@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -165,7 +180,7 @@ public class SOSVfsFtp extends SOSVfsFtpBaseClass implements ISOSVfsFileTransfer
 
 		String conMethodName = "getFilenames";
 		String strCurrentDirectory = null;
-		// TODO vecDirectoryListing = null; prüfen, ob notwendig
+		// TODO vecDirectoryListing = null; prï¿½fen, ob notwendig
 		Vector<String> vecDirectoryListing = null;
 		if (vecDirectoryListing == null) {
 			vecDirectoryListing = new Vector<String>();
@@ -1013,7 +1028,7 @@ public class SOSVfsFtp extends SOSVfsFtpBaseClass implements ISOSVfsFileTransfer
 
 	@Override
 	public String[] getFilelist(final String folder, final String regexp, final int flag, final boolean flgRecurseSubFolder) {
-		// TODO vecDirectoryListing = null; prüfen, ob notwendig
+		// TODO vecDirectoryListing = null; prï¿½fen, ob notwendig
 		vecDirectoryListing = null;
 		if (vecDirectoryListing == null) {
 			vecDirectoryListing = nList(folder, flgRecurseSubFolder);

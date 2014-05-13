@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -53,11 +68,11 @@ import sos.xml.SOSXMLXPath;
 /**
  * sos.scheduler.job.JobSchedulerSignalJob.java
  * 
- * - der Job liest aus den Tabellen scheduler_signal_objects, scheduler_signal_parameters und erzeugt soviele Aufträge wie Datensätze vorhanden sind
+ * - der Job liest aus den Tabellen scheduler_signal_objects, scheduler_signal_parameters und erzeugt soviele Auftrï¿½ge wie Datensï¿½tze vorhanden sind
  * 
- * - der Job erzeugt Aufträge immer via XML, egal, ob der Auftrag an den Scheduler gerichtet ist, der JobSchedulerSignalJob ausführt oder ein anderer
+ * - der Job erzeugt Auftrï¿½ge immer via XML, egal, ob der Auftrag an den Scheduler gerichtet ist, der JobSchedulerSignalJob ausfï¿½hrt oder ein anderer
  * 
- * - Host und Port des Schedulers, der den Auftrag erhält werden aus SETTINGS gelesen (default) bzw. kommen als Job-Parameter an (prioritär)
+ * - Host und Port des Schedulers, der den Auftrag erhï¿½lt werden aus SETTINGS gelesen (default) bzw. kommen als Job-Parameter an (prioritï¿½r)
  * 
  * 
  * @author mueruevet.oeksuez@sos-berlin.com
@@ -68,7 +83,7 @@ public class JobSchedulerSignalJob extends Job_impl {
 	/** databse connection and settings*/
 	private SOSConnection            sosConnection                     = null;		
 	
-	/** host und port werden entweder als Jobparameter oder über die Settings Tabelle gelesen. */
+	/** host und port werden entweder als Jobparameter oder ï¿½ber die Settings Tabelle gelesen. */
 	private String                   sosSettingsFile                   = null;
 	
 	/** Job Scheduler signalling interface tables */
@@ -80,10 +95,10 @@ public class JobSchedulerSignalJob extends Job_impl {
 	/** Liste aller Ergenisse der Tabelle SCHEDULER_SIGNAL_OBECTS mit der Status = 0.*/
 	private Iterator                 listOfSignalObject                = null;  
 	
-	/** Zähler aller erfolgreich abgeschlossene process Schritten */
+	/** Zï¿½hler aller erfolgreich abgeschlossene process Schritten */
 	private int                      countProcessOk                    = 0;
 	
-	/** Zähler aller fehlerhaften process Schritten */
+	/** Zï¿½hler aller fehlerhaften process Schritten */
 	private int                      countProcessError                 = 0;
 	
 	/** Attribut: verbrauchte Zeit in Sekunden */

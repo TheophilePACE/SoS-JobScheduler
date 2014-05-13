@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -136,7 +151,7 @@ public class JobChainForm extends SOSJOEMessageCodes implements IUnsaved, IUpdat
         tName = JOE_T_JobChainForm_ChainName.Control(new Text(jobChainGroup, SWT.BORDER));
         tName.addVerifyListener(new VerifyListener() {
             public void verifyText(final VerifyEvent e) {
-                if (!init) {// während der initialiserung sollen keine überprüfungen stattfinden
+                if (!init) {// wï¿½hrend der initialiserung sollen keine ï¿½berprï¿½fungen stattfinden
                     // String name = listener.getChainName();
                     e.doit = Utils.checkElement(listener.getChainName(), listener.get_dom(), Editor.JOB_CHAIN, null);
                     /*System.out.println(e.doit);

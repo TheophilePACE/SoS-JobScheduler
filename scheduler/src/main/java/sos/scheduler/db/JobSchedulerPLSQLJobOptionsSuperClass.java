@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -78,8 +93,8 @@ import com.sos.JSHelper.Options.SOSOptionString;
  *
  * \section TestData Eine Hilfe zum Erzeugen einer HashMap mit Testdaten
  *
- * Die folgenden Methode kann verwendet werden, um für einen Test eine HashMap
- * mit sinnvollen Werten für die einzelnen Optionen zu erzeugen.
+ * Die folgenden Methode kann verwendet werden, um fï¿½r einen Test eine HashMap
+ * mit sinnvollen Werten fï¿½r die einzelnen Optionen zu erzeugen.
  *
  * \verbatim
  private HashMap <String, String> SetJobSchedulerSSHJobOptions (HashMap <String, String> pobjHM) {
@@ -100,7 +115,7 @@ public class JobSchedulerPLSQLJobOptionsSuperClass extends JSOptionsClass {
 
 	/**
 	 * \var command : Database Commands for the Job. It is possible to define m
-	 * Database Commands for the Job. It is possible to define more than one instruction in the COMMAND field. Such instructions are then carried out in the order in which they are written and must be separated by a semicolon and a subsequent new line. Parameters can be replaced in database commands. This is done by the addition of a variable in the form §{param} at any given point in a command. This variable is then given the value of the instruction parameter with the name [param] before execution.
+	 * Database Commands for the Job. It is possible to define more than one instruction in the COMMAND field. Such instructions are then carried out in the order in which they are written and must be separated by a semicolon and a subsequent new line. Parameters can be replaced in database commands. This is done by the addition of a variable in the form ï¿½{param} at any given point in a command. This variable is then given the value of the instruction parameter with the name [param] before execution.
 	 *
 	 */
 	@JSOptionDefinition(name = "command", description = "Database Commands for the Job. It is possible to define m", key = "command", type = "SOSOptionString", mandatory = false)
@@ -115,7 +130,7 @@ public class JobSchedulerPLSQLJobOptionsSuperClass extends JSOptionsClass {
 	 * \brief getcommand : Database Commands for the Job. It is possible to define m
 	 * 
 	 * \details
-	 * Database Commands for the Job. It is possible to define more than one instruction in the COMMAND field. Such instructions are then carried out in the order in which they are written and must be separated by a semicolon and a subsequent new line. Parameters can be replaced in database commands. This is done by the addition of a variable in the form §{param} at any given point in a command. This variable is then given the value of the instruction parameter with the name [param] before execution.
+	 * Database Commands for the Job. It is possible to define more than one instruction in the COMMAND field. Such instructions are then carried out in the order in which they are written and must be separated by a semicolon and a subsequent new line. Parameters can be replaced in database commands. This is done by the addition of a variable in the form ï¿½{param} at any given point in a command. This variable is then given the value of the instruction parameter with the name [param] before execution.
 	 *
 	 * \return Database Commands for the Job. It is possible to define m
 	 *
@@ -128,7 +143,7 @@ public class JobSchedulerPLSQLJobOptionsSuperClass extends JSOptionsClass {
 	 * \brief setcommand : Database Commands for the Job. It is possible to define m
 	 * 
 	 * \details
-	 * Database Commands for the Job. It is possible to define more than one instruction in the COMMAND field. Such instructions are then carried out in the order in which they are written and must be separated by a semicolon and a subsequent new line. Parameters can be replaced in database commands. This is done by the addition of a variable in the form §{param} at any given point in a command. This variable is then given the value of the instruction parameter with the name [param] before execution.
+	 * Database Commands for the Job. It is possible to define more than one instruction in the COMMAND field. Such instructions are then carried out in the order in which they are written and must be separated by a semicolon and a subsequent new line. Parameters can be replaced in database commands. This is done by the addition of a variable in the form ï¿½{param} at any given point in a command. This variable is then given the value of the instruction parameter with the name [param] before execution.
 	 *
 	 * @param command : Database Commands for the Job. It is possible to define m
 	 */
@@ -444,16 +459,16 @@ public class JobSchedulerPLSQLJobOptionsSuperClass extends JSOptionsClass {
 	} // private String getAllOptionsAsString ()
 
 	/**
-	 * \brief setAllOptions - übernimmt die OptionenWerte aus der HashMap
+	 * \brief setAllOptions - ï¿½bernimmt die OptionenWerte aus der HashMap
 	 *
-	 * \details In der als Parameter anzugebenden HashMap sind Schlüssel (Name)
-	 * und Wert der jeweiligen Option als Paar angegeben. Ein Beispiel für den
+	 * \details In der als Parameter anzugebenden HashMap sind Schlï¿½ssel (Name)
+	 * und Wert der jeweiligen Option als Paar angegeben. Ein Beispiel fï¿½r den
 	 * Aufbau einer solchen HashMap findet sich in der Beschreibung dieser
 	 * Klasse (\ref TestData "setJobSchedulerSSHJobOptions"). In dieser Routine
-	 * werden die Schlüssel analysiert und, falls gefunden, werden die
-	 * dazugehörigen Werte den Properties dieser Klasse zugewiesen.
+	 * werden die Schlï¿½ssel analysiert und, falls gefunden, werden die
+	 * dazugehï¿½rigen Werte den Properties dieser Klasse zugewiesen.
 	 *
-	 * Nicht bekannte Schlüssel werden ignoriert.
+	 * Nicht bekannte Schlï¿½ssel werden ignoriert.
 	 *
 	 * \see JSOptionsClass::getItem
 	 *
@@ -472,13 +487,13 @@ public class JobSchedulerPLSQLJobOptionsSuperClass extends JSOptionsClass {
 	} // public void setAllOptions (HashMap <String, String> JSSettings)
 
 	/**
-	 * \brief CheckMandatory - prüft alle Muss-Optionen auf Werte
+	 * \brief CheckMandatory - prï¿½ft alle Muss-Optionen auf Werte
 	 *
 	 * \details
 	 * @throws Exception
 	 *
 	 * @throws Exception
-	 * - wird ausgelöst, wenn eine mandatory-Option keinen Wert hat
+	 * - wird ausgelï¿½st, wenn eine mandatory-Option keinen Wert hat
 	 */
 	@Override
 	public void CheckMandatory() throws JSExceptionMandatoryOptionMissing //
@@ -493,11 +508,11 @@ public class JobSchedulerPLSQLJobOptionsSuperClass extends JSOptionsClass {
 
 	/**
 	 *
-	 * \brief CommandLineArgs - Übernehmen der Options/Settings aus der
+	 * \brief CommandLineArgs - ï¿½bernehmen der Options/Settings aus der
 	 * Kommandozeile
 	 *
 	 * \details Die in der Kommandozeile beim Starten der Applikation
-	 * angegebenen Parameter werden hier in die HashMap übertragen und danach
+	 * angegebenen Parameter werden hier in die HashMap ï¿½bertragen und danach
 	 * den Optionen als Wert zugewiesen.
 	 *
 	 * \return void

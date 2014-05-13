@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -148,7 +163,7 @@ public class ManagedJobImport extends SOSImport {
 		System.out.println("     -v=              Loglevel (optional)");
 		System.out.println("     -log=            LogDatei (optional)");
 		System.out.println("     -settings=       factory.ini Datei (default:../config/factory.ini)");
-		System.out.println("     -jobchain=       neue Jobkette (ID) für importierten Job (optional)");
+		System.out.println("     -jobchain=       neue Jobkette (ID) fï¿½r importierten Job (optional)");
 	}
 	
 	/**
@@ -167,7 +182,7 @@ public class ManagedJobImport extends SOSImport {
 
     
 	/***** 
-     * Key für MANAGED_JOBS
+     * Key fï¿½r MANAGED_JOBS
      * 
      */
     public HashMap key_handler_MANAGED_JOBS(HashMap keys) throws Exception {
@@ -181,7 +196,7 @@ public class ManagedJobImport extends SOSImport {
     }
     
     /***** 
-     * Record handler für MANAGED_JOBS
+     * Record handler fï¿½r MANAGED_JOBS
      * 
      */
     public HashMap rec_handler_MANAGED_JOBS(HashMap keys, HashMap record, String record_identifier) throws Exception{

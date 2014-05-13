@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -54,8 +69,8 @@ import com.sos.i18n.annotation.I18NResourceBundle;
 /**
  * FTP File Transfer
  *
- * @author Andreas Püschel
- * @author Mürüvet Öksüz
+ * @author Andreas Pï¿½schel
+ * @author Mï¿½rï¿½vet ï¿½ksï¿½z
  * 
  * 2009-02-22: added SOSCommand.getExternalPassword
  * 2009-02-00: Redesign from Configuration and call SOSFTP
@@ -153,7 +168,7 @@ public class JobSchedulerFTPSend extends JobSchedulerJobAdapter {
 				}
 				else
 					if (sosString.parseToString(params.var("ftp_parent_order_id")).length() > 0) {
-						// Hauptauftrag wurde wegen Erreichens von ftp_parallel_check_retry beendet -> die restlichen Unteraufträge sollen
+						// Hauptauftrag wurde wegen Erreichens von ftp_parallel_check_retry beendet -> die restlichen Unterauftrï¿½ge sollen
 						// nicht durchlaufen
 						String state = spooler.variables().var("terminated_cause_max_order_setback_" + normalize(params.var("ftp_parent_order_id")));
 						if (state.equals("1"))
@@ -175,13 +190,13 @@ public class JobSchedulerFTPSend extends JobSchedulerJobAdapter {
 			try { // to process ftp
 
 				if (parallelTransfer && !isFilePath) {
-					// nur die filelist holen um Parallelen transfer zu ermöglichen
+					// nur die filelist holen um Parallelen transfer zu ermï¿½glichen
 					Properties p = new Properties();
 					p.putAll((Properties) schedulerParams.clone());
 					p.put("skip_transfer", "yes");
 					// kb 2011-04--27 no longer needed due to too much trouble with this file / concept
 //					 createIncludeConfigurationFile("sos/net/sosftp/Configuration.xml", "sos.net.sosftp.Configuration.xml");//Alle
-					// Parametern sind hier auch gültig
+					// Parametern sind hier auch gï¿½ltig
 					SOSConfiguration con = new SOSConfiguration(null, p, sosString.parseToString(schedulerParams.get(conParameterSETTINGS)),
 							sosString.parseToString(schedulerParams.get(conParameterPROFILE)),
 //							"sos/scheduler/ftp/SOSFTPConfiguration.xml", new SOSSchedulerLogger(spooler_log));
@@ -230,8 +245,8 @@ public class JobSchedulerFTPSend extends JobSchedulerJobAdapter {
 							spooler.variables().set_var("ftp_check_send_" + normalize(spooler_task.order().id()) + "." + normalize(newOrder.id()), "0");
 
 						}
-						// am aktuellen Auftrag speichern, dass im Wiederholungsfall per setback() nicht erneut Aufträge erzeugt werden
-						// sollen, sondern dass deren Erledigungszustand gepräft wird:
+						// am aktuellen Auftrag speichern, dass im Wiederholungsfall per setback() nicht erneut Auftrï¿½ge erzeugt werden
+						// sollen, sondern dass deren Erledigungszustand geprï¿½ft wird:
 						spooler_task.order().params().set_var("ftp_check_parallel", "yes");
 						spooler_job.set_delay_order_after_setback(1, parallelTransferCheckSetback);
 						spooler_job.set_max_order_setbacks(parallelTransferCheckRetry);
@@ -243,7 +258,7 @@ public class JobSchedulerFTPSend extends JobSchedulerJobAdapter {
 				// end Parallel Transfer
 //				createIncludeConfigurationFile("sos/net/sosftp/Configuration.xml", "sos.net.sosftp.Configuration.xml");// Alle Parametern
 //																														// sind hier auch
-//																														// gültig
+//																														// gï¿½ltig
 				SOSConfiguration con = new SOSConfiguration(null, mapToProperties(schedulerParams), sosString.parseToString(schedulerParams.get(conParameterSETTINGS)),
 						sosString.parseToString(schedulerParams.get(conParameterPROFILE)),
 //						"sos/scheduler/ftp/SOSFTPConfiguration.xml", new SOSSchedulerLogger(spooler_log));
@@ -336,7 +351,7 @@ public class JobSchedulerFTPSend extends JobSchedulerJobAdapter {
 //				schedulerParams.put(key, val);
 //			}
 
-			// Einige Defaults hinzufügen
+			// Einige Defaults hinzufï¿½gen
 			schedulerParams.put("operation", "send");
 
 			try {

@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -1284,7 +1299,7 @@ public class SOSFileSystemOperations {
 				throw new JobSchedulerException("directory is not readable: " + dir.getCanonicalPath());
 		}
 		else {
-			// eine Datei gleich ausschließen
+			// eine Datei gleich ausschlieï¿½en
 			return false;
 		}
 
@@ -2897,7 +2912,7 @@ public class SOSFileSystemOperations {
 					throw new JobSchedulerException("missed constraint for file skipping (minFileAge, maxFileAge, minFileSize, maxFileSize)");
 			}
 
-			// Wenn ersetzt werden soll, ist es gültig?
+			// Wenn ersetzt werden soll, ist es gï¿½ltig?
 			if (replacing != null || replacement != null) {
 
 				if (replacing == null)
@@ -2940,7 +2955,7 @@ public class SOSFileSystemOperations {
 				if (m.find())
 					throw new JobSchedulerException("unsupported file mask found: " + m.group());
 
-				// zum Schluss Änderungen zuweisen
+				// zum Schluss ï¿½nderungen zuweisen
 				target = new File(targetFilename);
 			}
 
@@ -2993,7 +3008,7 @@ public class SOSFileSystemOperations {
 				// Zieldatei ermitteln
 				if (target != null) {
 					if (target.isDirectory()) {
-						// Rekursion berücksichtigen
+						// Rekursion berï¿½cksichtigen
 						String root = (source.isDirectory()) ? source.getPath() : source.getParent();
 						targetFilename = target.getPath() + sourceFile.getPath().substring(root.length());
 					}
@@ -3005,7 +3020,7 @@ public class SOSFileSystemOperations {
 				}
 				else {
 					if (source.isDirectory()) {
-						// Rekursion berücksichtigen
+						// Rekursion berï¿½cksichtigen
 						String root = (source.isDirectory()) ? source.getPath() : source.getParent();
 						targetFilename = source.getPath() + sourceFile.getPath().substring(root.length());
 					}
@@ -3020,7 +3035,7 @@ public class SOSFileSystemOperations {
 
 					if (replace) {
 
-						targetFilename = targetFile.getName(); // bis jetzt noch ursprünglicher Dateiname
+						targetFilename = targetFile.getName(); // bis jetzt noch ursprï¿½nglicher Dateiname
 
 						targetFilename = replaceGroups(targetFilename, replacing, replacement /* .split(";") */);
 						targetFilename = substituteAllDate(targetFilename);
@@ -3039,7 +3054,7 @@ public class SOSFileSystemOperations {
 					throw new JobSchedulerException("replacement error in file " + targetFilename + ": " + re.getMessage());
 				}
 
-				// Existieren alle benötigten Elternverzeichnisse?
+				// Existieren alle benï¿½tigten Elternverzeichnisse?
 				dir = new File(targetFile.getParent());
 
 				if (!dir.exists()) {
@@ -3191,11 +3206,11 @@ public class SOSFileSystemOperations {
 		}
 		;
 
-		// sortiert die Dateien im Array aufsteigend nach Größe der Datei, d.h. kleinere zuerst
+		// sortiert die Dateien im Array aufsteigend nach Grï¿½ï¿½e der Datei, d.h. kleinere zuerst
 		if (sorting.equals("sort_size"))
 			Arrays.sort(oArr, new SizeComparator());
 		else
-			// sortiert die Dateien im Array aufsteigend nach Änderungsdatum der Datei, d.h. jüngere zuerst
+			// sortiert die Dateien im Array aufsteigend nach ï¿½nderungsdatum der Datei, d.h. jï¿½ngere zuerst
 			if (sorting.equals("sort_age"))
 				Arrays.sort(oArr, new AgeComparator());
 

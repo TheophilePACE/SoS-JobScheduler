@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -354,7 +369,7 @@ public class JobSchedulerException extends RuntimeException {
 	 * <method type="smcw" version="1.0"> <name>Category</name> <title>The
 	 * Catogory assigned to this Exception</title> <description> <para> The
 	 * Catogory assigned to this Exception </para> <para> Initial-Wert (Default)
-	 * ist "null" (ohne Anführungszeichen). </para> <mandatory>true</mandatory>
+	 * ist "null" (ohne Anfï¿½hrungszeichen). </para> <mandatory>true</mandatory>
 	 * </description> <params> <param name="param1" type=" "
 	 * ref="byref|byvalue|out" > <para> </para> </param> </params> <keywords>
 	 * <keyword>Exception</keyword> </keywords> <categories>
@@ -398,7 +413,7 @@ public class JobSchedulerException extends RuntimeException {
 	 * <method type="smcw" version="1.0"> <name>Typ</name> <title>The Type
 	 * assigned to this Exception</title> <description> <para> The Type
 	 * assigned to this Exception </para> <para> Initial-Wert (Default) ist
-	 * "null" (ohne Anführungszeichen). </para> <mandatory>true</mandatory>
+	 * "null" (ohne Anfï¿½hrungszeichen). </para> <mandatory>true</mandatory>
 	 * </description> <params> <param name="param1" type=" "
 	 * ref="byref|byvalue|out" > <para> </para> </param> </params> <keywords>
 	 * <keyword>Exception</keyword> </keywords> <categories>
@@ -442,7 +457,7 @@ public class JobSchedulerException extends RuntimeException {
 	 * <method type="smcw" version="1.0"> <name>Message</name> <title>The
 	 * Message assigned to this Exception</title> <description> <para> The
 	 * Message assigned to this Exception </para> <para> Initial-Wert (Default)
-	 * ist "null" (ohne Anführungszeichen). </para> <mandatory>true</mandatory>
+	 * ist "null" (ohne Anfï¿½hrungszeichen). </para> <mandatory>true</mandatory>
 	 * </description> <params> <param name="param1" type=" "
 	 * ref="byref|byvalue|out" > <para> </para> </param> </params> <keywords>
 	 * <keyword>Exception</keyword> </keywords> <categories>
@@ -549,7 +564,7 @@ public class JobSchedulerException extends RuntimeException {
 	 * <method type="smcw" version="1.0"> <name>AdditionalText</name>
 	 * <title>AdditionalText</title> <description> <para> AdditionalText
 	 * </para> <para> Initial-Wert (Default) ist "null" (ohne
-	 * Anführungszeichen). </para> <mandatory>true</mandatory> </description>
+	 * Anfï¿½hrungszeichen). </para> <mandatory>true</mandatory> </description>
 	 * <params> <param name="param1" type=" " ref="byref|byvalue|out" > <para>
 	 * </para> </param> </params> <keywords> <keyword>Exception</keyword>
 	 * <keyword>JobStart</keyword> </keywords> <categories> <category>Exception</category>
@@ -611,7 +626,7 @@ public class JobSchedulerException extends RuntimeException {
 	eMailSubject
 	</para>
 	<para>
-	Initial-Wert (Default) ist "null" (ohne Anführungszeichen).
+	Initial-Wert (Default) ist "null" (ohne Anfï¿½hrungszeichen).
 	</para>
 	<mandatory>true</mandatory>
 	</description>

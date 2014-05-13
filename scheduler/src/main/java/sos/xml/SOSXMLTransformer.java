@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -60,7 +75,7 @@ import javax.xml.transform.stream.StreamSource;
  * <p>Copyright: Copyright (c) 2003</p>
  * <p>Company: SOS GmbH</p>
  * @author Ghassan Beydoun
- * @author Andreas Püschel
+ * @author Andreas Pï¿½schel
  * @author Andreas Liebert
  * @version 1.0
  * @resource sos.xml.jar
@@ -72,7 +87,7 @@ public class SOSXMLTransformer {
 	/**
 	 *
 	 * @param data Eingabe-String, der transformiert werden soll.
-	 * @param xslFile XSL-Datei für den XSLT-Prozessor
+	 * @param xslFile XSL-Datei fï¿½r den XSLT-Prozessor
 	 * @param outputFile die Ergebnis-Datei der Transformation
 	 * @throws TransformerException
 	 * @throws TransformerConfigurationException
@@ -88,9 +103,9 @@ public class SOSXMLTransformer {
 	/**
 	 *
 	 * @param data Eingabe-String, der transformiert werden soll.
-	 * @param xslFile XSL-Datei für den XSLT-Prozessor
+	 * @param xslFile XSL-Datei fï¿½r den XSLT-Prozessor
 	 * @param outputFile die Ergebnis-Datei der Transformation
-	 * @param parameters Parameter für die XSL-Transformation
+	 * @param parameters Parameter fï¿½r die XSL-Transformation
 	 * @throws TransformerException
 	 * @throws TransformerConfigurationException
 	 * @throws FileNotFoundException
@@ -113,7 +128,7 @@ public class SOSXMLTransformer {
 	/**
 	 *
 	 * @param xmlFile Eingabedatei, der transformiert werden soll.
-	 * @param xslFile XSL-Datei für den XSLT-Prozessor
+	 * @param xslFile XSL-Datei fï¿½r den XSLT-Prozessor
 	 * @param outputFile die Ergebnis-Datei der Transformation
 	 * @throws TransformerException
 	 * @throws TransformerConfigurationException
@@ -129,9 +144,9 @@ public class SOSXMLTransformer {
 	/**
 	 *
 	 * @param xmlFile Eingabedatei, der transformiert werden soll.
-	 * @param xslFile XSL-Datei für den XSLT-Prozessor
+	 * @param xslFile XSL-Datei fï¿½r den XSLT-Prozessor
 	 * @param outputFile die Ergebnis-Datei der Transformation
-	 * @param parameters Parameter für die XSL-Transformation
+	 * @param parameters Parameter fï¿½r die XSL-Transformation
 	 * @throws TransformerException
 	 * @throws TransformerConfigurationException
 	 * @throws FileNotFoundException
@@ -154,7 +169,7 @@ public class SOSXMLTransformer {
 	/**
 	 *
 	 * @param stream Eingabe-Strom, der transformiert werden soll.
-	 * @param xslFile XSL-Datei für den XSLT-Prozessor
+	 * @param xslFile XSL-Datei fï¿½r den XSLT-Prozessor
 	 * @param outputFile die Ergebnis-Datei der Transformation
 	 * @throws TransformerException
 	 * @throws TransformerConfigurationException
@@ -170,9 +185,9 @@ public class SOSXMLTransformer {
 	/**
 	 *
 	 * @param stream Eingabe-Strom, der transformiert werden soll.
-	 * @param xslFile XSL-Datei für den XSLT-Prozessor
+	 * @param xslFile XSL-Datei fï¿½r den XSLT-Prozessor
 	 * @param outputFile die Ergebnis-Datei der Transformation
-	 * @param parameters Parameter für die XSL-Transformation
+	 * @param parameters Parameter fï¿½r die XSL-Transformation
 	 * @throws TransformerException
 	 * @throws TransformerConfigurationException
 	 * @throws FileNotFoundException
@@ -195,7 +210,7 @@ public class SOSXMLTransformer {
 	/**
 	 *
 	 * @param stream Eingabe-Stream, der transformiert werden soll.
-	 * @param xslFile XSL-Datei für den XSLT-Prozessor
+	 * @param xslFile XSL-Datei fï¿½r den XSLT-Prozessor
 	 * @param outputFile die Ergebnis-Datei der Transformation
 	 * @throws TransformerException
 	 * @throws TransformerConfigurationException
@@ -211,9 +226,9 @@ public class SOSXMLTransformer {
 	/**
 	 *
 	 * @param stream Eingabe-Stream, der transformiert werden soll.
-	 * @param xslFile XSL-Datei für den XSLT-Prozessor
+	 * @param xslFile XSL-Datei fï¿½r den XSLT-Prozessor
 	 * @param outputFile die Ergebnis-Datei der Transformation
-	 * @param parameters Parameter für die XSL-Transformation
+	 * @param parameters Parameter fï¿½r die XSL-Transformation
 	 * @throws TransformerException
 	 * @throws TransformerConfigurationException
 	 * @throws FileNotFoundException
@@ -252,7 +267,7 @@ public class SOSXMLTransformer {
 	 *
 	 * @param inputFile Eingabe-Datei, die transformiert werden soll.
 	 * @param outputFile die Ergebnis-Datei der Transformation
-	 * @param parameters Parameter für die XSL-Transformation
+	 * @param parameters Parameter fï¿½r die XSL-Transformation
 	 * @throws TransformerException
 	 * @throws TransformerConfigurationException
 	 * @throws FileNotFoundException
@@ -297,7 +312,7 @@ public class SOSXMLTransformer {
 	 *
 	 * @param data Eingabe-String, der transformiert werden soll.
 	 * @param outputFile die Ergebnis-Datei der Transformation
-	 * @param parameters Parameter für die XSL-Transformation
+	 * @param parameters Parameter fï¿½r die XSL-Transformation
 	 * @throws TransformerException
 	 * @throws TransformerConfigurationException
 	 * @throws FileNotFoundException
@@ -336,7 +351,7 @@ public class SOSXMLTransformer {
 	 *
 	 * @param stream Eingabe-Stream, der transformiert werden soll.
 	 * @param outputFile die Ergebnis-Datei der Transformation
-	 * @param parameters Parameter für die XSL-Transformation
+	 * @param parameters Parameter fï¿½r die XSL-Transformation
 	 * @throws TransformerException
 	 * @throws TransformerConfigurationException
 	 * @throws FileNotFoundException
@@ -374,7 +389,7 @@ public class SOSXMLTransformer {
 	/**
 	 * @param stream Eingabe-Strom, der transformiert werden soll.
 	 * @param outputFile die Ergebnis-Datei der Transformation
-	 * @param parameters Parameter für die XSL-Transformation
+	 * @param parameters Parameter fï¿½r die XSL-Transformation
 	 * @throws TransformerException
 	 * @throws TransformerConfigurationException
 	 * @throws FileNotFoundException
@@ -402,7 +417,7 @@ public class SOSXMLTransformer {
 	/**
 	 *
 	 * @param data Eingabe-String, der transformiert werden soll.
-	 * @param xslFile XSL-Datei für den XSLT-Prozessor
+	 * @param xslFile XSL-Datei fï¿½r den XSLT-Prozessor
 	 * @param outputStream Ergebnis-Stream der Transformation
 	 * @throws TransformerException
 	 * @throws TransformerConfigurationException
@@ -418,9 +433,9 @@ public class SOSXMLTransformer {
 	/**
 	 *
 	 * @param data Eingabe-String, der transformiert werden soll.
-	 * @param xslFile XSL-Datei für den XSLT-Prozessor
+	 * @param xslFile XSL-Datei fï¿½r den XSLT-Prozessor
 	 * @param outputStream Ergebnis-Stream der Transformation
-	 * @param parameters Parameter für die XSL-Transformation
+	 * @param parameters Parameter fï¿½r die XSL-Transformation
 	 * @throws TransformerException
 	 * @throws TransformerConfigurationException
 	 * @throws FileNotFoundException
@@ -442,7 +457,7 @@ public class SOSXMLTransformer {
 	
 	/**
 	 * @param xmlFile Eingabedatei, der transformiert werden soll.
-	 * @param xslFile XSL-Datei für den XSLT-Prozessor
+	 * @param xslFile XSL-Datei fï¿½r den XSLT-Prozessor
 	 * @param outputStream Ergebnis-Stream der Transformation
 	 * @throws TransformerException
 	 * @throws TransformerConfigurationException
@@ -457,9 +472,9 @@ public class SOSXMLTransformer {
 	
 	/**
 	 * @param xmlFile Eingabedatei, der transformiert werden soll.
-	 * @param xslFile XSL-Datei für den XSLT-Prozessor
+	 * @param xslFile XSL-Datei fï¿½r den XSLT-Prozessor
 	 * @param outputStream Ergebnis-Stream der Transformation
-	 * @param parameters Parameter für die XSL-Transformation
+	 * @param parameters Parameter fï¿½r die XSL-Transformation
 	 * @throws TransformerException
 	 * @throws TransformerConfigurationException
 	 * @throws FileNotFoundException
@@ -483,7 +498,7 @@ public class SOSXMLTransformer {
 	
 	/**
 	 * @param stream Eingabe-Strom, der transformiert werden soll.
-	 * @param xslFile XSL-Datei für den XSLT-Prozessor
+	 * @param xslFile XSL-Datei fï¿½r den XSLT-Prozessor
 	 * @param outputStream Ergebnis-Stream der Transformation
 	 * @throws TransformerException
 	 * @throws TransformerConfigurationException
@@ -498,9 +513,9 @@ public class SOSXMLTransformer {
 	
 	/**
 	 * @param stream Eingabe-Strom, der transformiert werden soll.
-	 * @param xslFile XSL-Datei für den XSLT-Prozessor
+	 * @param xslFile XSL-Datei fï¿½r den XSLT-Prozessor
 	 * @param outputStream Ergebnis-Stream der Transformation
-	 * @param parameters Parameter für die XSL-Transformation
+	 * @param parameters Parameter fï¿½r die XSL-Transformation
 	 * @throws TransformerException
 	 * @throws TransformerConfigurationException
 	 * @throws FileNotFoundException
@@ -523,7 +538,7 @@ public class SOSXMLTransformer {
 	/**
 	 *
 	 * @param stream Eingabe-Stream, der transformiert werden soll.
-	 * @param xslFile XSL-Datei für den XSLT-Prozessor
+	 * @param xslFile XSL-Datei fï¿½r den XSLT-Prozessor
 	 * @param outputStream Ergebnis-Stream der Transformation
 	 * @throws TransformerException
 	 * @throws TransformerConfigurationException
@@ -539,9 +554,9 @@ public class SOSXMLTransformer {
 	/**
 	 *
 	 * @param stream Eingabe-Stream, der transformiert werden soll.
-	 * @param xslFile XSL-Datei für den XSLT-Prozessor
+	 * @param xslFile XSL-Datei fï¿½r den XSLT-Prozessor
 	 * @param outputStream Ergebnis-Stream der Transformation
-	 * @param parameters Parameter für die XSL-Transformation
+	 * @param parameters Parameter fï¿½r die XSL-Transformation
 	 * @throws TransformerException
 	 * @throws TransformerConfigurationException
 	 * @throws FileNotFoundException
@@ -578,7 +593,7 @@ public class SOSXMLTransformer {
 	/**
 	 * @param inputFile Eingabe-Datei, die transformiert werden soll.
 	 * @param outputStream Ergebnis-Stream der Transformation
-	 * @param parameters Parameter für die XSL-Transformation
+	 * @param parameters Parameter fï¿½r die XSL-Transformation
 	 * @throws TransformerException
 	 * @throws TransformerConfigurationException
 	 * @throws FileNotFoundException
@@ -622,7 +637,7 @@ public class SOSXMLTransformer {
 	 *
 	 * @param inputStream Eingabe-XML-Strom, der transformiert werden soll.
 	 * @param outputStream Ergebnis-Stream der Transformation
-	 * @param parameters Parameter für die XSL-Transformation
+	 * @param parameters Parameter fï¿½r die XSL-Transformation
 	 * @throws TransformerException
 	 * @throws TransformerConfigurationException
 	 * @throws FileNotFoundException
@@ -672,7 +687,7 @@ public class SOSXMLTransformer {
 	 *
 	 * @param data Eingabe-String, der transformiert werden soll.
 	 * @param outputStream Ergebnis-Stream der Transformation
-	 * @param parameters Parameter für die XSL-Transformation
+	 * @param parameters Parameter fï¿½r die XSL-Transformation
 	 * @throws TransformerException
 	 * @throws TransformerConfigurationException
 	 * @throws FileNotFoundException
@@ -712,7 +727,7 @@ public class SOSXMLTransformer {
 	 *
 	 * @param stream Eingabe-Stream, der transformiert werden soll.
 	 * @param outputStream Ergebnis-Stream der Transformation
-	 * @param parameters Parameter für die XSL-Transformation
+	 * @param parameters Parameter fï¿½r die XSL-Transformation
 	 * @throws TransformerException
 	 * @throws TransformerConfigurationException
 	 * @throws FileNotFoundException
@@ -752,7 +767,7 @@ public class SOSXMLTransformer {
 	 *
 	 * @param stream Eingabe-Strom, der transformiert werden soll.
 	 * @param outputStream Ergebnis-Stream der Transformation
-	 * @param parameters Parameter für die XSL-Transformation
+	 * @param parameters Parameter fï¿½r die XSL-Transformation
 	 * @throws TransformerException
 	 * @throws TransformerConfigurationException
 	 * @throws FileNotFoundException

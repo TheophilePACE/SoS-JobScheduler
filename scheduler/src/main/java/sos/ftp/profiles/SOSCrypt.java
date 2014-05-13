@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -53,15 +68,15 @@ public class SOSCrypt {
     /** Verwendete Zeichendecodierung */
     private static final String charset = "UTF8";
 
-    /** Verwendete Füllzeichen */
+    /** Verwendete Fï¿½llzeichen */
     private static final String fillchars = "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
 
 
     /**
-     * Schlüssel auffüllen
+     * Schlï¿½ssel auffï¿½llen
      * 
-     * @param pass   Schlüssel
-     * @param length gewünschte Länge
+     * @param pass   Schlï¿½ssel
+     * @param length gewï¿½nschte Lï¿½nge
      * @return
      * @throws Exception
      */
@@ -84,9 +99,9 @@ public class SOSCrypt {
    
     
     /**
-     * Verschlüsseln
+     * Verschlï¿½sseln
      * 
-     * @param pass   Schlüssel
+     * @param pass   Schlï¿½ssel
      * @param str    Daten
      * @return
      * @throws Exception
@@ -101,14 +116,14 @@ public class SOSCrypt {
         
         try {
 	
-            // Auffüllen des Schlüssel auf die vom Algorithmus benötigte Länge
+            // Auffï¿½llen des Schlï¿½ssel auf die vom Algorithmus benï¿½tigte Lï¿½nge
             pass = getPadded(pass, 24);
         	//pass = getPadded(pass, 8);
 
-            // Auffüllen der Daten auf die vom Algorithmus benötigte Länge
+            // Auffï¿½llen der Daten auf die vom Algorithmus benï¿½tigte Lï¿½nge
             str = getPadded(str, 8);
 
-            // nur für jre 1.3.x nötig
+            // nur fï¿½r jre 1.3.x nï¿½tig
             Provider bp = new org.bouncycastle.jce.provider.BouncyCastleProvider();
 
             Security.addProvider(bp);
@@ -137,9 +152,9 @@ public class SOSCrypt {
     }
 
     /**
-     * Entschlüsseln
+     * Entschlï¿½sseln
      * 
-     * @param pass Schlüssel
+     * @param pass Schlï¿½ssel
      * @param str  Daten
      * @return
      * @throws Exception
@@ -154,14 +169,14 @@ public class SOSCrypt {
         
         try {
 
-            // Auffüllen des Schlüssel auf die vom Algorithmus benötigte Länge
+            // Auffï¿½llen des Schlï¿½ssel auf die vom Algorithmus benï¿½tigte Lï¿½nge
             pass = getPadded(pass, 24);
         	//pass = getPadded(pass, 8);
 
-            // Auffüllen der Daten auf die vom Algorithmus benötigte Länge
+            // Auffï¿½llen der Daten auf die vom Algorithmus benï¿½tigte Lï¿½nge
             //str = getPadded(str, 8);
 
-            // nur für jre 1.3.x nötig
+            // nur fï¿½r jre 1.3.x nï¿½tig
             Provider bp = new org.bouncycastle.jce.provider.BouncyCastleProvider();
 
             Security.addProvider(bp);

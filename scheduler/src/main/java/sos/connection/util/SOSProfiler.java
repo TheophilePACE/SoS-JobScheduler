@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -35,7 +50,7 @@ package sos.connection.util;
 /**
  * <p>Title: SOSProfiler</p>
  * <p>Description: Messen der Zugriffszeiten.
- * Die Profiler kann direkt über ein Methodenaufruf eingeschaltet.</p>
+ * Die Profiler kann direkt ï¿½ber ein Methodenaufruf eingeschaltet.</p>
  * <p>Copyright: Copyright (c) 2003</p>
  * <p>Company: SOS-Berlin GmbH</p>
  * @author Mueruevet Oeksuez
@@ -49,15 +64,15 @@ import sos.connection.SOSConnection;
 
 public class SOSProfiler {
 
-  /* Datenbanktabelle Name für Profiler-Einstellungen */
+  /* Datenbanktabelle Name fï¿½r Profiler-Einstellungen */
   private static String table_settings 		= "PROFILER_SETTINGS";
-  /* Datenbanktabelle Name für Profiler-Historie */
+  /* Datenbanktabelle Name fï¿½r Profiler-Historie */
   private static String table_history 		= "PROFILER_HISTORY";
-  /* Name des Eintrags für Sequenzzähler der Historieneinträge in Tabelle profiler_settings */
+  /* Name des Eintrags fï¿½r Sequenzzï¿½hler der Historieneintrï¿½ge in Tabelle profiler_settings */
   private static String entry_history_id 	= "profiler_history.id";
-  /* Name des Eintrags für Sequenzzähler der Dialogschritte in Tabelle profiler_settings */
+  /* Name des Eintrags fï¿½r Sequenzzï¿½hler der Dialogschritte in Tabelle profiler_settings */
   private static String entry_history_step 	= "profiler_history.step";
-  /* sequence für PROFILER_HISTORY*/
+  /* sequence fï¿½r PROFILER_HISTORY*/
   private int history_id;
   /* Zeitstempel fur Starten*/
   private long startTimeStamp;
@@ -104,7 +119,7 @@ public class SOSProfiler {
 
 
   /**
-   * Methode zum starten der Profiler. Übergeben wird ein Statement als String, falls vorhanden
+   * Methode zum starten der Profiler. ï¿½bergeben wird ein Statement als String, falls vorhanden
    * @param sqlStatement
    */
   public void start(String sqlStatement) {
@@ -128,7 +143,7 @@ public class SOSProfiler {
       history_id = this.getSequence(entry_history_id);
       
       insStr = " INSERT INTO " + table_history + " ( " +
-          "  \"ID\" " + /* C Primärschlüssel */
+          "  \"ID\" " + /* C Primï¿½rschlï¿½ssel */
           ", \"APPLICATION\" " + /* s Name der application */
           ", \"SESSION\" " + /* s ID der Sitzung */
           ", \"STEP\" " + /* s ID des Dialogschritts */
@@ -140,11 +155,11 @@ public class SOSProfiler {
           //", \"QUERY_STRING\" " + /* Inhalt des Query-Strings */
           //", \"REMOTE_ADDR\" " + /* IP-Adresse des Clients */
           //", \"USER_NAME\" " + /* Name des Benutzers */
-          ", \"START_TIME\" " + /* Zeitstempel des Beginns der Ausführung */
-          //", \"END_TIME\" " + /* Zeitstempel des Endes der Ausführung */
+          ", \"START_TIME\" " + /* Zeitstempel des Beginns der Ausfï¿½hrung */
+          //", \"END_TIME\" " + /* Zeitstempel des Endes der Ausfï¿½hrung */
           ", \"START_TIMESTAMP\" " +
-          /* Zeitstempel in Millisekunden des Beginns der Ausführung */
-          //", \"END_TIMESTAMP\" " + /* Zeitstempel in Millisekunden des Endes der Ausführung */
+          /* Zeitstempel in Millisekunden des Beginns der Ausfï¿½hrung */
+          //", \"END_TIMESTAMP\" " + /* Zeitstempel in Millisekunden des Endes der Ausfï¿½hrung */
           //", \"ELAPSED\" " +/* Anzahl Millisekunden zwischen start_time und end_time */
           ", \"STATEMENT\" " + /* Inhalt des SQL-Statements */
           //", \"ERROR\" " + /* Boolean: 0=ok, 1=Fehler */
@@ -283,7 +298,7 @@ public class SOSProfiler {
   }
 
   /**
-   * holt den nächsten sequenz
+   * holt den nï¿½chsten sequenz
    * @param entry
    * @return int
    */
@@ -329,7 +344,7 @@ public class SOSProfiler {
 
   /*
    * Bestimmt den Namen der Klasse und den Namen der Methode, die die Methode
-   * dataswitch.Profiler.start aufgerufen haben. Zusätzlich wird
+   * dataswitch.Profiler.start aufgerufen haben. Zusï¿½tzlich wird
    * die Strukturtiefe bestimmt.
    */
   private void getMethodName() {
@@ -413,7 +428,7 @@ public class SOSProfiler {
   }
 
   /**
-   *  Datenbanktabelle Name für Profiler-Einstellungen setzen
+   *  Datenbanktabelle Name fï¿½r Profiler-Einstellungen setzen
    *  @param tableSettings_
    */
   public void setName4TableSettings(String tableSettings_) {
@@ -421,7 +436,7 @@ public class SOSProfiler {
   }
 
   /**
-   *  Datenbanktabelle Name für Profiler-Einstellungen auslesen
+   *  Datenbanktabelle Name fï¿½r Profiler-Einstellungen auslesen
    *  @return String
    */
   public String getName4TableSettings() {
@@ -429,7 +444,7 @@ public class SOSProfiler {
   }
 
   /**
-   *  Datenbanktabelle Name für Profiler-Historie setzen
+   *  Datenbanktabelle Name fï¿½r Profiler-Historie setzen
    *  @param tableHistory
    */
   public void setName4TableHistory(String tableHistory) {
@@ -437,7 +452,7 @@ public class SOSProfiler {
   }
 
   /**
-   *  Datenbanktabelle Name für Profiler-Historie auslesen
+   *  Datenbanktabelle Name fï¿½r Profiler-Historie auslesen
    *  @return String
    */
   public String getName4TableHistory() {
@@ -445,7 +460,7 @@ public class SOSProfiler {
   }
 
   /**
-   * Name des Eintrags für Sequenzzähler der Historieneinträge
+   * Name des Eintrags fï¿½r Sequenzzï¿½hler der Historieneintrï¿½ge
    * in Tabelle profiler_settings setzen.
    *  @param historyId
    */
@@ -454,7 +469,7 @@ public class SOSProfiler {
   }
 
   /**
-   * Name des Eintrags für Sequenzzähler der Historieneinträge
+   * Name des Eintrags fï¿½r Sequenzzï¿½hler der Historieneintrï¿½ge
    * in Tabelle profiler_settings auslesen.
    *  @return String
    */
@@ -463,7 +478,7 @@ public class SOSProfiler {
   }
 
   /**
-   *  Name des Eintrags für Sequenzzähler der Dialogschritte in Tabelle
+   *  Name des Eintrags fï¿½r Sequenzzï¿½hler der Dialogschritte in Tabelle
    * profiler_settings setzen.
    *  @param entryHistoryStep
    */
@@ -472,7 +487,7 @@ public class SOSProfiler {
   }
 
   /**
-   *  Name des Eintrags für Sequenzzähler der Dialogschritte in Tabelle
+   *  Name des Eintrags fï¿½r Sequenzzï¿½hler der Dialogschritte in Tabelle
    *  profiler_settings auslesen.
    *  @return String
    */

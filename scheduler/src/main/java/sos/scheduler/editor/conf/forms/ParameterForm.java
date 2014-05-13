@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -399,7 +414,7 @@ public class ParameterForm extends SOSJOEMessageCodes implements IUnsaved, IUpda
 			includeParameterTabItem.setData("node", node);
 			includeParameterTabItem.setData("doc", doc);
 			includeParameterTabItem.setData("params", listOfElement);
-			// --> bis hier alles in listener übernehmen
+			// --> bis hier alles in listener ï¿½bernehmen
 			
 			final Group group_1 = new Group(tabFolder, SWT.NONE);
 			group_1.setText(txtIncludeFilename.getText());
@@ -540,7 +555,7 @@ public class ParameterForm extends SOSJOEMessageCodes implements IUnsaved, IUpda
 					txtIncludeParameter.setFocus();
 				}
 			});
-			// Speichern und löschen ist nicht im Xpath Ausdruck erlaubt. Grund: Parameter können aus verschiedenen Paths geholt werden.
+			// Speichern und lï¿½schen ist nicht im Xpath Ausdruck erlaubt. Grund: Parameter kï¿½nnen aus verschiedenen Paths geholt werden.
 			boolean hasXPathExpression = txtIncludeNode.getText().trim().length() == 0;
 			butoIncludeSave.setVisible(hasXPathExpression);
 			butIncludeRemove.setVisible(hasXPathExpression);
@@ -604,7 +619,7 @@ public class ParameterForm extends SOSJOEMessageCodes implements IUnsaved, IUpda
 			}
 		}
 		else {
-			// parameter löschen
+			// parameter lï¿½schen
 			if (tableIncludeParameter.getSelectionCount() > 0) {
 				Element param = (Element) tableIncludeParameter.getSelection()[0].getData("param");
 				Element params = ((Element) listOfElement.get(0)).getParentElement();

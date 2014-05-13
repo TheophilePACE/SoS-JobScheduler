@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -407,7 +422,7 @@ public class SOSSSH2TriLeadImpl extends SOSVfsBaseClass implements ISOSShell, IS
 
 	/**
 	 * \todo
-	 * TODO Variable_set muß hier raus und in den Adapter für den JobScheduler
+	 * TODO Variable_set muï¿½ hier raus und in den Adapter fï¿½r den JobScheduler
 	 * 
 	 */
 	private Variable_set	params	= null;
@@ -517,10 +532,10 @@ public class SOSSSH2TriLeadImpl extends SOSVfsBaseClass implements ISOSShell, IS
 				String regex = "(?i)";
 				/**
 				 * \todo
-				 * TODO os-abhängigkeit besser herstellen als hier gemacht
+				 * TODO os-abhï¿½ngigkeit besser herstellen als hier gemacht
 				 * 
 				 * TODO Es ist doch eigentlich viel besser, wenn die Variablen
-				 * (zusätzlich) als Environment-variablen gesetzt werden.
+				 * (zusï¿½tzlich) als Environment-variablen gesetzt werden.
 				 */
 				if (isWindows) {
 					regex += "%SCHEDULER_PARAM_" + name + "%";
@@ -701,7 +716,7 @@ public class SOSSSH2TriLeadImpl extends SOSVfsBaseClass implements ISOSShell, IS
 
 		@SuppressWarnings("unused")
 		final String conMethodName = conClassName + "::getScriptFileNameSuffix";
-		// TODO über eine Option steuern
+		// TODO ï¿½ber eine Option steuern
 		String strSuffix = flgIsRemoteOSWindows ? ".cmd" : ".sh";
 
 		return strSuffix;
@@ -996,7 +1011,7 @@ public class SOSSSH2TriLeadImpl extends SOSVfsBaseClass implements ISOSShell, IS
 			strbStdoutOutput = new StringBuffer();
 		}
 		else { 
-			// temporär eingebaut um zu prüfen ob das so mit VMS geht. ur 21.6.2013
+			// temporï¿½r eingebaut um zu prï¿½fen ob das so mit VMS geht. ur 21.6.2013
 			if (flgIsRemoteOSWindows == false && !strCmd.startsWith("@") && !strCmd.startsWith("run ")) {
 				strCmd = "echo $$ && " + strCmd;
 			}

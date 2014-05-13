@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -44,21 +59,21 @@ import sos.xml.SOSXMLXPath;
 /**
  * 
  * Klasse JobSchedulerLoadTestLauncher
- * Diese Klasse kann die Ausführung paralleler Jobs skalieren und beliebig viele Jobs können parallel laufen.
+ * Diese Klasse kann die Ausfï¿½hrung paralleler Jobs skalieren und beliebig viele Jobs kï¿½nnen parallel laufen.
  * Die Klasse kann beliebig viele individuelle Jobs starten und kann mit dem Namen eines anderen Jobs oder
  * Auftrages parametrisiert werden, die gestartet werden soll.
- * Die Anzahl zu startenden Jobs in konfigurierbaren Zeitabständen sowie die Erhöhung der Anzahl zu startenden Jobs beim Erreichen
+ * Die Anzahl zu startenden Jobs in konfigurierbaren Zeitabstï¿½nden sowie die Erhï¿½hung der Anzahl zu startenden Jobs beim Erreichen
  * jedes Intervalls sind konfigurierbar.
  * 
  * resourcen: * sos.mail.jar, sos.util.jar, sos.xml.jar, xercesImpl.jar, xml-apis.jar, xalan.jar 
  *
  * 
  *
- * a) Aufruf über Kommandozeile
+ * a) Aufruf ï¿½ber Kommandozeile
  *
  * java -cp=. JobSchedulerLoadTestLauncher -config=<Konfigurationsdatei> -job= -host= -port=
  *
- * Wenn host= bzw. port= gesetzt sind, dann überschreiben sie die Werte der Konfigurationsdatei
+ * Wenn host= bzw. port= gesetzt sind, dann ï¿½berschreiben sie die Werte der Konfigurationsdatei
  * Ist ein Job-Name angegeben, dann wird versucht aus der Konfigurationsdatei die Parameter dieses 
  * Jobs zu extrahieren. Ist kein Job-Name angegeben, dann wird das erste Element <params> aus der Konfigurationsdatei ausgelesen. 
  *
@@ -70,15 +85,15 @@ import sos.xml.SOSXMLXPath;
  *
  * 2. Parameter
  *
- * 2.1 Allgemeine Parameter für den Launcher
+ * 2.1 Allgemeine Parameter fï¿½r den Launcher
  *
  * a) <param name="scheduler_launcher_host" value="localhost"/>
  *
- * Der Host des Job Schedulers, der den Job ausführt, Default: localhost
+ * Der Host des Job Schedulers, der den Job ausfï¿½hrt, Default: localhost
  *
  * b) <param name="scheduler_launcher_port" value="4444"/>
  *
- * Der Port des Job Schedulers, der den Job ausführt, Default: 4444
+ * Der Port des Job Schedulers, der den Job ausfï¿½hrt, Default: 4444
  *
  * c) <param name="scheduler_launcher_protocol" value="tcp|udp"/>
  *
@@ -86,16 +101,16 @@ import sos.xml.SOSXMLXPath;
  *
  * c) <param name="scheduler_launcher_min_starts" value="5"/>
  *
- * Die minimale Anzahl von Jobs oder Aufträgen, die gleichzeitig gestartet werden. Default=1
+ * Die minimale Anzahl von Jobs oder Auftrï¿½gen, die gleichzeitig gestartet werden. Default=1
  *
  * d) <param name="scheduler_launcher_max_starts" value="100"/>
  *
- * Die maximale Anzahl von Jobs oder Aufträgen, die gleichzeitig gestartet werden.
+ * Die maximale Anzahl von Jobs oder Auftrï¿½gen, die gleichzeitig gestartet werden.
  *
  *  e) <param name="scheduler_launcher_start_increment" value="+10|*2"/>
  *
- *  Die Anzahl zu startender Job oder Aufträge wird pro Start um diese Zahl erhöht. Ein Wert 3 ist gleichbedeutend mit +3, d.h. die Zahl wird um 3 erhöht.
- *  Ein Wert *2 bedeutet, dass sich die Anzahl verdoppelt. Das Inkrement gilt nicht beim ersten Start. Die mit dem Parameter max_starts gesetzte Anzahl darf nicht überschritten werden. Wird sie überschritten, dann werden alle weiteren Starts mit dem Wert von max_starts ausgeführt.
+ *  Die Anzahl zu startender Job oder Auftrï¿½ge wird pro Start um diese Zahl erhï¿½ht. Ein Wert 3 ist gleichbedeutend mit +3, d.h. die Zahl wird um 3 erhï¿½ht.
+ *  Ein Wert *2 bedeutet, dass sich die Anzahl verdoppelt. Das Inkrement gilt nicht beim ersten Start. Die mit dem Parameter max_starts gesetzte Anzahl darf nicht ï¿½berschritten werden. Wird sie ï¿½berschritten, dann werden alle weiteren Starts mit dem Wert von max_starts ausgefï¿½hrt.
  *
  *  f) alle Parameter, deren Namen nicht mit scheduler_launcher_ beginnen, werden an den Job oder Auftrag durchgereicht.
  *  
@@ -103,9 +118,9 @@ import sos.xml.SOSXMLXPath;
  *  Kriterium um das Programm zu beenden
  *  
  *
- *  2.2 Spezielle Parameter für Jobs, siehe Beispiel
+ *  2.2 Spezielle Parameter fï¿½r Jobs, siehe Beispiel
  *  <param name="scheduler_launcher_job" value="job_name"/>
- *  Wenn dieser Parameter übergeben wurde, dann handelt es sich um einen Job. Der hier übergebene 
+ *  Wenn dieser Parameter ï¿½bergeben wurde, dann handelt es sich um einen Job. Der hier ï¿½bergebene 
  *  Job-Name ist der Wert des Attributs job= in <start_job job="..."/>
  *
  *  In diesem Fall werden ausgewertet:
@@ -113,21 +128,21 @@ import sos.xml.SOSXMLXPath;
  *  a) mandatory
  *  keine
  *
- *  b) optional, d.h. bitte keine eigenen Defaults, sondern im Fall des Fehlens einfach nicht übergeben
+ *  b) optional, d.h. bitte keine eigenen Defaults, sondern im Fall des Fehlens einfach nicht ï¿½bergeben
  *  <param name="scheduler_launcher_job_after" value="..."/>
  *  <param name="scheduler_launcher_job_at" value="..."/>
  *  <param name="scheduler_launcher_job_web_service" value="..."/>
  *
- *  2.3 Spezielle Parameter für Aufträge, siehe Beispiel
+ *  2.3 Spezielle Parameter fï¿½r Auftrï¿½ge, siehe Beispiel
  *  <param name="scheduler_launcher_order" value="order_id"/>
- *  Wenn dieser Parameter übergeben wurde, dann handelt es sich um einen Auftrag. Die hier übergebene Auftragskennung ist der Wert des Attributs id= in <add_order id="..."/>
+ *  Wenn dieser Parameter ï¿½bergeben wurde, dann handelt es sich um einen Auftrag. Die hier ï¿½bergebene Auftragskennung ist der Wert des Attributs id= in <add_order id="..."/>
  *
  *  In diesem Fall werden ausgewertet:
  *
  *  a) mandatory
  *  <param name="scheduler_launcher_order_job_chain" value="..."/>
  *
- *  b) optional, d.h. bitte keine eigenen Defaults, sondern im Fall des Fehlens einfach nicht übergeben
+ *  b) optional, d.h. bitte keine eigenen Defaults, sondern im Fall des Fehlens einfach nicht ï¿½bergeben
  *  <param name="scheduler_launcher_order_replace" value="yes|no"/>
  *  <param name="scheduler_launcher_order_state" value="..."/>
  *  <param name="scheduler_launcher_order_title" value="..."/>
@@ -138,10 +153,10 @@ import sos.xml.SOSXMLXPath;
  *  
  *
  *  2.4 Alle anderen Parameter werden durchgereicht. Genauer: alle Parameter, die nicht mit
- *  scheduler_launcher_ beginnen, werden den Jobs oder Aufträgen durchgereicht, die gestartet werden sollen.
+ *  scheduler_launcher_ beginnen, werden den Jobs oder Auftrï¿½gen durchgereicht, die gestartet werden sollen.
  *
  *
- * @author Mürüvet Öksüz
+ * @author Mï¿½rï¿½vet ï¿½ksï¿½z
  * 
  * mueruevet.oeksuez@sos-berlin.com
  *
@@ -150,30 +165,30 @@ import sos.xml.SOSXMLXPath;
 
 public class JobSchedulerLoadTestLauncher {
 	
-	/** Allgemeine Parameter für den Launcher */
-	/** Der Host des Job Schedulers, der den Job ausführt, Default: localhost*/
+	/** Allgemeine Parameter fï¿½r den Launcher */
+	/** Der Host des Job Schedulers, der den Job ausfï¿½hrt, Default: localhost*/
 	private String schedulerLauncherHost                = "localhost";
 	
-	/** Der Port des Job Schedulers, der den Job ausführt, Default: 4444 */
+	/** Der Port des Job Schedulers, der den Job ausfï¿½hrt, Default: 4444 */
 	private int schedulerLauncherPort                   = 4444;
 	
 	/** Das Protokoll zum Versenden via JobSchedulerCommand tcp oder udp, Default: tcp */
 	private String schedulerLauncherProtocol            = "tcp";
 	
-	/** Die minimale Anzahl von Jobs oder Aufträgen, die gleichzeitig gestartet wird. Default=1 */
+	/** Die minimale Anzahl von Jobs oder Auftrï¿½gen, die gleichzeitig gestartet wird. Default=1 */
 	private int schedulerLauncherMinStarts              = 1;
 	
-	/** Die maximale Anzahl von Jobs oder Aufträgen, die gleichzeitig gestartet werden.
+	/** Die maximale Anzahl von Jobs oder Auftrï¿½gen, die gleichzeitig gestartet werden.
 	 * -1 bedeutet, das kein Parameterwert angegeben ist
 	 */
 	private int schedulerLauncherMaxStarts              = -1;
 	
 	/**
-	 * Die Anzahl zu startender Job oder Aufträge wird pro Start um diese Zahl erhöht.
-	 * Ein Wert 3 ist gleichbedeutend mit +3, d.h. die Zahl wird um 3 erhöht.
+	 * Die Anzahl zu startender Job oder Auftrï¿½ge wird pro Start um diese Zahl erhï¿½ht.
+	 * Ein Wert 3 ist gleichbedeutend mit +3, d.h. die Zahl wird um 3 erhï¿½ht.
 	 * Ein Wert *2 bedeutet, dass sich die Anzahl verdoppelt.
-	 * Das Inkrement gilt nicht beim ersten Start. Die mit dem Parameter max_starts gesetzte Anzahl darf nicht überschritten werden.
-	 * Wird sie überschritten, dann werden alle weiteren Starts mit dem Wert von max_starts ausgeführt.
+	 * Das Inkrement gilt nicht beim ersten Start. Die mit dem Parameter max_starts gesetzte Anzahl darf nicht ï¿½berschritten werden.
+	 * Wird sie ï¿½berschritten, dann werden alle weiteren Starts mit dem Wert von max_starts ausgefï¿½hrt.
 	 * Z.B. value="+10" oder "*2"/>
 	 * Diese Wert wird in zwei Variablen gesplittet: 
 	 * schedulerLauncherStartIncrement und schedulerLauncherStartIncrementFactor.
@@ -181,7 +196,7 @@ public class JobSchedulerLoadTestLauncher {
 	private int schedulerLauncherStartIncrement           = 1;
 	private String schedulerLauncherStartIncrementFactor  = "+";
 	
-	/** Verzögerung bis zum nächsten Job Starts*/
+	/** Verzï¿½gerung bis zum nï¿½chsten Job Starts*/
 	private int schedulerLauncherInterval                 = 0; 
 	
 	/** Abbruchbedingung. Beim Erreichen der Anzahl Sekunden wird das Programm beendet. 
@@ -195,29 +210,29 @@ public class JobSchedulerLoadTestLauncher {
 	 */
 	private long terminateTimeInSec                       = 0;
 	
-	/** Spezielle Parameter für Jobs
-	 * Wenn dieser Parameter übergeben wurde, dann handelt es sich um einen Job.
-	 * Der hier übergebene Job-Name ist der Wert des Attributs job= in <start_job job="..."/>
+	/** Spezielle Parameter fï¿½r Jobs
+	 * Wenn dieser Parameter ï¿½bergeben wurde, dann handelt es sich um einen Job.
+	 * Der hier ï¿½bergebene Job-Name ist der Wert des Attributs job= in <start_job job="..."/>
 	 */
 	private String schedulerLauncherJob                 = "";
 	
-	/** Spezielle Parameter für Jobs, mandatory*/
+	/** Spezielle Parameter fï¿½r Jobs, mandatory*/
 	private String schedulerLauncherJobAfter            = "";
 	private String schedulerLauncherJobAt               = "";
 	private String schedulerLauncherJobWebService       = "";
 	
 	/**
-	 * Spezielle Parameter für Aufträge.
-	 * Wenn dieser Parameter übergeben wurde, dann handelt es sich um einen Auftrag.
-	 * Die hier übergebene Auftragskennung ist der Wert des Attributs id= in <add_order id="..."/>
+	 * Spezielle Parameter fï¿½r Auftrï¿½ge.
+	 * Wenn dieser Parameter ï¿½bergeben wurde, dann handelt es sich um einen Auftrag.
+	 * Die hier ï¿½bergebene Auftragskennung ist der Wert des Attributs id= in <add_order id="..."/>
 	 */
 	private String schedulerLauncherOrder               = "";
 	
-	/** Spezielle Parameter für Aufträge. mandatory, wenn Parameter schedulerLauncher_order angegeben ist */
+	/** Spezielle Parameter fï¿½r Auftrï¿½ge. mandatory, wenn Parameter schedulerLauncher_order angegeben ist */
 	private String schedulerLauncherOrderJobChain       = "";
 	
-	/** Spezielle Parameter für Aufträge.
-	 * Optional, d.h. bitte keine eigenen Defaults, sondern im Fall des Fehlens einfach nicht übergeben
+	/** Spezielle Parameter fï¿½r Auftrï¿½ge.
+	 * Optional, d.h. bitte keine eigenen Defaults, sondern im Fall des Fehlens einfach nicht ï¿½bergeben
 	 */
 	private boolean schedulerLauncherOrderReplace        = true;
 	private String schedulerLauncherOrderState          = "";
@@ -247,7 +262,7 @@ public class JobSchedulerLoadTestLauncher {
 	private String stateText                            = "";
 	
 	/** Name des Jobs, dessen Parameter aus der XML-Konfigurationsdatei extrahiert werden sollen.
-	 *  Gilt nur, wenn diese Klasse über die Kommandozeile aufgerufen wird*/
+	 *  Gilt nur, wenn diese Klasse ï¿½ber die Kommandozeile aufgerufen wird*/
 	private String jobname                              = "";
 	
     
@@ -274,7 +289,7 @@ public class JobSchedulerLoadTestLauncher {
 			this.sosLogger = sosLogger_;
 			this.configFile = configFile_;
 			
-			// Wenn das configFile_ mehrere Job-Definitionen enthält, dann sollen die Parameter diese jobname extrahiert werden			
+			// Wenn das configFile_ mehrere Job-Definitionen enthï¿½lt, dann sollen die Parameter diese jobname extrahiert werden			
 			if (jobname_ != null && jobname_.length() > 0) {
 				this.jobname = jobname_;
 				sosLogger.debug3("..argument[job] = " + jobname);
@@ -282,13 +297,13 @@ public class JobSchedulerLoadTestLauncher {
 			
 			init();
 			
-			//Das Argument host_ überschreibt eventuell vorhandene Parameter aus der Konfigurationsdatei
+			//Das Argument host_ ï¿½berschreibt eventuell vorhandene Parameter aus der Konfigurationsdatei
 			if (sosString.parseToString(host_).length() > 0) {
 				this.schedulerLauncherHost = host_;			
 				sosLogger.debug3("..argument[host] = " + schedulerLauncherHost);
 			}
 			
-			//Das Argument port_ überschreibt eventuell vorhandene Parameter aus der Konfigurationsdatei			
+			//Das Argument port_ ï¿½berschreibt eventuell vorhandene Parameter aus der Konfigurationsdatei			
 			if ((port_ != -1) 					
 					&& (sosString.parseToString(String.valueOf(port_)).length() > 0)) {
 				this.schedulerLauncherPort = port_;
@@ -315,10 +330,10 @@ public class JobSchedulerLoadTestLauncher {
 	
 	/**
 	 * Extrahiert die Parameters aus einer Konfigurationsdatei.
-	 * Das ist der Fall, wenn diese Klasse über eine Kommandozeile aufgerufen wurde und 
-	 * die Konfigurationsdateiname als Argument übergeben wurde.
+	 * Das ist der Fall, wenn diese Klasse ï¿½ber eine Kommandozeile aufgerufen wurde und 
+	 * die Konfigurationsdateiname als Argument ï¿½bergeben wurde.
 	 * 
-	 * Wenn keine Konfigurationsdatei übergeben wurde, dann springt er raus.
+	 * Wenn keine Konfigurationsdatei ï¿½bergeben wurde, dann springt er raus.
 	 * 
 	 * @throws Exception
 	 */
@@ -362,10 +377,10 @@ public class JobSchedulerLoadTestLauncher {
 	
 	/**
 	 * Extrahiert die Parameters aus einer Konfigurationsdatei.
-	 * Das ist der Fall, wenn diese Klasse über eine Kommandozeile aufgerufen wurde und 
-	 * die Konfigurationsdateiname als Argument übergeben wurde.
+	 * Das ist der Fall, wenn diese Klasse ï¿½ber eine Kommandozeile aufgerufen wurde und 
+	 * die Konfigurationsdateiname als Argument ï¿½bergeben wurde.
 	 * 
-	 * Wenn keine Konfigurationsdatei übergeben wurde, dann springt er raus.
+	 * Wenn keine Konfigurationsdatei ï¿½bergeben wurde, dann springt er raus.
 	 * 
 	 * @throws Exception
 	 */
@@ -705,8 +720,8 @@ public class JobSchedulerLoadTestLauncher {
 	}
 	
 	/**
-	 * Überprüfungen:
-	 * Die Parameter scheduler_launcher_job und scheduler_launcher_order dürfen nicht gleichzeitig leer sein bzw. gleichzeitig angegeben sein
+	 * ï¿½berprï¿½fungen:
+	 * Die Parameter scheduler_launcher_job und scheduler_launcher_order dï¿½rfen nicht gleichzeitig leer sein bzw. gleichzeitig angegeben sein
 	 * @throws Exception
 	 */
 	private void checkParams() throws Exception {
@@ -762,7 +777,7 @@ public class JobSchedulerLoadTestLauncher {
 	
 	
 	/**
-	 * Nach Programmausführung können folgende Ausgaben erfolgen:
+	 * Nach Programmausfï¿½hrung kï¿½nnen folgende Ausgaben erfolgen:
 	 * --------------------------------------------------------------- 
 	 * ..number of job starts :  
 	 * ..number of jobs processed successfully : 
@@ -796,7 +811,7 @@ public class JobSchedulerLoadTestLauncher {
 	
 	/**
 	 * 
-	 * Diese Klasse kann über die Kommadozeile aufgerufen werden, z.B. kann die 
+	 * Diese Klasse kann ï¿½ber die Kommadozeile aufgerufen werden, z.B. kann die 
 	 * Kommando-Datei wie folgt aussehen:
 	 * 
 	 * **********************************************************************************
@@ -819,7 +834,7 @@ public class JobSchedulerLoadTestLauncher {
         
 		String configFile = "";
 		String host       = "";
-		int port          = -1; //es wurde kein Argument -port= übergeben
+		int port          = -1; //es wurde kein Argument -port= ï¿½bergeben
 		String job        = "";
 		SOSString sosString = null;
         

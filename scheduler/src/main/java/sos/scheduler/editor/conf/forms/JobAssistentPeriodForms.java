@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -155,8 +170,8 @@ public class JobAssistentPeriodForms {
 
 	private String				bApply					= "";
 
-	/** Hilsvariable für das Schliessen des Dialogs. 
-	 * Das wird gebraucht wenn das Dialog über den "X"-Botten (oben rechts vom Dialog) geschlossen wird .*/
+	/** Hilsvariable fï¿½r das Schliessen des Dialogs. 
+	 * Das wird gebraucht wenn das Dialog ï¿½ber den "X"-Botten (oben rechts vom Dialog) geschlossen wird .*/
 	private boolean				closeDialog				= false;
 
 	public JobAssistentPeriodForms(SchedulerDom dom_, ISchedulerUpdate update_, Element job_, int assistentType_) {
@@ -532,7 +547,7 @@ public class JobAssistentPeriodForms {
 		Element day = null;
 		Element[] days = monthListener.getDayElements();
 		if (days != null && days.length > 0) {// gleich 1 bedeutet, das day Element gerade generiert wurde
-			// überprüfe, ob der Wochentag bereits ausgewählt wurde
+			// ï¿½berprï¿½fe, ob der Wochentag bereits ausgewï¿½hlt wurde
 			for (int i = 0; i < days.length; i++) {
 				Element eday = (Element) days[i];
 				if (Utils.str2int(Utils.getAttributeValue("day", eday)) == (comboMonth.getSelectionIndex() + 1)) {
@@ -554,7 +569,7 @@ public class JobAssistentPeriodForms {
 		Element day = null;
 		Element[] days = weekDayListener.getDayElements();
 		if (days != null && days.length > 0) {// gleich 1 bedeutet, das day Element gerade generiert wurde
-			// überprüfe, ob der Wochentag bereits ausgewählt wurde
+			// ï¿½berprï¿½fe, ob der Wochentag bereits ausgewï¿½hlt wurde
 			for (int i = 0; i < days.length; i++) {
 				Element eday = (Element) days[i];
 				if (Utils.str2int(Utils.getAttributeValue("day", eday)) == (comboWeekDay.getSelectionIndex() + 1)) {
@@ -748,7 +763,7 @@ public class JobAssistentPeriodForms {
 			int[] da = speDateListener.getDate(i);
 			java.util.List periods = speElem.getChildren("period");
 			if (periods == null || periods.size() <= 1) {
-				// es existiert nur maximal eine Periode -> der Element kann gelöscht werden
+				// es existiert nur maximal eine Periode -> der Element kann gelï¿½scht werden
 				speDateListener.removeDate(i);
 			}
 			else {
@@ -776,11 +791,11 @@ public class JobAssistentPeriodForms {
 			if (selectedStr.indexOf(sWeek) > -1) {
 				java.util.List periods = elWeek.getChildren("period");
 				if (periods == null || periods.size() <= 1) {
-					// es existiert nur maximal eine Periode -> der Element kann gelöscht werden
+					// es existiert nur maximal eine Periode -> der Element kann gelï¿½scht werden
 					weekDayListener.deleteDay(sWeek);
 				}
 				else {
-					// Der Wochentag hat mehr als eine Periode -> lösche den mit der gleichen Zeit
+					// Der Wochentag hat mehr als eine Periode -> lï¿½sche den mit der gleichen Zeit
 					for (int j = 0; periods != null && j < periods.size(); j++) {
 						Element period = (Element) periods.get(j);
 						PeriodListener p = new PeriodListener(dom);
@@ -808,11 +823,11 @@ public class JobAssistentPeriodForms {
 			if (selectedStr.indexOf(sMonth) > -1) {
 				java.util.List periods = elMonth.getChildren("period");
 				if (periods == null || periods.size() <= 1) {
-					// es existiert nur maximal eine Periode -> der Element kann gelöscht werden
+					// es existiert nur maximal eine Periode -> der Element kann gelï¿½scht werden
 					monthListener.deleteDay(sMonth);
 				}
 				else {
-					// Der Monat hat mehr als eine Periode -> lösche den mit der gleichen Zeit
+					// Der Monat hat mehr als eine Periode -> lï¿½sche den mit der gleichen Zeit
 					for (int j = 0; periods != null && j < periods.size(); j++) {
 						Element period = (Element) periods.get(j);
 						PeriodListener p = new PeriodListener(dom);

@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -386,7 +401,7 @@ public class TreeMenu {
 
                     String newXML = Utils.showClipboard(xml, _tree.getShell(), i.getText().equalsIgnoreCase(TreeMenu.EDIT_XML), selectStr);
 
-                    // newXML ist null, wenn Änderungen nicht übernommen werden
+                    // newXML ist null, wenn ï¿½nderungen nicht ï¿½bernommen werden
                     // sollen
                     if (newXML != null)
                         applyXMLChange(newXML);
@@ -980,7 +995,7 @@ public class TreeMenu {
         return false;
     }
 
-    // liefert mögliche Vaterknoten der key, falls diese nicht in dom.orders
+    // liefert mï¿½gliche Vaterknoten der key, falls diese nicht in dom.orders
     // steht
     private String[] getPossibleParent(String key) {
         if (key.equals("jobs") || key.equals("monitor"))
@@ -999,7 +1014,7 @@ public class TreeMenu {
     private void paste(String key, TreeData data, boolean overrideAttributes) {
 
         try {
-            // ungleiche Typen, überprüfen, ob das pastelement ein möglicher
+            // ungleiche Typen, ï¿½berprï¿½fen, ob das pastelement ein mï¿½glicher
             // Vaterknoten von _copy element ist, z.B. _copy Element ist job und
             // paste Element ist jobs
             if (_type != data.getType()) {
@@ -1039,7 +1054,7 @@ public class TreeMenu {
                     key = split[split.length - 1];
                 java.util.List ce = null;
                 if (key.equals(copyElement.getName())) {
-                    // überschreiben: z.B. copy ist job element und paste ist
+                    // ï¿½berschreiben: z.B. copy ist job element und paste ist
                     // auch Job element
                     removeAttributes(currElem);
                     currElem.removeContent();
@@ -1066,7 +1081,7 @@ public class TreeMenu {
                     java.util.List currElemContent = null;
                     if (_tree.getSelection()[0].getData("max_occur") != null && _tree.getSelection()[0].getData("max_occur").equals("1")) {
                         // es darf nur einen currElem.get(key) Kindknoten geben.
-                        // Also attribute löschen aber die Kinder mitnehmen
+                        // Also attribute lï¿½schen aber die Kinder mitnehmen
                         if (currElem.getChild(key) != null)
                             currElemContent = currElem.getChild(key).cloneContent();
                         currElem.removeChild(key);
@@ -1112,8 +1127,8 @@ public class TreeMenu {
         }
     }
 
-    // Ein Kindelement hinzufügen, z.B. jobs einen job element oder job_chains
-    // einen job_chain element einfügen
+    // Ein Kindelement hinzufï¿½gen, z.B. jobs einen job element oder job_chains
+    // einen job_chain element einfï¿½gen
     private void pasteChild(String key, TreeData data) {
         if (key.equalsIgnoreCase("monitor") && _type != data.getType()) {
             // ausnahme

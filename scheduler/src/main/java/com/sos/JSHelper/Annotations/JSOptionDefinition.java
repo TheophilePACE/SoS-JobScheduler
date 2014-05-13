@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -33,9 +48,9 @@
 package com.sos.JSHelper.Annotations;
 
 /**
-* \class JSOptionDefinition - Annotation für eine JSOption
+* \class JSOptionDefinition - Annotation fï¿½r eine JSOption
 * 
-* \brief JSOptionDefinition - Annotation für eine JSOption
+* \brief JSOptionDefinition - Annotation fï¿½r eine JSOption
 * 
 * \details
 *
@@ -77,7 +92,7 @@ public @interface JSOptionDefinition {
 	 * Hier wird der Name der Option angegeben.
 	 * Mit diesem Namen wird die Option von "aussen" angesprochen.
 	 * 
-	 * Das Schlüsselwort muß in der Annotation angegeben werden.
+	 * Das Schlï¿½sselwort muï¿½ in der Annotation angegeben werden.
 	 * \return String
 	 *
 	 */
@@ -88,27 +103,27 @@ public @interface JSOptionDefinition {
 	 * \brief description - Kurzbeschreibung der Option
 	 * 
 	 * \details
-	 * Mit diesem Schlüsselwort wird eine Kurzbeschreibung der Option angegeben.
+	 * Mit diesem Schlï¿½sselwort wird eine Kurzbeschreibung der Option angegeben.
 	 * Diese Kurzbeschreibung wird verwendet in der Ausgabe, z.B. in den Protokollen
-	 * zur Laufzeit oder in der Prüfung auf Vorhandensein (siehe 
+	 * zur Laufzeit oder in der Prï¿½fung auf Vorhandensein (siehe 
 	 * Eigenschaft "mandatory").
 	 * 
-	 * Das Schlüsselwort muß in der Annotation angegeben werden.
+	 * Das Schlï¿½sselwort muï¿½ in der Annotation angegeben werden.
 	 * \return String
 	 *
 	 */
 	String description();
 	/**
 	 * 
-	 * \brief key - Schlüssel der Option
+	 * \brief key - Schlï¿½ssel der Option
 	 * 
 	 * \details
-	 * Mit dem Schlüssel wird festgelegt, wie die Option z.B. in einer HashMap oder einer Property-Datei
+	 * Mit dem Schlï¿½ssel wird festgelegt, wie die Option z.B. in einer HashMap oder einer Property-Datei
 	 * abgelegt ist bzw. wird.
-	 * Der Schlüssel kann mit dem Namen der Optionklasse ergänzt werden. Dann wird der Name der Klasse
-	 * als Präfix verwendet.
+	 * Der Schlï¿½ssel kann mit dem Namen der Optionklasse ergï¿½nzt werden. Dann wird der Name der Klasse
+	 * als Prï¿½fix verwendet.
 	 * 
-	 * Das Schlüsselwort muß nicht angegeben werden, es ist optional.
+	 * Das Schlï¿½sselwort muï¿½ nicht angegeben werden, es ist optional.
 	 * Wird es nicht angegeben, so wird als Wert der Wert des Attributes "name" verwendet.
 	 * \example
 	 * @JSOptionDefinition (name"HostName", description="Name of FTP-Host/Server", key="HostName" )
@@ -126,7 +141,7 @@ public @interface JSOptionDefinition {
 	 * Mit diesem Attribut der Annotation wird der Name des XML-Tags festgelegt, der in der Ausgabe im
 	 * XML-Format (siehe Methode toXML() ) verwendet wird.
 	 * 
-	 * Das Schlüsselwort muß nicht angegeben werden, es ist optional.
+	 * Das Schlï¿½sselwort muï¿½ nicht angegeben werden, es ist optional.
 	 * Wird es nicht angegeben, so wird als Wert der Wert des Attributes "name" verwendet.
 	 * 
 	 * \return String

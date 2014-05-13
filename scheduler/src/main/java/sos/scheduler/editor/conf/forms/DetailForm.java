@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -128,7 +143,7 @@ public class DetailForm extends SOSJOEMessageCodes implements IUpdateLanguage {
 	private boolean							isLifeElement				= false;
 	private String							path						= null;
 	private String							_orderId					= null;
-	// wird nur für wizzard verwendet
+	// wird nur fï¿½r wizzard verwendet
 	private ISchedulerUpdate				update						= null;
 	private SchedulerDom					schedulerDom				= null;
 	// Verwendung in Wizzard
@@ -863,7 +878,7 @@ public class DetailForm extends SOSJOEMessageCodes implements IUpdateLanguage {
 	private void changeParameNote() {
 		if (detailListener == null)
 			return;
-		// Wert auf leer zurücksetzen
+		// Wert auf leer zurï¿½cksetzen
 		if (txtParamNote.getText() != null && txtParamNote.getText().length() == 0)
 			return;
 		if (txtName.getText() != null && txtName.getText().length() == 0) {
@@ -989,7 +1004,7 @@ public class DetailForm extends SOSJOEMessageCodes implements IUpdateLanguage {
 	}
 
 	/*
-	 * Überprüft, ob der Import Knoten die Parameter verändert hat. Es geht um die Parameterbeschreibung.
+	 * ï¿½berprï¿½ft, ob der Import Knoten die Parameter verï¿½ndert hat. Es geht um die Parameterbeschreibung.
 	 * Die Parameter Beschreibung ist hier leider anders abgelegt als bei den anderen Parametern.
 	 */
 	private void refreshTable() {

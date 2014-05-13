@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -60,17 +75,17 @@ import sos.util.SOSDate;
 import sos.util.SOSString;
 
 /**
- * Dieser Job läuft auf einem Master Scheduler und überprüft den
+ * Dieser Job lï¿½uft auf einem Master Scheduler und ï¿½berprï¿½ft den
  * Status anderer als Slaves angemeldeter Scheduler
  * Paramter:<br/>
  * <ul>
- *  <li>slave_1 erster zu überprüfender Jobscheduler (host:port)</li>
- *  <li>slave_n n-ter zu überprüfender Jobscheduler</li>
+ *  <li>slave_1 erster zu ï¿½berprï¿½fender Jobscheduler (host:port)</li>
+ *  <li>slave_n n-ter zu ï¿½berprï¿½fender Jobscheduler</li>
  *  <li>warn_if_not_connected Warnung verschicken wenn Scheduler nicht verbunden
  *   sind? default:true</li>
  *  <li>warn_if_not_registered Warnung verschicken wenn Scheduler nicht registriert
  *   sind? default:true</li>
- *  <li>check_jobs Jobs der verbundenen Scheduler überprüfen? default:true</li>
+ *  <li>check_jobs Jobs der verbundenen Scheduler ï¿½berprï¿½fen? default:true</li>
  *  <li>min_warning_age</li>Mindestalter eines Problems, damit der Job es meldet.
  *     Entweder Sekunden oder hh:mm[:ss]
  * </ul>
@@ -197,10 +212,10 @@ public class JobSchedulerCheckSlaves extends JobSchedulerJob {
 	private boolean warnIfNotRegistered = true;
 	private boolean checkJobs = true;
 	
-	 /** Attribut: maxRetryConnectCount: Maximale Anzahl Versuche für Verbindungsaufbau bis Fehlerzustand erreicht ist */
+	 /** Attribut: maxRetryConnectCount: Maximale Anzahl Versuche fï¿½r Verbindungsaufbau bis Fehlerzustand erreicht ist */
     private int maxRetry			= 50; 
 
-    /** Attribut: maxRetryConnectInterval: Zeitintervall für Wiederholungsversuche für Verbindungsaufbau wenn Fehlerzustand erreicht ist */
+    /** Attribut: maxRetryConnectInterval: Zeitintervall fï¿½r Wiederholungsversuche fï¿½r Verbindungsaufbau wenn Fehlerzustand erreicht ist */
     private int maxRetryInterval			= 14400; // alle 4 Stunden
     
     /** Attribut: min_warning_age: Mindestalter eines Problems, damit der Job es meldet. */
@@ -209,7 +224,7 @@ public class JobSchedulerCheckSlaves extends JobSchedulerJob {
     /** Zeit des Schedulers aus der XML Antwort */
     private String schedulerDateTime="";
     
-    // wurden Scheduler konfiguriert, die auf alle Fälle benötigt werden?
+    // wurden Scheduler konfiguriert, die auf alle Fï¿½lle benï¿½tigt werden?
     private boolean hasRequests;
 	
 	public boolean spooler_init(){

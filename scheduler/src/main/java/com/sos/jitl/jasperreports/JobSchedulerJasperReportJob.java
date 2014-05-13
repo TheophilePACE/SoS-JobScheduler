@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -91,20 +106,20 @@ import sos.xml.SOSXMLXPath;
  *  <br>
  *  <br> 
  *  <br>Es kann wahlweise die Datenbankverbindung des Job Schedulers oder eine separat angebbare 
- *  <br>Datenbankverbindung für die Abfrage der Berichtsdaten verwendet werden.
+ *  <br>Datenbankverbindung fï¿½r die Abfrage der Berichtsdaten verwendet werden.
  *  <br>
  *  <br>
- *  <br>Die Berichtsdaten können auch mittels Parameter generiert werden. Alle Jobparameter werden den JasperReport als 
+ *  <br>Die Berichtsdaten kï¿½nnen auch mittels Parameter generiert werden. Alle Jobparameter werden den JasperReport als 
  *      Parameter zum Weiterverarbeiten weitergegeben.
  *  <br>
  *  <br>
- *  <br>Der Job unterstützt die Ausgabe in die Berichtsformate PDF, HTML, RTF, XML und XLS.
+ *  <br>Der Job unterstï¿½tzt die Ausgabe in die Berichtsformate PDF, HTML, RTF, XML und XLS.
  *  <br>
- *  <br>Alle Generierten Reports können als emails versendet werden.
+ *  <br>Alle Generierten Reports kï¿½nnen als emails versendet werden.
  *  <br>
  *  <br>Generieren von Reports mit JasperReport:
  *  <br>
- *  <br>Über die Jobparameter bzw. Orderparameter können folgende Parametern übergeben werden:
+ *  <br>ï¿½ber die Jobparameter bzw. Orderparameter kï¿½nnen folgende Parametern ï¿½bergeben werden:
  *  <br> - Name der Jasper Vorlage. Die jasper-Vorlage mit Pfadangabe angeben.
  *  <br> <b>parameter:</b> name="<i>report_filename</i>" value="<i>jasperreports/config/dod/dod.jasper</i>"
  *  <br>              
@@ -114,30 +129,30 @@ import sos.xml.SOSXMLXPath;
  *  <br> - Das Report wird hier zweimal erzeugt. Einmal in html und einmal in pdf
  *  <br> <b>parameter:</b> name="<i>output_type</i>" value="<i>html;pdf</i>"
  *  <br>
- *  <br> - Titel des Reports (gilt nur für dod-reports)
+ *  <br> - Titel des Reports (gilt nur fï¿½r dod-reports)
  *  <br> <b>parameter:</b> name="<i>title</i>" value="<i>DOD Yearly Order Report: ETH Zuerich</i>"   
  *  <br>
- *  <br> - Verzeichnis der Sub Reports, falls Unterformulare vorhanden ist. Bitte schließende Slash nicht vergessen  
+ *  <br> - Verzeichnis der Sub Reports, falls Unterformulare vorhanden ist. Bitte schlieï¿½ende Slash nicht vergessen  
  *  <br> <b>parameter:</b> name="<i>SUBREPORT_DIR</i>" value="<i>/home/test/scheduler.jasper/jasperreports/config/dod/dod_sub_report/</i>"        
  *  <br>
- *  <br> - Konfigurationsdatei der Datenbankverbindung. Ist kein "settings_filename" angegeben, dann wird der Connection des schedulers übergeben  
+ *  <br> - Konfigurationsdatei der Datenbankverbindung. Ist kein "settings_filename" angegeben, dann wird der Connection des schedulers ï¿½bergeben  
  *  <br> <b>parameter:</b> name="<i>settings_filename</i>" value="<i>/home/test/scheduler.jasper/config/sos_settings_dod.ini</i>" 
  *  <br>
  *  <br> - Der Parameter benennt den Pfad und Namen einer Eingabedatei mit SQL-Statements. 
- *  <br> Wird dem Parameter ein Dateiname zugewiesen, dann wird die in dieser Datei enthaltene Abfrage für den Report verwendet 
+ *  <br> Wird dem Parameter ein Dateiname zugewiesen, dann wird die in dieser Datei enthaltene Abfrage fï¿½r den Report verwendet 
  *  <br> anstelle der in der Berichtskonfiguration enthaltenen Abfrage, siehe Parameterreport_filename.
  *  <br> <b>parameter:</b> name="<i>query_filename</i>" value="<i>dod.sql</i>"
  *  <br>
  *  <br> - Der Parameter gibt eine SQL-Dateiname an. Ist dem Parameter eine Dateiname zugewiesen, 
- *  <br> dann wird die Abfrage ausgeführt und das Resultat der Abfrage mit den Datenbankverbindungen 
- *  <br> den JasperReports als Parameter übergeben. 
+ *  <br> dann wird die Abfrage ausgefï¿½hrt und das Resultat der Abfrage mit den Datenbankverbindungen 
+ *  <br> den JasperReports als Parameter ï¿½bergeben. 
  *  <br> Die Resultat der Abfrage sind freier Parametern, der zur weitergabe an den JasperReports 
  *  <br> Parameter verwendet wird. In DOD-Report werden z.B. dated_from und dated_to als 
  *  <br> Parameter gebraucht, die aus der SQL-Statements selektiert werden 
  *  <br> <b>parameter:</b> name="<i>parameter_query_filename</i>" value="<i>dod_report_year.sql</i>" 
  *  <br> 
  *  <br>
- *  <br> -die Parameter dated_from und dated_to direkt übergeben z.B. 
+ *  <br> -die Parameter dated_from und dated_to direkt ï¿½bergeben z.B. 
  *  <br> Die Parameter ist ein freier Parameter, der zur weitergabe an den JasperReports Parameter 
  *  <br> verwendet wird. Es handelt sich um die Titel des Reports und wird in DOD-Reports verwendet.
  *  <br> <b>parameter:</b> name="<i>dated_from</i>" value="<i>2000-01-01</i>" 
@@ -155,18 +170,18 @@ import sos.xml.SOSXMLXPath;
  *  <br>
  *  <br>- Parameter zur Mailversenden    
  *  <br>mail_it funktion. Ist eine mail_it Parameter angegeben bzw auf true gesetzt, dann wird mit
- *  <br>der Scheduler Mail Funktion emails versendet. Es wird überprüft, ob zusätzlich
+ *  <br>der Scheduler Mail Funktion emails versendet. Es wird ï¿½berprï¿½ft, ob zusï¿½tzlich
  *  <br>die Parameter "mail_to", "mail_cc", "mail_bcc", "mail_subject" und "mail_body" angegeben 
  *  <br>sind. Wenn ja, dann werden zu diesen Adressanten mit den Betreff und body emails versendet. 
- *  <br>Wenn diese Parametern nicht existieren, dann werden die Empfänger aus den Einstellungen 
+ *  <br>Wenn diese Parametern nicht existieren, dann werden die Empfï¿½nger aus den Einstellungen 
  *  <br>des Schedulers (factory.ini) genommen. 
  *  <br>Ist der Jobparameter mail_it nicht vorhanden bzw. als false gesetzt, dann wird der email mit 
  *  <br>Hilfe der Klasse SOSMailOrder versendet. 
  *  <br>Die Voraussetzung zum email versenden mit der Klasse SOSMailOrder ist 
  *  <br>  1. Datenbankverbindung ( hier ist die Datenbankverbindung des Schedulers oder die Datengemeint)
  *  <br>  2. das Existieren der Tabelle "SETTINGS"
- *  <br>  3. Einträge zum email versenden in der Tabelle "SETTINGS"   
- *  <br> Die Empfänger und der Subject und Body werden aus der Jobparameter ausgelesen. 
+ *  <br>  3. Eintrï¿½ge zum email versenden in der Tabelle "SETTINGS"   
+ *  <br> Die Empfï¿½nger und der Subject und Body werden aus der Jobparameter ausgelesen. 
  *  <br>
  *  <br><b>parameter:</b> name="<i>mail_it</i>" value="true/false"
  *  
@@ -181,13 +196,13 @@ import sos.xml.SOSXMLXPath;
  *  <br>-Geben Sie hier eine oder mehrere eMail Adressen an, die den Report als blind carbon copy erhalten. Mehrere eMail Adressen werden durch Komma getrennt.
  *  <br><b>parameter:</b> name="<i>mail_bcc</i>" value=""
  *  
- *  <br>-Der Inhalt des Parameters wird als Betreff der eMail des Reports verwendet und muss ausgefüllt sein, wenn Reports per eMail versendet werden.
+ *  <br>-Der Inhalt des Parameters wird als Betreff der eMail des Reports verwendet und muss ausgefï¿½llt sein, wenn Reports per eMail versendet werden.
  *  <br>Mit diesem Parameter kann das Layout des Reports im HTML-Format oder als plain text angegeben werden. Zur Bestimmen des Layout Typs wird dem Parameter folgender Prefix zugeordnet:
  *  <br>  - factory: 
  *  <br>  - factory_file: 
  *  <br>  - plain: 
  *  <br>  - plain_file: 
- *  <br>Es können folgende Platzhalter verwendet werden, die durch [ und] geklammert werden, z.B. in der Form [date]:
+ *  <br>Es kï¿½nnen folgende Platzhalter verwendet werden, die durch [ und] geklammert werden, z.B. in der Form [date]:
  *  <br>  - [date] - aktuelles Datum 
  *  <br>  - [datetime] - aktuelles Datum und Uhrzeit 
  *  <br>  - [orderid] - ID des Auftrags 
@@ -201,7 +216,7 @@ import sos.xml.SOSXMLXPath;
  *  <br>  - plain: 
  *  <br>  - plain_file: 
  *  <br>
- *  <br>Innerhalb des Layouts können folgende Platzhalter verwendet werden, die jeweils mit [ und ] geklammert werden, z.B. in der Form [date]:
+ *  <br>Innerhalb des Layouts kï¿½nnen folgende Platzhalter verwendet werden, die jeweils mit [ und ] geklammert werden, z.B. in der Form [date]:
  *  <br>  - [date] - aktuelles Datum 
  *  <br>  - [datetime] - aktuelles Datum und Uhrzeit 
  *  <br>  - [orderid] - ID des Auftrags 
@@ -232,7 +247,7 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 	private String reportFilename                       = "";
 	
 	/** SQL-Dateiname, wird dieser Parameter gesetzt dann wird den JasperReport
-	 * die ResultSet ohne Datenbankverbindung übergeben.*/
+	 * die ResultSet ohne Datenbankverbindung ï¿½bergeben.*/
 	private String queryFilename                        = "";
 	
 	/** Ausgabetyp der Reportdatei*/
@@ -241,25 +256,25 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 	/** Name der Ausgabedatei oder eine Verzeichnisname */
 	private String outputFilename                       = "";
 		
-	/** Wenn der Druckername eine prefix = "factory:" enthält, dann wird dieser 
-	 * über die Documentfactory ermittelt. Sonst wird über diesen Druckername gedruckt. */
+	/** Wenn der Druckername eine prefix = "factory:" enthï¿½lt, dann wird dieser 
+	 * ï¿½ber die Documentfactory ermittelt. Sonst wird ï¿½ber diesen Druckername gedruckt. */
 	private String printerName      					= "";
 	
-	/** Einstellungsdatei für Datenbankverbindung, wenn Documentfactory printerName / mail von einer 
+	/** Einstellungsdatei fï¿½r Datenbankverbindung, wenn Documentfactory printerName / mail von einer 
 	 * anderen Datenbank ermittelt werden soll */
 	private String factorySettingsFile                  = "";
 	
 	/** sos.util.SOSString Objekt*/
 	private SOSString sosString 						= new SOSString();
 	
-	/** temporäre Ausgabe hilfsdateiname */
+	/** temporï¿½re Ausgabe hilfsdateiname */
 	private File filledReportFile 						= null;
 	
 	/** Liste aller generierten Report Dokumente*/
 	private ArrayList listOfOutputFilename              = null;
 	
-	/** Ist ein parameter_query_filename angegeben, so wird dieser hier in java ausgeführt und das 
-	 * Ergebis als Parameter den jasperreport übergebenden */
+	/** Ist ein parameter_query_filename angegeben, so wird dieser hier in java ausgefï¿½hrt und das 
+	 * Ergebis als Parameter den jasperreport ï¿½bergebenden */
 	private String parameterQueryFilename				= "";
 	
 	/** sos.spooler.Order Objekt */
@@ -272,10 +287,10 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 	private int printerCopies							= 1;
 	
 	/** Ist eine mail_it Parameter angegeben bzw auf true gesetzt, dann wird mit
-	 * der Scheduler Mail Funktion emails versendet. Es wird überprüft, ob zusätzlich
+	 * der Scheduler Mail Funktion emails versendet. Es wird ï¿½berprï¿½ft, ob zusï¿½tzlich
 	 * die Parameter "mail_to", "mail_cc", "mail_bcc", "mail_subject" und "mail_body" angegeben
 	 * sind. Wenn ja, dann werden zu diesen Adressanten mit den Betreff und body emails versendet.
-	 * Wenn diese Parametern nicht existieren, dann werden die Empfänger aus den Einstellungen
+	 * Wenn diese Parametern nicht existieren, dann werden die Empfï¿½nger aus den Einstellungen
 	 * des Schedulers (factory.ini) genommen.*/
 	private boolean mailIt								= false;
 	
@@ -295,10 +310,10 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 	private String mailBcc								= "";
 	
 	/** Der Inhalt des Parameters wird als Betreff der eMail des
-	 * Reports verwendet und muss ausgefüllt sein, wenn Reports per
+	 * Reports verwendet und muss ausgefï¿½llt sein, wenn Reports per
 	 * eMail versendet werden.
 	 * <p>
-	 *  Es können folgende Platzhalter verwendet werden, die durch [
+	 *  Es kï¿½nnen folgende Platzhalter verwendet werden, die durch [
 	 *  und] geklammert werden, z.B. in der Form [date]:
 	 * </p>
 	 * <ul>
@@ -312,7 +327,7 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 	private String mailSubject							= "";
 	
 	/**
-	 * Löscht den alten Bericht bevor neue generiert wird.
+	 * Lï¿½scht den alten Bericht bevor neue generiert wird.
 	 * Das verhindert, falls keine neue Bericht erstellt wird, z.B. wegen DB oder SQL Fehler,
 	 * dann soll auch keine alten Bericht abgeholt werden
 	 */
@@ -323,7 +338,7 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 	 * <p>
 	 * Mit diesem Parameter kann das Layout
 	 * des Reports im HTML-Format oder als plain text angegeben
-	 * werden. Innerhalb des Layouts können folgende Platzhalter verwendet werden, die jeweils mit [
+	 * werden. Innerhalb des Layouts kï¿½nnen folgende Platzhalter verwendet werden, die jeweils mit [
 	 * und ] geklammert werden, z.B. in der Form [date]:
 	 * </p>
 	 * <ul>
@@ -342,11 +357,11 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 	 */
 	private String mailBody								= "";
 	
-	/** SQL-Statement in base64 encodiert. Diese Variable wird zuerst decodiert und anschließend wird der
-	 * Inhalt ausgeführt und der ResultSet den JasperReport ohne Datenbankverbindung übergeben.*/
+	/** SQL-Statement in base64 encodiert. Diese Variable wird zuerst decodiert und anschlieï¿½end wird der
+	 * Inhalt ausgefï¿½hrt und der ResultSet den JasperReport ohne Datenbankverbindung ï¿½bergeben.*/
 	private String queryStatement                        = "";
 	
-	/** Schalter für das versenden bzw. nicht versenden von Reports als Attachment; 
+	/** Schalter fï¿½r das versenden bzw. nicht versenden von Reports als Attachment; 
 	 * Fall: suspend_attachment=true  -> dann werden keine Reports versender
 	 * Fall: suspend_attachment=false -> dann werden Reports mit versendet
 	 * default: suspend_attachment=false */
@@ -431,7 +446,7 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 					outputFile.deleteOnExit();
 				}
 				
-				//eventuell vorhandene alte Berichte löschen
+				//eventuell vorhandene alte Berichte lï¿½schen
 				if(this.isDeleteOldFilename()) {
 					if(outputFile.exists()) {
 						spooler_log.debug3("..deleting old File " + outputFile.getCanonicalPath());
@@ -452,7 +467,7 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 					queryProcessor = new SOSConnectionFileProcessor(this.getConnection(),  new sos.util.SOSSchedulerLogger(spooler_log));
 				}
 				
-				//alle Jobparametern werden den jasperreport übergeben
+				//alle Jobparametern werden den jasperreport ï¿½bergeben
 				Map parameters = new HashMap();
 				Variable_set params = spooler_task.params();
 				
@@ -475,7 +490,7 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 					spooler_log.debug6(".......jobparameter: " + name + "=" + params.var(name));
 				}   
 				
-				//Ausführen der sql-script und das Ergebnis den Jasperreport als Parameter übergeben
+				//Ausfï¿½hren der sql-script und das Ergebnis den Jasperreport als Parameter ï¿½bergeben
 				if (sosString.parseToString(parameterQueryFilename).length() > 0) {
 					parameterQueryFile = new File (this.parameterQueryFilename);
 					if (parameterQueryFile.exists()) {
@@ -497,7 +512,7 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 					parameters.put(JRParameter.REPORT_LOCALE, Locale.GERMAN);
 				}
 				
-				//Ausgaben aller Parametern, die den JasperReport übergeben werden
+				//Ausgaben aller Parametern, die den JasperReport ï¿½bergeben werden
 				Object[] param = parameters.entrySet().toArray();
 				for (int i = 0; i < param.length; i++) {
 					spooler_log.debug3( "..report parameter " + param[i].toString());
@@ -517,7 +532,7 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 				
 				
 				 				
-				//existiert ein queryfile, dann wird das Ergebnis der Queryfile ohne Connection den jasperreport übergeben
+				//existiert ein queryfile, dann wird das Ergebnis der Queryfile ohne Connection den jasperreport ï¿½bergeben
 				//Vorher werden alle Platzhalter in der query_filname ersetzt mit Parameter
 				if (queryFile.exists()) { 
 					//queryProcessor.process(queryFile);
@@ -677,8 +692,8 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 	
 	
 	/**
-	 * Liefert true, wenn in output_type gültige Typen definiert ist:
-	 * Gültige output_type sind: [pdf, htm, xml, xls, rtfl]
+	 * Liefert true, wenn in output_type gï¿½ltige Typen definiert ist:
+	 * Gï¿½ltige output_type sind: [pdf, htm, xml, xls, rtfl]
 	 * @return
 	 * @throws Exception
 	 */
@@ -716,14 +731,14 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
             */									
 			//sencode = sencode.replaceAll("\r","");
 			//sencode = sencode.replaceAll("\n","");
-			//this.getLogger().debug("lösch mich: " + sencode);
+			//this.getLogger().debug("lï¿½sch mich: " + sencode);
 			
             byte[] buf = new sun.misc.BASE64Decoder().decodeBuffer(sencode.trim());            
 			
             File f = File.createTempFile("query_statement", ".sql");
             //File f = new File("C:/temp/a.sql");
             f.deleteOnExit();
-            //this.getLogger().info("test lösch mich "+ f.getCanonicalPath());
+            //this.getLogger().info("test lï¿½sch mich "+ f.getCanonicalPath());
 			// writes to the file            
             FileOutputStream fos = new FileOutputStream( f );
             fos.write( buf );
@@ -786,8 +801,8 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 	}
 	
 	/**
-	 * Liefert den Ausgabedateitypen. Es können mehrere in semikolon getrennt angegeben werden:
-	 * Gültige Typen sind: [pdf, html, xml, xls, rtf]
+	 * Liefert den Ausgabedateitypen. Es kï¿½nnen mehrere in semikolon getrennt angegeben werden:
+	 * Gï¿½ltige Typen sind: [pdf, html, xml, xls, rtf]
 	 * @return String
 	 */
 	public String getOutputType() {
@@ -795,8 +810,8 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 	}
 	
 	/**
-	 * Setzen der Ausgabedateitypen:Es können mehrere in semikolon getrennt angegeben werden:
-	 * Gültige Typen sind: [pdf, html, xml, xls, rtf]
+	 * Setzen der Ausgabedateitypen:Es kï¿½nnen mehrere in semikolon getrennt angegeben werden:
+	 * Gï¿½ltige Typen sind: [pdf, html, xml, xls, rtf]
 	 * @param outputType
 	 */
 	public void setOutputType(String outputType) {
@@ -830,7 +845,7 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 	 * SQL Dateiname auslesen. Beinhaltet eine SQL-Select-Statement. 
 	 * 
 	 * Wird dieser Parameter gesetzt dann wird den JasperReport
-	 * die ResultSet der SQL-Select-Statement ohne Datenbankverbindung übergeben.
+	 * die ResultSet der SQL-Select-Statement ohne Datenbankverbindung ï¿½bergeben.
 	 * 
 	 * @return String
 	 */
@@ -842,10 +857,10 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 	 * SQL Dateiname auslesen. Beinhaltet eine SQL-Select-Statement. 
 	 * 
 	 * Wird dieser Parameter gesetzt dann wird den JasperReport
-	 * die ResultSet der SQL-Select-Statement ohne Datenbankverbindung übergeben.
+	 * die ResultSet der SQL-Select-Statement ohne Datenbankverbindung ï¿½bergeben.
 	 * 
 	 * Ist dieser Parameter leer bzw. existiert nicht, dann wird dem JasperReport 
-	 * der Datenbankverbindung übergeben.
+	 * der Datenbankverbindung ï¿½bergeben.
 	 * 
 	 * @return queryFilename
 	 */
@@ -856,8 +871,8 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 	/**
 	 * SQL Dateiname auslesen. Beinhaltet eine SQL-Select-Statement. 
 	 * 
-	 * Ist ein parameter_query_filename angegeben, so wird dieser hier in java ausgeführt und das 
-	 * Ergebis als Parameter den jasperreport mit der Datenbankverbindungen übergebenden
+	 * Ist ein parameter_query_filename angegeben, so wird dieser hier in java ausgefï¿½hrt und das 
+	 * Ergebis als Parameter den jasperreport mit der Datenbankverbindungen ï¿½bergebenden
 	 * 
 	 * @return String
 	 */
@@ -869,8 +884,8 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 	/**
 	 * SQL Dateiname setzen. Beinhaltet eine SQL-Select-Statement. 
 	 * 
-	 * Ist ein parameter_query_filename angegeben, so wird dieser hier in java ausgeführt und das 
-	 * Ergebis als Parameter den jasperreport mit der Datenbankverbindungen übergebenden
+	 * Ist ein parameter_query_filename angegeben, so wird dieser hier in java ausgefï¿½hrt und das 
+	 * Ergebis als Parameter den jasperreport mit der Datenbankverbindungen ï¿½bergebenden
 	 * 
 	 * @return String
 	 */
@@ -881,7 +896,7 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 	/**
 	 * Konfigurationsdatei der Datenbankverbindungen auslesen.
 	 * Ist eine Angabe nicht vorhanden, dann wird der Scheduler Datenbanken
-	 * übergeben.
+	 * ï¿½bergeben.
 	 * 
 	 * @return String
 	 */
@@ -893,7 +908,7 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 	/**
 	 * Konfigurationsdatei der Datenbankverbindungen setzen.
 	 * Ist eine Angabe nicht vorhanden, dann wird der Scheduler Datenbanken
-	 * übergeben.
+	 * ï¿½bergeben.
 	 *  
 	 * @param settingsFilename The settingsFilename to set.
 	 */
@@ -903,8 +918,8 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 	
 	/**
 	 * Auslesen der Druckername.
-	 * Wenn der Druckername eine prefix = "factory:" enthält, dann wird dieser 
-	 * über die Documentfactory ermittelt. Sonst wird über diesen Druckername gedruckt.
+	 * Wenn der Druckername eine prefix = "factory:" enthï¿½lt, dann wird dieser 
+	 * ï¿½ber die Documentfactory ermittelt. Sonst wird ï¿½ber diesen Druckername gedruckt.
 	 * 
 	 * @return String
 	 */
@@ -915,8 +930,8 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 	/**
 	 * Druckername setzen.
 	 * 
-	 * Wenn der Druckername eine prefix = "factory:" enthält, dann wird dieser 
-	 * über die Documentfactory ermittelt. Sonst wird über diesen Druckername gedruckt.
+	 * Wenn der Druckername eine prefix = "factory:" enthï¿½lt, dann wird dieser 
+	 * ï¿½ber die Documentfactory ermittelt. Sonst wird ï¿½ber diesen Druckername gedruckt.
 	 * @param printerName
 	 */
 	public void setPrinterName(
@@ -928,7 +943,7 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 	 * E-Mail Adresse auslesen.
 	 * 
 	 * Der Inhalt der Parameter "scheduler_order_report_mailto" ist die E-Mail-Adresse.
-	 * Existiert ein Eintrag, dann wird versucht über diesen Adresse eine E-Mail zu versenden. 
+	 * Existiert ein Eintrag, dann wird versucht ï¿½ber diesen Adresse eine E-Mail zu versenden. 
 	 * 
 	 * @return String
 	 */
@@ -941,7 +956,7 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 	 * E-Mail Adresse setzen.
 	 * 
 	 * Der Inhalt der Parameter "scheduler_order_report_mailto" ist die E-Mail-Adresse.
-	 * Existiert ein Eintrag, dann wird versucht über diesen Adresse eine E-Mail zu versenden. 
+	 * Existiert ein Eintrag, dann wird versucht ï¿½ber diesen Adresse eine E-Mail zu versenden. 
 	 * 
 	 * @return String
 	 */
@@ -950,7 +965,7 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 	 }*/
 	
 	/**
-	 * Name der Konfigurationsdatei für Datenbankverbindung, wenn Documentfactory printerName  von einer 
+	 * Name der Konfigurationsdatei fï¿½r Datenbankverbindung, wenn Documentfactory printerName  von einer 
 	 * anderen Datenbank ermittelt werden soll. 
 	 * 
 	 * Oder der Emailversand soll per Dokumentfactory laufen und diese Datenbank verwenden.
@@ -962,7 +977,7 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 	}
 	
 	/**
-	 * Setzen der Name der Konfigurationsdatei für Datenbankverbindung, wenn 
+	 * Setzen der Name der Konfigurationsdatei fï¿½r Datenbankverbindung, wenn 
 	 * Documentfactory printerName / mail von einer anderen Datenbank ermittelt werden soll. 
 	 * 
 	 * @param factorySettingsFile
@@ -1019,7 +1034,7 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 	 *  <li> plain_file:</li>
 	 * </ul>
 	 *  
-	 * Innerhalb des Layouts können folgende Platzhalter verwendet werden, die jeweils mit [
+	 * Innerhalb des Layouts kï¿½nnen folgende Platzhalter verwendet werden, die jeweils mit [
 	 * und ] geklammert werden, z.B. in der Form [date]:
 	 * </p>
 	 * <ul>
@@ -1053,7 +1068,7 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 	 *  <li> plain_file:</li>
 	 * </ul>
 	 *  
-	 * Innerhalb des Layouts können folgende Platzhalter verwendet werden, die jeweils mit [
+	 * Innerhalb des Layouts kï¿½nnen folgende Platzhalter verwendet werden, die jeweils mit [
 	 * und ] geklammert werden, z.B. in der Form [date]:
 	 * </p>
 	 * <ul>
@@ -1092,7 +1107,7 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 	}
 	
 	/** Der Inhalt des Parameters wird als Betreff der eMail des
-	 * Reports verwendet und muss ausgefüllt sein, wenn Reports per
+	 * Reports verwendet und muss ausgefï¿½llt sein, wenn Reports per
 	 * eMail versendet werden. 
 	 * Zur Bestimmen des Layouts wird dem Parameter folgender Prefix zugeordnet:
 	 * 
@@ -1103,7 +1118,7 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 	 *  <li> plain_file:</li>
 	 * </ul>
 	 * <p>
-	 *  Es können folgende Platzhalter verwendet werden, die durch [
+	 *  Es kï¿½nnen folgende Platzhalter verwendet werden, die durch [
 	 *  und] geklammert werden, z.B. in der Form [date]:
 	 * </p>
 	 * <ul>
@@ -1121,7 +1136,7 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 	}
 	
 	/** Der Inhalt des Parameters wird als Betreff der eMail des
-	 * Reports verwendet und muss ausgefüllt sein, wenn Reports per
+	 * Reports verwendet und muss ausgefï¿½llt sein, wenn Reports per
 	 * eMail versendet werden. 
 	 * Zur Bestimmen des Layouts wird dem Parameter folgender Prefix zugeordnet:
 	 * 
@@ -1132,7 +1147,7 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 	 *  <li> plain_file:</li>
 	 * </ul>
 	 * <p>
-	 *  Es können folgende Platzhalter verwendet werden, die durch [
+	 *  Es kï¿½nnen folgende Platzhalter verwendet werden, die durch [
 	 *  und] geklammert werden, z.B. in der Form [date]:
 	 * </p>
 	 * <ul>
@@ -1169,10 +1184,10 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 	}
 	
 	/** Ist eine mail_it Parameter angegeben bzw auf true gesetzt, dann wird mit
-	 * der Scheduler Mail Funktion emails versendet. Es wird überprüft, ob zusätzlich
+	 * der Scheduler Mail Funktion emails versendet. Es wird ï¿½berprï¿½ft, ob zusï¿½tzlich
 	 * die Parameter "mail_to", "mail_cc", "mail_bcc", "mail_subject" und "mail_body" angegeben
 	 * sind. Wenn ja, dann werden zu diesen Adressanten mit den Betreff und body emails versendet.
-	 * Wenn diese Parametern nicht existieren, dann werden die Empfänger aus den Einstellungen
+	 * Wenn diese Parametern nicht existieren, dann werden die Empfï¿½nger aus den Einstellungen
 	 * des Schedulers (factory.ini) genommen.
 	 * 
 	 * @return boolean
@@ -1182,10 +1197,10 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 	}
 	
 	/** Ist eine mail_it Parameter angegeben bzw auf true gesetzt, dann wird mit
-	 * der Scheduler Mail Funktion emails versendet. Es wird überprüft, ob zusätzlich
+	 * der Scheduler Mail Funktion emails versendet. Es wird ï¿½berprï¿½ft, ob zusï¿½tzlich
 	 * die Parameter "mail_to", "mail_cc", "mail_bcc", "mail_subject" und "mail_body" angegeben
 	 * sind. Wenn ja, dann werden zu diesen Adressanten mit den Betreff und body emails versendet.
-	 * Wenn diese Parametern nicht existieren, dann werden die Empfänger aus den Einstellungen
+	 * Wenn diese Parametern nicht existieren, dann werden die Empfï¿½nger aus den Einstellungen
 	 * des Schedulers (factory.ini) genommen.
 	 * @param boolean
 	 * */
@@ -1219,7 +1234,7 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 	/**
 	 * Ermittelt den Druckername.
 	 * Entweder der Druckername ist direkt angegeben oder 
-	 * es wird über die Druckerid über die Tabelle Dokumentfactory.LF_PPRINTERS ermittelt, wenn der .	
+	 * es wird ï¿½ber die Druckerid ï¿½ber die Tabelle Dokumentfactory.LF_PPRINTERS ermittelt, wenn der .	
 	 * 
 	 * @throws Exception
 	 */
@@ -1241,7 +1256,7 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 				printName = this.getPrinterName();
 				
 			} else {
-				//druckername über die Tabelle Dokumentfactory.LF_PPRINTERS ermittelt.
+				//druckername ï¿½ber die Tabelle Dokumentfactory.LF_PPRINTERS ermittelt.
 				if (sosString.parseToString(getFactorySettingsFile()).length() > 0 ) {
 					facConn = getFactoryConnection();
 				} else {
@@ -1306,10 +1321,10 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 	 * Email versenden.
 	 * 
 	 * 1. mail_it funktion. Ist eine mail_it Parameter angegeben bzw auf true gesetzt, dann wird mit
-	 * der Scheduler Mail Funktion emails versendet. Es wird überprüft, ob zusätzlich
+	 * der Scheduler Mail Funktion emails versendet. Es wird ï¿½berprï¿½ft, ob zusï¿½tzlich
 	 * die Parameter "mail_to", "mail_cc", "mail_bcc", "mail_subject" und "mail_body" angegeben 
 	 * sind. Wenn ja, dann werden zu diesen Adressanten emails versendet. 
-	 * Wenn diese Parametern nicht existieren, dann werden die Empfänger aus den Einstellungen 
+	 * Wenn diese Parametern nicht existieren, dann werden die Empfï¿½nger aus den Einstellungen 
 	 * des Schedulers (factory.ini) genommen. 
 	 * 
 	 * Ist der Jobparameter mail_it nicht 
@@ -1318,8 +1333,8 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 	 *   1. Datenbankverbindung ( entweder die Datenbankverbindung des Schedulers oder die Datenbankverbindung des Factorys 
 	 *      Siehe Parameter factory_settings_file)
 	 *   2. das Existieren der Tabelle "SETTINGS"
-	 *   3. Einträge zum email versenden in der Tabelle "SETTINGS"   
-	 *  Die Empfänger und der Subject und Body werden aus der Jobparameter ausgelesen. 
+	 *   3. Eintrï¿½ge zum email versenden in der Tabelle "SETTINGS"   
+	 *  Die Empfï¿½nger und der Subject und Body werden aus der Jobparameter ausgelesen. 
 	 * 
 	 * @param stateText
 	 * @throws Exception
@@ -1331,10 +1346,10 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 		String currBody = "";
 		try {
 			sosLogger = new SOSSchedulerLogger(this.spooler_log);
-			//mail_it Lösung			
+			//mail_it Lï¿½sung			
 			if (isMailIt()){
 				sosLogger.debug("..email sending with mail_it Parameter.");
-				//email erzwingen. Einstellungen wie sender/empfänder siehe factory.ini
+				//email erzwingen. Einstellungen wie sender/empfï¿½nder siehe factory.ini
 //				Sollen attachment mitversendet werden?
 				if (!getSuspendAttachment()) {
 					for(int i = 0; i < listOfOutputFilename.size(); i++) {
@@ -1377,7 +1392,7 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 				sosLogger.debug("..email successfully send with mail_it Paramater. ");
 				return stateText + "..email successfully send. ";
 			}			
-			//ende mail_it Lösung
+			//ende mail_it Lï¿½sung
 			
 			//keine emails zum versenden vorhanden
 			if ((sosString.parseToString(getMailTo()).length() == 0) &&
@@ -1400,7 +1415,7 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 					currConn = getConnection();
 				}
 				sett = new SOSConnectionSettings(currConn , "SETTINGS", sosLogger);
-				//Überprüfen, ob die Tabelle Settings vorhanden ist bzw. Einträge hat.							
+				//ï¿½berprï¿½fen, ob die Tabelle Settings vorhanden ist bzw. Eintrï¿½ge hat.							
 				//java.util.Properties entries = sett.getSection("email", "mail_server");				
 				String val = currConn.getSingleValue("SELECT \"NAME\" FROM SETTINGS WHERE \"APPLICATION\" = 'email' AND \"SECTION\" = 'mail_server' AND \"SECTION\" <> \"NAME\"");
 				if (sosString.parseToString(val).length() > 0) {
@@ -1570,7 +1585,7 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 					spooler_log.warn(".. job parameter [printer_copies] is 0 not in range 1..2147483647 ");
 					throw new Exception(".. job parameter [printer_copies] is 0 not in range 1..2147483647 ");
 				}
-				//überprüfen, ob der Parameter printer_copies ziffern ist
+				//ï¿½berprï¿½fen, ob der Parameter printer_copies ziffern ist
 				char c[] = pc.toCharArray();				
 				for (int i = 0; i < c.length; i++) {
 					if (!(Character.isDigit(c[i]))) {
@@ -1610,7 +1625,7 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 				this.setSuspendAttachment(sosString.parseToBoolean((spooler_task.params().var("suspend_attachment"))));
 				spooler_log.debug1(".. job parameter [suspend_attachment]: " + this.getSuspendAttachment());
 			}
-			//Löscht zuerst das alte Bericht, bevor eine neue erstellt wird			
+			//Lï¿½scht zuerst das alte Bericht, bevor eine neue erstellt wird			
 			if (sosString.parseToString(spooler_task.params().var("delete_old_output_file")).length() > 0) {
 				this.setDeleteOldFilename(sosString.parseToBoolean((spooler_task.params().var("delete_old_output_file"))));
 				spooler_log.debug1(".. job parameter [delete_old_output_file]: " + this.isDeleteOldFilename());
@@ -1706,7 +1721,7 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 						if (xpath.selectSingleNodeValue("//param[@name[.='suspend_attachment']]/@value") != null) {
 							params.set_var("suspend_attachment", xpath.selectSingleNodeValue("//param[@name[.='suspend_attachment']]/@value"));
 						}
-//						Löscht zuerst das alte Bericht, bevor eine neue erstellt wird
+//						Lï¿½scht zuerst das alte Bericht, bevor eine neue erstellt wird
 						if (xpath.selectSingleNodeValue("//param[@name[.='delete_old_output_file']]/@value") != null) {
 							params.set_var("delete_old_output_file", xpath.selectSingleNodeValue("//param[@name[.='delete_old_output_file']]/@value"));
 						}
@@ -1872,7 +1887,7 @@ public class JobSchedulerJasperReportJob extends JobSchedulerManagedJob {
 	}
 	
 	/**
-	 * Angabe der Pflichtfelder/-parameter überprüfen.
+	 * Angabe der Pflichtfelder/-parameter ï¿½berprï¿½fen.
 	 * 
 	 * @throws Exception
 	 */

@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -189,7 +204,7 @@ public class FTPDialog {
                     listener = ftpProfilePicker.getListener();
                 }
 
-                // Hier: wenn ein neuer Profile im Combobox ausgewählt wird
+                // Hier: wenn ein neuer Profile im Combobox ausgewï¿½hlt wird
                 ftpProfilePicker.addSelectionListener((new SelectionAdapter() {
                     public void widgetSelected(final SelectionEvent e) {
                         try {
@@ -757,8 +772,8 @@ public class FTPDialog {
 
             java.util.Iterator it = h.keySet().iterator();
             // Alle Hot Folder Dateinamen merken: Grund: Beim Speichern werden
-            // alle Dateien gelöscht und anschliessend
-            // neu zurückgeschrieben
+            // alle Dateien gelï¿½scht und anschliessend
+            // neu zurï¿½ckgeschrieben
             ArrayList nameOfLifeElement = new ArrayList();
             String targetfile = sosString.parseToString(listener.getCurrProfile().getLocaldirectory());
             targetfile = targetfile.replaceAll("\\\\", "/");
@@ -842,7 +857,7 @@ public class FTPDialog {
     }
 
     /**
-     * Öffnet das ausgewählte Datei.
+     * ï¿½ffnet das ausgewï¿½hlte Datei.
      * 
      * 
      * Wenn eine
@@ -865,9 +880,9 @@ public class FTPDialog {
 
                 if (new File(file).getName().endsWith(".job_chain.xml")) {
 
-                    // Es wurde eine Jobkette geöffnet. Es werden automatisch,
+                    // Es wurde eine Jobkette geï¿½ffnet. Es werden automatisch,
                     // falls vorhanden die entsprechende Job Chain Node
-                    // Parameter datei geöffnet
+                    // Parameter datei geï¿½ffnet
                     int endP = txtFilename.getText().length() - ".job_chain.xml".length();
                     // File detailsfile = new File(txtDir.getText() + "/" +
                     // txtFilename.getText().substring(0, endP) +

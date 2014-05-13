@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -52,8 +67,8 @@ import com.sos.JSHelper.Basics.JSVersionInfo;
 /**
  * FTP File Transfer
  *
- * @author Andreas Püschel 
- * @author Mürüvet Öksüz
+ * @author Andreas Pï¿½schel 
+ * @author Mï¿½rï¿½vet ï¿½ksï¿½z
  * 
  * 2009-02-22: added SOSCommand.getExternalPassword
  * 2009-02-00: Redesign from Configuration and call SOSFTP 
@@ -149,7 +164,7 @@ public class JobSchedulerFTPReceive extends JobSchedulerJob {
 				}
 				else
 					if (schedulerParams.get("parent_order_id") != null) {
-						// Hauptauftrag wurde wegen Erreichens von ftp_parallel_check_retry beendet -> die restlichen Unterauftrüge sollen
+						// Hauptauftrag wurde wegen Erreichens von ftp_parallel_check_retry beendet -> die restlichen Unterauftrï¿½ge sollen
 						// nicht durchlaufen
 						String state = spooler.variables().var(
 								"terminated_cause_max_order_setback_" + normalize(sosString.parseToString(schedulerParams.get("ftp_parent_order_id"))));
@@ -173,12 +188,12 @@ public class JobSchedulerFTPReceive extends JobSchedulerJob {
 				String remoteDir = sosString.parseToString(schedulerParams.get("remoteDir"));
 				// parallel Transfer
 				if (parallelTransfer && !isFilePath) {
-					// nur die filelist holen um Parallelen transfer zu ermöglichen
+					// nur die filelist holen um Parallelen transfer zu ermï¿½glichen
 					schedulerParams.put("skip_transfer", "yes");
 //					createIncludeConfigurationFile("sos/net/sosftp/Configuration.xml", "sos.net.sosftp.Configuration.xml");// Alle
 					// Parametern
 					// sind hier
-					// auch gültig
+					// auch gï¿½ltig
 					SOSConfiguration con = new SOSConfiguration(null, schedulerParams, sosString.parseToString(schedulerParams.get("settings")),
 							sosString.parseToString(schedulerParams.get("profile")),
 							// "sos/net/sosftp/Configuration.xml",
@@ -235,8 +250,8 @@ public class JobSchedulerFTPReceive extends JobSchedulerJob {
 								spooler.variables().set_var("ftp_check_receive_" + normalize(spooler_task.order().id()) + "." + normalize(newOrder.id()), "0");
 							}
 						}
-						// am aktuellen Auftrag speichern, dass im Wiederholungsfall per setback() nicht erneut Auftrüge erzeugt werden
-						// sollen, sondern dass deren Erledigungszustand geprüft wird:
+						// am aktuellen Auftrag speichern, dass im Wiederholungsfall per setback() nicht erneut Auftrï¿½ge erzeugt werden
+						// sollen, sondern dass deren Erledigungszustand geprï¿½ft wird:
 						spooler_task.order().params().set_var(conVarname_ftp_check_parallel, "yes");
 						spooler_job.set_delay_order_after_setback(1, parallelTransferCheckSetback);
 						spooler_job.set_max_order_setbacks(parallelTransferCheckRetry);
@@ -248,7 +263,7 @@ public class JobSchedulerFTPReceive extends JobSchedulerJob {
 				// kb 2011-04-27 no more longer needed due to too much trouble with this file / concept
 //				 createIncludeConfigurationFile("sos/net/sosftp/Configuration.xml", "sos.net.sosftp.Configuration.xml");// Alle Parametern
 				// sind hier auch
-				// gültig
+				// gï¿½ltig
 				SOSConfiguration con = new SOSConfiguration(null, schedulerParams, sosString.parseToString(schedulerParams.get("settings")),
 						sosString.parseToString(schedulerParams.get("profile")),
 						// "sos/net/sosftp/Configuration.xml",
@@ -279,7 +294,7 @@ public class JobSchedulerFTPReceive extends JobSchedulerJob {
 			finally {
 				if (parallelTransfer) {
 					if (orderSelfDestruct) {
-						// positiven Endzustand für den parallel gestarteten Auftrag finden
+						// positiven Endzustand fï¿½r den parallel gestarteten Auftrag finden
 						String state = "";
 						sos.spooler.Job_chain_node node = spooler_task.order().job_chain_node();
 						while (node != null) {
@@ -365,8 +380,8 @@ public class JobSchedulerFTPReceive extends JobSchedulerJob {
 			for (int i = 0; i < names.length; i++) {
 				String key = names[i];
 				String val = params.var(names[i]);
-				// Alle Parametern hatten bis jetzt den Präfix ftp_ gehabt. SOSFTP kennt die ftp_ Präfixe nicht.
-				// Deshalb werden die Präfixen gekürzt.
+				// Alle Parametern hatten bis jetzt den Prï¿½fix ftp_ gehabt. SOSFTP kennt die ftp_ Prï¿½fixe nicht.
+				// Deshalb werden die Prï¿½fixen gekï¿½rzt.
 				if (key.startsWith(conPrefixFTP) && key.length() > conPrefixFTP.length()) {
 					key = key.substring(conPrefixFTP.length());
 				}
@@ -376,7 +391,7 @@ public class JobSchedulerFTPReceive extends JobSchedulerJob {
 			if (sosString.parseToString(schedulerParams.get("use_order_set_back")).length() > 0) {
 				flgUseOrderSetBack = sosString.parseToBoolean(schedulerParams.get("use_order_set_back"));
 			}
-			// Einige Defaults hinzufügen
+			// Einige Defaults hinzufï¿½gen
 			schedulerParams.put("operation", "receive");
 			try {
 				schedulerParams.put("mail_smtp", spooler_log.mail().smtp());
@@ -450,7 +465,7 @@ public class JobSchedulerFTPReceive extends JobSchedulerJob {
 			String filePaths = "";
 			/**
 			 * Dieses codeteil liefert *alle* Dateinamen, die in dem Verzeichnis stehen
-			 * gefordert ist aber die Namen der Dateien zu liefern, die auch tatsächlich übertragen wurden.
+			 * gefordert ist aber die Namen der Dateien zu liefern, die auch tatsï¿½chlich ï¿½bertragen wurden.
 			 * Und die stehen nicht im Vector, der mit getfileList geliefert wird.
 			 * 
 			 */
@@ -509,7 +524,7 @@ public class JobSchedulerFTPReceive extends JobSchedulerJob {
 			boolean forceFiles, int pollTimeout, int pollIntervall, int pollMinFiles, String pollFilesErrorState1) throws Exception {
 		double delay = pollIntervall;
 		getLogger().debug("calling: " + sos.util.SOSClassUtil.getMethodName());
-		// getLogger().debug9("lösch mich " + pollTimeout + " " + pollIntervall + " " + pollMinFiles + " setbackcount" + iSetbackCount);
+		// getLogger().debug9("lï¿½sch mich " + pollTimeout + " " + pollIntervall + " " + pollMinFiles + " setbackcount" + iSetbackCount);
 		if (pollTimeout > 0) {
 			// before any processing, check if files are available
 			boolean flgStopPolling = false;
@@ -560,7 +575,7 @@ public class JobSchedulerFTPReceive extends JobSchedulerJob {
 						/**
 						 * kb 2011-07-18
 						 * JS fragen, wie der SetBackCount ist. die andere Methode funktioniert nicht, die Var hat immer den Wert 1
-						 * Es ist müssig, nach dem Fehler zu suchen, wenn der JS das direkt anbietet.
+						 * Es ist mï¿½ssig, nach dem Fehler zu suchen, wenn der JS das direkt anbietet.
 						 */
 						iSetbackCount = spooler_task.order().setback_count();
 						flgStopPolling = true;
@@ -575,9 +590,9 @@ public class JobSchedulerFTPReceive extends JobSchedulerJob {
 							getLogger().info(matchedFiles + " matching files found." + pollMinFiles + " files required, setting back order.");
 							spooler_job.set_delay_order_after_setback(1, delay);
 							/**
-							 * ist das eigentlich notwendig? der API-Job überwacht doch bereits die Anzahl setBack's
+							 * ist das eigentlich notwendig? der API-Job ï¿½berwacht doch bereits die Anzahl setBack's
 							 * Ja, das ist notwendig. im Job werden die max Anzahl setbacks nicht gesetzt, sondern
-							 * nur über die Parameter im Order oder Job 
+							 * nur ï¿½ber die Parameter im Order oder Job 
 							 */
 							spooler_job.set_max_order_setbacks((int) nrOfTries);
 							spooler_task.order().setback();

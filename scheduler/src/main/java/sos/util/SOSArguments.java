@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -43,7 +58,7 @@ import java.util.Map;
  * @since 2004-08-10
  * @version 1.0
  *
- * Arguments überprüft die Gültigkeit und Vollständigkeit der Eingabeparameter
+ * Arguments ï¿½berprï¿½ft die Gï¿½ltigkeit und Vollstï¿½ndigkeit der Eingabeparameter
  */
 
 public class SOSArguments
@@ -63,7 +78,7 @@ public class SOSArguments
     //--------------------------------------------------------------------------------Arguments
 
     /**
-     * Konstruktor, der die Eingabeparameter als Zeichenkettenfeld erhält
+     * Konstruktor, der die Eingabeparameter als Zeichenkettenfeld erhï¿½lt
      */
     public SOSArguments( String argStr ) throws Exception
 	{
@@ -85,7 +100,7 @@ public class SOSArguments
 	}
     
     /**
-     * Konstruktor, der die Eingabeparameter als Zeichenkettenfeld erhält
+     * Konstruktor, der die Eingabeparameter als Zeichenkettenfeld erhï¿½lt
      */
     public SOSArguments( String[] args ) throws Exception
     {
@@ -108,7 +123,7 @@ public class SOSArguments
     }
 
     /**
-     * Konstruktor, der die Eingabeparameter als Zeichenkettenfeld erhält
+     * Konstruktor, der die Eingabeparameter als Zeichenkettenfeld erhï¿½lt
      * ignore -> auch parameter ohne "-" und Paare Werte (Name=Wert) kommen durch  
      */
     public SOSArguments( String[] args, boolean ignore ) throws Exception

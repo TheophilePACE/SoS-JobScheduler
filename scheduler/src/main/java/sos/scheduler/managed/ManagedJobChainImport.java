@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -113,7 +128,7 @@ public class ManagedJobChainImport extends SOSImport {
 			if (logFile.length()>0)	sosLogger = new SOSStandardLogger(logFile, logLevel);
 			else sosLogger = new SOSStandardLogger(logLevel);
 			if(packages.length()>0 && jobchains.length()>0){
-				System.out.println("jobchain und package dürfen nicht zusammen angegeben werden.");
+				System.out.println("jobchain und package dï¿½rfen nicht zusammen angegeben werden.");
 				showUsage();
 				System.exit(0);
 			}
@@ -168,7 +183,7 @@ public class ManagedJobChainImport extends SOSImport {
 	}
 	
 	/***** 
-     * Key für MANAGED_JOBS
+     * Key fï¿½r MANAGED_JOBS
      * 
      */
     public HashMap key_handler_MANAGED_JOBS(HashMap keys) throws Exception {
@@ -182,7 +197,7 @@ public class ManagedJobChainImport extends SOSImport {
     }
     
     /***** 
-     * Key für MANAGED_MODELS
+     * Key fï¿½r MANAGED_MODELS
      * 
      */
     public HashMap key_handler_MANAGED_MODELS(HashMap keys) throws Exception {
@@ -196,7 +211,7 @@ public class ManagedJobChainImport extends SOSImport {
     }
     
     /***** 
-     * Key für MANAGED_ORDERS
+     * Key fï¿½r MANAGED_ORDERS
      * 
      */
     public HashMap key_handler_MANAGED_ORDERS(HashMap keys) throws Exception {
@@ -210,7 +225,7 @@ public class ManagedJobChainImport extends SOSImport {
     }
     
     /***** 
-     * Record handler für MANAGED_JOBS
+     * Record handler fï¿½r MANAGED_JOBS
      * 
      */
     public HashMap rec_handler_MANAGED_JOBS(HashMap keys, HashMap record, String record_identifier) throws Exception{

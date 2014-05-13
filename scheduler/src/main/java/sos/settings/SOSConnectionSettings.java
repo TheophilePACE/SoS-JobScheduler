@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -40,7 +55,7 @@ package sos.settings;
  * @author <a href="mailto:ghassan.beydoun@sos-berlin.com">Ghassan Beydoun</a>
  * @resource sos.connection.jar sos.util.jar
  * @version 1.0
- * @author <a href="mailto:andreas.pueschel@sos-berlin.com">Andreas Püschel</a>
+ * @author <a href="mailto:andreas.pueschel@sos-berlin.com">Andreas Pï¿½schel</a>
  * @resource sos.connection.jar sos.util.jar
  * @version 1.0
  */
@@ -76,18 +91,18 @@ public class SOSConnectionSettings extends sos.settings.SOSSettings {
     
     protected final static String LONG_VALUE = "LONG_VALUE";
 
-    /** Name der Applikation für Zählervariablen */
+    /** Name der Applikation fï¿½r Zï¿½hlervariablen */
     protected String entryCounterApplication = "counter";
 
-    /** Name der Sektion für Zählervariablen */
+    /** Name der Sektion fï¿½r Zï¿½hlervariablen */
     protected String entryCounterSection = "counter";
 
-    /** Sortierfeld für Anzeige der Einträge */
+    /** Sortierfeld fï¿½r Anzeige der Eintrï¿½ge */
     protected String entryOrder = "NAME";
 
     protected String entrySettingTitle = "TITLE";
 
-    /** Name der Sektion für Master Schemata */
+    /** Name der Sektion fï¿½r Master Schemata */
     protected String entrySchemaSection = "**schema**";
 
     /** default file name bei long values binary */
@@ -99,7 +114,7 @@ public class SOSConnectionSettings extends sos.settings.SOSSettings {
      * @param sosConnection
      *            ein SOSConnection-Objekt
      * @param source
-     *            Name der Tabelle für Einstellungen
+     *            Name der Tabelle fï¿½r Einstellungen
      * @throws Exception
      * @see #SOSConnectionSettings( SOSConnection, String, String, String,
      *      SOSLogger )
@@ -170,13 +185,13 @@ public class SOSConnectionSettings extends sos.settings.SOSSettings {
     }
 
     /**
-     * Liefert alle Einträge einer Sektion zurück.
+     * Liefert alle Eintrï¿½ge einer Sektion zurï¿½ck.
      * 
      * @param String
      *            application Name der Anwendung
      * @param String
      *            section Name der Sektion
-     * @return Properties Objekt, das alle Einträge der Sektion darstellt.
+     * @return Properties Objekt, das alle Eintrï¿½ge der Sektion darstellt.
      * @exception Exception
      * @see #getSection( String )
      */
@@ -227,11 +242,11 @@ public class SOSConnectionSettings extends sos.settings.SOSSettings {
     }
 
     /**
-     * Liefert alle Einträge einer Sektion zurück.
+     * Liefert alle Eintrï¿½ge einer Sektion zurï¿½ck.
      * 
      * @param String
      *            section Name der Sektion
-     * @return Properties Objekt, das alle Einträge der Sektion darstellt.
+     * @return Properties Objekt, das alle Eintrï¿½ge der Sektion darstellt.
      * @exception Exception
      * @see #getSection( String, String )
      */
@@ -251,9 +266,9 @@ public class SOSConnectionSettings extends sos.settings.SOSSettings {
     }
 
     /**
-     * Liefert alle Einträge einer Sektion zurück.
+     * Liefert alle Eintrï¿½ge einer Sektion zurï¿½ck.
      * 
-     * @return Properties Objekt, das alle Einträge der Sektion darstellt.
+     * @return Properties Objekt, das alle Eintrï¿½ge der Sektion darstellt.
      * @exception Exception
      * @see #getSection( String, String )
      */
@@ -273,7 +288,7 @@ public class SOSConnectionSettings extends sos.settings.SOSSettings {
     }
 
     /**
-     * Liefert alle Sektionen einer Anwendung zurück
+     * Liefert alle Sektionen einer Anwendung zurï¿½ck
      * 
      * @return ArrayList die alle Sektionen beinhaltet
      * @throws java.lang.Exception
@@ -323,7 +338,7 @@ public class SOSConnectionSettings extends sos.settings.SOSSettings {
     }
 
     /**
-     * Liefert den wert eines Eintrages zurück.
+     * Liefert den wert eines Eintrages zurï¿½ck.
      * 
      * @param entry
      *            Name des Eintrages
@@ -337,7 +352,7 @@ public class SOSConnectionSettings extends sos.settings.SOSSettings {
     }
 
     /**
-     * Liefert den wert eines Eintrages zurück.
+     * Liefert den wert eines Eintrages zurï¿½ck.
      * 
      * @param String
      *            application Name der Anwendung
@@ -367,7 +382,7 @@ public class SOSConnectionSettings extends sos.settings.SOSSettings {
 
 
     /**
-     * Liefert den Wert eines BLOB Eintrages (LONG_VALUE) als byte Array zurück.
+     * Liefert den Wert eines BLOB Eintrages (LONG_VALUE) als byte Array zurï¿½ck.
      * 
      * @param entry
      *            Name des Eintrages
@@ -382,7 +397,7 @@ public class SOSConnectionSettings extends sos.settings.SOSSettings {
 
 
     /**
-     * Liefert den Wert eines BLOB Eintrages (LONG_VALUE) als byte Array zurück.
+     * Liefert den Wert eines BLOB Eintrages (LONG_VALUE) als byte Array zurï¿½ck.
      * 
      * @param 
      *            application Name der Anwendung
@@ -458,7 +473,7 @@ public class SOSConnectionSettings extends sos.settings.SOSSettings {
     
     
     /**
-     * Liefert SQL Statement für unterschiedlichen getSectionEntry
+     * Liefert SQL Statement fï¿½r unterschiedlichen getSectionEntry
      * 
      * @param application  	Name der Applikation
      * @param section		Name der Sektion
@@ -499,8 +514,8 @@ public class SOSConnectionSettings extends sos.settings.SOSSettings {
     }
 
     /**
-     * richtet einen Zähler ein: existiert der Zähler bereits so behält er
-     * seinen aktuellen Wert. Sonst wird der Zähler neu eingerichtet.
+     * richtet einen Zï¿½hler ein: existiert der Zï¿½hler bereits so behï¿½lt er
+     * seinen aktuellen Wert. Sonst wird der Zï¿½hler neu eingerichtet.
      * 
      * @param String
      *            application Name der Anwendung
@@ -519,7 +534,7 @@ public class SOSConnectionSettings extends sos.settings.SOSSettings {
         boolean created = false;
         String counter = null;
         StringBuffer query = null;
-        String initValue = "1"; // wird mit 1 gezählt
+        String initValue = "1"; // wird mit 1 gezï¿½hlt
         int inserted = 0;
 
         try {
@@ -555,7 +570,7 @@ public class SOSConnectionSettings extends sos.settings.SOSSettings {
                 throw e;
             }
 
-            if (counter != null && counter != "") return true; // Zähler
+            if (counter != null && counter != "") return true; // Zï¿½hler
                                                                // existiert
 
             try {
@@ -590,7 +605,7 @@ public class SOSConnectionSettings extends sos.settings.SOSSettings {
     }
 
     /**
-     * Liefert nach Inkrementierung den Wert der eingegebenen Variable zurück.
+     * Liefert nach Inkrementierung den Wert der eingegebenen Variable zurï¿½ck.
      * 
      * @param application
      *            Name der Anwendung
@@ -601,7 +616,7 @@ public class SOSConnectionSettings extends sos.settings.SOSSettings {
      * @return int Wert der inkrementierten Variable bei Erfolg, sonst -1
      * 
      * @exception Exception
-     *                wird ausgelöst falls ein Datenbankfehler vorliegt.
+     *                wird ausgelï¿½st falls ein Datenbankfehler vorliegt.
      */
 
     public int getLockedSequence(String application, String section,
@@ -689,7 +704,7 @@ public class SOSConnectionSettings extends sos.settings.SOSSettings {
     }
 
     /**
-     * Liefert nach Inkrementierung den Wert der eingegebenen Variable zurück.
+     * Liefert nach Inkrementierung den Wert der eingegebenen Variable zurï¿½ck.
      * 
      * @param application
      *            Name der Anwendung
@@ -701,7 +716,7 @@ public class SOSConnectionSettings extends sos.settings.SOSSettings {
      *         Zeichenkette
      * 
      * @exception Exception
-     *                wird ausgelöst falls ein Datenbankfehler vorliegt.
+     *                wird ausgelï¿½st falls ein Datenbankfehler vorliegt.
      */
 
     public String getLockedSequenceAsString(String application, String section,
@@ -788,7 +803,7 @@ public class SOSConnectionSettings extends sos.settings.SOSSettings {
     }
 
     /**
-     * Liefert nach Inkrementierung den Wert der eingegebenen Variable zurück.
+     * Liefert nach Inkrementierung den Wert der eingegebenen Variable zurï¿½ck.
      * 
      * @param application
      *            Name der Anwendung
@@ -799,7 +814,7 @@ public class SOSConnectionSettings extends sos.settings.SOSSettings {
      * @return int Wert der inkrementierten Variable bei Erfolg, sonst -1
      * 
      * @exception Exception
-     *                wird ausgelöst falls ein Datenbankfehler vorliegt.
+     *                wird ausgelï¿½st falls ein Datenbankfehler vorliegt.
      */
 
     public int getSequence(String application, String section, String entry)
@@ -873,7 +888,7 @@ public class SOSConnectionSettings extends sos.settings.SOSSettings {
     }
 
     /**
-     * Liefert nach Inkrementierung den Wert der eingegebenen Variable zurück.
+     * Liefert nach Inkrementierung den Wert der eingegebenen Variable zurï¿½ck.
      * 
      * @param application
      *            Name der Anwendung
@@ -885,7 +900,7 @@ public class SOSConnectionSettings extends sos.settings.SOSSettings {
      *         Zeichenkette
      * 
      * @exception Exception
-     *                wird ausgelöst falls ein Datenbankfehler vorliegt.
+     *                wird ausgelï¿½st falls ein Datenbankfehler vorliegt.
      */
 
     public String getSequenceAsString(String application, String section,
@@ -956,7 +971,7 @@ public class SOSConnectionSettings extends sos.settings.SOSSettings {
     }
 
     /**
-     * Aktiviert die Kleinschreibung für Feldnamen
+     * Aktiviert die Kleinschreibung fï¿½r Feldnamen
      * 
      * @see #setKeysToUpperCase
      */
@@ -968,7 +983,7 @@ public class SOSConnectionSettings extends sos.settings.SOSSettings {
     }
 
     /**
-     * Aktiviert die Kleinschreibung für Feldnamen
+     * Aktiviert die Kleinschreibung fï¿½r Feldnamen
      * 
      * @see #setKeysToLowerCase
      */
@@ -980,7 +995,7 @@ public class SOSConnectionSettings extends sos.settings.SOSSettings {
     }
 
     /**
-     * Setzt den Schalter für die Berücksichtigung von Groß/Kleinschreibung
+     * Setzt den Schalter fï¿½r die Berï¿½cksichtigung von Groï¿½/Kleinschreibung
      * 
      * @param ignoreCase
      */
@@ -990,7 +1005,7 @@ public class SOSConnectionSettings extends sos.settings.SOSSettings {
     }
 
     /**
-     * liefert den Schalter für die Berücksichtigung von Groß/Kleinschreibung
+     * liefert den Schalter fï¿½r die Berï¿½cksichtigung von Groï¿½/Kleinschreibung
      * 
      * @param ignoreCase
      */
@@ -1018,83 +1033,83 @@ public class SOSConnectionSettings extends sos.settings.SOSSettings {
     }
 
     /**
-     * Liefert den  Name der Applikation für Zählervariablen
+     * Liefert den  Name der Applikation fï¿½r Zï¿½hlervariablen
      * 
-     * @return  Name der Applikation für Zählervariablen.
+     * @return  Name der Applikation fï¿½r Zï¿½hlervariablen.
      */
     public String getEntryCounterApplication() {
         return entryCounterApplication;
     }
 
     /**
-     * Setzt den  Name der Applikation für Zählervariablen
+     * Setzt den  Name der Applikation fï¿½r Zï¿½hlervariablen
      * 
      * @param entryCounterApplication
-     *             Name der Applikation für Zählervariablen. Default : counter
+     *             Name der Applikation fï¿½r Zï¿½hlervariablen. Default : counter
      */
     public void setEntryCounterApplication(String entryCounterApplication) {
         this.entryCounterApplication = entryCounterApplication;
     }
 
     /**
-     * Lifert den Name der Sektion für Zählervariablen
+     * Lifert den Name der Sektion fï¿½r Zï¿½hlervariablen
      * 
-     * @return Name der Sektion für Zählervariablen.
+     * @return Name der Sektion fï¿½r Zï¿½hlervariablen.
      */
     public String getEntryCounterSection() {
         return entryCounterSection;
     }
 
     /**
-     * Setzt den Name der Sektion für Zählervariablen
+     * Setzt den Name der Sektion fï¿½r Zï¿½hlervariablen
      * 
      * @param entryCounterSection
-     *            Name der Sektion für Zählervariablen. Default : counter
+     *            Name der Sektion fï¿½r Zï¿½hlervariablen. Default : counter
      */
     public void setEntryCounterSection(String entryCounterSection) {
         this.entryCounterSection = entryCounterSection;
     }
 
     /**
-     * Liefert Sortierfeld(er) für Anzeige der Einträge
+     * Liefert Sortierfeld(er) fï¿½r Anzeige der Eintrï¿½ge
      * 
-     * @return Sortierfeld(er) für Anzeige der Einträge.
+     * @return Sortierfeld(er) fï¿½r Anzeige der Eintrï¿½ge.
      */
     public String getEntryOrder() {
         return entryOrder;
     }
 
     /**
-     * Setzt Sortierfeld(er) für Anzeige der Einträge
+     * Setzt Sortierfeld(er) fï¿½r Anzeige der Eintrï¿½ge
      * 
      * @param entryOrder
-     *            Sortierfeld(er) für Anzeige der Einträge. Default : NAME
+     *            Sortierfeld(er) fï¿½r Anzeige der Eintrï¿½ge. Default : NAME
      */
     public void setEntryOrder(String entryOrder) {
         this.entryOrder = entryOrder;
     }
 
     /**
-     * Liefert den Name der Sektion für Master Schemata
+     * Liefert den Name der Sektion fï¿½r Master Schemata
      * 
-     * @return Name der Sektion für Master Schemata
+     * @return Name der Sektion fï¿½r Master Schemata
      */
     public String getEntrySchemaSection() {
         return entrySchemaSection;
     }
 
     /**
-     * Setzt den Name der Sektion für Master Schemata
+     * Setzt den Name der Sektion fï¿½r Master Schemata
      * 
      * @param entrySchemaSection
-     *            Name der Sektion für Master Schemata. Default : **schema**
+     *            Name der Sektion fï¿½r Master Schemata. Default : **schema**
      */
     public void setEntrySchemaSection(String entrySchemaSection) {
         this.entrySchemaSection = entrySchemaSection;
     }
 
     /**
-     * Liefert das Feld für Titels der Einträge
+     * Liefert das Feld fï¿½r Titels der Eintrï¿½ge
      * 
      * @return Returns the entrySettingTitle.
      */
@@ -1103,17 +1118,17 @@ public class SOSConnectionSettings extends sos.settings.SOSSettings {
     }
 
     /**
-     * Setzt das Feld für Titels der Einträge
+     * Setzt das Feld fï¿½r Titels der Eintrï¿½ge
      * 
      * @param entrySettingTitle
-     *            Feld für Titels der Einträge.
+     *            Feld fï¿½r Titels der Eintrï¿½ge.
      */
     public void setEntrySettingTitle(String entrySettingTitle) {
         this.entrySettingTitle = entrySettingTitle;
     }
     
     /**
-     * Default Filename für LONG_VALUE
+     * Default Filename fï¿½r LONG_VALUE
      * 
      * @return Returns the defaultDocumentFileName.
      */
@@ -1122,7 +1137,7 @@ public class SOSConnectionSettings extends sos.settings.SOSSettings {
     }
     
     /**
-     * Default Filename für LONG_VALUE
+     * Default Filename fï¿½r LONG_VALUE
      * 
      * @param fileName The fileName to set.
      */

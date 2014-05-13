@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -436,7 +451,7 @@ public class CrontabFileConverter {
 		//Ein Bindestrich  -  gibt einen Zeitraum an. Jeden Tag von 12-24 Uhr (jede Stunde) ...:
 		//Document job = cc.createJobElement("0  12-24  *  *  *   /usr/bin/xsoftwaresamba.sh");
 
-		// Ein Schrägstrich  /  teilt einen Zeitraum ein. Zwischen 6 und 23 Uhr alle 15 Minuten ...:
+		// Ein Schrï¿½gstrich  /  teilt einen Zeitraum ein. Zwischen 6 und 23 Uhr alle 15 Minuten ...:
 		//Document job = cc.createJobElement("*/15  6-23  *  *  *   /usr/bin/xsoftwaresamba.sh");
 
 		// Jeden Tag um 0:00 und um 12:00 Uhr wird das Script xmessage.sh aufgerufen:
@@ -953,7 +968,7 @@ public class CrontabFileConverter {
 						String beginHour = currentHourArray[0];
 
 						int iEndHour = (Integer.parseInt(beginHour) + 1) % 24;
-						// workaround, bis endhour am nächsten Tag erlaubt
+						// workaround, bis endhour am nï¿½chsten Tag erlaubt
 						if (iEndHour == 0)
 							iEndHour = 24;
 						String endHour = "" + iEndHour;
@@ -1002,14 +1017,14 @@ public class CrontabFileConverter {
 								int endHour = Integer.parseInt(currentHourArray[1]);
 								int beginMinute = Integer.parseInt(currentMinute);
 								int endMinute = beginMinute + 1;
-								// workaround, bis endhour am nächsten Tag erlaubt
+								// workaround, bis endhour am nï¿½chsten Tag erlaubt
 								endMinute = beginMinute;
 								if (endMinute == 60) {
 									endMinute = 0;
 									endHour = endHour + 1;
 								}
 								endHour = endHour % 24;
-								// workaround, bis endhour am nächsten Tag erlaubt
+								// workaround, bis endhour am nï¿½chsten Tag erlaubt
 								if (endHour == 0)
 									endHour = 24;
 								String stepSize = "1";

@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -81,10 +96,10 @@ public class JobSchedulerMonitorMessageJob extends Job_impl {
 	/** sos.util.SOSString Object */
 	private     SOSString    sosString                   = new SOSString();
 	
-	/** optional nur der Job-Name soll überprüft werden*/
+	/** optional nur der Job-Name soll ï¿½berprï¿½ft werden*/
 	private     String       monitorJobname              = "";
 	
-	/** optional nur der Jobkette soll überprüft werden*/
+	/** optional nur der Jobkette soll ï¿½berprï¿½ft werden*/
 	private     String       monitorJobChainname         = "";
 	
 	/** optional, default = false, Loggen von Fehlern und Warnungen */
@@ -99,9 +114,9 @@ public class JobSchedulerMonitorMessageJob extends Job_impl {
 	/** Schalter, die Defaultmeldungen ausschaltet bzw. rausschreibt. */
 	private     boolean      includeSupervisor           = false;        
 	
-	/**  Parameter "exclude_messages": ergänzt (d.h. mergt) die Liste der in der Job-Implementierung ausgeschlossenen Messages     
-	 Messages werden als semikolon-separierte Liste auf Job- oder Auftragsparametern geliefert. Ist nur eine Message-ID übergeben, 
-	 dann kann das Semikolon fehlen; es ist kein Fehler wenn die Liste der Message-IDs mit Semikolon schließt.
+	/**  Parameter "exclude_messages": ergï¿½nzt (d.h. mergt) die Liste der in der Job-Implementierung ausgeschlossenen Messages     
+	 Messages werden als semikolon-separierte Liste auf Job- oder Auftragsparametern geliefert. Ist nur eine Message-ID ï¿½bergeben, 
+	 dann kann das Semikolon fehlen; es ist kein Fehler wenn die Liste der Message-IDs mit Semikolon schlieï¿½t.
 	 */
 	private     String       excludeMessages             = null;
 	
@@ -624,7 +639,7 @@ public class JobSchedulerMonitorMessageJob extends Job_impl {
                     this.setNoWebServiceResponse(sosString.parseToBoolean(spooler_task.params().var("no_webservice")));
                     spooler_log.debug1(".. job parameter [no_webservice]: " + this.isNoWebServiceResponse());
                 } else {
-                    this.setNoWebServiceResponse(false);//default zurücksetzen                          
+                    this.setNoWebServiceResponse(false);//default zurï¿½cksetzen                          
                 }
                 
                 if (sosString.parseToString(spooler_task.params().var("exclude_messages")).length() > 0) {
@@ -638,7 +653,7 @@ public class JobSchedulerMonitorMessageJob extends Job_impl {
                     this.setIncludeSupervisor(sosString.parseToBoolean(spooler_task.params().var("include_supervisor")));
                     spooler_log.debug1(".. job parameter [include_supervisor]: " + this.isIncludeSupervisor());
                 } else {
-                    this.setIncludeSupervisor(false);//default zurücksetzen                         
+                    this.setIncludeSupervisor(false);//default zurï¿½cksetzen                         
                 }
                 
                 
@@ -842,7 +857,7 @@ public class JobSchedulerMonitorMessageJob extends Job_impl {
 							this.setNoWebServiceResponse(sosString.parseToBoolean(orderData.var("no_webservice")));
 							spooler_log.debug1(".. order parameter [no_webservice]: " + this.isNoWebServiceResponse() );
 						} else {
-							this.setNoWebServiceResponse(false);//default zurücksetzen							
+							this.setNoWebServiceResponse(false);//default zurï¿½cksetzen							
 						}
 						
 						
@@ -857,7 +872,7 @@ public class JobSchedulerMonitorMessageJob extends Job_impl {
 							this.setIncludeSupervisor(sosString.parseToBoolean(orderData.var("include_supervisor")));
 							spooler_log.debug1(".. order parameter [include_supervisor]: " + this.isIncludeSupervisor() );
 						} else {
-							this.setIncludeSupervisor(false);//default zurücksetzen							
+							this.setIncludeSupervisor(false);//default zurï¿½cksetzen							
 						}
 						
 						
@@ -1147,7 +1162,7 @@ public class JobSchedulerMonitorMessageJob extends Job_impl {
 	 * [Timestamp: 2007-02-16 14:29:26.671 ][WARN] [Job: monitor_check_status] ERRNO-2  No such file or directory [stat] [c:/scheduler.hobbit/jobs/JobSchedulerMonitorMessageJob.xml]}
 	 * [Timestamp: Zeitstempel ][WARN oder ERROR] [Job: Jobname] Fehlermeldung
 	 * 
-	 * Beispiel 2 für job chain:
+	 * Beispiel 2 fï¿½r job chain:
 	 * 
 	 * [Timestamp: 2007-02-16 14:29:26.671] [WARN] [Job Chain: ftp_send_service, Order ID: 2, Job: monitor_check_status] ERRNO-2  No such file or directory [stat] [c:/scheduler.hobbit/jobs/JobSchedulerMonitorMessageJob.xml]}
 	 * [Timestamp: Zeitstempel] [WARN oder ERROR] [Job Chain: jobchainname, Order ID: orderId, Job: Jobname] Fehlermeldung

@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -45,7 +60,7 @@ import sos.util.SOSStandardLogger;
 
 /**
  * static helper class for Managed Jobs
- * @author Andreas Püschel <andreas.pueschel@sos-berlin.com>
+ * @author Andreas Pï¿½schel <andreas.pueschel@sos-berlin.com>
  * @since 2005-03-05
  * @version 1.0
  */
@@ -79,7 +94,7 @@ public class JobSchedulerManagedObject {
 
 	private static String		tableLiveSchedules					= "LIVE_SCHEDULES";
 
-	/** Tabelle der persistenten Aufträge */
+	/** Tabelle der persistenten Auftrï¿½ge */
 	private static String		tableManagedOrders					= "SCHEDULER_MANAGED_ORDERS";
 
 	/** Tabelle der persistenten Auftragsparameter */
@@ -94,16 +109,16 @@ public class JobSchedulerManagedObject {
 	/** Tabelle der Jobs */
 	private static String		tableManagedJobs					= "SCHEDULER_MANAGED_JOBS";
 
-	/** Tabelle der Benutzer-Aufträge */
+	/** Tabelle der Benutzer-Auftrï¿½ge */
 	private static String		tableManagedUserJobs				= "SCHEDULER_MANAGED_USER_JOBS";
 
-	/** Tabelle der Temporären Benutzer für die User Jobs */
+	/** Tabelle der Temporï¿½ren Benutzer fï¿½r die User Jobs */
 	private static String		tableManagedTempUsers				= "SCHEDULER_MANAGED_TEMP_USERS";
 
 	/** Tabelle der Workflow-Modelle */
 	private static String		tableManagedModels					= "SCHEDULER_MANAGED_MODELS";
 
-	/** Tabelle der Temporären Benutzer für die User Jobs */
+	/** Tabelle der Temporï¿½ren Benutzer fï¿½r die User Jobs */
 	private static String		tableManagedUserVariables			= "SCHEDULER_MANAGED_USER_VARIABLES";
 
 	/** Tabelle der Workflow-Pakete */
@@ -262,12 +277,12 @@ public class JobSchedulerManagedObject {
 	}
 
 	/**
-	 * Gibt ein Connection Object zurück, welches die Order-spezifische Verbindung darstellt.
+	 * Gibt ein Connection Object zurï¿½ck, welches die Order-spezifische Verbindung darstellt.
 	 * Funktioniert mit Managed Job 2
-	 * @param conn Connection, die benutzt wird, um die Daten für die neue Connection zu finden
+	 * @param conn Connection, die benutzt wird, um die Daten fï¿½r die neue Connection zu finden
 	 * @param job job Object, von dessen Order die Connection besorgt werden soll (meistens "this")
-	 * @return Connection, die zum Order gehört. Diese ist noch nicht initialisiert, es müssen also
-	 * noch connect() und später disconnect() aufgerufen werden.
+	 * @return Connection, die zum Order gehï¿½rt. Diese ist noch nicht initialisiert, es mï¿½ssen also
+	 * noch connect() und spï¿½ter disconnect() aufgerufen werden.
 	 * @throws Exception
 	 */
 	public static SOSConnection getOrderConnection(final SOSConnection connection, final Job_impl job) throws Exception {
@@ -376,13 +391,13 @@ public class JobSchedulerManagedObject {
 	}
 
 	/**
-	 * Gibt ein Connection Object zurück, welches die Job-spezifische Verbindung darstellt
-	 * @param connection Connection, die benutzt wird, um die Daten für die neue Connection zu finden
+	 * Gibt ein Connection Object zurï¿½ck, welches die Job-spezifische Verbindung darstellt
+	 * @param connection Connection, die benutzt wird, um die Daten fï¿½r die neue Connection zu finden
 	 * @param spoolerId ID des Schedulers
 	 * @param jobName Name des Jobs
-	 * @param log SOSLogger für Logging der Datenbankverbindung
-	 * @return Connection, die zum Job gehört. Diese ist noch nicht initialisiert, es müssen also
-	 * noch connect() und später disconnect() aufgerufen werden.
+	 * @param log SOSLogger fï¿½r Logging der Datenbankverbindung
+	 * @return Connection, die zum Job gehï¿½rt. Diese ist noch nicht initialisiert, es mï¿½ssen also
+	 * noch connect() und spï¿½ter disconnect() aufgerufen werden.
 	 * @throws Exception
 	 */
 	public static SOSConnection getJobConnection(final SOSConnection connection, final String spoolerId, final String jobName, SOSLogger log) throws Exception {
@@ -432,14 +447,14 @@ public class JobSchedulerManagedObject {
 	}
 
 	/**
-	 * Gibt ein Connection Object zurück, welches die Job-spezifische Verbindung darstellt
-	 * @param connection Connection, die benutzt wird, um die Daten für die neue Connection zu finden
+	 * Gibt ein Connection Object zurï¿½ck, welches die Job-spezifische Verbindung darstellt
+	 * @param connection Connection, die benutzt wird, um die Daten fï¿½r die neue Connection zu finden
 	 * @param spoolerId ID des Schedulers
 	 * @param jobChain Name der Jobchain
 	 * @param order Id des Auftrags (order.id())
 	 * @param databaseConnection Identifizierer der Datenbankverbindung aus
-	 * @return Connection, die zum Job gehört. Diese ist noch nicht initialisiert, es müssen also
-	 * noch connect() und später disconnect() aufgerufen werden.
+	 * @return Connection, die zum Job gehï¿½rt. Diese ist noch nicht initialisiert, es mï¿½ssen also
+	 * noch connect() und spï¿½ter disconnect() aufgerufen werden.
 	 * @throws Exception
 	 */
 	public static SOSConnection getOrderConnection(final SOSConnection connection, final String spoolerId, final String jobChain, final String order, final String databaseConnection)
@@ -448,15 +463,15 @@ public class JobSchedulerManagedObject {
 	}
 
 	/**
-	 * Gibt ein Connection Object zurück, welches die Job-spezifische Verbindung darstellt
-	 * @param connection Connection, die benutzt wird, um die Daten für die neue Connection zu finden
+	 * Gibt ein Connection Object zurï¿½ck, welches die Job-spezifische Verbindung darstellt
+	 * @param connection Connection, die benutzt wird, um die Daten fï¿½r die neue Connection zu finden
 	 * @param spoolerId ID des Schedulers
 	 * @param jobChain Name der Jobchain
 	 * @param order Id des Auftrags (order.id())
 	 * @param databaseConnection Identifizierer der Datenbankverbindung aus 
-	 * @param log SOSLogger für Logging der Datenbankverbindung (aus order.payload.value("database_connection") in javascript)
-	 * @return Connection, die zum Job gehört. Diese ist noch nicht initialisiert, es müssen also
-	 * noch connect() und später disconnect() aufgerufen werden.
+	 * @param log SOSLogger fï¿½r Logging der Datenbankverbindung (aus order.payload.value("database_connection") in javascript)
+	 * @return Connection, die zum Job gehï¿½rt. Diese ist noch nicht initialisiert, es mï¿½ssen also
+	 * noch connect() und spï¿½ter disconnect() aufgerufen werden.
 	 * @throws Exception
 	 */
 	public static SOSConnection getOrderConnection(final SOSConnection connection, final String spoolerId, final String jobChain, final String order, final String databaseConnection,
@@ -677,7 +692,7 @@ public class JobSchedulerManagedObject {
 	}
 
 	/**
-	 * replaces variables of the ${name} and §{name} schemes in a command with values from
+	 * replaces variables of the ${name} and ï¿½{name} schemes in a command with values from
 	 * Variable_set
 	 * @param command original command string
 	 * @param vars job parameters
@@ -690,7 +705,7 @@ public class JobSchedulerManagedObject {
 			log.debug3("doing replacements for " + keys.length + " parameters.");
 		for (String parameterName : keys) {
 			String parameterValue = vars.var(parameterName).replaceAll("\\\\", "\\\\\\\\");
-			command = command.replaceAll("(?i)(\\$|§)\\{" + parameterName + "\\}", parameterValue.replaceAll("\\[quot\\]", "'"));
+			command = command.replaceAll("(?i)(\\$|ï¿½)\\{" + parameterName + "\\}", parameterValue.replaceAll("\\[quot\\]", "'"));
 		}
 
 		return command;

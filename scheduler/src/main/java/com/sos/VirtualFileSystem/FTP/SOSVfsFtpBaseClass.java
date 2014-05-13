@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -582,7 +597,7 @@ public class SOSVfsFtpBaseClass extends SOSVfsBaseClass implements ISOSVfsFileTr
 	 */
 	private Vector<String> getFilenames(final String pstrPathName, final boolean flgRecurseSubFolders) {
 		String strCurrentDirectory = null;
-		// TODO vecDirectoryListing = null; prüfen, ob notwendig
+		// TODO vecDirectoryListing = null; prï¿½fen, ob notwendig
 		vecDirectoryListing = null;
 		if (vecDirectoryListing == null) {
 			vecDirectoryListing = new Vector<String>();
@@ -1020,7 +1035,7 @@ public class SOSVfsFtpBaseClass extends SOSVfsBaseClass implements ISOSVfsFileTr
 		final String conMethodName = conClassName + "::getModificationTime";
 
 		String strT = null;
-		// Es gibt Probleme bei der standalone-compilation mit javac. unter eclipse läuft es fehlerfrei
+		// Es gibt Probleme bei der standalone-compilation mit javac. unter eclipse lï¿½uft es fehlerfrei
 		try {
 			/*
 			 * Issue the FTP MDTM command (not supported by all servers to retrieve the last modification time of a file.
@@ -1653,7 +1668,7 @@ public class SOSVfsFtpBaseClass extends SOSVfsBaseClass implements ISOSVfsFileTr
 
 	@Override
 	public String[] getFilelist(final String folder, final String regexp, final int flag, final boolean withSubFolder) {
-		// TODO vecDirectoryListing = null; prüfen, ob notwendig
+		// TODO vecDirectoryListing = null; prï¿½fen, ob notwendig
 		vecDirectoryListing = null;
 		if (vecDirectoryListing == null) {
 			vecDirectoryListing = nList(folder, withSubFolder);
@@ -1675,7 +1690,7 @@ public class SOSVfsFtpBaseClass extends SOSVfsBaseClass implements ISOSVfsFileTr
 
 	@Override
 	public String[] getFolderlist(final String folder, final String regexp, final int flag, final boolean withSubFolder) {
-		// TODO vecDirectoryListing = null; prüfen, ob notwendig
+		// TODO vecDirectoryListing = null; prï¿½fen, ob notwendig
 		vecDirectoryListing = null;
 		if (vecDirectoryListing == null) {
 			vecDirectoryListing = nList(folder, withSubFolder);

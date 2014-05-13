@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -58,16 +73,16 @@ public class FTPDialogListener {
 	/** Hilfsvariable. name=profilname, wert= entsprechende FTPProfile Objekt*/
 	private              HashMap                profiles                      = null;
 
-	/** aktuell ausgewählte FTPProfile Objekt*/
+	/** aktuell ausgewï¿½hlte FTPProfile Objekt*/
 	private              FTPProfile             currProfile                   = null;
 
-	/** aktuell ausgewählte Profilname*/
+	/** aktuell ausgewï¿½hlte Profilname*/
 	private              String                 currProfileName               = null;
 
 	/** see sos.settings.SOSProfileSettings Object*/
 	private              SOSProfileSettings     settings                      = null;
 
-	/** In der Konfigurationsdatei haben die Profilsektionen einen Präfix.
+	/** In der Konfigurationsdatei haben die Profilsektionen einen Prï¿½fix.
 	 * Unterhalb dieser Sektionen werden die Einstellungen/Zugangsdaten gespeichert.  
 	 * 
 	 * */
@@ -81,8 +96,8 @@ public class FTPDialogListener {
 	/** In dieser Auswahllisten stehen die Profilnamen*/
 	private              Combo                  cboConnectname                = null;
 
-	/** Falls es nicht erwünscht ist, den Passwort zuspeichern, dann hat man auch die Möglichkeit dieser 
-	 * während der Laufzeit anzugeben.*/
+	/** Falls es nicht erwï¿½nscht ist, den Passwort zuspeichern, dann hat man auch die Mï¿½glichkeit dieser 
+	 * wï¿½hrend der Laufzeit anzugeben.*/
 	private              String                 password                      = "";
 
 	/** Flag */
@@ -249,7 +264,7 @@ public class FTPDialogListener {
 	}
 
 	/**
-	 * Liefert die aktuell ausgewählte Profilname
+	 * Liefert die aktuell ausgewï¿½hlte Profilname
 	 * @return
 	 */
 	public String getCurrProfileName() {
@@ -257,7 +272,7 @@ public class FTPDialogListener {
 	}
 
 	/**
-	 * Setzt die aktuelle ausgewähle Profilname
+	 * Setzt die aktuelle ausgewï¿½hle Profilname
 	 * @param currProfileName
 	 */
 	public void setCurrProfileName(String currProfileName) {
@@ -266,7 +281,7 @@ public class FTPDialogListener {
 	}
 
 	/**
-	 * Löscht die FTPProfile 
+	 * Lï¿½scht die FTPProfile 
 	 * @param profilename
 	 */
 	public void removeProfile(String profilename) {
@@ -285,7 +300,7 @@ public class FTPDialogListener {
 
 
 	/**
-	 * Liest den Inhalt der Datei file und gibt den Inhalt als Array von Byte zurück.
+	 * Liest den Inhalt der Datei file und gibt den Inhalt als Array von Byte zurï¿½ck.
 	 * @param file
 	 * @return
 	 * @throws IOException
@@ -319,7 +334,7 @@ public class FTPDialogListener {
 	}
 
 	/**
-	 * Löscht die Profilname aus der Konfigurationsdatei
+	 * Lï¿½scht die Profilname aus der Konfigurationsdatei
 	 * @param profilename
 	 * @throws Exception
 	 */

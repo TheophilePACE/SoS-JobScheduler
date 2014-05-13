@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -142,9 +157,9 @@ public class IOUtils {
 	/**
 	 *
 	 * Es wird entweder eine Scheduler Konfigurationsdatei, eine Hot Folder Verzeichnis oder
-	 * ein Hot Folder Datei geöffnet.
+	 * ein Hot Folder Datei geï¿½ffnet.
 	 *
-	 * Beim erfolgreichen Öffnet wird true, sansonsten flase geliefert.
+	 * Beim erfolgreichen ï¿½ffnet wird true, sansonsten flase geliefert.
 	 *
 	 * @param filename String
 	 * @param filenames java.util.Collection
@@ -180,13 +195,13 @@ public class IOUtils {
 				}
 				// File tempFile = File.createTempFile("#xml#.config.", ".xml~", new File(path) );
 				// tempFile.deleteOnExit();
-				// temporäre config.xml bilden
+				// temporï¿½re config.xml bilden
 				MergeAllXMLinDirectory allJob = new MergeAllXMLinDirectory(path);
 				xml = allJob.parseDocuments();
-				// schreibgeschützte Dateien merken. Diese Elemente werden anders farbig dargestellt und können nicht verändert werden
+				// schreibgeschï¿½tzte Dateien merken. Diese Elemente werden anders farbig dargestellt und kï¿½nnen nicht verï¿½ndert werden
 				((SchedulerDom) dom).setListOfReadOnlyFiles(allJob.getListOfReadOnly());
 				// life Dateiname und Element-Attribute-name sind nicht gleich. Attributname wird automatisch
-				// verändert und das Dokument auf geändert markiert
+				// verï¿½ndert und das Dokument auf geï¿½ndert markiert
 				if (allJob.getListOfChangeElementNames() != null && allJob.getListOfChangeElementNames().size() > 0)
 					((SchedulerDom) dom).setListOfChangeElementNames(allJob.getListOfChangeElementNames());
 				// tempFile.delete();
@@ -455,7 +470,7 @@ public class IOUtils {
 	}
 
 	/**
-	 * Speichert das Dokument in die einzelnen Dateien (als HOT FOLDER ELEMENT) wieder zurück
+	 * Speichert das Dokument in die einzelnen Dateien (als HOT FOLDER ELEMENT) wieder zurï¿½ck
 	 */
 	public static boolean saveDirectory(final DomParser dom, final boolean saveas, final int type, final String nameOfElement, final IContainer container) {
 		Document currDoc = dom.getDoc();

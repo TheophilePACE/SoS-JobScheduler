@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -349,7 +364,7 @@ public class JobChainNestedListener {
 			String oldState = Utils.getAttributeValue("state", _node);
 
 			if(oldState != null &&  state != null &&  !oldState.equals(state)) {
-				//state hat sicg geändert. ggf die Details state auch ändern
+				//state hat sicg geï¿½ndert. ggf die Details state auch ï¿½ndern
 				DetailsListener.changeDetailsState(oldState, state, Utils.getAttributeValue("name", _chain), _dom);
 			}
 
@@ -488,7 +503,7 @@ public class JobChainNestedListener {
 
 			List l = _chain.getContent();
 			int cIndex =-1;
-			boolean found = false;//Hilfsvariabkle für down
+			boolean found = false;//Hilfsvariabkle fï¿½r down
 			for(int i =0; i < _chain.getContentSize(); i++) {
 				if(l.get(i) instanceof Element) {				
 					Element elem_ = (Element)l.get(i);

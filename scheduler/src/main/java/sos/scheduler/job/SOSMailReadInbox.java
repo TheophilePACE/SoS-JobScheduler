@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -55,7 +70,7 @@ import sos.util.SOSSchedulerLogger;
 
 /**
  * <p>Title: JobDocumentFactoryCheckFax</p>
- * <p>Description: Dieser Job überprüft anhand einer Mailbox, ob der Faxserver
+ * <p>Description: Dieser Job ï¿½berprï¿½ft anhand einer Mailbox, ob der Faxserver
  *
  *
  * </p>
@@ -73,23 +88,23 @@ public class SOSMailReadInbox extends Job_impl {
 	private String				mailPassword				= new String("");
 	/** Settings Attribut: mailMessageFolder: Ordner, der gelesen werden soll */
 	private String				mailMessageFolder			= "";
-	/** Settings Attribut: mailSubjectFilter: Filter für Betreff */
+	/** Settings Attribut: mailSubjectFilter: Filter fï¿½r Betreff */
 	private String				mailSubjectFilter			= "";
-	/** Settings Attribut: mailSubjectPattern: Regulärer Ausdruck für Betreff */
+	/** Settings Attribut: mailSubjectPattern: Regulï¿½rer Ausdruck fï¿½r Betreff */
 	private String				mailSubjectPattern			= "";
-	/** Settings Attribut: mailBodyPattern: Regulärer Ausdruck für Body */
+	/** Settings Attribut: mailBodyPattern: Regulï¿½rer Ausdruck fï¿½r Body */
 	private String				mailBodyPattern				= "";
 	/** Settings Attribut: mailServerTimeout: Timeout */
 	private int					mailServerTimeout			= 0;
-	/** Settings Attribut: mailDumpDir: Verzeichnis für Email, die als Datei gespeichert werden */
+	/** Settings Attribut: mailDumpDir: Verzeichnis fï¿½r Email, die als Datei gespeichert werden */
 	private String				mailDumpDir					= "";
-	/** Settings Attribut: mailJobchain: Jobkette für add_order */
+	/** Settings Attribut: mailJobchain: Jobkette fï¿½r add_order */
 	private String				mailJobchain				= "";
-	/** Settings Attribut: mailOrderId: Order-id für add_order */
+	/** Settings Attribut: mailOrderId: Order-id fï¿½r add_order */
 	private String				mailOrderId					= "";
-	/** Settings Attribut: mailOrderState: State für add_order */
+	/** Settings Attribut: mailOrderState: State fï¿½r add_order */
 	private String				mailOrderState				= "";
-	/** Settings Attribut: mailOrderTitle: Title für add_order */
+	/** Settings Attribut: mailOrderTitle: Title fï¿½r add_order */
 	private String				mailOrderTitle				= "";
 	/** Settings Attribut: mailServerType: Imap oder Pop3 */
 	private String				mailServerType				= "";
@@ -97,11 +112,11 @@ public class SOSMailReadInbox extends Job_impl {
 	private boolean				mailBodyAsSchedulerCommand	= false;
 	/** Settings Attribut: mailAction:  delete|order|dump|command */
 	private String				mailAction					= "";
-	/** Settings Attribut: mailSchedulerHost:  Scheduler Host für Kommando aus Body und add_order*/
+	/** Settings Attribut: mailSchedulerHost:  Scheduler Host fï¿½r Kommando aus Body und add_order*/
 	private String				mailSchedulerHost			= "";
-	/** Settings Attribut: mailSchedulerPort:  Scheduler Port für Kommando aus Body und add_order*/
+	/** Settings Attribut: mailSchedulerPort:  Scheduler Port fï¿½r Kommando aus Body und add_order*/
 	private int					mailSchedulerPort			= 0;
-	/** Email nach der Ausführung der Aktionen auf "gelesen" setzen */
+	/** Email nach der Ausfï¿½hrung der Aktionen auf "gelesen" setzen */
 	private boolean				mailSetSeen					= true;
 	/** Nur Emails verarbeiten, die nicht gelesen sind. Wenn True ist mailSetSeen auch True */
 	private boolean				mailUseSeen					= true;

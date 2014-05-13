@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -602,23 +617,23 @@ public class JobSchedulerJobAdapter extends JobSchedulerJob implements JSJobUtil
 			//
 			/**
 			 * beides zulassen, % und $
-			 * mögliche Kombinationen sind:
+			 * mï¿½gliche Kombinationen sind:
 			 *
 			 * %SCHEDULER_PARAM_name%
 			 * %name%
 			 * ${SCHEDULER_PARAM_name}
 			 * $SCHEDULER_PARAM_name
-			 * §{SCHEDULER_PARAM_name}
-			 * §SCHEDULER_PARAM_name
+			 * ï¿½{SCHEDULER_PARAM_name}
+			 * ï¿½SCHEDULER_PARAM_name
 			 * ${name}
-			 * §{name}
+			 * ï¿½{name}
 			 * $name
-			 * §name
+			 * ï¿½name
 			 *
 			 * Managed-DB:
-			 *    §{...}
+			 *    ï¿½{...}
 			 */
-			String[] strPatterns = new String[] { "%%SCHEDULER_PARAM_%1$s%%", "%%%1$s%%", "(\\$|§)\\{?SCHEDULER_PARAM_%1$s\\}?", "(\\$|§)\\{?%1$s\\}?" };
+			String[] strPatterns = new String[] { "%%SCHEDULER_PARAM_%1$s%%", "%%%1$s%%", "(\\$|ï¿½)\\{?SCHEDULER_PARAM_%1$s\\}?", "(\\$|ï¿½)\\{?%1$s\\}?" };
 			for (String strPattern : strPatterns) {
 				regExPattern = strPattern;
 				//				logger.debug("regExPattern = " + regExPattern);
@@ -697,7 +712,7 @@ public class JobSchedulerJobAdapter extends JobSchedulerJob implements JSJobUtil
 	 * \brief myReplaceAll
 	 *
 	 * \details
-		 * m) suche über mehrere Zeilen
+		 * m) suche ï¿½ber mehrere Zeilen
 		 * i) case insensitive
 	 *
 	 * \return String
@@ -710,7 +725,7 @@ public class JobSchedulerJobAdapter extends JobSchedulerJob implements JSJobUtil
 	public String myReplaceAll(final String source, final String what, final String replacement) {
 		String newReplacement = replacement.replaceAll("\\$", "\\\\\\$");
 		/*
-		 * m) suche über mehrere Zeilen
+		 * m) suche ï¿½ber mehrere Zeilen
 		 * i) case insensitive
 		 */
 		return source.replaceAll("(?im)" + what, newReplacement);
@@ -1012,9 +1027,9 @@ public class JobSchedulerJobAdapter extends JobSchedulerJob implements JSJobUtil
 	//				else {
 	//					spooler_job.set_delay_order_after_setback(1, delay);
 	//					/**
-	//					 * ist das eigentlich notwendig? der API-Job überwacht doch bereits die Anzahl setBack's
+	//					 * ist das eigentlich notwendig? der API-Job ï¿½berwacht doch bereits die Anzahl setBack's
 	//					 * Ja, das ist notwendig. im Job werden die max Anzahl setbacks nicht gesetzt, sondern
-	//					 * nur über die Parameter im Order oder Job
+	//					 * nur ï¿½ber die Parameter im Order oder Job
 	//					 */
 	//					spooler_job.set_max_order_setbacks((int) nrOfTries);
 	//					spooler_task.order().setback();
@@ -1030,11 +1045,11 @@ public class JobSchedulerJobAdapter extends JobSchedulerJob implements JSJobUtil
 	 * @brief Helperfunktion - liefert true, wenn String weder null noch leer
 	 *
 	 * \details
-	 * StringObjekt auf null/empty prüfen
+	 * StringObjekt auf null/empty prï¿½fen
 	 *
-	 * @param pstrValue zu prüfendes Stringobjekt
+	 * @param pstrValue zu prï¿½fendes Stringobjekt
 	 *
-	 * @return boolean true, wenn String sinnvollen Wert enthält.
+	 * @return boolean true, wenn String sinnvollen Wert enthï¿½lt.
 	 */
 	protected boolean isNotEmpty(final String pstrValue) {
 		return isNotNull(pstrValue) && pstrValue.trim().length() > 0;

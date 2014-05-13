@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -328,7 +343,7 @@ public class JobSchedulerExportJob extends JobSchedulerJob {
 	 *  [dataobject]_[id]_[datetime].xml
 	 *  [scheduler_signal_objects.job_chain]_[scheduler_signal_objects.signal_id]_ [yyyymmdd-hhMMss].xml
 	 *  dataobject = job_chainname
-	 *  id         = ursprung: Eindeutige SChlüssen der Tabelle SCHEDULER_SIGNAL_OBJECT.ID. Steht hier in der Order Id.
+	 *  id         = ursprung: Eindeutige SChlï¿½ssen der Tabelle SCHEDULER_SIGNAL_OBJECT.ID. Steht hier in der Order Id.
 	 *  datetime   = datetime
 	 *  
 	 * @return String
@@ -348,7 +363,7 @@ public class JobSchedulerExportJob extends JobSchedulerJob {
 	}
 	
 	/**
-	 * Fügt einen Slah hinten einen Verzeichnis, wenn dieser Bereits nicht
+	 * Fï¿½gt einen Slah hinten einen Verzeichnis, wenn dieser Bereits nicht
 	 * existiert
 	 * 
 	 * @param path
@@ -541,11 +556,11 @@ public class JobSchedulerExportJob extends JobSchedulerJob {
 						if(queryId == -1 && bDoExport) {											
 							queryId =export.query(tag, keys, query, null, operation, ldel, queryId);	
 						} else if (queryId > -1 && bDoExport) {
-							//unabhängige Abfrage							
+							//unabhï¿½ngige Abfrage							
 							queryId = export.add(tag, keys, query, "", operation,  ldel, queryId);
 							
 						} else {
-							//abhängige Abfrage
+							//abhï¿½ngige Abfrage
 							queryId = export.query(tag, keys, query, "", operation, ldel, queryId);						
 						}
 						

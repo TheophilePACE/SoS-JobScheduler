@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -80,7 +95,7 @@ public class SOSResourceBundle {
     }
     
     /**
-     * ResourceBundle für die Nachrichten definieren.
+     * ResourceBundle fï¿½r die Nachrichten definieren.
      * 
      * @param name
      *            Name der Nachrichtendatei Der Name soll wie folgt aussehen :
@@ -95,7 +110,7 @@ public class SOSResourceBundle {
     }
 
     /**
-     * ResourceBundle für die Nachrichten definieren.
+     * ResourceBundle fï¿½r die Nachrichten definieren.
      * 
      * @param name
      *            Name der Nachrichtendatei Der Name soll wie folgt aussehen :
@@ -158,7 +173,7 @@ public class SOSResourceBundle {
      * Nachricht lesen
      * 
      * @param name
-     *            Schlüsselname in der .properties Datei
+     *            Schlï¿½sselname in der .properties Datei
      * @return message oder message key(wenn nicht gefunden)
      * @throws Exception
      */
@@ -177,9 +192,9 @@ public class SOSResourceBundle {
      * arg ersetzen
      * 
      * @param name
-     *            Schlüsselname in der .properties Datei
+     *            Schlï¿½sselname in der .properties Datei
      * @param arg
-     *            Wert für den Platzhalter
+     *            Wert fï¿½r den Platzhalter
      * @return message oder message key(wenn nicht gefunden)
      * @throws Exception
      */
@@ -192,11 +207,11 @@ public class SOSResourceBundle {
      * durch arg0 und arg1 ersetzen
      * 
      * @param name
-     *            Schlüsselname in der .properties Datei
+     *            Schlï¿½sselname in der .properties Datei
      * @param arg0
-     *            Wert für den Platzhalter {0}
+     *            Wert fï¿½r den Platzhalter {0}
      * @param arg1
-     *            Wert für den Platzhalter {1}
+     *            Wert fï¿½r den Platzhalter {1}
      * @return message oder message key(wenn nicht gefunden)
      * @throws Exception
      */
@@ -210,9 +225,9 @@ public class SOSResourceBundle {
      * durch args ersetzen
      * 
      * @param name
-     *            Schlüsselname in der .properties Datei
+     *            Schlï¿½sselname in der .properties Datei
      * @param args
-     *            Werte für die Platzhalter
+     *            Werte fï¿½r die Platzhalter
      * @return message oder message key(wenn nicht gefunden)
      * @throws Exception
      */

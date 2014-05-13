@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -63,10 +78,10 @@ import sos.util.SOSString;
  *
  * Es existiert eine Meta Datei, in dem folgen Information beiinhaltet sind:
  *
- *  1. gültige Parametername
- *  2. überprüft ob die Parameterwerte zu den Parametername gültig sind
- *  3. Abhängigkeiten der Parameternamen untereinander
- *  4. überprüfen der Abhängigkeiten mit Hilfe der boolean Operationen wie and und or
+ *  1. gï¿½ltige Parametername
+ *  2. ï¿½berprï¿½ft ob die Parameterwerte zu den Parametername gï¿½ltig sind
+ *  3. Abhï¿½ngigkeiten der Parameternamen untereinander
+ *  4. ï¿½berprï¿½fen der Abhï¿½ngigkeiten mit Hilfe der boolean Operationen wie and und or
  *
  *
  */
@@ -83,16 +98,16 @@ public class SOSConfiguration {
 	private final SOSString						sosString							= new SOSString();
 	private SOSLogger						sosLogger							= null;
 
-	/** Programargumente können entweder als String[] oder als Poperties übergeben werden */
+	/** Programargumente kï¿½nnen entweder als String[] oder als Poperties ï¿½bergeben werden */
 	private String[]						arguments							= null;
 	private Properties						argumentsAsProperties				= null;
 
 	/** Scheduler Parameter*/
 	private Properties						schedulerParams						= null;
 
-	private String							settingsFile						= null;								//für SOSXMLSettings und SOSProfilesettings
-	private String							settingsTablename					= null;								//für SOSConnectionSettings
-	private String							settingsApplicationname				= null;								//für SOSConnectionSettings
+	private String							settingsFile						= null;								//fï¿½r SOSXMLSettings und SOSProfilesettings
+	private String							settingsTablename					= null;								//fï¿½r SOSConnectionSettings
+	private String							settingsApplicationname				= null;								//fï¿½r SOSConnectionSettings
 	private String							settingsProfilename					= null;
 
 	/** SOSConnection Objekt wird verwendet in SOSConnectionSettings */
@@ -214,7 +229,7 @@ public class SOSConfiguration {
 
 	private void init() throws Exception {
 
-		//Programm Arguments können vom Typ String[] oder Properties sein
+		//Programm Arguments kï¿½nnen vom Typ String[] oder Properties sein
 		if (arguments != null)
 			readProgramArguments(arguments);
 		else
@@ -450,7 +465,7 @@ public class SOSConfiguration {
 
 	/**
 	 *
-	 * p2 überschreibt die Werte von p1
+	 * p2 ï¿½berschreibt die Werte von p1
 	 * @param p1
 	 * @param p2
 	 * @return
@@ -508,7 +523,7 @@ public class SOSConfiguration {
 		try {
 			SOSConfigurationItem item = null;
 			if (ri != null && ri.getQuickConfigurationsItem() != null && ri.getQuickConfigurationsItem().containsKey(name)) {
-				//das überprüfte ConfigurationItem wird hier übergeben
+				//das ï¿½berprï¿½fte ConfigurationItem wird hier ï¿½bergeben
 				item = (SOSConfigurationItem) ri.getQuickConfigurationsItem().get(name);
 			}
 			if (item == null)
@@ -522,7 +537,7 @@ public class SOSConfiguration {
 
 	public HashMap getConfigurationsItems() {
 		if (ri != null && ri.getQuickConfigurationsItem() != null) {
-			//das überprüfte ConfigurationItem wird hier übergeben
+			//das ï¿½berprï¿½fte ConfigurationItem wird hier ï¿½bergeben
 			return ri.getQuickConfigurationsItem();
 		}
 		else {
@@ -532,7 +547,7 @@ public class SOSConfiguration {
 
 	public ArrayList getPasswordnames() {
 		if (ri != null && ri.getPasswordNames() != null) {
-			//alle Passwortnamen werden übergeben
+			//alle Passwortnamen werden ï¿½bergeben
 			return ri.getPasswordNames();
 		}
 		else {
@@ -671,14 +686,14 @@ public class SOSConfiguration {
 			String profile = "remote_wilma";
 
 			SOSConfiguration con = new SOSConfiguration(args, null, settingsFile, profile, sosLogger);
-			SOSConfigurationItem[] p2 = con.getParameter();//Hier sind die gemergte Parameter ohne Defaults und Überprüfung
-			System.out.println("*************************** Hier sind die Parameter ohne Defaults und Überprüfung ***************************");
+			SOSConfigurationItem[] p2 = con.getParameter();//Hier sind die gemergte Parameter ohne Defaults und ï¿½berprï¿½fung
+			System.out.println("*************************** Hier sind die Parameter ohne Defaults und ï¿½berprï¿½fung ***************************");
 			for (int i = 0; i < p2.length; i++) {
 				System.out.println(i + "'te Parameter \n\tname=" + p2[i].getName() + "\n\tvalue=" + p2[i].getValue() + "\n\tdefault=" + p2[i].getDefaults()
 						+ "\n\titemId=" + p2[i].getItemId() + "\n\tpassword=" + p2[i].isPassword());
 			}
 
-			System.out.println("*************************** Start configuration Item nachdem Überprüfung und ggf. mit Defaults ************************");
+			System.out.println("*************************** Start configuration Item nachdem ï¿½berprï¿½fung und ggf. mit Defaults ************************");
 			SOSConfigurationItem[] p1 = con.checkConfigurationItems(requiredDefaultFile);
 			for (int i = 0; i < p1.length; i++) {
 				System.out.println(i + "'te Parameter \n\tname=" + p1[i].getName() + "\n\tvalue=" + p1[i].getValue() + "\n\tdefault=" + p1[i].getDefaults()
@@ -705,14 +720,14 @@ public class SOSConfiguration {
 			String profile = "remote_wilma";
 
 			SOSConfiguration con = new SOSConfiguration(args, null, settingsFile, settingsApplication, profile, requiredDefaultFile, sosLogger);
-			SOSConfigurationItem[] p2 = con.getParameter();//Hier sind die gemergte Parameter ohne Defaults und Überprüfung
-			System.out.println("*************************** Hier sind die Parameter ohne Defaults und Überprüfung ***************************");
+			SOSConfigurationItem[] p2 = con.getParameter();//Hier sind die gemergte Parameter ohne Defaults und ï¿½berprï¿½fung
+			System.out.println("*************************** Hier sind die Parameter ohne Defaults und ï¿½berprï¿½fung ***************************");
 			for (int i = 0; i < p2.length; i++) {
 				System.out.println(i + "'te Parameter \n\tname=" + p2[i].getName() + "\n\tvalue=" + p2[i].getValue() + "\n\tdefault=" + p2[i].getDefaults()
 						+ "\n\titemId=" + p2[i].getItemId() + "\n\tpassword=" + p2[i].isPassword());
 			}
 
-			System.out.println("*************************** Start configuration Item nachdem Überprüfung und ggf. mit Defaults ************************");
+			System.out.println("*************************** Start configuration Item nachdem ï¿½berprï¿½fung und ggf. mit Defaults ************************");
 			SOSConfigurationItem[] p1 = con.checkConfigurationItems(requiredDefaultFile);
 			for (int i = 0; i < p1.length; i++) {
 				System.out.println(i + "'te Parameter \n\tname=" + p1[i].getName() + "\n\tvalue=" + p1[i].getValue() + "\n\tdefault=" + p1[i].getDefaults()
@@ -754,8 +769,8 @@ public class SOSConfiguration {
 			String settingsProfilename = "test";
 
 			SOSConfiguration con = new SOSConfiguration(args, sosConnection, settingsTablename, settingsApplication, settingsProfilename, sosLogger);
-			SOSConfigurationItem[] p2 = con.getParameter();//Hier sind die gemergte Parameter ohne Defaults und Überprüfung
-			System.out.println("*************************** Hier sind die Parameter ohne Defaults und Überprüfung ***************************");
+			SOSConfigurationItem[] p2 = con.getParameter();//Hier sind die gemergte Parameter ohne Defaults und ï¿½berprï¿½fung
+			System.out.println("*************************** Hier sind die Parameter ohne Defaults und ï¿½berprï¿½fung ***************************");
 			for (int i = 0; i < p2.length; i++) {
 				System.out.println(i + "'te Parameter \n\tname=" + p2[i].getName() + "\n\tvalue=" + p2[i].getValue() + "\n\tdefault=" + p2[i].getDefaults()
 						+ "\n\titemId=" + p2[i].getItemId() + "\n\tpassword=" + p2[i].isPassword());
@@ -763,7 +778,7 @@ public class SOSConfiguration {
 
 			SOSConfigurationItem[] p1 = con.checkConfigurationItems(requiredDefaultFile);
 
-			System.out.println("*************************** Start configuration Item nachdem Überprüfung und ggf. mit Defaults ************************");
+			System.out.println("*************************** Start configuration Item nachdem ï¿½berprï¿½fung und ggf. mit Defaults ************************");
 			for (int i = 0; i < p1.length; i++) {
 				System.out.println(i + "'te Parameter \n\tname=" + p1[i].getName() + "\n\tvalue=" + p1[i].getValue() + "\n\tdefault=" + p1[i].getDefaults()
 						+ "\n\titemId=" + p1[i].getItemId() + "\n\tpassword=" + p1[i].isPassword());
@@ -781,13 +796,13 @@ public class SOSConfiguration {
 	public static void main(String[] args) throws Exception {
 		try {
 
-			//Folgende dateien werden zum Testen benötigt:
+			//Folgende dateien werden zum Testen benï¿½tigt:
 			// 1. ./testDateien/Configuration.xml
 			// 2. ./testDateien/sos_settings.ini
 			// 3. ./testDateien/ftp_settings.ini
 			// 4. ./testDateien/test_settings.xml
-			// 5. sos.util.configuration.TestJob.java --> liegt temporär da
-			// 6. ./testDateien/TestParams.job.xml -> job für 5.
+			// 5. sos.util.configuration.TestJob.java --> liegt temporï¿½r da
+			// 6. ./testDateien/TestParams.job.xml -> job fï¿½r 5.
 
 			//manuell erzeugte programmargumente soll zum Test dienen
 			if (args == null || args.length == 0)

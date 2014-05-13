@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -40,7 +55,7 @@ package sos.settings;
  * @author <a href="mailto:ghassan.beydoun@sos-berlin.com">Ghassan Beydoun</a>
  * @resource sos.util.jar
  * @version 1.0
- * @author <a href="mailto:andreas.pueschel@sos-berlin.com">Andreas Püschel</a>
+ * @author <a href="mailto:andreas.pueschel@sos-berlin.com">Andreas Pï¿½schel</a>
  * @since 2005-01-25
  * @version 1.1
  */
@@ -67,7 +82,7 @@ public abstract class SOSSettings {
   /** Bezeichnung des Names der Einstellung */
   protected String entry                = "";
 
-  /** Voreinstellung für created_name, modified_name bei Änderung von Einstellungen */
+  /** Voreinstellung fï¿½r created_name, modified_name bei ï¿½nderung von Einstellungen */
   protected String author               = "SOS";
   
   /** Datenquelle: Array der Tabellen und Titel */
@@ -75,19 +90,19 @@ public abstract class SOSSettings {
   
   protected String entryApplication     = "APPLICATION";
   
-  /** Feldname für die Sektion eines Eintrags */
+  /** Feldname fï¿½r die Sektion eines Eintrags */
   protected String entrySection         = "SECTION";
 
-  /** Feldname für den Namen eines Eintrags */
+  /** Feldname fï¿½r den Namen eines Eintrags */
   protected String entryName            = "NAME";
   
-  /** Feldname für den Wert eines Eintrags */
+  /** Feldname fï¿½r den Wert eines Eintrags */
   protected String entryValue           = "VALUE";
   
-  /** Feldname für den Titel eines Eintrags */
+  /** Feldname fï¿½r den Titel eines Eintrags */
   protected String entryTitle           = "TITLE";
 
-  /** Groß-/Kleinschreibung berücksichtigen */
+  /** Groï¿½-/Kleinschreibung berï¿½cksichtigen */
   protected boolean ignoreCase          = false;
   
 
@@ -187,9 +202,9 @@ public abstract class SOSSettings {
 
 
   /**
-   * Liefert alle Einträge einer Sektion zurück.
+   * Liefert alle Eintrï¿½ge einer Sektion zurï¿½ck.
    *
-   * @return Properties Objekt, das alle Einträge der Sektion darstellt.
+   * @return Properties Objekt, das alle Eintrï¿½ge der Sektion darstellt.
    * @throws java.lang.Exception
    * @see #getSections
    */
@@ -197,9 +212,9 @@ public abstract class SOSSettings {
 
 
   /**
-   * Liefert alle Einträge der eingegebenen Sektion zurück.
+   * Liefert alle Eintrï¿½ge der eingegebenen Sektion zurï¿½ck.
    *
-   * @return Properties Objekt, das alle Einträge der Sektion darstellt.
+   * @return Properties Objekt, das alle Eintrï¿½ge der Sektion darstellt.
    * @throws java.lang.Exception
    * @see #getSections
    */
@@ -207,9 +222,9 @@ public abstract class SOSSettings {
 
 
   /**
-   * Liefert alle Einträge der eingegebenen Sektion zurück.
+   * Liefert alle Eintrï¿½ge der eingegebenen Sektion zurï¿½ck.
    *
-   * @return Properties Objekt, das alle Einträge der Sektion darstellt.
+   * @return Properties Objekt, das alle Eintrï¿½ge der Sektion darstellt.
    * @throws java.lang.Exception
    * @see #getSections
    */
@@ -218,7 +233,7 @@ public abstract class SOSSettings {
 
 
   /**
-   * Liefert alle Sektionen einer Anwendung zurück
+   * Liefert alle Sektionen einer Anwendung zurï¿½ck
    *
    * @return ArrayList die alle Sektionen beinhaltet
    * @throws java.lang.Exception
@@ -227,7 +242,7 @@ public abstract class SOSSettings {
 
 
   /**
-   * Liefert den wert eines Eintrages zurück.
+   * Liefert den wert eines Eintrages zurï¿½ck.
    *
    * @param entry Name des Eintrages
    * @return String der Wert eines Eintrages
@@ -237,7 +252,7 @@ public abstract class SOSSettings {
 
 
   /**
-   * Aktiviert die Kleinschreibung für Feldnamen
+   * Aktiviert die Kleinschreibung fï¿½r Feldnamen
    *
    * @see #setKeysToUpperCase
    */
@@ -245,7 +260,7 @@ public abstract class SOSSettings {
 
 
   /**
-   * Aktiviert die Kleinschreibung für Feldnamen
+   * Aktiviert die Kleinschreibung fï¿½r Feldnamen
    *
    * @see #setKeysToLowerCase
    */
@@ -253,13 +268,13 @@ public abstract class SOSSettings {
 
 
   /**
-   * Setzt den Schalter für die Berücksichtigung von Groß/Kleinschreibung
+   * Setzt den Schalter fï¿½r die Berï¿½cksichtigung von Groï¿½/Kleinschreibung
    * @param ignoreCase
    */
   public abstract void setIgnoreCase( boolean ignoreCase );
   
   /**
-   * liefert den Schalter für die Berücksichtigung von Groß/Kleinschreibung
+   * liefert den Schalter fï¿½r die Berï¿½cksichtigung von Groï¿½/Kleinschreibung
    * @param ignoreCase
    */
   public abstract boolean getIgnoreCase();

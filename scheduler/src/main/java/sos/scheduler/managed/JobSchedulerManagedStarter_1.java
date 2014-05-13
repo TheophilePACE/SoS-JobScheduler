@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -75,16 +90,16 @@ import sos.xml.SOSXMLValidator;
 
 public class JobSchedulerManagedStarter_1 extends JobSchedulerJob {
 
-    /** Attribut: workflowOrders: Liste der Aufträge und zugehöriger Modelle */
+    /** Attribut: workflowOrders: Liste der Auftrï¿½ge und zugehï¿½riger Modelle */
     private ArrayList workflowOrders = new ArrayList();
 
-    /** Attribut: orderIterator: Iterator für Aufträge */
+    /** Attribut: orderIterator: Iterator fï¿½r Auftrï¿½ge */
     private Iterator orderIterator = null;
 
-    /** Settings Attribut: maxOrderCount: max. Größe der Auftragswarteschlangen aller Job-Ketten */
+    /** Settings Attribut: maxOrderCount: max. Grï¿½ï¿½e der Auftragswarteschlangen aller Job-Ketten */
     private int maxOrderCount = 0;
     
-    /** Läuft der Job als startscript? */
+    /** Lï¿½uft der Job als startscript? */
     private boolean startscript = true;
 
     private static final String schedulerXSDOld = "config/scheduler_interface_v1.0.xsd";
@@ -421,7 +436,7 @@ public class JobSchedulerManagedStarter_1 extends JobSchedulerJob {
 					if (modelId.length()==0){
 						if ( this.spooler.job_chain_exists(currWorkflowModel.get("name").toString())) continue;
 					} else{
-						// wenns die schon gibt, false zurückgeben, damit bekannt ist,
+						// wenns die schon gibt, false zurï¿½ckgeben, damit bekannt ist,
 						// dass keine Jobchain eingerichtet wurde
 						if ( this.spooler.job_chain_exists(currWorkflowModel.get("name").toString())) {
 							if (remove){
@@ -489,7 +504,7 @@ public class JobSchedulerManagedStarter_1 extends JobSchedulerJob {
 					       
 					    } // if
 					} // while
-					// Endzustände für Fehlerzustände ohne Folgeverarbeitung bekanntgeben:
+					// Endzustï¿½nde fï¿½r Fehlerzustï¿½nde ohne Folgeverarbeitung bekanntgeben:
 					Iterator iter =errorLevels.iterator();
 					while(iter.hasNext()){
 						Object oLevel = iter.next();
@@ -509,7 +524,7 @@ public class JobSchedulerManagedStarter_1 extends JobSchedulerJob {
 					if (this.getLog() != null) this.getLog().debug9(".. .. add_end_state with with maxOutputLevel: " +
 					       Integer.toString(maxOutputLevel) + " ok.");*/
 					
-					// Ausganszustände, die nicht als Eingangszustand auftauchen als Endzustand bekanntgeben:
+					// Ausganszustï¿½nde, die nicht als Eingangszustand auftauchen als Endzustand bekanntgeben:
 					outputLevels.removeAll(inputLevels);
 					Iterator outIter = outputLevels.iterator();
 					while (outIter.hasNext()){
@@ -541,7 +556,7 @@ public class JobSchedulerManagedStarter_1 extends JobSchedulerJob {
 
 
     /**
-     * Initialisierung: Persistente Aufträge hinzufügen
+     * Initialisierung: Persistente Auftrï¿½ge hinzufï¿½gen
      * 
      * @return boolean
      */
@@ -768,10 +783,10 @@ public class JobSchedulerManagedStarter_1 extends JobSchedulerJob {
     
 
   /**
-   * liefert den Job für den nächsten Auftrag zurück.
+   * liefert den Job fï¿½r den nï¿½chsten Auftrag zurï¿½ck.
    *
    * @param workflowModel Modell des Workflows
-   * @param taskLevel für die den Auftrag mit diesem Input-Level bedient
+   * @param taskLevel fï¿½r die den Auftrag mit diesem Input-Level bedient
    * @return HashMap
    * @exception Exception.
    */
@@ -800,7 +815,7 @@ public class JobSchedulerManagedStarter_1 extends JobSchedulerJob {
 
 
     /**
-     * liefert ein verfügbares Workflow Modell zur Task zurück
+     * liefert ein verfï¿½gbares Workflow Modell zur Task zurï¿½ck
      *
      * @param jobName Name des Jobs
      * @return HashMap
@@ -837,7 +852,7 @@ public class JobSchedulerManagedStarter_1 extends JobSchedulerJob {
     }
     
     /**
-     * liefert alle verfügbaren Workflow Modelle zurück
+     * liefert alle verfï¿½gbaren Workflow Modelle zurï¿½ck
      *
      * @return ArrayList
      * @exception Exception.
@@ -869,7 +884,7 @@ public class JobSchedulerManagedStarter_1 extends JobSchedulerJob {
     
 
     /**
-     * liefert alle Tasks des angegebenen Modells zurück
+     * liefert alle Tasks des angegebenen Modells zurï¿½ck
      *
      * @param modelId
      * @return ArrayList
@@ -881,7 +896,7 @@ public class JobSchedulerManagedStarter_1 extends JobSchedulerJob {
   }
 
   	/**
-     * liefert alle Tasks des angegebenen Modells zurück
+     * liefert alle Tasks des angegebenen Modells zurï¿½ck
      *
      * @param modelId
      * @param jobID

@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -484,7 +499,7 @@ public class SOSVfsWebDAV extends SOSVfsTransferBaseClass {
 
 			//remoteFileSize = this.size(remoteFile);
 
-			// TODO append muss noch berücksichtigt werden
+			// TODO append muss noch berï¿½cksichtigt werden
 			file = new File(localFile);
 
 			res = this.getResource(remoteFile);
@@ -679,7 +694,7 @@ public class SOSVfsWebDAV extends SOSVfsTransferBaseClass {
 	public OutputStream getOutputStream(final String path) {
 		WebdavResource res = null;
 //		Das muss in den WebDavFile ausgelagert werden. Andernfalls ist ein paralleles
-//		Übertragen nicht möglich
+//		ï¿½bertragen nicht mï¿½glich
 		try {
 			res = this.getResource(path, false);
 //			res.lockMethod(path, owner, timeout, lockType, depth):
@@ -1051,7 +1066,7 @@ public class SOSVfsWebDAV extends SOSVfsTransferBaseClass {
 		HttpURL httpUrl = this.setRootHttpURL(userName, password, host, port);
 
 		try {
-			// eigentlich bereits bei new WebdavResource soll eine Exception ausgelöst werden,
+			// eigentlich bereits bei new WebdavResource soll eine Exception ausgelï¿½st werden,
 			// wenn die Credentials bzw host etc falsch sind
 			// hier aber aus irgend. Grund kommt keine Exception hoch
 			if(SOSString.isEmpty(proxyHost)) {

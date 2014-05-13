@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -343,8 +358,8 @@ public class cmdShell extends SOSVfsMessageCodes implements Runnable {
 		intCC = objShell.executeCommand("C:/Users/KB/Desktop/filezilla_start.bat");
 		//		intCC = objShell.executeCommand("dir");
 		//		intCC = objShell.executeCommand("dir bin");
-		// xcopy bleibt hängen. scheint von stdin lesen zu wollen und bekommt nichts?
-		// Mit echo 1 | sqlcmd funktioniert es. Ohne geht es nicht bei älteren Versionen.
+		// xcopy bleibt hï¿½ngen. scheint von stdin lesen zu wollen und bekommt nichts?
+		// Mit echo 1 | sqlcmd funktioniert es. Ohne geht es nicht bei ï¿½lteren Versionen.
 		//		intCC = objShell.executeCommand("xcopy conf c:\\temp\\conf /F /Y");
 		//		intCC = objShell.executeCommand("xcopy bin c:\\temp\\bin /I /F /Y /J");
 		logger.debug(SOSVfs_D_231.params(intCC));

@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -67,7 +82,7 @@ import sos.util.SOSStandardLogger;
  * in eine HashTabelle gesammelt.  
  * </p>
  * <p>Dieses Programm interpretiert ein XSD-Schema und erzeugt ein Insert Script.</p>
- * <p>Sechs Parametern müssen übergeben werden wenn das Programm standalone aufgerufen wird </p>
+ * <p>Sechs Parametern mï¿½ssen ï¿½bergeben werden wenn das Programm standalone aufgerufen wird </p>
  * <p>1. Parameter: Pfad + Name der XSD-Datei </p>
  * <p>2. Parameter: Content_ID (M, S oder P) </p>
  * <p>3. Parameter: Pfad + Name der script Datei, der hier erzeugt werden soll</p> 
@@ -84,7 +99,7 @@ import sos.util.SOSStandardLogger;
  * Company: SOS GmbH
  * </p>
  * 
- * @author Mürüvet Öksüz
+ * @author Mï¿½rï¿½vet ï¿½ksï¿½z
  * @version 1.0
  */
 public class SOSSchemaInterpreter implements ContentHandler, ErrorHandler,
@@ -93,7 +108,7 @@ public class SOSSchemaInterpreter implements ContentHandler, ErrorHandler,
     // Store the locator
     private Locator locator;
 
-    /** Content_id (M, S oder P) wird als Parameter übergeben */
+    /** Content_id (M, S oder P) wird als Parameter ï¿½bergeben */
     private static String content_id = new String();
 
     /** ini datei fuer DB-Einstellungen */
@@ -109,12 +124,12 @@ public class SOSSchemaInterpreter implements ContentHandler, ErrorHandler,
     private static HashMap hashTypes = new HashMap();
 
     /**
-     * Eindeutige Schlüssel der Tabelle. Existiert kein Eintrag, so wird es mit
+     * Eindeutige Schlï¿½ssel der Tabelle. Existiert kein Eintrag, so wird es mit
      * 0 angefangen
      */
     private int content_element_id = 0;
 
-    /** Liste für die Parents */
+    /** Liste fï¿½r die Parents */
     private ArrayList parent = new ArrayList();
 
     private String parentID4TechnicalInformation = new String("");;
@@ -126,7 +141,7 @@ public class SOSSchemaInterpreter implements ContentHandler, ErrorHandler,
     private boolean bParent = false;
 
     /**
-     * Da die Methode startDocument kein Exception auslösen kann, wird dieser
+     * Da die Methode startDocument kein Exception auslï¿½sen kann, wird dieser
      * mit Parametern bearbeitet
      */
     private String error = new String();
@@ -166,7 +181,7 @@ public class SOSSchemaInterpreter implements ContentHandler, ErrorHandler,
     /** Alle Tag typen zu den Tagnamen */
     private static HashMap allTagTypeForTagName = new HashMap();
 
-    /** Alle Minoccurs werte für Tagname */
+    /** Alle Minoccurs werte fï¿½r Tagname */
     private static HashMap allMinOccurForTagName = new HashMap();
 
     /** Attribut: beinhaltet den Startknoten: tagname und content_element_id */
@@ -178,14 +193,14 @@ public class SOSSchemaInterpreter implements ContentHandler, ErrorHandler,
     /** Hilfsvariable : LastParentTan */
     private int lastParentTag = 0;
     
-    /** Alle Kinder zu einem Vaterknoten werden hier zusammengefaßt*/
+    /** Alle Kinder zu einem Vaterknoten werden hier zusammengefaï¿½t*/
     private static HashMap allChildrenFromParent = new HashMap();
     
     /** Tagnamen zu Columnnamen mappen*/
     private static HashMap tagname2columnname = null;
     
     /** Eine Liste von Kinderknoten. Die Kindeknoten ist eine Hashtabelle, die Informationen 
-     * über einen Tag hat. Die Liste ist geordnet*/
+     * ï¿½ber einen Tag hat. Die Liste ist geordnet*/
     private static ArrayList childList = new ArrayList();
     
     /** Name der Ausgabe Scriptdatei*/
@@ -194,7 +209,7 @@ public class SOSSchemaInterpreter implements ContentHandler, ErrorHandler,
     /** SchemaInterpreter Objekt*/
     private static SOSSchemaInterpreter sample = new SOSSchemaInterpreter();
     
-    /** Zähler*/
+    /** Zï¿½hler*/
     private int count = 0;
     
     /** Alle Informationen werden pro Datensatz in einer HashTabelle gesammelt:
@@ -273,7 +288,7 @@ public class SOSSchemaInterpreter implements ContentHandler, ErrorHandler,
     
     /**
     * <p>Dieses Programm interpretiert ein XSD-Schema und erzeugt ein Insert Script.</p>
-    * <p>Sechs Parametern müssen übergeben werden wenn das Programm standalone aufgerufen wird </p>
+    * <p>Sechs Parametern mï¿½ssen ï¿½bergeben werden wenn das Programm standalone aufgerufen wird </p>
     * <p>1. Parameter: Pfad + Name der XSD-Datei </p>
     * <p>2. Parameter: Content_ID (M, S oder P) </p>
     * <p>3. Parameter: Pfad + Name der script Datei, der hier erzeugt werden soll</p> 
@@ -289,7 +304,7 @@ public class SOSSchemaInterpreter implements ContentHandler, ErrorHandler,
                         .println("Usage: <Schemafilename.xsd> <Content_id> <scriptname.sql> <db Ini Filename> <Tablename> ");
                 System.exit(1);
             }
-            //xsdDatei überprüfen
+            //xsdDatei ï¿½berprï¿½fen
             if (argv[0] != null) {
                 if (argv[0].indexOf(".xsd") == -1) {
                     System.out.println("There is no XSD-File: " + argv[0]);
@@ -312,7 +327,7 @@ public class SOSSchemaInterpreter implements ContentHandler, ErrorHandler,
             if (argv[4] != null) {
                 contentTableName = argv[4].toString();
             }
-            //Tabellename wurde übergeben. Muß aber nicht sein.
+            //Tabellename wurde ï¿½bergeben. Muï¿½ aber nicht sein.
             if (argv.length == 6) {
                 tablePrefix = argv[5].toString();
             }
@@ -381,7 +396,7 @@ public class SOSSchemaInterpreter implements ContentHandler, ErrorHandler,
                     .indexOf("Element 'xsd:schema' used but not declared.")) > 0))
                     System.out.println(e.toString());
         } finally {
-            //Der insert-script wurde erzeugt. Also schließen.
+            //Der insert-script wurde erzeugt. Also schlieï¿½en.
             try {
                 output.close();
             } catch (IOException e) {
@@ -453,8 +468,8 @@ public class SOSSchemaInterpreter implements ContentHandler, ErrorHandler,
     public void startElement(String string1, String name, String string2,
             Attributes atts) throws SAXException {
         try {
-        //Startdokument kann keine Exception auslösen. daher wird hier
-        // ausgelöst.
+        //Startdokument kann keine Exception auslï¿½sen. daher wird hier
+        // ausgelï¿½st.
             count++;
             if (count == 46) {
                 System.out.println("test");
@@ -491,7 +506,7 @@ public class SOSSchemaInterpreter implements ContentHandler, ErrorHandler,
             String aname = atts.getLocalName(i); //Vorsicht
             String type = atts.getType(i);
             String value = atts.getValue(i);
-            //if (value.equalsIgnoreCase("ReportingClients")) { //test lösch mich
+            //if (value.equalsIgnoreCase("ReportingClients")) { //test lï¿½sch mich
             //    System.out.println(" "+aname+"("+type+")"+"="+value);
             //}
             //System.out.println(" "+aname+"("+type+")"+"="+value);
@@ -519,7 +534,7 @@ public class SOSSchemaInterpreter implements ContentHandler, ErrorHandler,
             }
             if (aname.equalsIgnoreCase("name")) {
                 hashContentsElements.put("TAG_NAME", value);
-                //Vorschlag, daß Columnname den gleichen Namen wie der Tag hat
+                //Vorschlag, daï¿½ Columnname den gleichen Namen wie der Tag hat
                 if (tagname2columnname != null && tagname2columnname.get(value) != null) {
                     hashContentsElements.put("COLUMN_NAME", tagname2columnname.get(value));
                 } else {
@@ -544,7 +559,7 @@ public class SOSSchemaInterpreter implements ContentHandler, ErrorHandler,
                 hashContentsElements.put("COLUMN_LENGTH", value);
                 hashContentsElements.put("TAG_MAXLENGTH", value);
             }
-            //muß noch spezifiziert werden
+            //muï¿½ noch spezifiziert werden
             if (name.equalsIgnoreCase("minLength")) {
             }
             if ((name.equalsIgnoreCase("length"))
@@ -961,18 +976,18 @@ public class SOSSchemaInterpreter implements ContentHandler, ErrorHandler,
      * @return connection Objekt der Datenbank
      * 
      * @exception NullPointerException
-     *                wird ausgelöst, falls <code>dbinifile</code> Fehlerhafte
-     *                Parameter enthält.
+     *                wird ausgelï¿½st, falls <code>dbinifile</code> Fehlerhafte
+     *                Parameter enthï¿½lt.
      * @exception IOException
-     *                wird ausgelöst, falls ein Fehler beim Lesen der
+     *                wird ausgelï¿½st, falls ein Fehler beim Lesen der
      *                <code>dbinifile</code> vorliegt.
      * @exception ClassNotFoundException
-     *                wird ausgelöst, falls ein Fehler beim Laden des
+     *                wird ausgelï¿½st, falls ein Fehler beim Laden des
      *                JDBC-Treibes auftritt.
      * @exception SQLException
-     *                wird ausgelöst, falls ein Datenbankfehler vorliegt.
+     *                wird ausgelï¿½st, falls ein Datenbankfehler vorliegt.
      * @exception Exception
-     *                wird ausgelöst, falls ein unbekannter Fehler auftritt.
+     *                wird ausgelï¿½st, falls ein unbekannter Fehler auftritt.
      */
     private void getConnection(String iniFile) {
         try {           
@@ -991,11 +1006,11 @@ public class SOSSchemaInterpreter implements ContentHandler, ErrorHandler,
      * property-Objekt.
      * 
      * @param filename
-     *            Dateiname, die die Verbindungsparameter enthält.
+     *            Dateiname, die die Verbindungsparameter enthï¿½lt.
      * @return Properties
      * 
      * @exception IOException
-     *                wird ausgelöst, falls Dateilesefehler beim Einlesen der
+     *                wird ausgelï¿½st, falls Dateilesefehler beim Einlesen der
      *                <code>filename</code> vorliegt.
      *  
      */
@@ -1052,7 +1067,7 @@ public class SOSSchemaInterpreter implements ContentHandler, ErrorHandler,
     }
 
     /**
-     * Liefert die content_model_id, wenn SOSConnectoin Objekt übergeben wurde. Sonst 
+     * Liefert die content_model_id, wenn SOSConnectoin Objekt ï¿½bergeben wurde. Sonst 
      * ist content_model_id = 1;
      * @throws Exception
      */
@@ -1103,7 +1118,7 @@ public class SOSSchemaInterpreter implements ContentHandler, ErrorHandler,
     }
     
     /**
-     * HashTabelle übergeben, die Tagnamen zu Columnnamen mapp
+     * HashTabelle ï¿½bergeben, die Tagnamen zu Columnnamen mapp
      * @param tagname2columnname The tagname2columnname to set.
      */
     public void mapTagname2columnname(HashMap tagname2columnname) {

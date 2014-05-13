@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.bigloupe</groupId>
 	<artifactId>jobscheduler-pom</artifactId>
@@ -83,7 +84,6 @@
 					<plugin>
 						<groupId>com.github.github</groupId>
 						<artifactId>site-maven-plugin</artifactId>
-						<version>0.9</version>
 						<configuration>
 							<message>Building site for ${project.version}</message>
 							<server>github</server>
@@ -100,7 +100,6 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-site-plugin</artifactId>
-						<version>3.0</version>
 						<configuration>
 							<reportPlugins>
 								<plugin>
@@ -115,7 +114,6 @@
 								<plugin>
 									<groupId>org.apache.maven.plugins</groupId>
 									<artifactId>maven-javadoc-plugin</artifactId>
-									<version>2.7</version>
 								</plugin>
 								<plugin>
 									<groupId>org.apache.maven.plugins</groupId>
@@ -133,7 +131,6 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-javadoc-plugin</artifactId>
-						<version>2.9.1</version>
 						<executions>
 							<execution>
 								<goals>
@@ -157,7 +154,6 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-release-plugin</artifactId>
-						<version>2.2.2</version>
 						<configuration>
 							<arguments>-Dgpg.passphrase=${gpg.passphrase}</arguments>
 						</configuration>
@@ -166,7 +162,6 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-gpg-plugin</artifactId>
-						<version>1.4</version>
 						<configuration>
 							<passphrase>${gpg.passphrase}</passphrase>
 						</configuration>
@@ -180,6 +175,71 @@
 							</execution>
 						</executions>
 					</plugin>
+
+					<plugin>
+						<!-- this plugin is used to list the licenses of all the dependencies 
+							: mvn org.codehaus.mojo:license-maven-plugin:aggregate-add-third-party -->
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>license-maven-plugin</artifactId>
+						<configuration>
+							<groupByLicense>true</groupByLicense>
+							<excludedScopes>test</excludedScopes>
+							<excludedGroups>${project.groupId}</excludedGroups>
+							<licenseMerges>
+								<licenseMerge>The Apache Software License, Version 2.0|The
+									Apache
+									License, Version 2.0|Apache 2|Apache
+									2.0|Apache License
+									2.0|Apache
+									License|Apache License Version 2.0|Apache License,
+									Version 2.0|ASF 2.0|Apache
+									License|apache2|APLv2.0
+								</licenseMerge>
+								<licenseMerge>GNU Lesser General Public License, Version 2.1|GNU
+									Lesser General Public License (LGPL),
+									Version 2.1|GNU Lesser
+									General Public License, Version 2.1|Lesser Gnu
+									Public License
+									(LGPL), Version
+									2.1|LGPL, version 2.1|GNU Lesser General Public
+									License (LGPL), Version
+									2.1
+								</licenseMerge>
+								<licenseMerge>The BSD License|BSD|BSD License</licenseMerge>
+								<licenseMerge>Eclipse Public License, Version 1.0|Eclipse Public
+									License (EPL)</licenseMerge>
+								<licenseMerge>The MIT License|MIT License</licenseMerge>
+							</licenseMerges>
+						</configuration>
+					</plugin>
+
+					<plugin>
+						<inherited>false</inherited>
+						<groupId>com.mycila.maven-license-plugin</groupId>
+						<artifactId>maven-license-plugin</artifactId>
+						<configuration>
+							<header>${project.basedir}/LICENSE</header>
+							<failIfMissing>true</failIfMissing>
+							<strictCheck>true</strictCheck>
+							<aggregate>true</aggregate>
+							<includes>
+								<include>**/*.java</include>
+							</includes>
+							<mapping>
+								<java>JAVADOC_STYLE</java>
+							</mapping>
+						</configuration>
+						<executions>
+							<execution>
+								<id>enforce-license-headers</id>
+								<phase>validate</phase>
+								<goals>
+									<goal>check</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
 				</plugins>
 			</build>
 		</profile>
@@ -198,7 +258,6 @@
 				<plugins>
 					<plugin>
 						<artifactId>maven-war-plugin</artifactId>
-						<version>2.1.1</version>
 						<configuration>
 							<outputDirectory>deployments</outputDirectory>
 							<warName>ROOT</warName>
@@ -210,6 +269,8 @@
 	</profiles>
 
 	<build>
+
+		<!-- Plugin management -->
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -241,6 +302,11 @@
 					<version>3.3</version>
 				</plugin>
 				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>2.9.1</version>
+				</plugin>
+				<plugin>
 					<artifactId>maven-source-plugin</artifactId>
 					<version>2.2.1</version>
 				</plugin>
@@ -249,47 +315,36 @@
 					<version>2.5</version>
 				</plugin>
 				<plugin>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>2.1.1</version>
+				</plugin>
+				<plugin>
 					<artifactId>maven-surefire-plugin</artifactId>
 					<version>2.16</version>
 				</plugin>
 				<plugin>
-					<!-- this plugin is used to list the licenses of all the dependencies 
-						: mvn org.codehaus.mojo:license-maven-plugin:aggregate-add-third-party -->
+					<groupId>com.github.github</groupId>
+					<artifactId>site-maven-plugin</artifactId>
+					<version>0.9</version>
+				</plugin>
+				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>license-maven-plugin</artifactId>
 					<version>1.0-beta-3</version>
-					<configuration>
-						<groupByLicense>true</groupByLicense>
-						<excludedScopes>test</excludedScopes>
-						<excludedGroups>${project.groupId}</excludedGroups>
-						<licenseMerges>
-							<licenseMerge>The Apache Software License, Version 2.0|The Apache
-								License, Version 2.0|Apache 2|Apache
-								2.0|Apache License
-								2.0|Apache
-								License|Apache License Version 2.0|Apache License,
-								Version 2.0|ASF 2.0|Apache
-								License|apache2|APLv2.0
-							</licenseMerge>
-							<licenseMerge>GNU Lesser General Public License, Version 2.1|GNU
-								Lesser General Public License (LGPL),
-								Version 2.1|GNU Lesser
-								General Public License, Version 2.1|Lesser Gnu
-								Public License
-								(LGPL), Version
-								2.1|LGPL, version 2.1|GNU Lesser General Public
-								License (LGPL), Version
-								2.1
-							</licenseMerge>
-							<licenseMerge>The BSD License|BSD|BSD License</licenseMerge>
-							<licenseMerge>Eclipse Public License, Version 1.0|Eclipse Public
-								License (EPL)</licenseMerge>
-							<licenseMerge>The MIT License|MIT License</licenseMerge>
-						</licenseMerges>
-					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>com.mycila.maven-license-plugin</groupId>
+					<artifactId>maven-license-plugin</artifactId>
+					<version>1.9.0</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>1.4</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
+
 		<plugins>
 			<plugin>
 				<artifactId>maven-release-plugin</artifactId>
@@ -305,7 +360,6 @@
 					</systemProperties>
 				</configuration>
 			</plugin>
-
 			<plugin>
 				<artifactId>maven-source-plugin</artifactId>
 				<executions>
@@ -317,14 +371,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
-			<!-- <plugin> <inherited>false</inherited> <groupId>com.mycila.maven-license-plugin</groupId> 
-				<artifactId>maven-license-plugin</artifactId> <version>1.9.0</version> <configuration> 
-				<header>${project.basedir}/LICENSE</header> <failIfMissing>true</failIfMissing> 
-				<strictCheck>true</strictCheck> <aggregate>true</aggregate> <includes> <include>**/*.java</include> 
-				</includes> <mapping> <java>JAVADOC_STYLE</java> </mapping> </configuration> 
-				<executions> <execution> <id>enforce-license-headers</id> <phase>validate</phase> 
-				<goals> <goal>check</goal> </goals> </execution> </executions> </plugin> -->
 
 		</plugins>
 	</build>

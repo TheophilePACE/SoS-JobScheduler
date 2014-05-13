@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -38,13 +53,13 @@ package sos.xml.parser;
  * <p>Verwendung einer DOMParser. </p>
  * 
  * <p>Die Parsierung erfolgt von der root bis zu letzte Blatt. Die parsierte Pfad
- * wird mit seinen Knoten und Knotenwerten in eine Hashtabelle zusammengefaßt.</p>
+ * wird mit seinen Knoten und Knotenwerten in eine Hashtabelle zusammengefaï¿½t.</p>
  * 
  * <p>Wiederholende Elemente oder Pfade werden in eine neue HashTabelle
- * geschrieben. Alle Hashtabellen werden in eine Liste zusammengefügt. Mithilfe
+ * geschrieben. Alle Hashtabellen werden in eine Liste zusammengefï¿½gt. Mithilfe
  * der Methode getListOfXMLPath() kann diese Liste ausgelesen werden.
  * 
- * <p>Die Klasse schreibt für einen Pfad einen insertstatment. Die Methode
+ * <p>Die Klasse schreibt fï¿½r einen Pfad einen insertstatment. Die Methode
  * getInsertStatement() liefert eine Liste der gesamten insertstatements.</p>
  * 
  * <p>Eine XML-Datei in der Form:</p>
@@ -65,7 +80,7 @@ package sos.xml.parser;
  * <p>Die XML-Datei sollte so aufgebaut sein, das Komplextyps immer in der unteren
  * Ebenen liegen.</p>
  * 
- * z.B. Falsch wäre das Beispiel:  
+ * z.B. Falsch wï¿½re das Beispiel:  
  *  * <p>-------------------------------------</p>
  * <p>root                                </p>
  * <p>	  Familien </p>
@@ -79,7 +94,7 @@ package sos.xml.parser;
  * <p> wird interpretiert als:</p>
  * <p> 1. Vater, Kind 1</p>
  * <p> 2. Vater, Kind 2, Mutter</p>
- * <p> Somit hat Kind 1 keine Mutter und das wäre ja traurig.  </p>    
+ * <p> Somit hat Kind 1 keine Mutter und das wï¿½re ja traurig.  </p>    
  * 
  * <p>verwendetet Libraries: xerces.jar sos.util.jar</p>
  * 
@@ -112,20 +127,20 @@ import javax.xml.parsers.DocumentBuilderFactory;
 public class SOSDOMParserXML {
 
     /**
-     * Attribut: Hier werden Tagnamen und Tagvalues füe einen insertStatement
+     * Attribut: Hier werden Tagnamen und Tagvalues fï¿½e einen insertStatement
      * gesammelt
      */
     private HashMap hashTag 				= new HashMap();
 
-    /** Attribut: Alle insertStatement werden in eine Arraylist zusammengefaßt */
+    /** Attribut: Alle insertStatement werden in eine Arraylist zusammengefaï¿½t */
     private ArrayList insertStatement 		= new ArrayList();
 
     /** Liste alle Tags mit den gesammten XML-datei Tags */
     private ArrayList listOfTags 			= new ArrayList();
 
     /**
-     * Liste für die HashTable. In der HashTable werden die Daten
-     * zusammengehalten, die für einen Statement gesammelt wurden
+     * Liste fï¿½r die HashTable. In der HashTable werden die Daten
+     * zusammengehalten, die fï¿½r einen Statement gesammelt wurden
      */
     private ArrayList listOfXMLPath 		= new ArrayList();
     
@@ -146,10 +161,10 @@ public class SOSDOMParserXML {
     /** Mappen der Tagnamen */
     private HashMap mappingTagNames 		= new HashMap();
 
-    /** Vaterknoten werden nicht berücksichtigt. Default ist true */
+    /** Vaterknoten werden nicht berï¿½cksichtigt. Default ist true */
     private boolean removeParents 			= true;
 
-    /** Attribut: Beim bilden der insertStament können defaults übergeben werden */
+    /** Attribut: Beim bilden der insertStament kï¿½nnen defaults ï¿½bergeben werden */
     private HashMap defaultFields 			= new HashMap();
     
     /** Attribut: Es soll eine Ausgabe Script Datei erzeugt werden */
@@ -158,12 +173,12 @@ public class SOSDOMParserXML {
     private BufferedWriter output 			= null;
     
     /**
-     * Attribut: Wenn counter gesetz ist, dann wird ein Zähler zu den Statement
+     * Attribut: Wenn counter gesetz ist, dann wird ein Zï¿½hler zu den Statement
      * generiert
      */
     private boolean counter 				= false;
     
-    /** Attribut: Zähler, wenn counter=true ist, dann wird zu den Statement ein Zähler geschrieben */
+    /** Attribut: Zï¿½hler, wenn counter=true ist, dann wird zu den Statement ein Zï¿½hler geschrieben */
     private int count 						= 0;
 
     /** SOSLOgger Object */
@@ -305,7 +320,7 @@ public class SOSDOMParserXML {
     
 
     /**
-     * Durchläuft das übergebene Document Object und schreibt beim
+     * Durchlï¿½uft das ï¿½bergebene Document Object und schreibt beim
      * Arrayliste in geordneten Reihenfolge "tagname=tagwert". Der Tagname
      * kann durch den Eigenschaft 
      * depth=0 tagname=tagwert sein, oder
@@ -316,14 +331,14 @@ public class SOSDOMParserXML {
      */
     public void parseDocument(Document doc) throws Exception {
         try {
-//			"*" steht für root
+//			"*" steht fï¿½r root
             NodeList nl = doc.getElementsByTagName("*");
             Node n;
             String allParentname = "";
             String lastTagname = "";
 //          Tagname mit Tagvalue soll beim Wiederholungen nicht ausgeschrieben werden.
             String lastTagnameAndValue = "";
-//			Wiederholungen der lastTagnameAndValue zählen             
+//			Wiederholungen der lastTagnameAndValue zï¿½hlen             
             int countOfRepeat = 1;
             String curTagnameAndValue = ""; 
             
@@ -332,9 +347,9 @@ public class SOSDOMParserXML {
             for (int i = 0; i < nl.getLength(); i++) {
                 n = nl.item(i);
                 if (lastTagname.equals(n.getParentNode().getNodeName())) {
-                    //erst jetzt weiß ich, das der letzte Knoten ein Komplextyp
-                    // war. Also wenn gewünscht, dann kann der Komplextyp jetzt
-                    // gelöscht werden.
+                    //erst jetzt weiï¿½ ich, das der letzte Knoten ein Komplextyp
+                    // war. Also wenn gewï¿½nscht, dann kann der Komplextyp jetzt
+                    // gelï¿½scht werden.
                     if (removeParents) {
                         listOfTags.remove(listOfTags.size() - 1);
                     }
@@ -426,7 +441,7 @@ public class SOSDOMParserXML {
      * listOfTags ist eine geordnete Liste mit allen Taginformationen. Alle Tags
      * werden in neue eine Hastable geschrieben. Existiert bereits ein Eintrag
      * in der HashTabel, dann wird eine insertStatement geschrieben und die
-     * Inhalte der HashTable wird gelöscht. Die Liste wird aktualisiert, bis zu den
+     * Inhalte der HashTable wird gelï¿½scht. Die Liste wird aktualisiert, bis zu den
      * letzen sich wiederholenden Vaterknoten.
      * 
      * @throws Exception
@@ -531,7 +546,7 @@ public class SOSDOMParserXML {
             }
             
             if (this.isCounter()) {
-                //eindeutigen Zähler einfügen
+                //eindeutigen Zï¿½hler einfï¿½gen
                 insStr = insStr + " counter";
                 insStr2 = insStr2 + " " + this.count++;
                 if (key != null && key.length() > 0)
@@ -620,7 +635,7 @@ public class SOSDOMParserXML {
     }
 
     /**
-     * Tabellenname, in die die Datensätze insertet werden soll
+     * Tabellenname, in die die Datensï¿½tze insertet werden soll
      * @param tableName_
      *            The tableName to set.
      */
@@ -629,7 +644,7 @@ public class SOSDOMParserXML {
     }
 
     /**
-     * Key/Feldname für den insertstatement wird gebildet aus: 
+     * Key/Feldname fï¿½r den insertstatement wird gebildet aus: 
      * Absoluter Pfad (depth=99) oder 
      * nur mit einem Vaterknoten (depth=1) oder 
      * ohne die Angabe der Vaterknoten (depth=0) (nur der Tagname)
@@ -643,7 +658,7 @@ public class SOSDOMParserXML {
     }
 
     /**
-     * Key/Feldname für den insertstatement wird gebildet aus: 
+     * Key/Feldname fï¿½r den insertstatement wird gebildet aus: 
      * Absoluter Pfad (depth=99) oder 
      * nur mit einem Vaterknoten (depth=1) oder 
      * ohne die Angabe der Vaterknoten (depth=0) (nur der Tagname)
@@ -691,7 +706,7 @@ public class SOSDOMParserXML {
     }
 
     /**
-     * Auslesen der Vaterknoten, ob diese mit berücksichtigt werden sollen.
+     * Auslesen der Vaterknoten, ob diese mit berï¿½cksichtigt werden sollen.
      * Default ist true
      * 
      * @return boolean Returns the removeParents.
@@ -701,7 +716,7 @@ public class SOSDOMParserXML {
     }
 
     /**
-     * Setzen der Vaterknoten, ob diese mit berücksichtigt werden sollen.
+     * Setzen der Vaterknoten, ob diese mit berï¿½cksichtigt werden sollen.
      * Default ist true
      * 
      * @param removeParents_
@@ -712,9 +727,9 @@ public class SOSDOMParserXML {
     }
 
     /**
-     * Alle möglichen XML-Pfade wurden in die ArrayList geschrieben. Diese
+     * Alle mï¿½glichen XML-Pfade wurden in die ArrayList geschrieben. Diese
      * ArrayList beiinhaltet Hashtabellen, dessen Key der tagname/gemapte Tagname
-     * und value die Tagwert für einen Datensatz entspricht.
+     * und value die Tagwert fï¿½r einen Datensatz entspricht.
      * 
      * @return ArrayList -> Returns the listOfXMLPath.
      */
@@ -767,7 +782,7 @@ public class SOSDOMParserXML {
     }
 
     /**
-     * Hier können Werte mitübergeben werden, die nicht in der XML-Datei sind,
+     * Hier kï¿½nnen Werte mitï¿½bergeben werden, die nicht in der XML-Datei sind,
      * aber mit in der insert-Stament stehen sollen
      * 
      * Sinnvoll sind z.B. created, created_by etc.
@@ -780,7 +795,7 @@ public class SOSDOMParserXML {
     }
 
     /**
-     * Auslesen, ob ein Zähler mitgeschrieben werden soll.
+     * Auslesen, ob ein Zï¿½hler mitgeschrieben werden soll.
      * 
      * @return Returns the counter.
      */
@@ -789,7 +804,7 @@ public class SOSDOMParserXML {
     }
 
     /**
-     * Soll ein Zähler für den Statement gebildet werden.
+     * Soll ein Zï¿½hler fï¿½r den Statement gebildet werden.
      * 
      * @param counter
      *            The counter to set.
@@ -828,7 +843,7 @@ public class SOSDOMParserXML {
      * Diese Methode liefert den Wert der Property <i>listOfAttribut</i>. 
      * Der Typ der Property <i>listOfAttribut</i> ist ArrayList.
      * Ein Eintrag der ArrayList beiinhaltet eine Hashtabelle. Die Hastabelle
-     * ist gefüllt mit Attributnamen=Attributwerten zu einem Tag.
+     * ist gefï¿½llt mit Attributnamen=Attributwerten zu einem Tag.
      * 
      * @return ArrayList.
      */
@@ -853,7 +868,7 @@ public class SOSDOMParserXML {
      * @return String -> encoding
      * @throws Exception
      */
-    //TODO: encoding wird hier anhand von String überprüft; Suchen nach anderen Methodiken
+    //TODO: encoding wird hier anhand von String ï¿½berprï¿½ft; Suchen nach anderen Methodiken
 	//public String getEncoding(String fileName, InputSource ipSource) throws Exception{
     public String getEncoding(String fileName, byte[] bytesRead) throws Exception{
 		String line = "";
@@ -984,7 +999,7 @@ public class SOSDOMParserXML {
     		//      depth=> 0=nur Tagname; 1=nur der Vaterknoten; 99=gesamte Pfad
     		parser.setDepth(0); 
     		
-    		//		sollen Komplextyps in den insertStatement mit übernommen werden            
+    		//		sollen Komplextyps in den insertStatement mit ï¿½bernommen werden            
     		parser.setRemoveParents(true);
     		
     		//Tagnamen zu Columnnamen mappen            
@@ -998,7 +1013,7 @@ public class SOSDOMParserXML {
     		//HashMap defaults = getTestDefaults();            
     		//parser.setDefaultFields(defaults);
     		
-    		//		Soll ein eindeutiger Zähler für einen Statement generiert werden.             
+    		//		Soll ein eindeutiger Zï¿½hler fï¿½r einen Statement generiert werden.             
     		//parser.setCounter(true);
     		
     		//		Name der Ausgabe Script Datei            
@@ -1051,7 +1066,7 @@ public class SOSDOMParserXML {
     private static HashMap getTestMappingTagNames() throws Exception {
         try {
             HashMap mappingTagNames = new HashMap();
-            //wenn setDepth(0) ist; sonst muß der Pfad auch angegeben werden
+            //wenn setDepth(0) ist; sonst muï¿½ der Pfad auch angegeben werden
             mappingTagNames.put("Quantity", "myQuantity");
             mappingTagNames.put("StockLevelTimeStamp", "myStockLevelTimeStamp");
             mappingTagNames.put("VendorBatchNumber", "myVendorBatchNumber");

@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -34,10 +49,10 @@ package com.sos.JSHelper.Options;
 /**
 * \class JSDataElement
 *
-* \brief JSDataElement - Basisklasse für die Datenelement-Klassen des Dataswitch
+* \brief JSDataElement - Basisklasse fï¿½r die Datenelement-Klassen des Dataswitch
 *
 * \details
-* Basisklasse (SuperKlasse) für die Datenelement-Klassen des Dataswitch
+* Basisklasse (SuperKlasse) fï¿½r die Datenelement-Klassen des Dataswitch
 *
 * \section JSOptionClass_intro_sec Introduction
 *
@@ -109,7 +124,7 @@ public class SOSOptionElement extends JSToolBox implements Serializable, ISOSOpt
 	private String								strTitle					= "";
 	private String								strColumnHeader				= "";
 	private String								strXMLTagName				= "";
-	private String								strFormatString				= "";										// gehört in
+	private String								strFormatString				= "";										// gehï¿½rt in
 																														// Integer,
 																														// Double, etc
 	protected JSOptionsClass					objParentClass				= null;
@@ -118,7 +133,7 @@ public class SOSOptionElement extends JSToolBox implements Serializable, ISOSOpt
 	protected boolean							flgHideValue				= false;
 	protected boolean							flgHideOption				= false;
 	/**
-	 * \todo Werte(bereichs)prüfung mit dem regulären Ausdruck einbauen
+	 * \todo Werte(bereichs)prï¿½fung mit dem regulï¿½ren Ausdruck einbauen
 	 */
 	@SuppressWarnings("unused")
 	private final String						strRegExpr4Check			= "";
@@ -458,7 +473,7 @@ public class SOSOptionElement extends JSToolBox implements Serializable, ISOSOpt
 		}
 		if (pstrValue != null) {
 			/**
-			 * \todo über den regexp prüfen, ob die Werte syntaktisch korrekt sind
+			 * \todo ï¿½ber den regexp prï¿½fen, ob die Werte syntaktisch korrekt sind
 			 */
 			if (objParentClass != null) {
 				final String strTemp = objParentClass.SubstituteVariables(pstrValue);
@@ -527,7 +542,7 @@ public class SOSOptionElement extends JSToolBox implements Serializable, ISOSOpt
 	}
 
 	/**
-	 * \brief Size - Größe des Datenelements festlegen
+	 * \brief Size - Grï¿½ï¿½e des Datenelements festlegen
 	 *
 	 * \details
 	 *
@@ -545,7 +560,7 @@ public class SOSOptionElement extends JSToolBox implements Serializable, ISOSOpt
 	}
 
 	/**
-	 * \brief Size - Größe des Datenelements liefern
+	 * \brief Size - Grï¿½ï¿½e des Datenelements liefern
 	 *
 	 * \details
 	 *
@@ -691,7 +706,7 @@ public class SOSOptionElement extends JSToolBox implements Serializable, ISOSOpt
 
 	/**
 	 *
-	 * \brief FormatString - liefert den für die Option definierten FormatString
+	 * \brief FormatString - liefert den fï¿½r die Option definierten FormatString
 	 *
 	 * \details
 	 *
@@ -715,11 +730,11 @@ public class SOSOptionElement extends JSToolBox implements Serializable, ISOSOpt
 	 * \brief FormattedValue - Liefert den Wert der Option formatiert
 	 *
 	 * \details
-	 * das Format (die Edit-Maske) wird über die Eigenschaft FormatString
+	 * das Format (die Edit-Maske) wird ï¿½ber die Eigenschaft FormatString
 	 * definiert.
 	 *
 	 * Wenn kein Format-String definiert ist, so wird der Wert als String
-	 * zurückgegeben.
+	 * zurï¿½ckgegeben.
 	 *
 	 * \return String
 	 *
@@ -727,7 +742,7 @@ public class SOSOptionElement extends JSToolBox implements Serializable, ISOSOpt
 	 * @throws Exception
 	 */
 	public String FormattedValue() throws Exception {
-		// nur überschreibbar
+		// nur ï¿½berschreibbar
 		return this.Value();
 	}
 
@@ -762,11 +777,11 @@ public class SOSOptionElement extends JSToolBox implements Serializable, ISOSOpt
 
 	/**
 	 *
-	 * \brief MapValue - Wert der Option aus der HashTable übernehmen
+	 * \brief MapValue - Wert der Option aus der HashTable ï¿½bernehmen
 	 *
 	 * \details
-	 * Mit dieser Methode wird aus der HashTable für den für diese Option
-	 * definierten Key der eingestellte Wert übernommen.
+	 * Mit dieser Methode wird aus der HashTable fï¿½r den fï¿½r diese Option
+	 * definierten Key der eingestellte Wert ï¿½bernommen.
 	 *
 	 * Ist der gesuchte Key, und damit der Wert, nicht in der HashTable,
 	 * so wird der Default-Wert zugewiesen.
@@ -778,8 +793,8 @@ public class SOSOptionElement extends JSToolBox implements Serializable, ISOSOpt
 		@SuppressWarnings("unused")
 		final String conMethodName = SOSOptionElement.conClassName + "::MapValue";
 		/**
-		 * \todo Wenn abgeleitete Klassen in der Value()-Methode prüfungen auf gültige Werte haben
-		 * und ein "leerer" String ein ungültiger Wert ist, dann wird dieser ungültige Wert nicht erkannt.
+		 * \todo Wenn abgeleitete Klassen in der Value()-Methode prï¿½fungen auf gï¿½ltige Werte haben
+		 * und ein "leerer" String ein ungï¿½ltiger Wert ist, dann wird dieser ungï¿½ltige Wert nicht erkannt.
 		 */
 		if (this.isEmpty(strKey) == false) {
 			String strV = objParentClass.getItem(strKey, null);
@@ -797,7 +812,7 @@ public class SOSOptionElement extends JSToolBox implements Serializable, ISOSOpt
 			if (strV == null) {
 				strV = strDefaultValue;
 			}
-			else { // warum auf default setzen wenn er nicht in der hashmap ist? Dann unverändert lassen
+			else { // warum auf default setzen wenn er nicht in der hashmap ist? Dann unverï¿½ndert lassen
 
 				this.Value(strV);
 			}
@@ -816,11 +831,11 @@ public class SOSOptionElement extends JSToolBox implements Serializable, ISOSOpt
 	} // public void MapValue
 
 	/**
-	* \brief CheckMandatory - prüft ob eine Option tatsächlich gefüllt ist
+	* \brief CheckMandatory - prï¿½ft ob eine Option tatsï¿½chlich gefï¿½llt ist
 	*
 	* \details
 	*
-	* @throws Exception - wird ausgelöst, wenn eine mandatory-Option keinen Wert hat
+	* @throws Exception - wird ausgelï¿½st, wenn eine mandatory-Option keinen Wert hat
 	*/
 	public void CheckMandatory() {
 		try {

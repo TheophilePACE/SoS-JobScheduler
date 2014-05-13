@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 /********************************************************* begin of preamble
 **
 ** Copyright (C) 2003-2012 Software- und Organisations-Service GmbH. 
@@ -263,8 +278,8 @@ public class JobSchedulerTextProcessor extends Job_impl {
 	private SOSLogger			logger												= null;
 
 	/**
-	 * Implementierung für Spooler API.
-	 * Initialisierungmethode für den Scheduler.
+	 * Implementierung fï¿½r Spooler API.
+	 * Initialisierungmethode fï¿½r den Scheduler.
 	 * @return boolean
 	 */
 	public boolean spooler_init() {
@@ -300,13 +315,13 @@ public class JobSchedulerTextProcessor extends Job_impl {
 	}
 
 	/**
-	 * Implementierung für Spooler API. Läuft bis return = false
+	 * Implementierung fï¿½r Spooler API. Lï¿½uft bis return = false
 	 * @return boolean
 	 */
 	public boolean spooler_process() {
-/*         •	Lesen der n-ten Zeile aus einer Datei
-	   •	Zeile an Datei anfügen
-	   •	Zählen des Vorkommens einer bestimmten Zeichenfolge in einer Datei
+/*         ï¿½	Lesen der n-ten Zeile aus einer Datei
+	   ï¿½	Zeile an Datei anfï¿½gen
+	   ï¿½	Zï¿½hlen des Vorkommens einer bestimmten Zeichenfolge in einer Datei
 */
 		try {
 			logger.debug(JSVersionInfo.getVersionString());
