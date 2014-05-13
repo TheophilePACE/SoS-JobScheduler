@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<rss version="0.91">
+  <channel>
+    <title>JobScheduler :: Dashboard installer panel - Checkstyle report</title>
+    <link>https://github.com/bigloupe/SoS-JobScheduler/jobscheduler-install/jobscheduler-installer-panel</link>
+    <description>JobScheduler :: Dashboard installer panel - Checkstyle report</description>
+    <language>en-us</language>
+    <copyright>&#169;2014 BigLoupe</copyright>
+    <item>
+      <title>File: 4,
+             Errors: 480,
+             Warnings: 0,
+             Infos: 0
+      </title>
+            <link>https://github.com/bigloupe/SoS-JobScheduler/jobscheduler-install/jobscheduler-installer-panel/checkstyle.html</link>
+      <description>
+        <p>Click <a href="https://github.com/bigloupe/SoS-JobScheduler/jobscheduler-install/jobscheduler-installer-panel/checkstyle.html">here</a> for the full Checkstyle report.</p>
+
+        <table summary="Files" boder="1">
+          <thead>
+            <tr>
+              <th>Files</th>
+              <th style="width:30px;"><abbr title="Info">I</abbr></th>
+              <th style="width:30px;"><abbr title="Warning">W</abbr></th>
+              <th style="width:30px;"><abbr title="Error">E</abbr></th>
+            </tr>
+          </thead>
+          <tbody>
+                          <tr>
+                <td>
+                  <a href="https://github.com/bigloupe/SoS-JobScheduler/jobscheduler-install/jobscheduler-installer-panel/checkstyle.html#org.jobscheduler.dashboard.installer.DatabaseConnectionValidator.java">org/jobscheduler/dashboard/installer/DatabaseConnectionValidator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  75
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/bigloupe/SoS-JobScheduler/jobscheduler-install/jobscheduler-installer-panel/checkstyle.html#org.jobscheduler.dashboard.installer.db.Databases.java">org/jobscheduler/dashboard/installer/db/Databases.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  160
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/bigloupe/SoS-JobScheduler/jobscheduler-install/jobscheduler-installer-panel/checkstyle.html#org.jobscheduler.dashboard.installer.DatabaseConnectionPostValidateAction.java">org/jobscheduler/dashboard/installer/DatabaseConnectionPostValidateAction.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  70
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/bigloupe/SoS-JobScheduler/jobscheduler-install/jobscheduler-installer-panel/checkstyle.html#org.jobscheduler.dashboard.installer.JDBCManager.java">org/jobscheduler/dashboard/installer/JDBCManager.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  175
+                </td>
+              </tr>
+                      </tbody>
+        </table>
+        
+      </description>
+    </item>
+  </channel>
+</rss>
+
