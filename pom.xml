@@ -66,6 +66,11 @@
 			<name>Sonatype Nexus release repository</name>
 			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 		</repository>
+		<site>
+			<id>github-pages-site</id>
+			<name>Deployment through GitHub's site deployment plugin</name>
+			<url>${project.version}</url>
+		</site>
 	</distributionManagement>
 
 	<profiles>
@@ -87,6 +92,9 @@
 						<configuration>
 							<message>Building site for ${project.version}</message>
 							<server>github</server>
+							<!-- keep old versions -->
+							<path>${project.distributionManagement.site.url}</path>
+							<merge>true</merge>
 						</configuration>
 						<executions>
 							<execution>
@@ -109,6 +117,7 @@
 									<configuration>
 										<dependencyDetailsEnabled>true</dependencyDetailsEnabled>
 										<dependencyLocationsEnabled>true</dependencyLocationsEnabled>
+										<skipDeploy>true</skipDeploy>
 									</configuration>
 								</plugin>
 								<plugin>
@@ -127,6 +136,14 @@
 								</plugin>
 							</reportPlugins>
 						</configuration>
+						<dependencies>
+							<dependency>
+								<groupId>org.apache.maven.doxia</groupId>
+								<artifactId>doxia-module-markdown</artifactId>
+								<version>1.5</version>
+							</dependency>
+						</dependencies>
+
 					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
