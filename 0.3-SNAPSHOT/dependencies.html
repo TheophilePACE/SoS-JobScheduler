@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="Date-Revision-yyyymmdd" content="20140513" />
     <meta http-equiv="Content-Language" content="en" />
-    <title>JobScheduler :: Dashboard installer panel - Project Dependencies</title>
+    <title>JobScheduler :: Dashboard installer setup - Project Dependencies</title>
     <link rel="stylesheet" href="./css/apache-maven-fluido-1.3.1.min.css" />
     <link rel="stylesheet" href="./css/site.css" />
     <link rel="stylesheet" href="./css/print.css" media="print" />
@@ -75,7 +75,7 @@
     <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
 
     
-    <div class="g-plusone" data-href="https://github.com/bigloupe/SoS-JobScheduler/jobscheduler-install/jobscheduler-installer-panel" data-size="tall" ></div>
+    <div class="g-plusone" data-href="https://github.com/bigloupe/SoS-JobScheduler/jobscheduler-install/jobscheduler-installer" data-size="tall" ></div>
 
                    <div class="clear"></div>
                             <div class="clear"></div>
@@ -104,14 +104,14 @@
 <th>Version</th>
 <th>Type</th></tr>
 <tr class="b">
-<td>org.fusesource.jansi</td>
-<td><a class="externalLink" href="http://jansi.fusesource.org/jansi">jansi</a></td>
-<td>1.11</td>
-<td>jar</td></tr>
+<td>com.github.bigloupe</td>
+<td><a class="externalLink" href="http://projects.spring.io/spring-boot/dashboard/">dashboard</a></td>
+<td>0.3-SNAPSHOT</td>
+<td>war</td></tr>
 <tr class="a">
-<td>org.postgresql</td>
-<td><a class="externalLink" href="http://jdbc.postgresql.org">postgresql</a></td>
-<td>9.3-1100-jdbc41</td>
+<td>com.github.bigloupe</td>
+<td><a class="externalLink" href="https://github.com/bigloupe/SoS-JobScheduler/jobscheduler-install/jobscheduler-installer-panel">jobscheduler-installer-panel</a></td>
+<td>0.3-SNAPSHOT</td>
 <td>jar</td></tr></table></div><a name="Project_Dependencies_provided"></a>
 <div class="section">
 <h3>provided<a name="provided"></a></h3>
@@ -129,7 +129,26 @@
 <td>jar</td></tr></table></div></div><a name="Project_Transitive_Dependencies"></a>
 <div class="section">
 <h2>Project Transitive Dependencies<a name="Project_Transitive_Dependencies"></a></h2>
-<p>The following is a list of transitive dependencies for this project. Transitive dependencies are the dependencies of the project dependencies.</p><a name="Project_Transitive_Dependencies_provided"></a>
+<p>The following is a list of transitive dependencies for this project. Transitive dependencies are the dependencies of the project dependencies.</p><a name="Project_Transitive_Dependencies_compile"></a>
+<div class="section">
+<h3>compile<a name="compile"></a></h3>
+<p>The following is a list of compile dependencies for this project. These dependencies are required to compile and run the application:</p>
+<table border="0" class="table table-striped">
+<tr class="a">
+<th>GroupId</th>
+<th>ArtifactId</th>
+<th>Version</th>
+<th>Type</th></tr>
+<tr class="b">
+<td>org.fusesource.jansi</td>
+<td><a class="externalLink" href="http://jansi.fusesource.org/jansi">jansi</a></td>
+<td>1.11</td>
+<td>jar</td></tr>
+<tr class="a">
+<td>org.postgresql</td>
+<td><a class="externalLink" href="http://jdbc.postgresql.org">postgresql</a></td>
+<td>9.3-1100-jdbc41</td>
+<td>jar</td></tr></table></div><a name="Project_Transitive_Dependencies_provided"></a>
 <div class="section">
 <h3>provided<a name="provided"></a></h3>
 <p>The following is a list of provided dependencies for this project. These dependencies are required to compile the application, but should be provided by default when using the library:</p>
@@ -366,18 +385,18 @@
 <div class="section">
 <h3>Dependency Tree<a name="Dependency_Tree"></a></h3>
 <ul>
-<li>com.github.bigloupe:jobscheduler-installer-panel:jar:0.3-SNAPSHOT <img id="_480003328" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_563566860', '_480003328' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_563566860" style="display:none">
+<li>com.github.bigloupe:jobscheduler-installer:jar:0.3-SNAPSHOT <img id="_1948055857" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_408871569', '_1948055857' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_408871569" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
-<th>JobScheduler :: Dashboard installer panel</th></tr>
+<th>JobScheduler :: Dashboard installer setup</th></tr>
 <tr class="b">
 <td>
 <p><b>Description: </b>Dashboard for JobScheduler (https://sourceforge.net/projects/jobscheduler/)
 		SpringMVC + Hibernate</p>
-<p><b>URL: </b><a class="externalLink" href="https://github.com/bigloupe/SoS-JobScheduler/jobscheduler-install/jobscheduler-installer-panel">https://github.com/bigloupe/SoS-JobScheduler/jobscheduler-install/jobscheduler-installer-panel</a></p>
+<p><b>URL: </b><a class="externalLink" href="https://github.com/bigloupe/SoS-JobScheduler/jobscheduler-install/jobscheduler-installer">https://github.com/bigloupe/SoS-JobScheduler/jobscheduler-install/jobscheduler-installer</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">Apache 2</a></p></td></tr></table></div>
 <ul>
-<li>org.codehaus.izpack:izpack-compiler:jar:5.0.0-rc2 (provided) <img id="_742763409" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1754147097', '_742763409' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1754147097" style="display:none">
+<li>org.codehaus.izpack:izpack-compiler:jar:5.0.0-rc2 (provided) <img id="_1869241621" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_780674939', '_1869241621' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_780674939" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>IzPack compiler module</th></tr>
@@ -387,7 +406,7 @@
 <p><b>URL: </b><a class="externalLink" href="http://izpack.org/izpack-compiler/">http://izpack.org/izpack-compiler/</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div>
 <ul>
-<li>org.codehaus.izpack:izpack-native:jar:5.0.0-rc2 (provided) <img id="_2094605164" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1217619152', '_2094605164' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1217619152" style="display:none">
+<li>org.codehaus.izpack:izpack-native:jar:5.0.0-rc2 (provided) <img id="_378399201" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_360137059', '_378399201' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_360137059" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>IzPack native module</th></tr>
@@ -396,7 +415,7 @@
 <p><b>Description: </b>IzPack parent module</p>
 <p><b>URL: </b><a class="externalLink" href="http://izpack.org/izpack-native-parent/izpack-native/">http://izpack.org/izpack-native-parent/izpack-native/</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li>
-<li>org.codehaus.izpack:izpack-panel:jar:5.0.0-rc2 (provided) <img id="_1657937207" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1772599484', '_1657937207' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1772599484" style="display:none">
+<li>org.codehaus.izpack:izpack-panel:jar:5.0.0-rc2 (provided) <img id="_1245193858" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1857493065', '_1245193858' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1857493065" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>IzPack panel module</th></tr>
@@ -405,7 +424,7 @@
 <p><b>Description: </b>IzPack parent module</p>
 <p><b>URL: </b><a class="externalLink" href="http://izpack.org/izpack-panel/">http://izpack.org/izpack-panel/</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li>
-<li>org.codehaus.izpack:izpack-event:jar:5.0.0-rc2 (provided) <img id="_13965167" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_967808465', '_13965167' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_967808465" style="display:none">
+<li>org.codehaus.izpack:izpack-event:jar:5.0.0-rc2 (provided) <img id="_1418208304" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_341291717', '_1418208304' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_341291717" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>IzPack event module</th></tr>
@@ -415,7 +434,7 @@
 <p><b>URL: </b><a class="externalLink" href="http://izpack.org/izpack-event/">http://izpack.org/izpack-event/</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div>
 <ul>
-<li>org.codehaus.izpack:izpack-api:jar:5.0.0-rc2 (provided) <img id="_369859985" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_268440948', '_369859985' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_268440948" style="display:none">
+<li>org.codehaus.izpack:izpack-api:jar:5.0.0-rc2 (provided) <img id="_42463995" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1084209543', '_42463995' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1084209543" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>IzPack api module</th></tr>
@@ -425,7 +444,7 @@
 <p><b>URL: </b><a class="externalLink" href="http://izpack.org/izpack-api/">http://izpack.org/izpack-api/</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div>
 <ul>
-<li>org.apache.ant:ant:jar:1.9.2 (provided) <img id="_462198509" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_446200414', '_462198509' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_446200414" style="display:none">
+<li>org.apache.ant:ant:jar:1.9.2 (provided) <img id="_1730875564" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_784656602', '_1730875564' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_784656602" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>Apache Ant Core</th></tr>
@@ -434,7 +453,7 @@
 <p><b>Description: </b>master POM</p>
 <p><b>URL: </b><a class="externalLink" href="http://ant.apache.org/">http://ant.apache.org/</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li>
-<li>org.codehaus.izpack:izpack-tools:jar:5.0.0-rc2 (provided) <img id="_1756757351" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_86246607', '_1756757351' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_86246607" style="display:none">
+<li>org.codehaus.izpack:izpack-tools:jar:5.0.0-rc2 (provided) <img id="_468742985" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_21640244', '_468742985' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_21640244" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>IzPack tools module</th></tr>
@@ -443,7 +462,7 @@
 <p><b>Description: </b>Module containing all utilities classes completly independent</p>
 <p><b>URL: </b><a class="externalLink" href="http://izpack.org/izpack-tools/">http://izpack.org/izpack-tools/</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li>
-<li>org.picocontainer:picocontainer:jar:2.14.1 (provided) <img id="_1490743311" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_175570941', '_1490743311' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_175570941" style="display:none">
+<li>org.picocontainer:picocontainer:jar:2.14.1 (provided) <img id="_744193722" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1507403325', '_744193722' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1507403325" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>PicoContainer Core</th></tr>
@@ -452,7 +471,7 @@
 <p><b>Description: </b>A small Java embeddable Dependency Injection container</p>
 <p><b>URL: </b><a class="externalLink" href="http://www.picocontainer.org/picocontainer">http://www.picocontainer.org/picocontainer</a></p>
 <p><b>Project License: </b><a href="LICENSE.txt">BSD</a></p></td></tr></table></div></li></ul></li>
-<li>org.codehaus.izpack:izpack-util:jar:5.0.0-rc2 (provided) <img id="_929856243" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_130902564', '_929856243' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_130902564" style="display:none">
+<li>org.codehaus.izpack:izpack-util:jar:5.0.0-rc2 (provided) <img id="_1982343561" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_834504268', '_1982343561' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_834504268" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>IzPack util module</th></tr>
@@ -461,7 +480,7 @@
 <p><b>Description: </b>IzPack parent module</p>
 <p><b>URL: </b><a class="externalLink" href="http://izpack.org/izpack-util/">http://izpack.org/izpack-util/</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li>
-<li>org.codehaus.izpack:izpack-installer:jar:5.0.0-rc2 (provided) <img id="_1972753686" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_224966317', '_1972753686' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_224966317" style="display:none">
+<li>org.codehaus.izpack:izpack-installer:jar:5.0.0-rc2 (provided) <img id="_1373931187" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_902870924', '_1373931187' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_902870924" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>IzPack installer module</th></tr>
@@ -471,7 +490,7 @@
 <p><b>URL: </b><a class="externalLink" href="http://izpack.org/izpack-installer/">http://izpack.org/izpack-installer/</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div>
 <ul>
-<li>org.codehaus.izpack:izpack-core:jar:5.0.0-rc2 (provided) <img id="_1509771954" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_37292906', '_1509771954' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_37292906" style="display:none">
+<li>org.codehaus.izpack:izpack-core:jar:5.0.0-rc2 (provided) <img id="_707758386" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_907408866', '_707758386' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_907408866" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>IzPack core module</th></tr>
@@ -480,7 +499,7 @@
 <p><b>Description: </b>IzPack parent module</p>
 <p><b>URL: </b><a class="externalLink" href="http://izpack.org/izpack-core/">http://izpack.org/izpack-core/</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li>
-<li>org.codehaus.izpack:izpack-gui:jar:5.0.0-rc2 (provided) <img id="_1201333507" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_132257826', '_1201333507' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_132257826" style="display:none">
+<li>org.codehaus.izpack:izpack-gui:jar:5.0.0-rc2 (provided) <img id="_777661006" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1205938648', '_777661006' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1205938648" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>IzPack gui module</th></tr>
@@ -490,7 +509,7 @@
 <p><b>URL: </b><a class="externalLink" href="http://izpack.org/izpack-gui/">http://izpack.org/izpack-gui/</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div>
 <ul>
-<li>org.codehaus.izpack:izpack-core:jar:5.0.0-rc2 (provided) <img id="_1517910593" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_2142415103', '_1517910593' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_2142415103" style="display:none">
+<li>org.codehaus.izpack:izpack-core:jar:5.0.0-rc2 (provided) <img id="_1134939307" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1897234107', '_1134939307' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1897234107" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>IzPack core module</th></tr>
@@ -499,7 +518,7 @@
 <p><b>Description: </b>IzPack parent module</p>
 <p><b>URL: </b><a class="externalLink" href="http://izpack.org/izpack-core/">http://izpack.org/izpack-core/</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li></ul></li>
-<li>jakarta-regexp:jakarta-regexp:jar:1.4 (provided) <img id="_1495308987" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1507971200', '_1495308987' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1507971200" style="display:none">
+<li>jakarta-regexp:jakarta-regexp:jar:1.4 (provided) <img id="_806344303" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_862193583', '_806344303' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_862193583" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>jakarta-regexp</th></tr>
@@ -507,7 +526,7 @@
 <td>
 <p><b>Description: </b>There is currently no description associated with this project.</p>
 <p><b>Project License: </b>No project license is defined for this project.</p></td></tr></table></div></li></ul></li>
-<li>org.apache.ant:ant:jar:1.9.2 (provided) <img id="_333011421" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1031916597', '_333011421' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1031916597" style="display:none">
+<li>org.apache.ant:ant:jar:1.9.2 (provided) <img id="_829372821" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_72159485', '_829372821' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_72159485" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>Apache Ant Core</th></tr>
@@ -517,7 +536,7 @@
 <p><b>URL: </b><a class="externalLink" href="http://ant.apache.org/">http://ant.apache.org/</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div>
 <ul>
-<li>org.apache.ant:ant-launcher:jar:1.9.2 (provided) <img id="_1282928331" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1173608615', '_1282928331' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1173608615" style="display:none">
+<li>org.apache.ant:ant-launcher:jar:1.9.2 (provided) <img id="_1176141902" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1694432697', '_1176141902' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1694432697" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>Apache Ant Launcher</th></tr>
@@ -526,7 +545,7 @@
 <p><b>Description: </b>master POM</p>
 <p><b>URL: </b><a class="externalLink" href="http://ant.apache.org/">http://ant.apache.org/</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li></ul></li>
-<li>bsf:bsf:jar:2.4.0 (provided) <img id="_415291875" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1155988207', '_415291875' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1155988207" style="display:none">
+<li>bsf:bsf:jar:2.4.0 (provided) <img id="_1812755905" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1608686030', '_1812755905' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1608686030" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>Bean Scripting Framework</th></tr>
@@ -540,7 +559,7 @@
 <p><b>URL: </b><a class="externalLink" href="http://jakarta.apache.org/bsf">http://jakarta.apache.org/bsf</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div>
 <ul>
-<li>commons-logging:commons-logging:jar:1.0.4 (provided) <img id="_2119781442" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_193798642', '_2119781442' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_193798642" style="display:none">
+<li>commons-logging:commons-logging:jar:1.0.4 (provided) <img id="_1258451752" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1296509997', '_1258451752' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1296509997" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>Logging</th></tr>
@@ -550,7 +569,7 @@
     well known logging systems.</p>
 <p><b>URL: </b><a class="externalLink" href="http://jakarta.apache.org/commons/logging/">http://jakarta.apache.org/commons/logging/</a></p>
 <p><b>Project License: </b><a href="/LICENSE.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li></ul></li>
-<li>org.codehaus.izpack:izpack-native:jar:5.0.0-rc2 (provided) <img id="_571745570" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1856580710', '_571745570' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1856580710" style="display:none">
+<li>org.codehaus.izpack:izpack-native:jar:5.0.0-rc2 (provided) <img id="_1607330081" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_472025221', '_1607330081' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_472025221" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>IzPack native module</th></tr>
@@ -559,7 +578,7 @@
 <p><b>Description: </b>IzPack parent module</p>
 <p><b>URL: </b><a class="externalLink" href="http://izpack.org/izpack-native-parent/izpack-native/">http://izpack.org/izpack-native-parent/izpack-native/</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li></ul></li>
-<li>org.codehaus.izpack:izpack-uninstaller:jar:5.0.0-rc2 (provided) <img id="_1453538256" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1895835008', '_1453538256' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1895835008" style="display:none">
+<li>org.codehaus.izpack:izpack-uninstaller:jar:5.0.0-rc2 (provided) <img id="_1889368010" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1102152220', '_1889368010' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1102152220" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>IzPack uninstaller module</th></tr>
@@ -569,7 +588,7 @@
 <p><b>URL: </b><a class="externalLink" href="http://izpack.org/izpack-uninstaller/">http://izpack.org/izpack-uninstaller/</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div>
 <ul>
-<li>org.codehaus.izpack:izpack-core:jar:5.0.0-rc2 (provided) <img id="_2021126316" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1703671253', '_2021126316' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1703671253" style="display:none">
+<li>org.codehaus.izpack:izpack-core:jar:5.0.0-rc2 (provided) <img id="_2089185577" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1412583152', '_2089185577' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1412583152" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>IzPack core module</th></tr>
@@ -579,7 +598,7 @@
 <p><b>URL: </b><a class="externalLink" href="http://izpack.org/izpack-core/">http://izpack.org/izpack-core/</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div>
 <ul>
-<li>org.codehaus.izpack:izpack-util:jar:5.0.0-rc2 (provided) <img id="_1801389174" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_153809910', '_1801389174' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_153809910" style="display:none">
+<li>org.codehaus.izpack:izpack-util:jar:5.0.0-rc2 (provided) <img id="_1504722674" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1006846118', '_1504722674' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1006846118" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>IzPack util module</th></tr>
@@ -588,7 +607,7 @@
 <p><b>Description: </b>IzPack parent module</p>
 <p><b>URL: </b><a class="externalLink" href="http://izpack.org/izpack-util/">http://izpack.org/izpack-util/</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li>
-<li>commons-io:commons-io:jar:2.4 (provided) <img id="_141199457" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1319847423', '_141199457' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1319847423" style="display:none">
+<li>commons-io:commons-io:jar:2.4 (provided) <img id="_262952030" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_751757221', '_262952030' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_751757221" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>Commons IO</th></tr>
@@ -598,7 +617,7 @@
 file comparators, endian transformation classes, and much more.</p>
 <p><b>URL: </b><a class="externalLink" href="http://commons.apache.org/io/">http://commons.apache.org/io/</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li></ul></li>
-<li>org.codehaus.izpack:izpack-installer:jar:5.0.0-rc2 (provided) <img id="_813315456" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1350751284', '_813315456' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1350751284" style="display:none">
+<li>org.codehaus.izpack:izpack-installer:jar:5.0.0-rc2 (provided) <img id="_2081624052" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1180041081', '_2081624052' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1180041081" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>IzPack installer module</th></tr>
@@ -607,7 +626,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>Description: </b>IzPack parent module</p>
 <p><b>URL: </b><a class="externalLink" href="http://izpack.org/izpack-installer/">http://izpack.org/izpack-installer/</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li></ul></li>
-<li>org.codehaus.izpack:izpack-util:jar:5.0.0-rc2 (provided) <img id="_1676000504" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1735997947', '_1676000504' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1735997947" style="display:none">
+<li>org.codehaus.izpack:izpack-util:jar:5.0.0-rc2 (provided) <img id="_1534561337" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_797401705', '_1534561337' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_797401705" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>IzPack util module</th></tr>
@@ -617,7 +636,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>URL: </b><a class="externalLink" href="http://izpack.org/izpack-util/">http://izpack.org/izpack-util/</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div>
 <ul>
-<li>org.codehaus.izpack:izpack-api:jar:5.0.0-rc2 (provided) <img id="_1733156019" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_106276599', '_1733156019' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_106276599" style="display:none">
+<li>org.codehaus.izpack:izpack-api:jar:5.0.0-rc2 (provided) <img id="_200976852" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1700289156', '_200976852' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1700289156" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>IzPack api module</th></tr>
@@ -626,7 +645,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>Description: </b>IzPack parent module</p>
 <p><b>URL: </b><a class="externalLink" href="http://izpack.org/izpack-api/">http://izpack.org/izpack-api/</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li>
-<li>org.jdom:jdom2:jar:2.0.5 (provided) <img id="_1221276821" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1756227957', '_1221276821' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1756227957" style="display:none">
+<li>org.jdom:jdom2:jar:2.0.5 (provided) <img id="_974110268" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_766612988', '_974110268' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_766612988" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>JDOM</th></tr>
@@ -636,7 +655,7 @@ file comparators, endian transformation classes, and much more.</p>
 		and outputting XML data</p>
 <p><b>URL: </b><a class="externalLink" href="http://www.jdom.org">http://www.jdom.org</a></p>
 <p><b>Project License: </b><a class="externalLink" href="https://raw.github.com/hunterhacker/jdom/master/LICENSE.txt">Similar to Apache License but with the acknowledgment clause removed</a></p></td></tr></table></div></li></ul></li>
-<li>org.apache.maven.shared:maven-shared-jar:jar:1.1 (provided) <img id="_1452251473" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_2086232666', '_1452251473' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_2086232666" style="display:none">
+<li>org.apache.maven.shared:maven-shared-jar:jar:1.1 (provided) <img id="_1258039354" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_460107135', '_1258039354' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_460107135" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>Maven JAR Utilities</th></tr>
@@ -646,7 +665,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>URL: </b><a class="externalLink" href="http://maven.apache.org/shared/maven-shared-jar/">http://maven.apache.org/shared/maven-shared-jar/</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div>
 <ul>
-<li>org.apache.maven:maven-model:jar:2.0.7 (provided) <img id="_1343397995" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_948477646', '_1343397995' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_948477646" style="display:none">
+<li>org.apache.maven:maven-model:jar:2.0.7 (provided) <img id="_1061933451" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1608761951', '_1061933451' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1608761951" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>Maven Model</th></tr>
@@ -656,7 +675,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>URL: </b><a class="externalLink" href="http://maven.apache.org/maven-model">http://maven.apache.org/maven-model</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div>
 <ul>
-<li>org.codehaus.plexus:plexus-utils:jar:1.4.1 (provided) <img id="_1875054453" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_516272365', '_1875054453' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_516272365" style="display:none">
+<li>org.codehaus.plexus:plexus-utils:jar:1.4.1 (provided) <img id="_1485089795" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_2145439668', '_1485089795' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_2145439668" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>Plexus Common Utilities</th></tr>
@@ -664,7 +683,7 @@ file comparators, endian transformation classes, and much more.</p>
 <td>
 <p><b>Description: </b>There is currently no description associated with this project.</p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li></ul></li>
-<li>org.apache.maven:maven-artifact:jar:2.0.7 (provided) <img id="_1760815347" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_763437434', '_1760815347' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_763437434" style="display:none">
+<li>org.apache.maven:maven-artifact:jar:2.0.7 (provided) <img id="_676491945" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1120358261', '_676491945' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1120358261" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>Maven Artifact</th></tr>
@@ -674,7 +693,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>URL: </b><a class="externalLink" href="http://maven.apache.org/maven-artifact">http://maven.apache.org/maven-artifact</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div>
 <ul>
-<li>org.codehaus.plexus:plexus-utils:jar:1.4.1 (provided) <img id="_1030698670" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1815385693', '_1030698670' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1815385693" style="display:none">
+<li>org.codehaus.plexus:plexus-utils:jar:1.4.1 (provided) <img id="_1766564587" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1045579289', '_1766564587' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1045579289" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>Plexus Common Utilities</th></tr>
@@ -682,7 +701,7 @@ file comparators, endian transformation classes, and much more.</p>
 <td>
 <p><b>Description: </b>There is currently no description associated with this project.</p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li></ul></li>
-<li>org.codehaus.plexus:plexus-digest:jar:1.0 (provided) <img id="_1994472367" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_145495191', '_1994472367' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_145495191" style="display:none">
+<li>org.codehaus.plexus:plexus-digest:jar:1.0 (provided) <img id="_545361170" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1709174604', '_545361170' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1709174604" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>Plexus Digest / Hashcode Components</th></tr>
@@ -691,7 +710,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>Description: </b>There is currently no description associated with this project.</p>
 <p><b>Project License: </b>No project license is defined for this project.</p></td></tr></table></div>
 <ul>
-<li>org.codehaus.plexus:plexus-container-default:jar:1.0-alpha-8 (provided) <img id="_1634339215" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1662577003', '_1634339215' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1662577003" style="display:none">
+<li>org.codehaus.plexus:plexus-container-default:jar:1.0-alpha-8 (provided) <img id="_165352221" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1350937584', '_165352221' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1350937584" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>Default Plexus Container</th></tr>
@@ -700,7 +719,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>Description: </b>There is currently no description associated with this project.</p>
 <p><b>Project License: </b>No project license is defined for this project.</p></td></tr></table></div>
 <ul>
-<li>junit:junit:jar:3.8.1 (provided) <img id="_1353799765" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_645031206', '_1353799765' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_645031206" style="display:none">
+<li>junit:junit:jar:3.8.1 (provided) <img id="_345357222" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_126629882', '_345357222' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_126629882" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>JUnit</th></tr>
@@ -709,7 +728,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>Description: </b>JUnit is a regression testing framework written by Erich Gamma and Kent Beck. It is used by the developer who implements unit tests in Java.</p>
 <p><b>URL: </b><a class="externalLink" href="http://junit.org">http://junit.org</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.opensource.org/licenses/cpl1.0.txt">Common Public License Version 1.0</a></p></td></tr></table></div></li>
-<li>classworlds:classworlds:jar:1.1-alpha-2 (provided) <img id="_1841097185" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_797149558', '_1841097185' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_797149558" style="display:none">
+<li>classworlds:classworlds:jar:1.1-alpha-2 (provided) <img id="_338894475" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_25890767', '_338894475' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_25890767" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>classworlds</th></tr>
@@ -718,7 +737,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>Description: </b>There is currently no description associated with this project.</p>
 <p><b>URL: </b><a class="externalLink" href="http://classworlds.codehaus.org/">http://classworlds.codehaus.org/</a></p>
 <p><b>Project License: </b>No project license is defined for this project.</p></td></tr></table></div></li></ul></li></ul></li>
-<li>org.apache.bcel:bcel:jar:5.2 (provided) <img id="_1444256825" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_39097881', '_1444256825' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_39097881" style="display:none">
+<li>org.apache.bcel:bcel:jar:5.2 (provided) <img id="_477879832" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_2126733959', '_477879832' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_2126733959" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>bcel</th></tr>
@@ -727,7 +746,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>Description: </b>There is currently no description associated with this project.</p>
 <p><b>Project License: </b>No project license is defined for this project.</p></td></tr></table></div>
 <ul>
-<li>jakarta-regexp:jakarta-regexp:jar:1.4 (provided) <img id="_1429656528" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1654792861', '_1429656528' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1654792861" style="display:none">
+<li>jakarta-regexp:jakarta-regexp:jar:1.4 (provided) <img id="_660838989" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_446763640', '_660838989' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_446763640" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>jakarta-regexp</th></tr>
@@ -735,7 +754,7 @@ file comparators, endian transformation classes, and much more.</p>
 <td>
 <p><b>Description: </b>There is currently no description associated with this project.</p>
 <p><b>Project License: </b>No project license is defined for this project.</p></td></tr></table></div></li></ul></li>
-<li>commons-collections:commons-collections:jar:3.1 (provided) <img id="_529308875" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1776019610', '_529308875' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1776019610" style="display:none">
+<li>commons-collections:commons-collections:jar:3.1 (provided) <img id="_2044945247" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1913711303', '_2044945247' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1913711303" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>commons-collections</th></tr>
@@ -743,7 +762,7 @@ file comparators, endian transformation classes, and much more.</p>
 <td>
 <p><b>Description: </b>Types that extend and augment the Java Collections Framework.</p>
 <p><b>Project License: </b>No project license is defined for this project.</p></td></tr></table></div></li></ul></li>
-<li>commons-lang:commons-lang:jar:2.6 (provided) <img id="_2141055612" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_2081218776', '_2141055612' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_2081218776" style="display:none">
+<li>commons-lang:commons-lang:jar:2.6 (provided) <img id="_1548093740" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_156818231', '_1548093740' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_156818231" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>Commons Lang</th></tr>
@@ -754,7 +773,7 @@ file comparators, endian transformation classes, and much more.</p>
         standard as to justify existence in java.lang.</p>
 <p><b>URL: </b><a class="externalLink" href="http://commons.apache.org/lang/">http://commons.apache.org/lang/</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li>
-<li>commons-cli:commons-cli:jar:1.2 (provided) <img id="_1035548398" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_390231833', '_1035548398' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_390231833" style="display:none">
+<li>commons-cli:commons-cli:jar:1.2 (provided) <img id="_1904938566" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_265199174', '_1904938566' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_265199174" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>Commons CLI</th></tr>
@@ -763,7 +782,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>Description: </b>Commons CLI provides a simple API for presenting, processing and validating a command line interface.</p>
 <p><b>URL: </b><a class="externalLink" href="http://commons.apache.org/cli/">http://commons.apache.org/cli/</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li>
-<li>commons-io:commons-io:jar:2.4 (provided) <img id="_110626357" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1129867448', '_110626357' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1129867448" style="display:none">
+<li>commons-io:commons-io:jar:2.4 (provided) <img id="_352721339" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_151238732', '_352721339' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_151238732" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>Commons IO</th></tr>
@@ -773,7 +792,7 @@ file comparators, endian transformation classes, and much more.</p>
 file comparators, endian transformation classes, and much more.</p>
 <p><b>URL: </b><a class="externalLink" href="http://commons.apache.org/io/">http://commons.apache.org/io/</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li>
-<li>org.apache.commons:commons-compress:jar:1.3 (provided) <img id="_1435832511" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1370767552', '_1435832511' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1370767552" style="display:none">
+<li>org.apache.commons:commons-compress:jar:1.3 (provided) <img id="_20102225" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_86385674', '_20102225' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_86385674" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>Commons Compress</th></tr>
@@ -783,7 +802,7 @@ file comparators, endian transformation classes, and much more.</p>
   These include: bzip2, gzip, pack200 and ar, cpio, jar, tar, zip, dump.</p>
 <p><b>URL: </b><a class="externalLink" href="http://commons.apache.org/compress/">http://commons.apache.org/compress/</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li>
-<li>xpp3:xpp3:jar:1.1.4c (provided) <img id="_623017929" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_866209884', '_623017929' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_866209884" style="display:none">
+<li>xpp3:xpp3:jar:1.1.4c (provided) <img id="_1907238805" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_619839023', '_1907238805' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_619839023" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>MXP1: Xml Pull Parser 3rd Edition (XPP3)</th></tr>
@@ -792,7 +811,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>Description: </b>MXP1 is a stable XmlPull parsing engine that is based on ideas from XPP and in particular XPP2 but completely revised and rewritten to take the best advantage of latest JIT JVMs such as Hotspot in JDK 1.4+.</p>
 <p><b>URL: </b><a class="externalLink" href="http://www.extreme.indiana.edu/xgws/xsoap/xpp/mxp1/">http://www.extreme.indiana.edu/xgws/xsoap/xpp/mxp1/</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.extreme.indiana.edu/viewcvs/~checkout~/XPP3/java/LICENSE.txt">Indiana University Extreme! Lab Software License, vesion 1.1.1</a><a class="externalLink" href="http://creativecommons.org/licenses/publicdomain">Public Domain</a><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-1.1">Apache Software License, version 1.1</a></p></td></tr></table></div></li>
-<li>org.java.net.substance:substance:jar:6.0 (provided) <img id="_1575566750" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_294241875', '_1575566750' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_294241875" style="display:none">
+<li>org.java.net.substance:substance:jar:6.0 (provided) <img id="_100749712" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1762673939', '_100749712' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1762673939" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>Substance Look and Feel</th></tr>
@@ -803,7 +822,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>URL: </b><a class="externalLink" href="https://substance.dev.java.net/">https://substance.dev.java.net/</a></p>
 <p><b>Project License: </b><a class="externalLink" href="https://substance.dev.java.net/license.html">Berkeley Software Distribution (BSD) License</a></p></td></tr></table></div>
 <ul>
-<li>org.pushing-pixels:trident:jar:1.2 (provided) <img id="_1643762576" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_2061568870', '_1643762576' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_2061568870" style="display:none">
+<li>org.pushing-pixels:trident:jar:1.2 (provided) <img id="_277509220" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1714156835', '_277509220' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1714156835" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>Trident Animation Library</th></tr>
@@ -814,7 +833,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>URL: </b><a class="externalLink" href="http://kenai.com/projects/trident/pages/Home">http://kenai.com/projects/trident/pages/Home</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.opensource.org/licenses/bsd-license.php">BSD</a></p></td></tr></table></div>
 <ul>
-<li>org.eclipse.swt.win32.win32:x86:jar:3.3.0-v3346 (provided) <img id="_951524527" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_674368924', '_951524527' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_674368924" style="display:none">
+<li>org.eclipse.swt.win32.win32:x86:jar:3.3.0-v3346 (provided) <img id="_304482624" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_2070901057', '_304482624' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_2070901057" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>%fragmentName</th></tr>
@@ -822,7 +841,7 @@ file comparators, endian transformation classes, and much more.</p>
 <td>
 <p><b>Description: </b>There is currently no description associated with this project.</p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.eclipse.org/org/documents/epl-v10.html">Eclipse Public License - v 1.0</a></p></td></tr></table></div></li></ul></li>
-<li>net.java.dev.laf-widget:laf-widget:jar:5.0 (provided) <img id="_261144193" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_258820613', '_261144193' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_258820613" style="display:none">
+<li>net.java.dev.laf-widget:laf-widget:jar:5.0 (provided) <img id="_1930171357" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1405096540', '_1930171357' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1405096540" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>Laf-Widget</th></tr>
@@ -832,7 +851,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>URL: </b><a class="externalLink" href="https://laf-widget.dev.java.net/">https://laf-widget.dev.java.net/</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.opensource.org/licenses/bsd-license.php">Berkeley Software Distribution (BSD) License</a></p></td></tr></table></div>
 <ul>
-<li>org.pushing-pixels:trident:jar:1.2 (provided) <img id="_385211139" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1001675226', '_385211139' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1001675226" style="display:none">
+<li>org.pushing-pixels:trident:jar:1.2 (provided) <img id="_606287842" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_402429339', '_606287842' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_402429339" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>Trident Animation Library</th></tr>
@@ -842,7 +861,7 @@ file comparators, endian transformation classes, and much more.</p>
 		applications. It requires Java 6+ at compile and runtime, and is available under BSD license</p>
 <p><b>URL: </b><a class="externalLink" href="http://kenai.com/projects/trident/pages/Home">http://kenai.com/projects/trident/pages/Home</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.opensource.org/licenses/bsd-license.php">BSD</a></p></td></tr></table></div></li>
-<li>asm:asm-all:jar:2.2.3 (provided) <img id="_931767804" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1802424459', '_931767804' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1802424459" style="display:none">
+<li>asm:asm-all:jar:2.2.3 (provided) <img id="_512117442" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_281376981', '_512117442' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_281376981" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>ASM All</th></tr>
@@ -851,7 +870,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>Description: </b>A very small and fast Java bytecode manipulation framework</p>
 <p><b>URL: </b><a class="externalLink" href="http://asm.objectweb.org/asm-all/">http://asm.objectweb.org/asm-all/</a></p>
 <p><b>Project License: </b>No project license is defined for this project.</p></td></tr></table></div></li></ul></li>
-<li>net.java.dev.laf-plugin:laf-plugin:jar:1.1 (provided) <img id="_1802367996" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_607929376', '_1802367996' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_607929376" style="display:none">
+<li>net.java.dev.laf-plugin:laf-plugin:jar:1.1 (provided) <img id="_1570580537" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1159247033', '_1570580537' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1159247033" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>Laf-Plugin</th></tr>
@@ -862,7 +881,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>URL: </b><a class="externalLink" href="https://laf-plugin.dev.java.net/">https://laf-plugin.dev.java.net/</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.opensource.org/licenses/bsd-license.php">Berkeley Software Distribution (BSD) License</a></p></td></tr></table></div>
 <ul>
-<li>be.cyberelf.nanoxml:lite:jar:2.2.3 (provided) <img id="_970977719" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1846986318', '_970977719' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1846986318" style="display:none">
+<li>be.cyberelf.nanoxml:lite:jar:2.2.3 (provided) <img id="_1500132772" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_89544207', '_1500132772' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_89544207" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>NanoXML lite</th></tr>
@@ -871,7 +890,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>Description: </b>An extremely small (6KB) XML parser</p>
 <p><b>URL: </b><a class="externalLink" href="http://nanoxml.cyberelf.be/">http://nanoxml.cyberelf.be/</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.opensource.org/licenses/zlib-license.html">The zlib/libpng License</a></p></td></tr></table></div></li></ul></li></ul></li>
-<li>com.incors:kunstoff-laf:jar:2.0.2 (provided) <img id="_1794897149" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1737432938', '_1794897149' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1737432938" style="display:none">
+<li>com.incors:kunstoff-laf:jar:2.0.2 (provided) <img id="_907107650" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_666969008', '_907107650' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_666969008" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>Kunststoff Look and Feel</th></tr>
@@ -883,7 +902,7 @@ file comparators, endian transformation classes, and much more.</p>
 		we hope that it will help you make some wonderful GUIs.</p>
 <p><b>URL: </b><a class="externalLink" href="http://kunstoff.incors.com/archive">http://kunstoff.incors.com/archive</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt">GNU Lesser General Public License</a></p></td></tr></table></div></li>
-<li>com.jgoodies:looks:jar:2.2.2 (provided) <img id="_1350723010" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1752313941', '_1350723010' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1752313941" style="display:none">
+<li>com.jgoodies:looks:jar:2.2.2 (provided) <img id="_2026738847" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1746878151', '_2026738847' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1746878151" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>JGoodies Looks</th></tr>
@@ -896,7 +915,27 @@ file comparators, endian transformation classes, and much more.</p>
 	    In addition, many people have reviewed them as elegant.</p>
 <p><b>URL: </b><a class="externalLink" href="https://looks.dev.java.net/">https://looks.dev.java.net/</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.opensource.org/licenses/bsd-license.html">The BSD License</a></p></td></tr></table></div></li></ul></li>
-<li>org.fusesource.jansi:jansi:jar:1.11 (compile) <img id="_443173406" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1748759592', '_443173406' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1748759592" style="display:none">
+<li>com.github.bigloupe:dashboard:war:0.3-SNAPSHOT (compile) <img id="_677931322" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1779581826', '_677931322' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1779581826" style="display:none">
+<table border="0" class="table table-striped">
+<tr class="a">
+<th>JobScheduler :: Dashboard</th></tr>
+<tr class="b">
+<td>
+<p><b>Description: </b>Dashboard for JobScheduler project</p>
+<p><b>URL: </b><a class="externalLink" href="http://projects.spring.io/spring-boot/dashboard/">http://projects.spring.io/spring-boot/dashboard/</a></p>
+<p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a></p></td></tr></table></div></li>
+<li>com.github.bigloupe:jobscheduler-installer-panel:jar:0.3-SNAPSHOT (compile) <img id="_1374703169" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1915954241', '_1374703169' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1915954241" style="display:none">
+<table border="0" class="table table-striped">
+<tr class="a">
+<th>JobScheduler :: Dashboard installer panel</th></tr>
+<tr class="b">
+<td>
+<p><b>Description: </b>Dashboard for JobScheduler (https://sourceforge.net/projects/jobscheduler/)
+		SpringMVC + Hibernate</p>
+<p><b>URL: </b><a class="externalLink" href="https://github.com/bigloupe/SoS-JobScheduler/jobscheduler-install/jobscheduler-installer-panel">https://github.com/bigloupe/SoS-JobScheduler/jobscheduler-install/jobscheduler-installer-panel</a></p>
+<p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">Apache 2</a></p></td></tr></table></div>
+<ul>
+<li>org.fusesource.jansi:jansi:jar:1.11 (compile) <img id="_2043360300" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_897747191', '_2043360300' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_897747191" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>jansi</th></tr>
@@ -905,7 +944,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>Description: </b>Jansi is a java library for generating and interpreting ANSI escape sequences.</p>
 <p><b>URL: </b><a class="externalLink" href="http://jansi.fusesource.org/jansi">http://jansi.fusesource.org/jansi</a></p>
 <p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li>
-<li>org.postgresql:postgresql:jar:9.3-1100-jdbc41 (compile) <img id="_1428647554" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_936360049', '_1428647554' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_936360049" style="display:none">
+<li>org.postgresql:postgresql:jar:9.3-1100-jdbc41 (compile) <img id="_1624568609" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1545374844', '_1624568609' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1545374844" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>PostgreSQL JDBC Driver</th></tr>
@@ -913,14 +952,15 @@ file comparators, endian transformation classes, and much more.</p>
 <td>
 <p><b>Description: </b>The PostgreSQL Driver JDBC41</p>
 <p><b>URL: </b><a class="externalLink" href="http://jdbc.postgresql.org">http://jdbc.postgresql.org</a></p>
-<p><b>Project License: </b><a class="externalLink" href="http://jdbc.postgresql.org/license.html">BSD License</a></p></td></tr></table></div></li></ul></li></ul></div></div><a name="Licenses"></a>
+<p><b>Project License: </b><a class="externalLink" href="http://jdbc.postgresql.org/license.html">BSD License</a></p></td></tr></table></div></li></ul></li></ul></li></ul></div></div><a name="Licenses"></a>
 <div class="section">
 <h2>Licenses<a name="Licenses"></a></h2>
 <p><b>Apache Software License, version 1.1: </b>MXP1: Xml Pull Parser 3rd Edition (XPP3)</p>
 <p><b>Public Domain: </b>MXP1: Xml Pull Parser 3rd Edition (XPP3)</p>
-<p><b>Apache 2: </b>JobScheduler :: Dashboard installer panel</p>
+<p><b>Apache 2: </b>JobScheduler :: Dashboard installer panel, JobScheduler :: Dashboard installer setup</p>
 <p><b>Unknown: </b>ASM All, Default Plexus Container, Plexus Digest / Hashcode Components, bcel, classworlds, commons-collections, jakarta-regexp</p>
 <p><b>BSD: </b>PicoContainer Core, Trident Animation Library</p>
+<p><b>Apache License, Version 2.0: </b>JobScheduler :: Dashboard</p>
 <p><b>Eclipse Public License - v 1.0: </b>%fragmentName</p>
 <p><b>GNU Lesser General Public License: </b>Kunststoff Look and Feel</p>
 <p><b>The Apache Software License, Version 2.0: </b>Apache Ant Core, Apache Ant Launcher, Bean Scripting Framework, Commons CLI, Commons Compress, Commons IO, Commons Lang, IzPack api module, IzPack compiler module, IzPack core module, IzPack event module, IzPack gui module, IzPack installer module, IzPack native module, IzPack panel module, IzPack tools module, IzPack uninstaller module, IzPack util module, Logging, Maven Artifact, Maven JAR Utilities, Maven Model, Plexus Common Utilities, jansi</p>
@@ -974,6 +1014,22 @@ file comparators, endian transformation classes, and much more.</p>
 <td>3</td>
 <td>1.1</td>
 <td>debug</td></tr>
+<tr class="b">
+<td>com.github.bigloupe:dashboard:war:0.3-SNAPSHOT</td>
+<td>/tech/workspace/git/SoS-JobScheduler/dashboard/target/classes</td>
+<td>/tech/workspace/git/SoS-JobScheduler/dashboard/target/classes (Is a directory)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td></tr>
+<tr class="a">
+<td>com.github.bigloupe:jobscheduler-installer-panel:jar:0.3-SNAPSHOT</td>
+<td>/tech/workspace/git/SoS-JobScheduler/dashboard-install/panel/target/classes</td>
+<td>/tech/workspace/git/SoS-JobScheduler/dashboard-install/panel/target/classes (Is a directory)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td></tr>
 <tr class="b">
 <td>kunstoff-laf-2.0.2.jar</td>
 <td>49.02 kB</td>
@@ -1303,7 +1359,7 @@ file comparators, endian transformation classes, and much more.</p>
 <th>JDK Rev</th>
 <th>Debug</th></tr>
 <tr class="a">
-<td>44</td>
+<td>46</td>
 <td>12.35 MB</td>
 <td>8,585</td>
 <td>7,205</td>
@@ -1311,8 +1367,8 @@ file comparators, endian transformation classes, and much more.</p>
 <td>1.6</td>
 <td>41</td></tr>
 <tr class="b">
-<td>compile: 2</td>
-<td>compile: 685.04 kB</td>
+<td>compile: 4</td>
+<td>compile: 693.04 kB</td>
 <td>compile: 330</td>
 <td>compile: 267</td>
 <td>compile: 30</td>
@@ -1342,15 +1398,27 @@ file comparators, endian transformation classes, and much more.</p>
 <td>Yes</td>
 <td>-</td></tr>
 <tr class="a">
+<td>sonatype-snapshots</td>
+<td><a class="externalLink" href="https://oss.sonatype.org/content/repositories/releases/">https://oss.sonatype.org/content/repositories/releases/</a></td>
+<td>Yes</td>
+<td>Yes</td>
+<td>-</td></tr>
+<tr class="b">
 <td>apache.snapshots</td>
 <td><a class="externalLink" href="http://repository.apache.org/snapshots">http://repository.apache.org/snapshots</a></td>
 <td>-</td>
 <td>Yes</td>
 <td>-</td></tr>
-<tr class="b">
+<tr class="a">
 <td>sonatype-nexus-snapshots</td>
 <td><a class="externalLink" href="https://oss.sonatype.org/content/repositories/snapshots">https://oss.sonatype.org/content/repositories/snapshots</a></td>
 <td>-</td>
+<td>Yes</td>
+<td>-</td></tr>
+<tr class="b">
+<td>spring-snapshots</td>
+<td><a class="externalLink" href="http://repo.springsource.org/snapshot">http://repo.springsource.org/snapshot</a></td>
+<td>Yes</td>
 <td>Yes</td>
 <td>-</td></tr>
 <tr class="a">
@@ -1372,6 +1440,12 @@ file comparators, endian transformation classes, and much more.</p>
 <td>Yes</td>
 <td>-</td></tr>
 <tr class="b">
+<td>spring-milestones</td>
+<td><a class="externalLink" href="http://repo.springsource.org/milestone">http://repo.springsource.org/milestone</a></td>
+<td>Yes</td>
+<td>-</td>
+<td>-</td></tr>
+<tr class="a">
 <td>central</td>
 <td><a class="externalLink" href="http://repo.maven.apache.org/maven2">http://repo.maven.apache.org/maven2</a></td>
 <td>Yes</td>
@@ -1382,14 +1456,20 @@ file comparators, endian transformation classes, and much more.</p>
 <tr class="a">
 <th>Artifact</th>
 <th>codehaus.snapshots</th>
+<th>sonatype-snapshots</th>
 <th>apache.snapshots</th>
 <th>sonatype-nexus-snapshots</th>
+<th>spring-snapshots</th>
 <th>codehaus-snapshots</th>
 <th>apache-snapshots</th>
 <th>snapshots</th>
+<th>spring-milestones</th>
 <th>central</th></tr>
 <tr class="b">
 <td>asm:asm-all:jar:2.2.3</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td>
@@ -1405,9 +1485,15 @@ file comparators, endian transformation classes, and much more.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td><a class="externalLink" href="http://repo.maven.apache.org/maven2/be/cyberelf/nanoxml/lite/2.2.3/lite-2.2.3.jar"><img alt="Found at http://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td></tr>
 <tr class="b">
 <td>bsf:bsf:jar:2.4.0</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td>
@@ -1423,9 +1509,39 @@ file comparators, endian transformation classes, and much more.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td><a class="externalLink" href="http://repo.maven.apache.org/maven2/classworlds/classworlds/1.1-alpha-2/classworlds-1.1-alpha-2.jar"><img alt="Found at http://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td></tr>
 <tr class="b">
+<td>com.github.bigloupe:dashboard:war:0.3-SNAPSHOT</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td></tr>
+<tr class="a">
+<td>com.github.bigloupe:jobscheduler-installer-panel:jar:0.3-SNAPSHOT</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td></tr>
+<tr class="b">
 <td>com.incors:kunstoff-laf:jar:2.0.2</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td>
@@ -1441,9 +1557,15 @@ file comparators, endian transformation classes, and much more.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td><a class="externalLink" href="http://repo.maven.apache.org/maven2/com/jgoodies/looks/2.2.2/looks-2.2.2.jar"><img alt="Found at http://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td></tr>
 <tr class="b">
 <td>commons-cli:commons-cli:jar:1.2</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td>
@@ -1459,9 +1581,15 @@ file comparators, endian transformation classes, and much more.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td><a class="externalLink" href="http://repo.maven.apache.org/maven2/commons-collections/commons-collections/3.1/commons-collections-3.1.jar"><img alt="Found at http://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td></tr>
 <tr class="b">
 <td>commons-io:commons-io:jar:2.4</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td>
@@ -1477,9 +1605,15 @@ file comparators, endian transformation classes, and much more.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td><a class="externalLink" href="http://repo.maven.apache.org/maven2/commons-lang/commons-lang/2.6/commons-lang-2.6.jar"><img alt="Found at http://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td></tr>
 <tr class="b">
 <td>commons-logging:commons-logging:jar:1.0.4</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td>
@@ -1495,9 +1629,15 @@ file comparators, endian transformation classes, and much more.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td><a class="externalLink" href="http://repo.maven.apache.org/maven2/jakarta-regexp/jakarta-regexp/1.4/jakarta-regexp-1.4.jar"><img alt="Found at http://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td></tr>
 <tr class="b">
 <td>junit:junit:jar:3.8.1</td>
+<td>-</td>
+<td><a class="externalLink" href="https://oss.sonatype.org/content/repositories/releases//junit/junit/3.8.1/junit-3.8.1.jar"><img alt="Found at https://oss.sonatype.org/content/repositories/releases/" src="images/icon_success_sml.gif" /></a></td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td>
@@ -1513,9 +1653,15 @@ file comparators, endian transformation classes, and much more.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td><a class="externalLink" href="http://repo.maven.apache.org/maven2/net/java/dev/laf-plugin/laf-plugin/1.1/laf-plugin-1.1.jar"><img alt="Found at http://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td></tr>
 <tr class="b">
 <td>net.java.dev.laf-widget:laf-widget:jar:5.0</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td>
@@ -1531,9 +1677,15 @@ file comparators, endian transformation classes, and much more.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td><a class="externalLink" href="http://repo.maven.apache.org/maven2/org/apache/ant/ant/1.9.2/ant-1.9.2.jar"><img alt="Found at http://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td></tr>
 <tr class="b">
 <td>org.apache.ant:ant-launcher:jar:1.9.2</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td>
@@ -1549,9 +1701,15 @@ file comparators, endian transformation classes, and much more.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td><a class="externalLink" href="http://repo.maven.apache.org/maven2/org/apache/bcel/bcel/5.2/bcel-5.2.jar"><img alt="Found at http://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td></tr>
 <tr class="b">
 <td>org.apache.commons:commons-compress:jar:1.3</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td>
@@ -1567,9 +1725,15 @@ file comparators, endian transformation classes, and much more.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td><a class="externalLink" href="http://repo.maven.apache.org/maven2/org/apache/maven/maven-artifact/2.0.7/maven-artifact-2.0.7.jar"><img alt="Found at http://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td></tr>
 <tr class="b">
 <td>org.apache.maven:maven-model:jar:2.0.7</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td>
@@ -1585,9 +1749,15 @@ file comparators, endian transformation classes, and much more.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td><a class="externalLink" href="http://repo.maven.apache.org/maven2/org/apache/maven/shared/maven-shared-jar/1.1/maven-shared-jar-1.1.jar"><img alt="Found at http://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td></tr>
 <tr class="b">
 <td>org.codehaus.izpack:izpack-api:jar:5.0.0-rc2</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td>
@@ -1603,9 +1773,15 @@ file comparators, endian transformation classes, and much more.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td><a class="externalLink" href="http://repo.maven.apache.org/maven2/org/codehaus/izpack/izpack-compiler/5.0.0-rc2/izpack-compiler-5.0.0-rc2.jar"><img alt="Found at http://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td></tr>
 <tr class="b">
 <td>org.codehaus.izpack:izpack-core:jar:5.0.0-rc2</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td>
@@ -1621,9 +1797,15 @@ file comparators, endian transformation classes, and much more.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td><a class="externalLink" href="http://repo.maven.apache.org/maven2/org/codehaus/izpack/izpack-event/5.0.0-rc2/izpack-event-5.0.0-rc2.jar"><img alt="Found at http://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td></tr>
 <tr class="b">
 <td>org.codehaus.izpack:izpack-gui:jar:5.0.0-rc2</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td>
@@ -1639,9 +1821,15 @@ file comparators, endian transformation classes, and much more.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td><a class="externalLink" href="http://repo.maven.apache.org/maven2/org/codehaus/izpack/izpack-installer/5.0.0-rc2/izpack-installer-5.0.0-rc2.jar"><img alt="Found at http://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td></tr>
 <tr class="b">
 <td>org.codehaus.izpack:izpack-native:jar:5.0.0-rc2</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td>
@@ -1657,9 +1845,15 @@ file comparators, endian transformation classes, and much more.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td><a class="externalLink" href="http://repo.maven.apache.org/maven2/org/codehaus/izpack/izpack-panel/5.0.0-rc2/izpack-panel-5.0.0-rc2.jar"><img alt="Found at http://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td></tr>
 <tr class="b">
 <td>org.codehaus.izpack:izpack-tools:jar:5.0.0-rc2</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td>
@@ -1675,9 +1869,15 @@ file comparators, endian transformation classes, and much more.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td><a class="externalLink" href="http://repo.maven.apache.org/maven2/org/codehaus/izpack/izpack-uninstaller/5.0.0-rc2/izpack-uninstaller-5.0.0-rc2.jar"><img alt="Found at http://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td></tr>
 <tr class="b">
 <td>org.codehaus.izpack:izpack-util:jar:5.0.0-rc2</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td>
@@ -1693,9 +1893,15 @@ file comparators, endian transformation classes, and much more.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td><a class="externalLink" href="http://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-container-default/1.0-alpha-8/plexus-container-default-1.0-alpha-8.jar"><img alt="Found at http://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td></tr>
 <tr class="b">
 <td>org.codehaus.plexus:plexus-digest:jar:1.0</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td>
@@ -1711,9 +1917,15 @@ file comparators, endian transformation classes, and much more.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td><a class="externalLink" href="http://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-utils/1.4.1/plexus-utils-1.4.1.jar"><img alt="Found at http://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td></tr>
 <tr class="b">
 <td>org.eclipse.swt.win32.win32:x86:jar:3.3.0-v3346</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td>
@@ -1729,9 +1941,15 @@ file comparators, endian transformation classes, and much more.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td><a class="externalLink" href="http://repo.maven.apache.org/maven2/org/fusesource/jansi/jansi/1.11/jansi-1.11.jar"><img alt="Found at http://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td></tr>
 <tr class="b">
 <td>org.java.net.substance:substance:jar:6.0</td>
+<td>-</td>
+<td><a class="externalLink" href="https://oss.sonatype.org/content/repositories/releases//org/java/net/substance/substance/6.0/substance-6.0.jar"><img alt="Found at https://oss.sonatype.org/content/repositories/releases/" src="images/icon_success_sml.gif" /></a></td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td>
@@ -1741,6 +1959,9 @@ file comparators, endian transformation classes, and much more.</p>
 <td><a class="externalLink" href="http://repo.maven.apache.org/maven2/org/java/net/substance/substance/6.0/substance-6.0.jar"><img alt="Found at http://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td></tr>
 <tr class="a">
 <td>org.jdom:jdom2:jar:2.0.5</td>
+<td>-</td>
+<td><a class="externalLink" href="https://oss.sonatype.org/content/repositories/releases//org/jdom/jdom2/2.0.5/jdom2-2.0.5.jar"><img alt="Found at https://oss.sonatype.org/content/repositories/releases/" src="images/icon_success_sml.gif" /></a></td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td>
@@ -1756,9 +1977,15 @@ file comparators, endian transformation classes, and much more.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td><a class="externalLink" href="http://repo.maven.apache.org/maven2/org/picocontainer/picocontainer/2.14.1/picocontainer-2.14.1.jar"><img alt="Found at http://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td></tr>
 <tr class="a">
 <td>org.postgresql:postgresql:jar:9.3-1100-jdbc41</td>
+<td>-</td>
+<td><a class="externalLink" href="https://oss.sonatype.org/content/repositories/releases//org/postgresql/postgresql/9.3-1100-jdbc41/postgresql-9.3-1100-jdbc41.jar"><img alt="Found at https://oss.sonatype.org/content/repositories/releases/" src="images/icon_success_sml.gif" /></a></td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td>
@@ -1774,9 +2001,15 @@ file comparators, endian transformation classes, and much more.</p>
 <td>-</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td><a class="externalLink" href="http://repo.maven.apache.org/maven2/org/pushing-pixels/trident/1.2/trident-1.2.jar"><img alt="Found at http://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td></tr>
 <tr class="a">
 <td>xpp3:xpp3:jar:1.1.4c</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td>
@@ -1787,14 +2020,20 @@ file comparators, endian transformation classes, and much more.</p>
 <tr class="b">
 <th>Total</th>
 <th>codehaus.snapshots</th>
+<th>sonatype-snapshots</th>
 <th>apache.snapshots</th>
 <th>sonatype-nexus-snapshots</th>
+<th>spring-snapshots</th>
 <th>codehaus-snapshots</th>
 <th>apache-snapshots</th>
 <th>snapshots</th>
+<th>spring-milestones</th>
 <th>central</th></tr>
 <tr class="a">
-<td>44 (compile: 2, provided: 42)</td>
+<td>46 (compile: 4, provided: 42)</td>
+<td>0</td>
+<td>4</td>
+<td>0</td>
 <td>0</td>
 <td>0</td>
 <td>0</td>
