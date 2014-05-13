@@ -28,12 +28,12 @@
     <div id="content-wrapper">
       <div class="inner clearfix">
         <section id="main-content">
-          <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>JobScheduler Architecture</h3>
+          <h2>
+<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>JobScheduler Architecture</h2>
 
 <p>SoS JobScheduler has per default 2 components :</p>
 
-<p><b>JOC: JobScheduler Operations- Centre</b></p>
+<p><b><h4>JOC</h4> <b>J</b>obScheduler <b>O</b>perations- <b>C</b>entre (available in <a href="http://sourceforge.net/projects/jobscheduler/">sourceforge</a>)</b></p>
 <p>
 JobScheduler contains a HTTP server which shows job status information in a UI and allows controlling jobs (start and stop jobs, access log files etc.) at run time:
 
@@ -43,7 +43,7 @@ Read more on this feature in the <a href="http://www.sos-berlin.com/doc/en/sched
 
 Jobscheduler writes all this information in a database
 </p>
-<p><b>JOE: JobScheduler Object Editor</b></p>
+<p><b><h4>JOE</h4> JobScheduler Object Editor (available in <a href="http://sourceforge.net/projects/jobscheduler/">sourceforge</a>)</b></p>
 <p>JOE is used to create, modify and delete all JobScheduler objects. JOE is operating directly on a live folder.
  
 JOE reduces the complexity of directly accessing the XML structure and validates the configuration against an XML schema. Moreover, it is far easier to manage complex run time job configurations by mouse click.
@@ -51,17 +51,35 @@ JOE provides wizards for the configuration of jobs and job chains.
 Read more on this feature in the <a href="http://www.sos-berlin.com/doc/en/scheduler.doc/scheduler_editor.xml" target="_blank">configuration editor documentation</a>.
 </p>
 
-JobScheduler Dashboard, available in this area, is a Web Dashboard Application based on Java to follow activities from JobScheduler.
-Dashboard reads this information only in database and don't add  charge to JobScheduler Runtime 
-        </section>
+<h4>JobScheduler Dashboard</h4> available in this Web site, is a Web Dashboard Application based on Java to follow activities from JobScheduler.
+Dashboard reads this information only in database filled by JOC and don't add charge to JobScheduler Runtime 
 
+		<p></p>
+		<h2>Install JobScheduler Dashboard</h2>
+JobScheduler Dashboard is a java application. You need a Java runtime environment to run JobScheduler Dashboard. You can use <a href="http://www.oracle.com/technetwork/java/javase/overview/index.html">Oracle Java Standard Edition</a> or <a href="http://openjdk.java.net/">OpenJDK</a> but version 1.7 is required.
+
+
+After downloading jar intaller, you can luanch installer with this command : 
+	<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>java -jar jobscheduler-installer-0.1.0.jar</code></p>
+
+	Installer for JobScheduler install 3 files :
+<ul>
+	<li>The complete application available in the file dashboard.war. This file contains libs and an embedded tomcat launched on port 7000 by default</li>
+	<li>A script to launch jobscheduler dashboard </li>
+	<li>A configuration file "application-jobscheduler.yml" in a subdirectory config inside your installation path</li>
+</ul>
+        </section>
+		
+
+
+		
         <aside id="sidebar">
           <a href="https://github.com/bigloupe/SoS-JobScheduler/releases/download/v0.1/jobscheduler-installer-0.1.0.jar" class="button">
-            <small>Download binary files (Installer)</small>
+            <small>Download Installer</small>
             .jar file
           </a>		
           <a href="https://github.com/bigloupe/SoS-JobScheduler/zipball/master" class="button">
-            <small>Download source file</small>
+            <small>Download source files</small>
             .zip file
           </a>
           <a href="https://github.com/bigloupe/SoS-JobScheduler/tarball/master" class="button">
