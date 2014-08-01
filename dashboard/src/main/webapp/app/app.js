@@ -69,8 +69,8 @@ JobSchedulerApp.config(['$routeProvider', '$httpProvider', '$translateProvider',
             });
             
 
-            $routeProvider.when('/stats-test', {
-                templateUrl: 'app/jobs/partials/Stats-test.html',
+            $routeProvider.when('/stats', {
+                templateUrl: 'app/jobs/partials/Stats.html',
                 controller: StatsController
             });
             
