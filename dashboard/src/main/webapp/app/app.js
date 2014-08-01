@@ -56,6 +56,7 @@ JobSchedulerApp.config(['$routeProvider', '$httpProvider', '$translateProvider',
                     templateUrl: 'app/home/partials/main.html',
                     controller: 'LogoutController'
                 })
+                
                 .otherwise({
                     templateUrl: 'app/home/partials/main.html',
                     controller: 'MainController'
@@ -65,6 +66,12 @@ JobSchedulerApp.config(['$routeProvider', '$httpProvider', '$translateProvider',
             $routeProvider.when('/stats-scheduler-job/spooler/:spoolerId', {
                 templateUrl: 'app/jobs/partials/stats-scheduler-job.html',
                 controller: SchedulerJobStatsController
+            });
+            
+
+            $routeProvider.when('/stats-test', {
+                templateUrl: 'app/jobs/partials/Stats-test.html',
+                controller: StatsController
             });
             
             $routeProvider.when('/list-scheduler-job', {
@@ -82,10 +89,31 @@ JobSchedulerApp.config(['$routeProvider', '$httpProvider', '$translateProvider',
                 controller: ListSchedulerHistoryController
             });
             
+            $routeProvider.when('/newjob', {
+                templateUrl: 'app/jobs/partials/init.html',
+                controller: JobEditorController
+            });
+            
+            
+            
+            
+            $routeProvider.when('/newchain', {
+                templateUrl: 'app/jobs/partials/New-Chain.html',
+                controller: ChainEditorController
+            });
+            
+            $routeProvider.when('/neworder', {
+                templateUrl: 'app/jobs/partials/New-Order.html',
+                controller: OrderEditorController
+            });
+            
+            
             $routeProvider.when('/scheduler-history/:schedulerHistoryId', {
                 templateUrl: 'app/jobs/partials/scheduler-history.html',
                 controller: SchedulerHistoryController
             });
+            
+           
 
             // Initialize angular-translate
             $translateProvider.useStaticFilesLoader({
@@ -231,7 +259,6 @@ JobSchedulerApp.filter('newlines', function() {
 		  return result;
 	  };
 	});
-
 
 
 

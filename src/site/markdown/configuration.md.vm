@@ -1,6 +1,56 @@
+Configure JobScheduler Dashboard 
+===
+
+[Edit in GitHub](http://github.com/bigloupe/SoS-JobScheduler/edit/master/src/site/markdown/configuration.md.vm)
+
+JobScheduler Dashboard is a Spring boot application.
+
+```
+server:
+	# port
+    port: 7000
+    #address: localhost
+
+spring:
+    profiles: jobscheduler
+    datasource:
+        dataSourceClassName: org.postgresql.ds.PGSimpleDataSource
+        url: ${url}
+        databaseName: 
+        serverName: 
+        username: ${dbUser}
+        password: ${dbPassword}
+
+    jpa:
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+        database: POSTGRESQL
+        openInView: false
+        show_sql: true
+        generate-ddl: false
+        hibernate:
+            ddl-auto: none
+            naming-strategy: org.hibernate.cfg.EJB3NamingStrategy
+        properties:
+            hibernate.cache.use_second_level_cache: false
+            hibernate.cache.use_query_cache: false
+            hibernate.generate_statistics: false
+            hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory
+
+    thymeleaf:
+        mode: XHTML
+        cache: false
+
+metrics:
+    jmx.enabled: true
+    graphite:
+        enabled: false
+        host:
+        port:
+
+cache:
+    timeToLiveSeconds: 3600
+    ehcache:
+        maxBytesLocalHeap: 16M
+```        
 
 
-Configure JobScheduler Dashboard http://github.com/bigloupe/SoS-JobScheduler/edit/master/site/markdown/configuration.md.vm
-===================
-
-JobScheduler Dashboard is a spring boot application.

@@ -19,6 +19,7 @@
 <link rel="stylesheet" type="text/css" href="app/components/select2/select2.css">
 <link rel="stylesheet" type="text/css" href="css/cus-icons.css">
 <link rel="stylesheet" type="text/css" href="css/custom.css">
+<link rel="stylesheet" type="text/css" href="css/wait.css">
 <!-- endbuild -->
 </head>
 <body>
@@ -53,6 +54,9 @@
 								<ul class="dropdown-menu">
 									<li><a href="#/list-scheduler-job">Scheduler Jobs</a></li>
 									<li><a href="#/list-scheduler-history">Scheduler History</a></li>
+									<li><a href="#/newjob">Job Editor</a></li>
+									<li><a href="#/newchain">Chain Editor</a></li>
+									<li><a href="#/neworder">Order Editor</a></li>
 									<li class="divider"></li>
 									<li><a href="#/chart-scheduler-history">History graph</a></li>
 								</ul></li>
@@ -127,6 +131,8 @@
 	<script type="text/javascript"
 		src="app/components/jquery/jquery.min.js"></script>
 	<script type="text/javascript"
+		src="app/components/jquery-ui/ui/minified/jquery-ui.min.js"></script>		
+	<script type="text/javascript"
 		src="app/components/select2/select2.min.js"></script>
 		
 	<script type="text/javascript"
@@ -140,9 +146,9 @@
 	<script type="text/javascript"
 		src="app/components/bootstrap/dist/js/bootstrap.min.js"></script>
 	<script type="text/javascript"
-		src="app/components/angular-bootstrap/ui-bootstrap.min.js"></script>
+		src="app/components/angular-bootstrap/ui-bootstrap.js"></script>
 	<script type="text/javascript"
-		src="app/components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+		src="app/components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 	<script type="text/javascript"
 		src="app/components/angular-sanitize/angular-sanitize.min.js"></script>
     <script type="text/javascript" src="app/components/angular-cookies/angular-cookies.js"></script>		
@@ -165,6 +171,10 @@
     <script type="text/javascript" src="app/components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
     <script type="text/javascript" src="app/components/angular-dynamic-locale/src/tmhDinamicLocale.js"></script>
 
+	<script type="text/javascript" src="app/components/angular-ui-calendar/src/calendar.js"></script>
+	<script type="text/javascript" src="app/components/fullcalendar/fullcalendar.js"></script>
+	<script type="text/javascript" src="app/components/fullcalendar/gcal.js"></script>
+
 	<script type="text/javascript" src="app/app.js"></script>
 	<script type="text/javascript" src="app/home/controllers/controllers.js"></script>
 	<script type="text/javascript" src="app/jobs/controllers/controllers.js"></script>
@@ -175,7 +185,10 @@
     <script type="text/javascript" src="app/filter/router.js"></script>
     <script type="text/javascript" src="app/filter/controller.js"></script>
     <script type="text/javascript" src="app/filter/service.js"></script>
-    <!-- endbuild -->
-        
+    <script type="text/javascript" src="app/components/graphs/src/main/webapp/app/components/Chart.js"></script>
+    <script type="text/javascript" src="/app/components/graphs/src/main/webapp/app/components/Chart2.js"></script>
+   
+    <script type="text/javascript" src="app/jobs/controllers/modalController.js"></script>
+ <script type="text/javascript" src="app/components/angular-strap/src/modal/modal.js"></script>
 </body>
 </html>

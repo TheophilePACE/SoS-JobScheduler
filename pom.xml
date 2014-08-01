@@ -17,6 +17,7 @@
 	<modules>
 		<module>dashboard</module>
 		<module>dashboard-install</module>
+		<module>jobstreamconverter</module>
 	</modules>
 
 	<url>https://github.com/bigloupe/SoS-JobScheduler</url>
@@ -72,6 +73,10 @@
 			<url>${project.version}</url>
 		</site>
 	</distributionManagement>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 
 	<profiles>
 
@@ -290,6 +295,7 @@
 		<!-- Plugin management -->
 		<pluginManagement>
 			<plugins>
+
 				<plugin>
 					<artifactId>maven-clean-plugin</artifactId>
 					<version>2.5</version>
@@ -363,12 +369,22 @@
 		</pluginManagement>
 
 		<plugins>
+		
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+
 			<plugin>
 				<artifactId>maven-release-plugin</artifactId>
 				<configuration>
 					<releaseProfiles>release</releaseProfiles>
 				</configuration>
 			</plugin>
+			
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
@@ -377,6 +393,7 @@
 					</systemProperties>
 				</configuration>
 			</plugin>
+			
 			<plugin>
 				<artifactId>maven-source-plugin</artifactId>
 				<executions>

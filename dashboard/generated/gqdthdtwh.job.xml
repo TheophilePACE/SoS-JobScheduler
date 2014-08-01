@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<job name="gqdthdtwh" title="hdwghwdgh">
+    <settings>
+        <mail_on_error>no</mail_on_error>
+        <mail_on_warning>no</mail_on_warning>
+        <mail_on_success>yes</mail_on_success>
+        <mail_on_process>no</mail_on_process>
+    </settings>
+    <script language="schell"/>
+    <run_time/>
+</job>

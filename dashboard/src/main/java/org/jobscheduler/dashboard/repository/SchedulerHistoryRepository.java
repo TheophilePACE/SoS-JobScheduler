@@ -49,9 +49,59 @@ public interface SchedulerHistoryRepository extends PagingAndSortingRepository<S
 	@Query("from SchedulerHistory where (startTime >= :startTime1 and startTime <= :startTime2) order by (endTime - startTime) DESC")
 	List<SchedulerHistory> findByStartTimeBetweenAndDuringTime(@Param("startTime1") Timestamp startTime1,@Param("startTime2") Timestamp startTime2, Pageable pageable);
 	
+	
+	
 	// for getting information details
 	//////////////////////////////////
 	
 	List<SchedulerHistory> findBySpoolerIdAndJobName(String spoolerId, String jobName, Pageable pageable);
 	Long countBySpoolerIdAndJobName(String spoolerId, String jobName);
+
+	
+	//getting all the jobs
+	@Query("select jobName from SchedulerHistory")
+	String[] getAllJobs() ;
+	
+	//getting all start time and all end time 
+	@Query("select startTime from SchedulerHistory where (jobName = :jobName1 and endTime is not null and startTime >= :startTime1 and endTime <= :endTime1) order by startTime ")
+	List<Timestamp> getStartTimes(@Param("jobName1") String jobName1,@Param("startTime1")Timestamp start,@Param("endTime1")Timestamp end ) ;
+
+	
+	@Query("select endTime from SchedulerHistory where (jobName = :jobName1 and endTime is not null and startTime >= :startTime1 and endTime <= :endTime1) order by startTime ")
+	List<Timestamp> getEndTimes(@Param("jobName1") String jobName1,@Param("startTime1")Timestamp start,@Param("endTime1")Timestamp end  ) ;
+
+	
+	
+	@Query("select distinct jobName from SchedulerHistory where (jobName like %:jobName1% and endTime is not null ) ")
+	List<String> getJobLike(@Param("jobName1") String jobName1 ) ;
+
+	@Query("select count(jobName) from SchedulerHistory where (startTime <= :step and endTime > :step) ")
+	int getJobNumberbyDate(@Param("step") Timestamp step ) ;
+
+	
+	//get job in errors 
+	
+	@Query("select count(jobName ) from SchedulerHistory where (startTime >= :start and (endTime=null or endTime <= startTime))")
+	int getErrorJobs(@Param("start") Timestamp start) ;
+//
+	@Query("select count(jobName) from SchedulerHistory where (startTime >= :dayBegin and endTime < :dayEnd) and exitCode = 0")
+	int getDayJobsCount(@Param("dayBegin") Timestamp dayBegin,@Param("dayEnd") Timestamp dayEnd ) ;
+	
+	@Query("select count(jobName) from SchedulerHistory where (startTime >= :dayBegin and endTime < :dayEnd) and exitCode != 0")
+	int getErrorDayJobsCount(@Param("dayBegin") Timestamp dayBegin,@Param("dayEnd") Timestamp dayEnd ) ;
+
+////	
+	@Query("select distinct exitCode from SchedulerHistory where (startTime >= :begin and endTime < :end and exitCode !=0) ")
+	BigDecimal[] getExitCodes(@Param("begin") Timestamp begin,@Param("end") Timestamp end ) ;
+	
+
+	@Query("select count(jobName) from SchedulerHistory where (startTime >= :dayBegin and endTime < :dayEnd) and exitCode = :code")
+	int getErrorDayJobsCountAndExitCode(@Param("dayBegin") Timestamp dayBegin,@Param("dayEnd") Timestamp dayEnd,@Param("code") BigDecimal code ) ;
+
+	
+	@Query("select jobName as duration from SchedulerHistory where (endTime is not null and startTime is not null ) order by (endTime-startTime) DESC")
+	List<Object> getTopJobs() ;
+
+
+
 }

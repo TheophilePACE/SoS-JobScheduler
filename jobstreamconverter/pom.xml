@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.github.bigloupe</groupId>
+		<artifactId>jobscheduler-pom</artifactId>
+		<version>0.3-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>jobscheduler-jobstream-converter</artifactId>
+
+	<name>JobScheduler :: Jobstream converter</name>
+	<description>Convert Jobstream (definition of jobs in Tivoli Workload Scheduler) to Jobscheduler</description>
+
+	<packaging>jar</packaging>
+
+	<properties>
+		<tws.version>8.x.x</tws.version>
+
+		<antlr.version>4.2.2</antlr.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.antlr</groupId>
+			<artifactId>antlr4-runtime</artifactId>
+			<version>${antlr.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.antlr</groupId>
+				<artifactId>antlr4-maven-plugin</artifactId>
+				<version>${antlr.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>antlr4</goal>
+						</goals>
+						<configuration>
+							<listener>true</listener>
+							<visitor>true</visitor>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>extract-grammer</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>unpack-dependencies</goal>
+						</goals>
+						<configuration>
+							<includeArtifactIds>grammer</includeArtifactIds>
+							<outputDirectory>${antlr.dir}</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+
+</project>
