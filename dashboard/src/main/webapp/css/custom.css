@@ -1,3 +1,8 @@
+
+.list-width {
+	width: : 50px ;
+}
+
 .ng-table tr.emphasis td {
 	background-color: #2aabd2;
 	font-weight: bold;
@@ -52,6 +57,7 @@ heigh: 100px ;
 .big-cell{
 	width: 25 %;
 }
+
 
 .spacer-left-table {
 	margin-left: 0px ;

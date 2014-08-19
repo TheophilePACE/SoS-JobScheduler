@@ -352,11 +352,12 @@ var StatsController = function( $scope,$http,$sce,$timeout, $resource,
 		    return $http.get('/stats-test/searchJob', {
 		      params: {
 		    	  jobName: val,
-		        
+		    	  timeout : 300000
 		      }
 		    }).then(function(res){
 		      var jobs = [];
 		      jobs = res.data  ;
+		      console.log(jobs) ;
 		      console.log(jobs.length) ;
 		      return jobs;
 		    });
@@ -728,6 +729,18 @@ $scope.drawErrors = function(){
 	
 };
 
+$scope.selectedTown='Toulouse' ;
+
+$scope.changeDataBase = function(town){
+	$scope.selectedTown=town ;
+	$http.post(
+			'/stats-test/switchDB',
+			town
+	).success(function(data){
+		console.log("data base changed !!") ;
+} );
+	
+} ;
 $scope.jobClass = function(job){
 	if (job.exit == 0) {
 		return 'danger' ;
@@ -989,3 +1002,49 @@ var DatepickerDemoCtrl = function ($scope) {
 	  $scope.formats = ['yyyy-MM-dd hh:mm:ss', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
 	  $scope.format = $scope.formats[0];
 	};
+	
+	
+	
+	var ModalDemoCtrl = function ($scope, $modal, $log) {
+
+		  $scope.items = ['item1', 'item2', 'item3'];
+
+		  $scope.openModal = function (size) {
+			 console.log("zrgnrzg") ;
+		    var modalInstance = $modal.open({
+		      templateUrl: 'myModalContent.html',
+		      controller: ModalInstanceCtrl,
+		      size: size,
+		      resolve: {
+		        items: function () {
+		          return $scope.items;
+		        }
+		      }
+		    });
+
+		    modalInstance.result.then(function (selectedItem) {
+		      $scope.selected = selectedItem;
+		    }, function () {
+		      $log.info('Modal dismissed at: ' + new Date());
+		    });
+		  };
+		};
+
+		// Please note that $modalInstance represents a modal window (instance) dependency.
+		// It is not the same as the $modal service used above.
+
+		var ModalInstanceCtrl = function ($scope, $modalInstance, items) {
+
+		  $scope.items = items;
+		  $scope.selected = {
+		    item: $scope.items[0]
+		  };
+
+		  $scope.ok = function () {
+		    $modalInstance.close($scope.selected.item);
+		  };
+
+		  $scope.cancel = function () {
+		    $modalInstance.dismiss('cancel');
+		  };
+		};

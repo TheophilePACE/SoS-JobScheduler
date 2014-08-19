@@ -23,7 +23,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import javax.annotation.Resource;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.sql.DataSource;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -34,9 +37,14 @@ import jaxb.scheduler.generated.RunTime;
 import jaxb.scheduler.generated.Script;
 
 import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
+import org.jobscheduler.dashboard.config.DatabaseConfiguration;
+import org.jobscheduler.dashboard.datasources.DataSourceContextHolder;
+import org.jobscheduler.dashboard.datasources.DataSourcesConfiguration.JobSchedulerDataSourceRouter;
 import org.jobscheduler.dashboard.domain.SchedulerHistory;
 import org.jobscheduler.dashboard.repository.SchedulerHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,12 +53,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
 @RestController
 public class StatsController {
 
 	@Autowired
-	DataSource datasource;
+	private JobSchedulerDataSourceRouter datasource;
 
 	@Inject
 	SchedulerHistoryRepository schedulerHistoryRepository;
@@ -59,13 +69,13 @@ public class StatsController {
 	public @ResponseBody
 	String[] getAllJobs() {
 		String[] result = schedulerHistoryRepository.getAllJobs();
+
 		return result;
 	}
-	
-	
-	
+
 	/**
-	 * gets the list of jobs which names match with the filter 
+	 * gets the list of jobs which names match with the filter
+	 * 
 	 * @param jobName
 	 * @return
 	 */
@@ -73,14 +83,31 @@ public class StatsController {
 	public @ResponseBody
 	List<String> getJobByName(@RequestParam String jobName) {
 
-		List<String> result = schedulerHistoryRepository.getJobLike(jobName);
+		List<String> result = new ArrayList<String>();
 
-		return result.subList(0, Math.min(result.size(), 20));
+		try {
+
+			Connection conn = datasource.getConnection();
+			Statement st = conn.createStatement();
+			ResultSet rs = st
+					.executeQuery("SELECT DISTINCT \"JOB_NAME\" FROM public.scheduler_history WHERE(\"JOB_NAME\" like '%"
+							+ jobName
+							+ "%' and \"END_TIME\" is not null ) FETCH FIRST 20 ROWS ONLY;");
+			while (rs.next())
+
+				result.add(rs.getString(1));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("done !");
+		return result;
 
 	}
-	
+
 	/**
 	 * computes the number of jobs per step between two dates
+	 * 
 	 * @param af
 	 * @param model
 	 * @return
@@ -125,16 +152,23 @@ public class StatsController {
 		du.setData(numbers);
 		du.setFillColor("rgba(151,187,205,0.2)");
 		du.setStrokeColor("rgba(151,187,205,1)");
-		Data data = new Data(new DataUnit[] { du }, labels);
+		Data data = new Data(new DataUnit[] { du }, labelize(labels));
 
 		return data;
 	}
-	
-	
-	
-	
+
+	@RequestMapping(value = "/stats-test/switchDB", method = RequestMethod.POST, headers = { "Content-type=application/json" })
+	public @ResponseBody
+	String switchDataBases(@RequestBody String db) {
+
+		datasource.switchDataSource(db);
+
+		return null;
+	}
+
 	/**
-	 * computes the execution time of a chosen job between 2 dates 
+	 * computes the execution time of a chosen job between 2 dates
+	 * 
 	 * @param af
 	 * @param model
 	 * @return
@@ -180,7 +214,7 @@ public class StatsController {
 		du.setPointStrokeColor("#fff");
 		du.setPointHighlightStroke("rgba(151,187,205,1)");
 
-		Data data = new Data(new DataUnit[] { du }, labels);
+		Data data = new Data(new DataUnit[] { du }, labelize(labels));
 
 		return data;
 
@@ -188,6 +222,7 @@ public class StatsController {
 
 	/**
 	 * computes the number of jobs in error between two dates
+	 * 
 	 * @param af
 	 * @param model
 	 * @return
@@ -244,13 +279,13 @@ public class StatsController {
 		du2.setFillColor("rgba(254 ,25, 142,0.2)");
 		du2.setStrokeColor("rgba(254 ,25, 142,0.8)");
 
-		return new Data(du1, du2, 1, labelsArray);
+		return new Data(du1, du2, 1, labelize(labelsArray));
 
 	}
 
-	
 	/**
-	 * gets the number of error jobs and classify them by exit codes 
+	 * gets the number of error jobs and classify them by exit codes
+	 * 
 	 * @param af
 	 * @param model
 	 * @return
@@ -262,7 +297,8 @@ public class StatsController {
 		String[] colors = { "rgba( 0, 52, 154,", "rgba(255 ,50 ,55,",
 				"rgba( 0 ,114 ,45,", "rgba(3,3,3,", "rgba(255, 144, 11,",
 				"rgba(254, 25, 142,", "rgba( 180 ,255 ,0,", "rgba(255,215,0,",
-				"rgba(128,240,240,", "rgba(160,82,45," ,"rgba(255.204.204,","rgba(255.179.102"} ;
+				"rgba(128,240,240,", "rgba(160,82,45,", "rgba(255.204.204,",
+				"rgba(255.179.102" };
 		Timestamp start = Timestamp.valueOf(af.startDate.substring(0, 10)
 				+ " 00:00:00");
 		Timestamp end = Timestamp.valueOf(af.endDate.substring(0, 10)
@@ -304,7 +340,7 @@ public class StatsController {
 			du.setFillColor("rgba(255,255,255,0)");
 			du.setStrokeColor(colors[inc] + "3)");
 			data.getDatasets()[inc] = du;
-			data.setLabels(labelsArray);
+			data.setLabels(labelize(labelsArray));
 			inc++;
 
 		}
@@ -314,6 +350,7 @@ public class StatsController {
 
 	/**
 	 * get the longest jobs between two days
+	 * 
 	 * @param tf
 	 * @return
 	 */
@@ -327,7 +364,7 @@ public class StatsController {
 			Connection conn = datasource.getConnection();
 			Statement st = conn.createStatement();
 			ResultSet rs = st
-					.executeQuery("SELECT \"JOB_NAME\", \"END_TIME\"-\"START_TIME\" AS duration,\"EXIT_CODE\",\"START_TIME\",\"SPOOLER_ID\",\"LOG\" FROM public.scheduler_history "
+					.executeQuery("SELECT \"JOB_NAME\", \"END_TIME\"-\"START_TIME\" AS duration,\"EXIT_CODE\",\"START_TIME\",\"SPOOLER_ID\" FROM public.scheduler_history "
 							+ "WHERE \"START_TIME\">'"
 							+ tf.start
 							+ "' AND"
@@ -336,21 +373,22 @@ public class StatsController {
 							+ "' ORDER BY duration DESC LIMIT " + tf.top + ";");
 			while (rs.next()) {
 				Statement st2 = conn.createStatement();
-				ResultSet av = st2
-						.executeQuery("SELECT AVG(\"END_TIME\"-\"START_TIME\") FROM public.scheduler_history WHERE (\"JOB_NAME\"= '"
-								+ rs.getString(1)
-								+ "' AND \"END_TIME\" IS NOT NULL AND \"START_TIME\">'"
-								+ tf.start
-								+ "' AND"
-								+ "\"END_TIME\" < '"
-								+ tf.end + "') ;");
-				
-				while (av.next()) {
-					table[incr] = new JobInfo(rs.getString(1), av.getString(1)
-							.substring(0, 8), rs.getString(3), rs.getString(2),
-							rs.getString(4), rs.getString(5));
-				}
-				av.close();
+				 ResultSet av = st2
+				 .executeQuery("SELECT AVG(\"END_TIME\"-\"START_TIME\") FROM public.scheduler_history WHERE (\"JOB_NAME\"= '"
+				 + rs.getString(1)
+				 + "' AND \"END_TIME\" IS NOT NULL AND \"START_TIME\">'"
+				 + tf.start
+				 + "' AND"
+				 + "\"END_TIME\" < '"
+				 + tf.end + "') ;");
+
+				 while (av.next()) {
+				table[incr] = new JobInfo(rs.getString(1),   av.getString(1).substring(0,
+																 8)
+						, rs.getString(3), rs.getString(2), rs.getString(4),
+						rs.getString(5));
+				 }
+				 av.close();
 				st2.close();
 				incr++;
 			}
@@ -361,18 +399,10 @@ public class StatsController {
 			e.printStackTrace();
 		}
 
-	
 		return table;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	//TODO
+
+	// TODO
 
 	@RequestMapping(value = "/newjob/xml", headers = { "Content-type=application/json" }, method = RequestMethod.POST)
 	public @ResponseBody
@@ -428,5 +458,31 @@ public class StatsController {
 	}
 
 	
-
+	protected String[] labelize(String[] labels){
+		
+		
+		int length = labels.length ;
+		int step ;
+		if(length <50){
+			step = 1 ;
+		}else if(length < 100){
+			step = 2 ;
+		}else if(length < 200){
+			step = 8 ;
+		}else if (length < 300){
+			step = 16 ;
+		}else{
+			step = 24 ;
+		}
+		
+		for(int i = 0 ; i<length;i++){
+			if(i%step == 0){
+				labels[i] =labels[i] ;
+			}else{
+				labels[i] = "" ;
+			}
+		}
+		return labels ;
+	}
+	
 }
