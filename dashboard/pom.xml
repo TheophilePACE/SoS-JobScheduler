@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.github.bigloupe</groupId>
@@ -13,7 +14,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.0.2.RELEASE</version>
+		<version>1.1.5.RELEASE</version>
 	</parent>
 
 	<scm>
@@ -22,7 +23,7 @@
 		<url>https://github.com/bigloupe/SoS-JobScheduler</url>
 		<tag>jobscheduler-pom-0.2</tag>
 	</scm>
-	
+
 	<properties>
 		<!-- Maven build properties -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -70,15 +71,15 @@
 			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 		</repository>
 	</distributionManagement>
-	
+
 	<dependencies>
 		<dependency>
- 			 <groupId>org.codehaus.jackson</groupId>
-  				<artifactId>jackson-mapper-asl</artifactId>
- 				 <version>1.9.13</version>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.13</version>
 		</dependency>
-		
-	
+
+
 		<dependency>
 			<groupId>javax.inject</groupId>
 			<artifactId>javax.inject</artifactId>
@@ -180,7 +181,7 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-joda</artifactId>
-			<version>${jackson.version}</version><!--$NO-MVN-MAN-VER$-->
+			<version>${jackson.version}</version><!--$NO-MVN-MAN-VER$ -->
 		</dependency>
 
 		<dependency>
@@ -296,8 +297,8 @@
 			<artifactId>jansi</artifactId>
 			<version>${jansi.version}</version>
 		</dependency>
-            
-            
+
+
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -335,7 +336,7 @@
 
 	<build>
 		<finalName>${project.artifactId}</finalName>
-	
+
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
@@ -343,6 +344,9 @@
 				<includes>
 					<include>**/*</include>
 				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/generated</directory>
 			</resource>
 		</resources>
 
@@ -512,7 +516,7 @@
 
 		<!-- To update database -->
 		<profile>
-			<id>databaseChange</id>
+			<id>database</id>
 			<dependencies>
 				<dependency>
 					<groupId>org.codehaus.mojo</groupId>
@@ -582,6 +586,34 @@
 					</plugin>
 
 				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>jobSchedulerSchema</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>jaxb2-maven-plugin</artifactId>
+						<version>1.6</version>
+						<executions>
+							<execution>
+								<id>xjc</id>
+								<phase>generate-sources</phase>
+								<goals>
+									<goal>xjc</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<outputDirectory>src/main/generated</outputDirectory>
+							<schemaFiles>scheduler-1.7.xsd</schemaFiles>
+							<packageName>org.jobscheduler.dashboard.jobdefinition.xml</packageName> <!-- The name of your generated source package -->
+						</configuration>
+					</plugin>
+				</plugins>
+
 			</build>
 		</profile>
 
