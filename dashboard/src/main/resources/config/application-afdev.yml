@@ -5,12 +5,20 @@ server:
 spring:
     profiles: afdev
     datasource:
-        dataSourceClassName: org.postgresql.ds.PGSimpleDataSource
-        url: jdbc:postgresql://tlstnpgrdb02.france.airfrance.fr:1337/jobscheduler
-        databaseName: 
-        serverName: 
-        username: jobsched
-        password: jobsched
+        datasource1:
+           dataSourceClassName: org.postgresql.ds.PGSimpleDataSource
+           url: jdbc:postgresql://tlspnbdpgr02.france.airfrance.fr:5432/jstech
+           databaseName: 
+           serverName: 
+           username: jsvisu
+           password: 4framework
+        datasource2:
+           dataSourceClassName: org.postgresql.ds.PGSimpleDataSource
+           url: jdbc:postgresql://qvipnbdpgr01.france.airfrance.fr:5432/jstech
+           databaseName: 
+           serverName: 
+           username: jsvisu
+           password: 4framework
 
     jpa:
         database-platform: org.hibernate.dialect.PostgreSQLDialect

@@ -21,7 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.context.embedded.MultiPartConfigFactory;
+import org.springframework.boot.context.embedded.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -56,7 +56,7 @@ public class WebSpringConfiguration extends WebMvcConfigurerAdapter {
 	
     @Bean
     public MultipartConfigElement multipartConfigElement() {
-        MultiPartConfigFactory factory = new MultiPartConfigFactory();
+        MultipartConfigFactory factory = new MultipartConfigFactory();
         factory.setMaxFileSize("1024KB");
         factory.setMaxRequestSize("1024KB");
         return factory.createMultipartConfig();

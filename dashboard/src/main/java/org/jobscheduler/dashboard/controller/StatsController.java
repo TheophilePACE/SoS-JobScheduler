@@ -2,14 +2,8 @@ package org.jobscheduler.dashboard.controller;
 
 import java.io.File;
 import java.io.OutputStream;
-import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
-
-import org.json.JSONArray;
-
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -18,33 +12,21 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import javax.annotation.Resource;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.sql.DataSource;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
-import jaxb.scheduler.generated.Job;
-import jaxb.scheduler.generated.RunTime;
-import jaxb.scheduler.generated.Script;
-
 import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
-import org.jobscheduler.dashboard.config.DatabaseConfiguration;
-import org.jobscheduler.dashboard.datasources.DataSourceContextHolder;
 import org.jobscheduler.dashboard.datasources.DataSourcesConfiguration.JobSchedulerDataSourceRouter;
-import org.jobscheduler.dashboard.domain.SchedulerHistory;
+import org.jobscheduler.dashboard.jobdefinition.xml.Job;
+import org.jobscheduler.dashboard.jobdefinition.xml.RunTime;
 import org.jobscheduler.dashboard.repository.SchedulerHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,9 +34,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
 
 @RestController
 public class StatsController {
@@ -411,7 +390,7 @@ public class StatsController {
 
 		JAXBContext jaxbContext;
 		try {
-
+ 
 			myJob.setRunTime(new RunTime());
 			jaxbContext = JAXBContext.newInstance(Job.class);
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
