@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<Order title="ALLDAYS_0700">
+    <run_time>
+        <weekdays>
+            <day day="1 2 3 4 5 6 7">
+                <period single_start="31-déc.-1899"/>
+            </day>
+        </weekdays>
+    </run_time>
+</Order>

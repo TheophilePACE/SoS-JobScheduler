@@ -9,6 +9,9 @@
             s.a. http://www.zschimmer.com/sos/scheduler/konfiguration.html
         </xsd:documentation>
     </xsd:annotation>
+	
+
+
 
     <xsd:element name="spooler">
         <xsd:complexType>
@@ -901,7 +904,6 @@
             <xsd:attribute name="order" type="Order_id" use="required"/>
         </xsd:complexType>
     </xsd:element>
-    
     <xsd:element name="run_time" type="run_time"/>
     
     <!-- Für Order.Run_time.xml = "<run_time>" -->
@@ -916,6 +918,7 @@
             <xsd:choice minOccurs="0" maxOccurs="unbounded">
                 <xsd:element ref="include"/>
             </xsd:choice>
+			
             <xsd:attribute name="language" type="Name"/>
             <xsd:attribute name="use_engine">
                 <xsd:simpleType>
