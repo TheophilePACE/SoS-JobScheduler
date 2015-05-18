@@ -157,6 +157,7 @@ public class ExcelReader {
 		System.out.println("Affichage du job chaine SID numéro:"+chaine+", "+cell.toString());		
 		jbc=fabrique.createJobChain();
 		jbc.setVisible("yes");
+		jbc.setName(cell.toString());
 		jobchain.put(cell.toString(),jbc);
 		//boucle à ajouter pour exploiter les autres options 
 	}
@@ -167,7 +168,7 @@ public class ExcelReader {
 		System.out.print(LigneTitre.get(i)+":"+cell.toString() + ", ");
 
 		switch (LigneTitre.get(i).toString()) {
-
+		
 		case "job":
 
 			jb.setTitle(cell.toString());
@@ -202,6 +203,7 @@ public class ExcelReader {
 		case "jid":
 
 			jbcn.setState(cell.toString());
+			
 			break;
 
 		default: 
@@ -422,23 +424,27 @@ public void AddEndErrorEndSucsses()
 		int i=0;
 
 		if(lancement==1||lancement==12||lancement==123||lancement==13)
-		{
+		{Job job;
 			while(eLjob.hasMoreElements())
 
-			{OutputStream os = new FileOutputStream( i+"nosferatu.xml" );
+			{
+				job=(Job) eLjob.nextElement();
+				OutputStream os = new FileOutputStream("D:/resultat/"+job.getTitle()+".xml");
 
-			marshaller.marshal(eLjob.nextElement(),os);
+			marshaller.marshal(job,os);
 			i++;
 			}
 
 		}
 		if(lancement==2||lancement==12||lancement==123||lancement==23)
-		{ 
+		{ JobChain jobch;
 			while(ejobchain.hasMoreElements())
 
 			{
-				OutputStream os = new FileOutputStream( i+"nosferatu.xml" );
-				marshaller.marshal(ejobchain.nextElement(),os);
+				jobch=(JobChain) ejobchain.nextElement();
+				
+				OutputStream os = new FileOutputStream("D:/resultat/"+jobch.getName()+".xml" );
+				marshaller.marshal(jobch,os);
 				i++;	
 			} 
 
@@ -448,7 +454,7 @@ public void AddEndErrorEndSucsses()
 		{ 
 			while(eOrder.hasMoreElements())
 			{
-				OutputStream os = new FileOutputStream( i+"nosferatu.xml" );
+				OutputStream os = new FileOutputStream("D:/resultat/" + i+"nosferatu.xml" );
 				marshaller.marshal(eOrder.nextElement(),os);
 				i++;	
 			}
@@ -463,7 +469,7 @@ public void AddEndErrorEndSucsses()
 		//3=order
 		//12= job et jobchain
 		//etc...
-		if(exrd.TrainterLeFichierExcel()) exrd.OutputTest(3);
+		if(exrd.TrainterLeFichierExcel()) exrd.OutputTest(2);
 
 
 	}
