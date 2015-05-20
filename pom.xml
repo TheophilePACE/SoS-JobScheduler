@@ -17,7 +17,9 @@
 	<modules>
 		<module>dashboard</module>
 		<module>dashboard-install</module>
+		<!-- 
 		<module>jobstreamconverter</module>
+		 -->
 	</modules>
 
 	<url>https://github.com/bigloupe/SoS-JobScheduler</url>

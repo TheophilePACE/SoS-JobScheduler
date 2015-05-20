@@ -19,9 +19,17 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.jobscheduler.dashboard.jobdefinition.xml.*;
+import org.jobscheduler.dashboard.jobdefinition.xml.Job;
+import org.jobscheduler.dashboard.jobdefinition.xml.JobChain;
+import org.jobscheduler.dashboard.jobdefinition.xml.ObjectFactory;
+import org.jobscheduler.dashboard.jobdefinition.xml.Order;
+import org.jobscheduler.dashboard.jobdefinition.xml.Params;
+import org.jobscheduler.dashboard.jobdefinition.xml.Period;
+import org.jobscheduler.dashboard.jobdefinition.xml.RunTime;
+import org.jobscheduler.dashboard.jobdefinition.xml.Script;
+import org.jobscheduler.dashboard.jobdefinition.xml.Weekdays;
 
-import com.sun.xml.internal.bind.marshaller.CharacterEscapeHandler;
+import com.sun.xml.bind.marshaller.CharacterEscapeHandler;
 
 
 public class ExcelReader {
@@ -78,7 +86,7 @@ public class ExcelReader {
 		marshaller = jc.createMarshaller();
 		marshaller.setProperty("jaxb.encoding", "ISO-8859-1");
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-		marshaller.setProperty("com.sun.xml.internal.bind.characterEscapeHandler",
+		marshaller.setProperty("com.sun.xml.bind.characterEscapeHandler",
 				new CharacterEscapeHandler() {
 			@Override
 			public void escape(char[] ch, int start, int length,

@@ -335,11 +335,36 @@
 			</exclusions>
 		</dependency>
 
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.11</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.11</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-core</artifactId>
+			<version>2.2.11</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<version>2.2.11</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>
 		<finalName>${project.artifactId}</finalName>
-		
+
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
@@ -348,13 +373,9 @@
 					<include>**/*</include>
 				</includes>
 			</resource>
-			
+
 			<!-- For Spring boot to distribute Web files -->
-			<!-- 
-			<resource>
-				<directory>src/main/webapp</directory>
-			</resource>
-			 -->
+			<!-- <resource> <directory>src/main/webapp</directory> </resource> -->
 			<!-- For JAXB files -->
 			<resource>
 				<directory>src/main/generated</directory>
@@ -398,15 +419,6 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-
-			<plugin>
-				<groupId>pl.project13.maven</groupId>
-				<artifactId>git-commit-id-plugin</artifactId>
-				<configuration>
-					<dotGitDirectory>../.git</dotGitDirectory>
-				</configuration>
-			</plugin>
-
 
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
