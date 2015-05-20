@@ -1,4 +1,17 @@
+/*
+ * Nom de classe : ExcelReader
+ *
+ * Description   : Module permettant d'ordonnancer des taches sous JobScheduler � partir d'un fichier Excel 
+ *
+ * Version       : 1.0
+ *
+ * Date          : 20/05/2015
+ * 
+ * Copyright     : 
+ */
+
 package org.jobscheduler.dashboard.ocab;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -19,56 +32,61 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.jobscheduler.dashboard.jobdefinition.xml.Job;
-import org.jobscheduler.dashboard.jobdefinition.xml.JobChain;
-import org.jobscheduler.dashboard.jobdefinition.xml.ObjectFactory;
-import org.jobscheduler.dashboard.jobdefinition.xml.Order;
-import org.jobscheduler.dashboard.jobdefinition.xml.Params;
-import org.jobscheduler.dashboard.jobdefinition.xml.Period;
-import org.jobscheduler.dashboard.jobdefinition.xml.RunTime;
-import org.jobscheduler.dashboard.jobdefinition.xml.Script;
-import org.jobscheduler.dashboard.jobdefinition.xml.Weekdays;
+import org.jobscheduler.dashboard.jobdefinition.xml.*;
 
 import com.sun.xml.bind.marshaller.CharacterEscapeHandler;
 
-
 public class ExcelReader {
-	//***************objets système****************//
+	/**
+	 * System objects
+	 */
 	File file;;
 	FileInputStream fis;
-	boolean JobChaine=false;
-	JAXBContext jc ;
-	Marshaller marshaller ;
+	JAXBContext jc;
+	Marshaller marshaller;
 	ObjectFactory fabrique = new ObjectFactory();
 	XSSFWorkbook wb;
 	XSSFSheet sheet;
 	Cell cell;
 	String chaine;
 	String outPut;
-	//**********Pour nommer les order en fonction des jobchain*************// 
-	
+
+	/**
+	 * Name the order based on jobchain
+	 */
+
 	String jobchainEnCour;
 	int nbrDeOrder;
-	
-	//Existance ou non d'un runtime/params (fonctionnalité job scheduler)
-	boolean runtime=false;
-	boolean params=false;
 
-	//***************les listes****************//
-	
-	//ligne titre du excel  qui est parsé
-	ArrayList<String> LigneTitre = new ArrayList<String>(); 
-	Hashtable job = new Hashtable();	
-	Hashtable<String,JobChain>jobchain = new Hashtable<String,JobChain>();
-	Hashtable<String,Integer>NbOrderParJobchain = new Hashtable<String,Integer>();//à commenter...
-	Hashtable<String,Job>Ljob = new Hashtable<String,Job>();
-	Hashtable<String,Order>Lorder = new Hashtable<String,Order>();
+	/**
+	 * Existence or not of a runtime / params ( job scheduler functionality )
+	 */
+	boolean runtime = false;
+	boolean params = false;
+
+	/**
+	 * Lists
+	 */
+
+	ArrayList<String> ligneTitre = new ArrayList<String>(); // title line of
+															// Excel
+	Hashtable job = new Hashtable();
+	Hashtable<String, JobChain> jobchain = new Hashtable<String, JobChain>();
+	Hashtable<String, Integer> nbOrderParJobchain = new Hashtable<String, Integer>();// amount
+																						// "order"
+																						// for
+																						// each
+																						// jobchain
+	Hashtable<String, Job> ljob = new Hashtable<String, Job>();
+	Hashtable<String, Order> lorder = new Hashtable<String, Order>();
 	Iterator<Row> rowIterator;
 	Iterator<Cell> cellFirstLigne;
 	Iterator<Cell> cellIterator;
 
+	/**
+	 * Objects generated from the schema
+	 */
 
-	//***************Les objets générés à partir du schéma****************//
 	JobChain jbc = null;
 	JobChain.JobChainNode jbcn;
 	Job jb;
@@ -77,115 +95,149 @@ public class ExcelReader {
 	Params oParams;
 	RunTime oRuntime;
 
-	//***************Constructeur avec chemin du fichier excel, et chemin de sortie des fichier xml  en paramètre)****************//
-	public ExcelReader(String EmplacementFichierExcel,String output) throws JAXBException, IOException {
+	/**
+	 * Constructor using Excel and Xml path
+	 */
+
+	public ExcelReader(String EmplacementFichierExcel, String output)
+			throws JAXBException, IOException {
 		super();
-		this.outPut=output;
-		file = new File("D:/excel/KARMA_QAL_1.4_FULL.xlsx");
-		jc = JAXBContext.newInstance("org.jobscheduler.dashboard.jobdefinition.xml");
+		this.outPut = output;
+		file = new File(EmplacementFichierExcel);
+		jc = JAXBContext
+				.newInstance("org.jobscheduler.dashboard.jobdefinition.xml");
 		marshaller = jc.createMarshaller();
 		marshaller.setProperty("jaxb.encoding", "ISO-8859-1");
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-		marshaller.setProperty("com.sun.xml.bind.characterEscapeHandler",
+		marshaller.setProperty(
+				"com.sun.xml.bind.characterEscapeHandler",
 				new CharacterEscapeHandler() {
-			@Override
-			public void escape(char[] ch, int start, int length,
-					boolean isAttVal, Writer writer)
-							throws IOException {
-				writer.write(ch, start, length);
-			}
-		});
-
+					@Override
+					public void escape(char[] ch, int start, int length,
+							boolean isAttVal, Writer writer) throws IOException {
+						writer.write(ch, start, length);
+					}
+				});
 
 		fabrique = new ObjectFactory();
 		fis = new FileInputStream(file);
 		wb = new XSSFWorkbook(fis);
 		sheet = wb.getSheetAt(3);
+
 		
-		//Iterate through each rows one by one
-		rowIterator = sheet.iterator();
+		rowIterator = sheet.iterator();// Iterate through each rows one by one
+
 		
-		//Pour récupérer  la premiere ligne du fichier excel
-		//et connaitre le titre de chaque colonne
-		cellFirstLigne =sheet.getRow(0).cellIterator();
-		jobchainEnCour=null;
-		nbrDeOrder=0;
+		cellFirstLigne = sheet.getRow(0).cellIterator();// Get the first line of excel file
+		jobchainEnCour = null;
+		nbrDeOrder = 0;
 
 	}
 
-
-
-	public String CDATA(String st)
-	{
-		return "<![CDATA["+st+"]]>";
+	public String cdata(String st) {
+		return "<![CDATA[" + st + "]]>"; // for add CDATA in Xml file
 	}
 
+	/**
+	 * name - copieLigneTitre, copy in a arraylist the name of each
+	 * column to know on which work
+	 * 
+	 * @author Jean-vincent
+	 * @date 20/05/2015
+	 * @note
+	 */
 
-
-	//Copier dans une Arraylist le nom de chaque colonne
-	//pour savoir sur quel colonne on travail
-	public void CopieLigneTitre()
-	{
-		while(cellFirstLigne.hasNext())
-		{
-			LigneTitre.add(cellFirstLigne.next().toString());
+	public void copyLineTitle() {
+		while (cellFirstLigne.hasNext()) {
+			ligneTitre.add(cellFirstLigne.next().toString());
 		}
 	}
 
-	//Passer à la ligne exel suivante
-	public boolean LigneExcelSuivant()
-	{
-		if(rowIterator.hasNext())
-		{
+	/** 
+	 * name - ligneExcelSuivant, 
+	 *               Scroll to the next excel line
+	 *   
+	 * @return      boolean
+	 * @author      Jean-vincent 
+	 * @date        20/05/2015
+	 * @note 
+	 */
+	
+	public boolean nextExcelLine() {
+		if (rowIterator.hasNext()) {
 			rowIterator.next();
 			return true;
 		}
 		return false;
 	}
-
-	//Passer à la colone exel suivante
-	public Cell ColoneExcelSuivant()
-	{
-		if(cellIterator.hasNext())
-		{
+	
+	/** 
+	 * name - coloneExcelSuivant, 
+	 *               return the next excel column 
+	 * 
+	 *     
+	 * @return      Cell
+	 * @author      Jean-vincent 
+	 * @date        20/05/2015
+	 * @note 
+	 */
+	
+	public Cell coloneExcelSuivant() {
+		if (cellIterator.hasNext()) {
 			return cellIterator.next();
 
 		}
 		return null;
 	}
 
+	/** 
+	 * name - initialisationJobChain, 
+	 *               initialization of a new jobchain 
+	 *   
+	 * @author      Jean-vincent 
+	 * @date        20/05/2015
+	 * @note 
+	 */
 	
-	public void InitialisationJobChain()
-	{
-		
-		//on va directement  à la colone 4
-		ColoneExcelSuivant();   
-		ColoneExcelSuivant();
-		ColoneExcelSuivant();
-		cell=ColoneExcelSuivant();
+	public void initializationJobChain() {
 
-		System.out.println("Affichage du job chaine SID numéro:"+chaine+", "+cell.toString());		
-		jbc=fabrique.createJobChain();
+		
+		coloneExcelSuivant();
+		coloneExcelSuivant();
+		coloneExcelSuivant();
+		cell = coloneExcelSuivant(); //go directly to the column 4 which contains the name of jobchain
+
+		System.out.println("Affichage du job chaine SID num�ro:" + chaine
+				+ ", " + cell.toString());
+		jbc = fabrique.createJobChain();
 		jbc.setVisible("yes");
 		jbc.setName(cell.toString());
-		jobchain.put(cell.toString(),jbc);
-		//à commenter..
-		if(jobchainEnCour!=null)
-		{
-			NbOrderParJobchain.put(cell.toString(), nbrDeOrder);
-			nbrDeOrder=0;
+		jobchain.put(cell.toString(), jbc);
+	
+		if (jobchainEnCour != null) {//reset correspondence between jobchain and order
+			nbOrderParJobchain.put(cell.toString(), nbrDeOrder);
+			nbrDeOrder = 0;
 		}
-		jobchainEnCour=cell.toString();
-		//boucle à ajouter pour exploiter les autres options 
-	}
-
-	//Ajout des fonctionnalités
-	public void TraiterLesOptionDunJob(int i)
-	{
-		System.out.print(LigneTitre.get(i)+":"+cell.toString() + ", ");
-
-		switch (LigneTitre.get(i).toString()) {
+		jobchainEnCour = cell.toString();
 		
+	}
+	
+	/** 
+	 * name -       traiterLesOptionDunJob 
+	 *              functional correspondence between the excel file and jobscheduler (job)
+	 *              
+	 * @param       int : correspondence with the title line of the excel file
+	 * @author      jean-vincent 
+	 * @date        20/05/2015
+	 * @note 
+	 */
+	
+
+	public void treatJobOption(int i) {
+		System.out.print(ligneTitre.get(i) + ":" + cell.toString() + ", ");
+
+		switch (ligneTitre.get(i).toString()) {
+
 		case "job":
 
 			jb.setTitle(cell.toString());
@@ -193,22 +245,18 @@ public class ExcelReader {
 			jbcn.setState(cell.toString());
 			break;
 
-		case "scriptname": 
+		case "scriptname":
 
-
-			scrpt.getContent().add(CDATA(cell.toString()));
+			scrpt.getContent().add(cdata(cell.toString()));
 			jb.setScript(scrpt);
 			break;
 
 		case "recovery_option":
 
-			if(cell.toString().equals("stop"))
-			{
+			if (cell.toString().equals("stop")) {
 				jbcn.setErrorState("!end_ERR");
-			}
-			else
-			{
-				jbcn.setErrorState(jbcn.getNextState()); 
+			} else {
+				jbcn.setErrorState(jbcn.getNextState());
 			}
 			break;
 
@@ -220,56 +268,70 @@ public class ExcelReader {
 		case "jid":
 
 			jbcn.setState(cell.toString());
-			
+
 			break;
 
-		default: 
+		default:
 			break;
 		}
 
 	}
 
-
-	public void TraiterUneLigneJob()
-	{
-		jbcn=fabrique.createJobChainJobChainNode();
-		jb=fabrique.createJob();
+	/** 
+	 * name -       traiterUneLigneJob 
+	 *              treat a job
+	 *              
+	 * @see         traiterLesOptionDunJob              
+	 * @author      jean-vincent 
+	 * @date        20/05/2015
+	 * @note 
+	 */
+	
+	public void treatJobLine() {
+		jbcn = fabrique.createJobChainJobChainNode();
+		jb = fabrique.createJob();
 		jb.setOrder("yes");
-		scrpt=fabrique.createScript();
+		scrpt = fabrique.createScript();
 		scrpt.setLanguage("shell");
 
-		int i=2;
-		do     
-		{
+		int i = 2;// information about job begin in the 2nd column
+		do {
 
-			if(i>2)cell=ColoneExcelSuivant();
+			if (i > 2)
+				cell = coloneExcelSuivant();
 
-			// On traite une colone de la case excel
-			//il sagit d'un job	
-			if(!cell.toString().isEmpty())
-			{
-				TraiterLesOptionDunJob(i);
+			
+			if (!cell.toString().isEmpty()) {
+				treatJobOption(i); //treat a job hut 
 			}
 
 			i++;
 
-		}while (cellIterator.hasNext());
+		} while (cellIterator.hasNext());
 
-		jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcn);
-		Ljob.put(jb.getTitle(),jb);
+		jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcn);//add the jobchainnode in jobchain
+		ljob.put(jb.getTitle(), jb);
 		System.out.println("");
 	}
 
-	public void TraiterLesOptionDunOrder(int i)
-	{
-		if(i>3)cell=ColoneExcelSuivant();
+	/** 
+	 * name -       traiterLesOptionDunOrder 
+	 *              functional correspondence between the excel file and jobscheduler (order)
+	 *              
+	 * @param       int : correspondence with the title line of the excel file
+	 * @author      jean-vincent 
+	 * @date        20/05/2015
+	 * @note 
+	 */
+	
+	public void treatOrderOption(int i) {
+		if (i > 3)
+			cell = coloneExcelSuivant();
 
+		if (!cell.toString().equals("")) {
+			System.out.print(ligneTitre.get(i) + ":" + cell.toString() + ", ");
 
-		if(!cell.toString().equals(""))
-		{
-			System.out.print(LigneTitre.get(i)+":"+cell.toString() + ", ");
-
-			switch (LigneTitre.get(i).toString()) {
+			switch (ligneTitre.get(i).toString()) {
 
 			case "runcycle":
 
@@ -277,51 +339,42 @@ public class ExcelReader {
 
 				break;
 
-			case "at": 
+			case "at":
 
-				Weekdays TmpWeek=fabrique.createWeekdays();
-				Weekdays.Day TmpDay=fabrique.createWeekdaysDay();
-				Period TmpPeriod =fabrique.createPeriod();
+				Weekdays TmpWeek = fabrique.createWeekdays();
+				Weekdays.Day TmpDay = fabrique.createWeekdaysDay();
+				Period TmpPeriod = fabrique.createPeriod();
 
 				TmpPeriod.setSingleStart(cell.toString());
 				TmpDay.getPeriod().add(TmpPeriod);
 				TmpWeek.getDay().add(TmpDay);
 				oRuntime.setWeekdays(TmpWeek);
-				runtime=true;
-
-
-
-
+				runtime = true;
 
 				break;
-
 
 			case "ical":
-				if(oRuntime.getWeekdays()!=null)
-				{     
-					if (cell.toString().equals("FREQ=DAILY;INTERVAL=1"))
-					{
-						oRuntime.getWeekdays().getDay().get(0).getDay().add("1 2 3 4 5 6 7");
+				if (oRuntime.getWeekdays() != null) {
+					if (cell.toString().equals("FREQ=DAILY;INTERVAL=1")) {
+						oRuntime.getWeekdays().getDay().get(0).getDay()
+								.add("1 2 3 4 5 6 7");
 					}
-				}
-				else
-				{
-					Weekdays TmpWeek2=fabrique.createWeekdays();
-					Weekdays.Day TmpDay2=fabrique.createWeekdaysDay();
-					Period TmpPeriod2 =fabrique.createPeriod();
+				} else {
+					Weekdays tmpWeek2 = fabrique.createWeekdays();
+					Weekdays.Day tmpDay2 = fabrique.createWeekdaysDay();
+					Period tmpPeriod2 = fabrique.createPeriod();
 
-					TmpPeriod2.setSingleStart("00:00");
-					TmpDay2.getPeriod().add(TmpPeriod2);
-					TmpDay2.getDay().add("1 2 3 4 5 6 7");
-					TmpWeek2.getDay().add(TmpDay2);
-					oRuntime.setWeekdays(TmpWeek2);
-					runtime=true;
-
+					tmpPeriod2.setSingleStart("00:00");
+					tmpDay2.getPeriod().add(tmpPeriod2);
+					tmpDay2.getDay().add("1 2 3 4 5 6 7");
+					tmpWeek2.getDay().add(tmpDay2);
+					oRuntime.setWeekdays(tmpWeek2);
+					runtime = true;
 
 				}
 				break;
 
-			default: 
+			default:
 				break;
 			}
 
@@ -329,184 +382,211 @@ public class ExcelReader {
 
 	}
 
-	public void TraiterUneLigneOrder()
-	{
-		oRuntime=fabrique.createRunTime();
-		oParams=fabrique.createParams();
-		od=fabrique.createOrder();
+	/** 
+	 * name -       traiterUneLigneOrder 
+	 *              treat a order
+	 *
+	 * @see         traiterLesOptionDunOrder     
+	 * @author      jean-vincent 
+	 * @date        20/05/2015
+	 * @note 
+	 */
+	public void treatOrderLine() {
+		oRuntime = fabrique.createRunTime();
+		oParams = fabrique.createParams();
+		od = fabrique.createOrder();
 
+		int i = 3;
 
-
-
-		int i=3;
-
-		do     
-		{
-			TraiterLesOptionDunOrder(i);
+		do {
+			treatOrderOption(i);
 			i++;
 
-		}while (cellIterator.hasNext());
+		} while (cellIterator.hasNext());
 
-		if(runtime==true)
-		{
+		if (runtime == true) {
 			od.setRunTime(oRuntime);
 		}
 
-		Lorder.put(od.getTitle(),od);
+		lorder.put(od.getTitle(), od);
 		nbrDeOrder++;
 
 	}
 
-public void AddEndErrorEndSucsses()
-{
-	Enumeration ejobchain=jobchain.elements();
-	while(ejobchain.hasMoreElements())
+	/** 
+	 * name -       addEndErrorEndSucsses 
+	 *              add jobchainnodestate : EndError, EndSucces
+	 *
+	 * @author      jean-vincent 
+	 * @date        20/05/2015
+	 * @note 
+	 */
+	
+	public void addEndErrorEndSucsses() {
+		Enumeration ejobchain = jobchain.elements();
+		while (ejobchain.hasMoreElements())
 
-	{
-		JobChain jtemp=(JobChain) ejobchain.nextElement();
-		JobChain.JobChainNode temp=fabrique.createJobChainJobChainNode();
-		temp.setState("end_SUC_All");
-		jtemp.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(temp);
-		temp=fabrique.createJobChainJobChainNode();
-		temp.setState("!end_ERR");
-		jtemp.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(temp);
-		
-			
-	} 
-}
-	public boolean TrainterLeFichierExcel() throws IOException
-	{
-		CopieLigneTitre();
-		LigneExcelSuivant();
-
-		while (rowIterator.hasNext())
 		{
-			//Récupération d'une ligne dans la liste des lignes
-			Row row = rowIterator.next();
-			//récupération de la liste des colones
-			cellIterator = row.cellIterator();
+			JobChain jtemp = (JobChain) ejobchain.nextElement();
+			JobChain.JobChainNode temp = fabrique.createJobChainJobChainNode();
+			temp.setState("end_SUC_All");
+			jtemp.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(temp);
+			temp = fabrique.createJobChainJobChainNode();
+			temp.setState("!end_ERR");
+			jtemp.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(temp);
 
-			//Je vais directement à la deuxieme colone 
-			ColoneExcelSuivant();
-			cell = ColoneExcelSuivant(); 
-			chaine=cell.toString();
+		}
+	}
 
-			//On vérifie à la deuxieme case (le SID)
-			//si SID existant il faut créer un jobchain
-			if (!chaine.isEmpty())
-			{
-				InitialisationJobChain();
+	/** 
+	 * name -       trainterLeFichierExcel() 
+	 *              treat a excel file
+	 *
+	 * @exception   IOException
+	 * @return      boolean
+	 * @author      jean-vincent 
+	 * @date        20/05/2015
+	 * @note        don't forget initialize the Excelreader
+	 */
+	
+	public boolean treatExcelFile() throws IOException {
+		copyLineTitle();
+		nextExcelLine();
 
-			}
-			else    
-			{
-				//si SID iniexistant on regarde le JID
-				//si JID existant il faut créer un job
-				//et compléter le jobchain
-				cell = ColoneExcelSuivant(); 
+		while (rowIterator.hasNext()) { 
+			
+			Row row = rowIterator.next();// get a line in the file
+			
+			cellIterator = row.cellIterator(); //get huts in the line
 
-				if(!cell.toString().isEmpty())
-				{	
-					//on va traiter une ligne entiere
-					// qui contiendra la description d'un job
-					TraiterUneLigneJob();
-				}
-				else
-				{
-					//si JID iniexistant on regarde le DEP
-					//si DEP existant et égale à "R" il faut créer un order
-					cell = ColoneExcelSuivant();
+			
+			coloneExcelSuivant();
+			cell = coloneExcelSuivant(); //go directly to 2nd hut
+			chaine = cell.toString();
 
-					if(cell.toString().equals("R"))
-					{
-						TraiterUneLigneOrder();
+			// check if SID exist for create a jobchain
+			if (!chaine.isEmpty()) {
+				initializationJobChain();
+
+			} else {
+				// if SID don't exist we look the JID
+				// if JID exist we create a job
+				// and complete the jobchain
+				cell = coloneExcelSuivant();
+
+				if (!cell.toString().isEmpty()) {
+					// we treat the entire line (it's a job)
+					
+					treatJobLine();
+				} else {
+					// if JID don't exist we look the DEP
+					// if DEP exist and equal "R" we create a order
+					cell = coloneExcelSuivant();
+
+					if (cell.toString().equals("R")) {
+						treatOrderLine();
 					}
 
 				}
 
-
-			}	
+			}
 
 		}
-		AddEndErrorEndSucsses();
+		addEndErrorEndSucsses();
 		fis.close();
 		return true;
 	}
 
 	
-	//************FonctionPourTesterLeProgramme*****************//
-	
-	//lancement permet de sélectionner le type de fichier que l'on veux générer
-	//un job, un jobchain, un order, les trois en meme temps etc..
-	
-	public void OutputTest(int lancement) throws FileNotFoundException, JAXBException
-	{
-		Enumeration ejobchain=jobchain.elements();
-		Enumeration eLjob=Ljob.elements();
-		Enumeration eOrder=Lorder.elements();
-		int i=0;
 
-		if(lancement==1||lancement==12||lancement==123||lancement==13)
-		{Job job;
-			while(eLjob.hasMoreElements())
+	        // 1=job
+			// 2=jobchain
+			// 3=order
+			// 12= job et jobchain
+			// etc...
+	
+	/** 
+	 * name -       OutputTest 
+	 *              test the program, create XML files
+	 *              
+	 * @param       int : 1=> out a job, 2=> out a jobchain, 3=order, 12= job et jobchain
+	 * @author      jean-vincent 
+	 * @date        20/05/2015
+	 * @note        
+	 */
+
+	public void OutputTest(int lancement) throws FileNotFoundException,
+			JAXBException {
+		Enumeration ejobchain = jobchain.elements();
+		Enumeration eLjob = ljob.elements();
+		Enumeration eOrder = lorder.elements();
+		int i = 0;
+
+		if (lancement == 1 || lancement == 12 || lancement == 123
+				|| lancement == 13) {
+			Job job;
+			while (eLjob.hasMoreElements())
 
 			{
-				job=(Job) eLjob.nextElement();
-				OutputStream os = new FileOutputStream(outPut+job.getTitle()+".xml");
+				job = (Job) eLjob.nextElement();
+				OutputStream os = new FileOutputStream(outPut + job.getTitle()
+						+ ".xml");
 
-			marshaller.marshal(job,os);
-			i++;
+				marshaller.marshal(job, os);
+				i++;
 			}
 
 		}
-		if(lancement==2||lancement==12||lancement==123||lancement==23)
-		{ JobChain jobch;
-			while(ejobchain.hasMoreElements())
+		if (lancement == 2 || lancement == 12 || lancement == 123
+				|| lancement == 23) {
+			JobChain jobch;
+			while (ejobchain.hasMoreElements())
 
 			{
-				jobch=(JobChain) ejobchain.nextElement();
-				
-				OutputStream os = new FileOutputStream(outPut+jobch.getName()+".xml" );
-				marshaller.marshal(jobch,os);
-				i++;	
-			} 
+				jobch = (JobChain) ejobchain.nextElement();
+
+				OutputStream os = new FileOutputStream(outPut + jobch.getName()
+						+ ".xml");
+				marshaller.marshal(jobch, os);
+				i++;
+			}
 
 		}
-//à commenter d'urgence...
-		if(lancement==3||lancement==13||lancement==123||lancement==23)
-		{ 
-			int tmp=0;
+		
+		if (lancement == 3 || lancement == 13 || lancement == 123
+				|| lancement == 23) {
+			int tmp = 0;
 			JobChain jobch;
-			ejobchain=jobchain.elements();
-			jobch=(JobChain) ejobchain.nextElement();
-			while(eOrder.hasMoreElements())
-			{
-				Order ordTemp=(Order) eOrder.nextElement();
-				
-				
-				if(tmp==NbOrderParJobchain.get(jobch.getName()))
-				{
-					jobch=(JobChain) ejobchain.nextElement();
-					tmp=0;
+			ejobchain = jobchain.elements();
+			jobch = (JobChain) ejobchain.nextElement();
+			while (eOrder.hasMoreElements()) {
+				Order ordTemp = (Order) eOrder.nextElement();
+
+				if (tmp == nbOrderParJobchain.get(jobch.getName())) {
+					jobch = (JobChain) ejobchain.nextElement();
+					tmp = 0;
 				}
-				OutputStream os = new FileOutputStream(outPut +jobch.getName()+",order.xml" );
-				marshaller.marshal(fabrique.createOrder(ordTemp),os);
-				i++;	
+				OutputStream os = new FileOutputStream(outPut + jobch.getName()
+						+ ",order.xml");
+				marshaller.marshal(fabrique.createOrder(ordTemp), os);
+				i++;
 				tmp++;
 			}
 
 		}
 	}
+
 	public static void main(String[] args) throws IOException, JAXBException {
 
-		ExcelReader exrd= new ExcelReader("D:/excel/KARMA_QAL_1.4_FULL.xlsx","D:/resultat/");
-		//1=job
-		//2=jobchain
-		//3=order
-		//12= job et jobchain
-		//etc...
-		if(exrd.TrainterLeFichierExcel()) exrd.OutputTest(123);
-
+		ExcelReader exrd = new ExcelReader("D:/excel/KARMA_QAL_1.4_FULL.xlsx",
+				"D:/resultat/");
+		// 1=job
+		// 2=jobchain
+		// 3=order
+		// 12= job et jobchain
+		// etc...
+		if (exrd.treatExcelFile())
+			exrd.OutputTest(123);
 
 	}
 }
