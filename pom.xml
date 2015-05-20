@@ -17,7 +17,9 @@
 	<modules>
 		<module>dashboard</module>
 		<module>dashboard-install</module>
+		<!-- 
 		<module>jobstreamconverter</module>
+		-->
 	</modules>
 
 	<url>https://github.com/bigloupe/SoS-JobScheduler</url>
@@ -373,6 +375,7 @@
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
+				
 					<source>1.7</source>
 					<target>1.7</target>
 				</configuration>
