@@ -19,13 +19,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.dom4j.io.OutputFormat;
 import org.jobscheduler.dashboard.jobdefinition.xml.*;
-
-import com.sun.xml.internal.bind.marshaller.CharacterEscapeHandler;
-
-import javax.xml.bind.annotation.*;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import com.sun.xml.internal.bind.marshaller.CharacterEscapeHandler;
 
@@ -42,6 +36,11 @@ public class ExcelReader {
 	XSSFSheet sheet;
 	Cell cell;
 	String chaine;
+	String outPut;
+	//**********Pour nommer les order en fonction des jobchain*************// 
+	
+	String jobchainEnCour;
+	int nbrDeOrder;
 	
 	//Existance ou non d'un runtime/params (fonctionnalité job scheduler)
 	boolean runtime=false;
@@ -50,9 +49,10 @@ public class ExcelReader {
 	//***************les listes****************//
 	
 	//ligne titre du excel  qui est parsé
-	ArrayList LigneTitre = new ArrayList(); 
+	ArrayList<String> LigneTitre = new ArrayList<String>(); 
 	Hashtable job = new Hashtable();	
 	Hashtable<String,JobChain>jobchain = new Hashtable<String,JobChain>();
+	Hashtable<String,Integer>NbOrderParJobchain = new Hashtable<String,Integer>();//à commenter...
 	Hashtable<String,Job>Ljob = new Hashtable<String,Job>();
 	Hashtable<String,Order>Lorder = new Hashtable<String,Order>();
 	Iterator<Row> rowIterator;
@@ -69,10 +69,10 @@ public class ExcelReader {
 	Params oParams;
 	RunTime oRuntime;
 
-	//***************Constructeur avec chemin du fichier excel en paramètre(à rajouter à la fin)****************//
-	public ExcelReader() throws JAXBException, IOException {
+	//***************Constructeur avec chemin du fichier excel, et chemin de sortie des fichier xml  en paramètre)****************//
+	public ExcelReader(String EmplacementFichierExcel,String output) throws JAXBException, IOException {
 		super();
-
+		this.outPut=output;
 		file = new File("D:/excel/KARMA_QAL_1.4_FULL.xlsx");
 		jc = JAXBContext.newInstance("org.jobscheduler.dashboard.jobdefinition.xml");
 		marshaller = jc.createMarshaller();
@@ -100,6 +100,8 @@ public class ExcelReader {
 		//Pour récupérer  la premiere ligne du fichier excel
 		//et connaitre le titre de chaque colonne
 		cellFirstLigne =sheet.getRow(0).cellIterator();
+		jobchainEnCour=null;
+		nbrDeOrder=0;
 
 	}
 
@@ -159,6 +161,13 @@ public class ExcelReader {
 		jbc.setVisible("yes");
 		jbc.setName(cell.toString());
 		jobchain.put(cell.toString(),jbc);
+		//à commenter..
+		if(jobchainEnCour!=null)
+		{
+			NbOrderParJobchain.put(cell.toString(), nbrDeOrder);
+			nbrDeOrder=0;
+		}
+		jobchainEnCour=cell.toString();
 		//boucle à ajouter pour exploiter les autres options 
 	}
 
@@ -336,7 +345,7 @@ public class ExcelReader {
 		}
 
 		Lorder.put(od.getTitle(),od);
-
+		nbrDeOrder++;
 
 	}
 
@@ -416,6 +425,12 @@ public void AddEndErrorEndSucsses()
 		return true;
 	}
 
+	
+	//************FonctionPourTesterLeProgramme*****************//
+	
+	//lancement permet de sélectionner le type de fichier que l'on veux générer
+	//un job, un jobchain, un order, les trois en meme temps etc..
+	
 	public void OutputTest(int lancement) throws FileNotFoundException, JAXBException
 	{
 		Enumeration ejobchain=jobchain.elements();
@@ -429,7 +444,7 @@ public void AddEndErrorEndSucsses()
 
 			{
 				job=(Job) eLjob.nextElement();
-				OutputStream os = new FileOutputStream("D:/resultat/"+job.getTitle()+".xml");
+				OutputStream os = new FileOutputStream(outPut+job.getTitle()+".xml");
 
 			marshaller.marshal(job,os);
 			i++;
@@ -443,33 +458,46 @@ public void AddEndErrorEndSucsses()
 			{
 				jobch=(JobChain) ejobchain.nextElement();
 				
-				OutputStream os = new FileOutputStream("D:/resultat/"+jobch.getName()+".xml" );
+				OutputStream os = new FileOutputStream(outPut+jobch.getName()+".xml" );
 				marshaller.marshal(jobch,os);
 				i++;	
 			} 
 
 		}
-
+//à commenter d'urgence...
 		if(lancement==3||lancement==13||lancement==123||lancement==23)
 		{ 
+			int tmp=0;
+			JobChain jobch;
+			ejobchain=jobchain.elements();
+			jobch=(JobChain) ejobchain.nextElement();
 			while(eOrder.hasMoreElements())
 			{
-				OutputStream os = new FileOutputStream("D:/resultat/" + i+"nosferatu.xml" );
-				marshaller.marshal(eOrder.nextElement(),os);
+				Order ordTemp=(Order) eOrder.nextElement();
+				
+				
+				if(tmp==NbOrderParJobchain.get(jobch.getName()))
+				{
+					jobch=(JobChain) ejobchain.nextElement();
+					tmp=0;
+				}
+				OutputStream os = new FileOutputStream(outPut +jobch.getName()+",order.xml" );
+				marshaller.marshal(fabrique.createOrder(ordTemp),os);
 				i++;	
+				tmp++;
 			}
 
 		}
 	}
 	public static void main(String[] args) throws IOException, JAXBException {
 
-		ExcelReader exrd= new ExcelReader();
+		ExcelReader exrd= new ExcelReader("D:/excel/KARMA_QAL_1.4_FULL.xlsx","D:/resultat/");
 		//1=job
 		//2=jobchain
 		//3=order
 		//12= job et jobchain
 		//etc...
-		if(exrd.TrainterLeFichierExcel()) exrd.OutputTest(2);
+		if(exrd.TrainterLeFichierExcel()) exrd.OutputTest(123);
 
 
 	}
