@@ -13,59 +13,87 @@
 	<artifactId>jobscheduler-jobstream-converter</artifactId>
 
 	<name>JobScheduler :: Jobstream converter</name>
-	<description>Convert Jobstream (definition of jobs in Tivoli Workload Scheduler) to Jobscheduler</description>
+	<description>Convert Jobstream (definition of jobs in TWS Tivoli Workload Scheduler) to Jobscheduler</description>
 
 	<packaging>jar</packaging>
 
 	<properties>
 		<tws.version>8.x.x</tws.version>
 
-		<antlr.version>4.2.2</antlr.version>
+		<antlr.version>3.5.2</antlr.version>
 	</properties>
 
 	<dependencies>
+
 		<dependency>
 			<groupId>org.antlr</groupId>
-			<artifactId>antlr4-runtime</artifactId>
+			<artifactId>antlr</artifactId>
 			<version>${antlr.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
 		</dependency>
 	</dependencies>
 
 	<build>
+		<resources>
+
+			<resource>
+				<directory>src/main/generated</directory>
+				<includes>
+					<include>**/*.java</include>
+				</includes>
+			</resource>
+
+		</resources>
+
 		<plugins>
+
 			<plugin>
 				<groupId>org.antlr</groupId>
-				<artifactId>antlr4-maven-plugin</artifactId>
+				<artifactId>antlr3-maven-plugin</artifactId>
 				<version>${antlr.version}</version>
 				<executions>
 					<execution>
+						<id>jobs</id>
 						<goals>
-							<goal>antlr4</goal>
+							<goal>antlr</goal>
 						</goals>
 						<configuration>
 							<listener>true</listener>
 							<visitor>true</visitor>
+							<sourceDirectory>src/main/antlr3/jobs</sourceDirectory>
+							<outputDirectory>${project.basedir}/src/main/generated/org/jobscheduler/converter/tws/job</outputDirectory>
 						</configuration>
 					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
 					<execution>
-						<id>extract-grammer</id>
-						<phase>initialize</phase>
+						<id>schedules</id>
 						<goals>
-							<goal>unpack-dependencies</goal>
+							<goal>antlr</goal>
 						</goals>
 						<configuration>
-							<includeArtifactIds>grammer</includeArtifactIds>
-							<outputDirectory>${antlr.dir}</outputDirectory>
+							<listener>true</listener>
+							<visitor>true</visitor>
+							<sourceDirectory>src/main/antlr3/schedules</sourceDirectory>
+							<outputDirectory>${project.basedir}/src/main/generated/org/jobscheduler/converter/tws/jobstream</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>variables</id>
+						<goals>
+							<goal>antlr</goal>
+						</goals>
+						<configuration>
+							<listener>true</listener>
+							<visitor>true</visitor>
+							<sourceDirectory>src/main/antlr3/variables</sourceDirectory>
+							<outputDirectory>${project.basedir}/src/main/generated/org/jobscheduler/converter/tws/variables</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
-
 		</plugins>
 	</build>
 
