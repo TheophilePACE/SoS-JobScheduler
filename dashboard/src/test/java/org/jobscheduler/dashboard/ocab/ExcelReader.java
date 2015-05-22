@@ -235,7 +235,6 @@ public class ExcelReader {
 
 	public void treatJobChainOption(int i) {
 
-		System.out.print(ligneTitre.get(i) + ":" + cell.toString() + ", ");
 
 		switch (ligneTitre.get(i).toString()) {
 
@@ -265,7 +264,7 @@ public class ExcelReader {
 	 */
 
 	public void treatJobOption(int i) {
-		System.out.print(ligneTitre.get(i) + ":" + cell.toString() + ", ");
+		
 
 		switch (ligneTitre.get(i).toString()) {
 
@@ -344,7 +343,7 @@ public class ExcelReader {
 																		// in
 																		// jobchain
 		ljob.put(jb.getTitle(), jb);
-		System.out.println("");
+		
 	}
 	
 	
@@ -686,7 +685,7 @@ public String countDay(String day)
 
 		lorder.put(od.getTitle(), od);
 		nbrDeOrder++;
-		System.out.println("jepere que sa incrémente la fiouu >> "+nbrDeOrder);
+		
 	}
 
 	/**
