@@ -53,7 +53,7 @@ public class ExcelReader {
 	String chaine;
 	String outPut;
 	String saveAt;
-
+    JobHelper jobhelp;
 	/**
 	 * Name the order based on jobchain
 	 */
@@ -125,7 +125,10 @@ public class ExcelReader {
 		fis = new FileInputStream(file);
 		wb = new XSSFWorkbook(fis);
 		sheet = wb.getSheetAt(3);
-
+		
+		jobhelp=new JobHelper(sheet);
+		jobhelp.initialisation();
+		
 		rowIterator = sheet.iterator();// Iterate through each rows one by one
 
 		cellFirstLigne = sheet.getRow(0).cellIterator();// Get the first line of
@@ -233,6 +236,16 @@ public class ExcelReader {
 
 	}
 
+	/**
+	 * name - treatJobChainOption functional correspondence between the excel 
+	 *                            file and jobscheduler (jobchain)
+	 * 
+	 * @param int : correspondence with the title line of the excel file
+	 * @author jean-vincent
+	 * @date 20/05/2015
+	 * @note
+	 */
+	
 	public void treatJobChainOption(int i) {
 
 
@@ -282,17 +295,35 @@ public class ExcelReader {
 			break;
 
 		case "recovery_option":
-
+			
+			
 			if (cell.toString().equals("stop")) {
 				jbcn.setErrorState("!end_ERR");
 			} else {
-				jbcn.setErrorState(jbcn.getNextState());
+				if(jbcn.getNextState().isEmpty())
+				{	
+				
+					jbcn.setErrorState("!end_ERR");
+	
+				}
+				else
+				{
+					jbcn.setErrorState(jbcn.getNextState());
+				}
 			}
 			break;
 
 		case "follows":
-
-			jbcn.setNextState(cell.toString());
+			
+             if(!jobhelp.getNextJob(jb.getTitle()).equals("NogetL1"))
+             {	 
+			jbcn.setNextState(jobhelp.getNextJob(jb.getTitle()));
+             }
+             else
+             {
+            	 jbcn.setNextState("end_SUC_All");
+             }
+			
 			break;
 
 		case "jid":
@@ -324,19 +355,28 @@ public class ExcelReader {
 		scrpt.setLanguage("shell");
 
 		int i = 2;// information about job begin in the 2nd column
+		
 		do {
 
-			if (i > 2)
+			
 				cell = coloneExcelSuivant();
-
-			if (!cell.toString().isEmpty()) {
+				i++;
+				
+				
+			if (!cell.toString().isEmpty()||i==11) {
+				
+				if(i==29){treatJobOption(41);}
+				else
+				{
 				treatJobOption(i); // treat a job hut
+				}
 			}
-
-			i++;
+                 
+				
 
 		} while (cellIterator.hasNext());
-
+		
+		
 		jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcn);// add
 																		// the
 																		// jobchainnode
@@ -346,7 +386,15 @@ public class ExcelReader {
 		
 	}
 	
-	
+	/**
+	 * name - countDay  correspondence between  excel and job scheduler date
+	 * 
+	 * 
+	 * @param String[] : correspondence with the title line of the excel file
+	 * @author jean-vincent
+	 * @date 20/05/2015
+	 * @note
+	 */	
 	
 public String countDay(String[] days)
 {
@@ -809,7 +857,7 @@ public String countDay(String day)
 			{
 				job = (Job) eLjob.nextElement();
 				OutputStream os = new FileOutputStream(outPut + job.getTitle()
-						+ ".xml");
+						+ ".job.xml");
 
 				marshaller.marshal(job, os);
 				i++;
@@ -825,7 +873,7 @@ public String countDay(String day)
 				jobch = (JobChain) ejobchain.next();
 
 				OutputStream os = new FileOutputStream(outPut + jobch.getName()
-						+ ".xml");
+						+ ".job_chain.xml");
 				marshaller.marshal(jobch, os);
 				i++;
 			}
@@ -850,7 +898,7 @@ public String countDay(String day)
 					tmp = 0;
 				}
 				OutputStream os = new FileOutputStream(outPut + jobch.getName()
-						+ "," + ordTemp.getTitle() + ".xml");
+						+ "," + ordTemp.getTitle() + ".order.xml");
 			
 				marshaller.marshal(fabrique.createOrder(ordTemp), os);
 				
@@ -873,7 +921,7 @@ public String countDay(String day)
 	public static void main(String[] args) throws IOException, JAXBException {
 
 		ExcelReader exrd = new ExcelReader(
-				"C:/Users/puls/workspace2/SoS-JobScheduler/dashboard/src/test/ressource/OCAB_Test.xlsm",
+				"C:/Users/puls/workspace2/SoS-JobScheduler/dashboard/src/test/ressource/OCAB_Test.xlsx",
 				"D:/resultat/");
 		// 1=job
 		// 2=jobchain
