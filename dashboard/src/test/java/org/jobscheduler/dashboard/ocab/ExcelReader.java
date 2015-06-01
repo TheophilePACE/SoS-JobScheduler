@@ -19,6 +19,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -35,6 +36,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jobscheduler.dashboard.jobdefinition.xml.*;
+import org.jobscheduler.dashboard.jobdefinition.xml.JobChain.JobChainNode;
 
 import com.sun.xml.bind.marshaller.CharacterEscapeHandler;
 
@@ -54,6 +56,8 @@ public class ExcelReader {
 	String outPut;
 	String saveAt;
     JobHelper jobhelp;
+    boolean jbcnSplitSyncBool=false;
+    boolean alreadySync=false;
 	/**
 	 * Name the order based on jobchain
 	 */
@@ -97,6 +101,7 @@ public class ExcelReader {
 	Order od;
 	Params oParams;
 	RunTime oRuntime;
+	JobChainNode jbcnSplitSync;
 
 	/**
 	 * Constructor using Excel and Xml path
@@ -126,8 +131,8 @@ public class ExcelReader {
 		wb = new XSSFWorkbook(fis);
 		sheet = wb.getSheetAt(3);
 		
-		jobhelp=new JobHelper(sheet);
-		jobhelp.initialisation();
+		jobhelp=new JobHelper(sheet,marshaller,jc);
+		jobhelp.initialization(output);
 		
 		rowIterator = sheet.iterator();// Iterate through each rows one by one
 
@@ -278,7 +283,7 @@ public class ExcelReader {
 
 	public void treatJobOption(int i) {
 		
-
+      
 		switch (ligneTitre.get(i).toString()) {
 
 		case "job":
@@ -286,6 +291,36 @@ public class ExcelReader {
 			jb.setTitle(cell.toString());
 			jbcn.setJob(cell.toString());
 			jbcn.setState(cell.toString());
+			//if next line is a split, then we have to create a new jobchainnode  in actual jobchain
+			if(jobhelp.getNextJob(cell.toString()).indexOf("Split_")!=-1)
+			{
+				jbcnSplitSync=fabrique.createJobChainJobChainNode();
+				String temp=jobhelp.getNextJob(cell.toString());//just a temporary variable
+				jbcnSplitSync.setState(temp);
+				jbcnSplitSync.setNextState(jobhelp.getNextJob(temp));
+				jbcnSplitSync.setJob("/sos/jitl/jobChainSplitter");
+				jbcnSplitSyncBool=true;
+			}
+			
+			
+			if(jobhelp.getNextJob(cell.toString()).indexOf("Sync_")!=-1)
+			{
+				if(!alreadySync)
+				{	
+				jbcnSplitSync=fabrique.createJobChainJobChainNode();
+				String temp=jobhelp.getNextJob(cell.toString());
+				jbcnSplitSync.setState(temp);
+				jbcnSplitSync.setNextState(jobhelp.getNextJob(temp));
+				jbcnSplitSync.setJob(temp);
+				jbcnSplitSyncBool=true;
+				alreadySync=true;
+				}
+			}
+			else
+			{
+				alreadySync=false;
+				
+			}
 			break;
 
 		case "scriptname":
@@ -365,23 +400,24 @@ public class ExcelReader {
 				
 			if (!cell.toString().isEmpty()||i==11) {
 				
-				if(i==29){treatJobOption(41);}
-				else
-				{
+				
 				treatJobOption(i); // treat a job hut
-				}
+				
 			}
                  
 				
 
 		} while (cellIterator.hasNext());
 		
+		jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcn);// add the jobchainnode in jobchain																 
 		
-		jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcn);// add
-																		// the
-																		// jobchainnode
-																		// in
-																		// jobchain
+		if(jbcnSplitSyncBool)//if a split or a synchro file exist then add in the jobchain
+		{
+			jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcnSplitSync);
+			jbcnSplitSyncBool=false;//for reset
+			
+		}
+		
 		ljob.put(jb.getTitle(), jb);
 		
 	}
@@ -761,6 +797,8 @@ public String countDay(String day)
 
 		}
 	}
+	
+	
 
 	/**
 	 * name - trainterLeFichierExcel() treat a excel file
@@ -799,6 +837,7 @@ public String countDay(String day)
 				if (!cell.toString().isEmpty()) {
 					// we treat the entire line (it's a job)
 
+					
 					treatJobLine();
 				} else {
 					// if JID don't exist we look the DEP
@@ -921,7 +960,7 @@ public String countDay(String day)
 	public static void main(String[] args) throws IOException, JAXBException {
 
 		ExcelReader exrd = new ExcelReader(
-				"C:/Users/puls/workspace2/SoS-JobScheduler/dashboard/src/test/ressource/OCAB_Test.xlsx",
+				"C:/Users/puls/workspace2/SoS-JobScheduler/dashboard/src/test/ressource/KARMA_QAL_1.4_FULL2.xlsm",
 				"D:/resultat/");
 		// 1=job
 		// 2=jobchain

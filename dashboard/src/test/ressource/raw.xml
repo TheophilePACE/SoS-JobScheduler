@@ -1,0 +1,13 @@
+<job order="yes" stop_on_error="no" title="Start a parallel processingin a jobchain">
+<description>
+<include file="jobs/JobSchedulerJobChainSplitter.xml"/>
+</description>
+<params/>
+<script java_class="com.sos.jitl.splitter.JobChainSplitterJSAdapterClass"
+language="java"/>
+<monitor name="configuration_monitor" ordering="0">
+<script java_class="sos.scheduler.managed.configuration.ConfigurationOrderMonitor"
+language="java"/>
+</monitor>
+<run_time/>
+</job>
