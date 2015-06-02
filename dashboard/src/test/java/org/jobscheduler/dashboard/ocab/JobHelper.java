@@ -51,7 +51,7 @@ public class JobHelper {
 	Marshaller marshaller;
 	JAXBContext jc;
 	String paramValue;
-	LinkedHashMap<String, String> splitConfig;
+	LinkedHashMap<String,Boolean> jobChainComplex;
 	String nameJobChain;
 	Job jb;
 	ObjectFactory fabrique ;
@@ -59,6 +59,9 @@ public class JobHelper {
 	Settings st;
 	JobChain jbc;
 	Order ord;
+	boolean configFile=false;
+	boolean complexe;
+	
 	public JobHelper(XSSFSheet sheet,Marshaller marshaller,JAXBContext jc)
 	{
 		this.sheet=sheet;
@@ -71,27 +74,38 @@ public class JobHelper {
 		this. marshaller= marshaller;
 		fabrique = new ObjectFactory();
 		beginJobchain=true;
-
-
+		complexe=false;
+		jobChainComplex=new LinkedHashMap<String,Boolean>();
 	}
 
+	/**
+	 * name - initialization, it's the main work
+	 *                           
+	 * 
+	 * @param String : the output file path
+	 * @author jean-vincent
+	 * @date 20/05/2015
+	 * @note
+	 */
 	public void initialization(String outPut) throws JAXBException, FileNotFoundException
 	{
 		Integer jid = 0;
-		boolean complexe=false;//it's a complicated case or not
+		//it's a complicated case or not
 		
 		while (rowIterator.hasNext()) {
 
 			Row row = rowIterator.next();//we start at the line number 2, the first line is for title in the excel file
 
-
+           
 			if(!row.getCell(5).getStringCellValue().isEmpty()) //for check jobchain name 
 			{
-				if(!beginJobchain) //if it's false, we have generate a config file for the current jobchain, then we create a output file
+				
+				if(!beginJobchain&&configFile) //if it's false, we have generate a config file for the current jobchain, then we create a output file
 				{
 					
-					OutputStream os = new FileOutputStream("outPut"+nameJobChain+".config.xml");
+					OutputStream os = new FileOutputStream(outPut+nameJobChain+".config.xml");
 					marshaller.marshal(st, os);
+					configFile=false;
 
 
 				}
@@ -101,9 +115,19 @@ public class JobHelper {
 
 			}
 			
-			if(!row.getCell(2).getStringCellValue().isEmpty())	//for check the jid of the line
-				jid=Integer.parseInt(row.getCell(2).getStringCellValue());
-
+			if(!row.getCell(2).toString().isEmpty())	//for check the jid of the line
+			{
+				
+				//jid=(int)row.getCell(2).getNumericCellValue();
+		        if(row.getCell(2).getCellType()==0)
+		        {
+		        	jid=(int)row.getCell(2).getNumericCellValue();
+		        }
+		        	else
+		        {
+		            jid=Integer.parseInt(row.getCell(2).getStringCellValue());
+		        }
+			}
 
 			cellIterator=row.cellIterator();
 			
@@ -133,7 +157,10 @@ public class JobHelper {
 					complexe=true;//for notice we have treat a complex case
 
 
-
+                 if (!jobChainComplex.containsKey(nameJobChain))
+                 {
+                	 jobChainComplex.put(nameJobChain,true);
+                 }
 				}
 				else
 				{
@@ -147,50 +174,7 @@ public class JobHelper {
 						
 						//ir, we have treat the complex, we must create a job file
 						//if it's the first complex case in the jobchain we create a job 
-						if(beginJobchain)
-						{
-							
-							jb=fabrique.createJob();
-							st=fabrique.createSettings();
-							jbc=fabrique.createJobChain();
-							jbc.setName(nameJobChain);
-							ord=fabrique.createOrder();
-							Order.Process proc=fabrique.createOrderProcess();
-							Params params=fabrique.createParams();
-							Param param=fabrique.createParam();
-							param.setName("state_names");
-							param.setValue(paramValue);
-							params.getParamOrCopyParamsOrInclude().add(param);
-							param=fabrique.createParam();
-							param.setName("sync_state_name");
-							param.setValue("Sync_"+numbeSyn);
-							params.getParamOrCopyParamsOrInclude().add(param);
-							proc.setState("Split_"+numbeSplit);
-							proc.setParams(params);
-							ord.getProcess().add(proc);
-							jbc.setOrder(ord);
-							st.setJobChain(jbc);
-							beginJobchain=false;
-						}
-						else //the job already exist we add a process
-						{
-							Order.Process proc=fabrique.createOrderProcess();
-							Params params=fabrique.createParams();
-							Param param=fabrique.createParam();
-							param.setName("state_names");
-							param.setValue(paramValue);
-							params.getParamOrCopyParamsOrInclude().add(param);
-							param=fabrique.createParam();
-							param.setName("sync_state_name");
-							param.setValue("Sync_"+numbeSyn);
-							params.getParamOrCopyParamsOrInclude().add(param);
-							proc.setState("Split_"+numbeSplit);
-							proc.setParams(params);
-							ord.getProcess().add(proc);
-
-
-
-						}
+						createConfigFile();
 
 
 
@@ -201,8 +185,10 @@ public class JobHelper {
 
 					//if the 2 next row have the same previous Jid then the next line is a complicated cases
                     //and the next of the current line is a split
+					System.out.println("getL1(12):"+getL1(12)+" getL2(12):"+getL2(12)+" jid"+jid);
 					if(getL1(12).equals(getL2(12)) && getL1(12).equals(String.valueOf(jid)) && getL2(12).equals(String.valueOf(jid)))
 					{
+						System.out.println("test"+cell.toString());
 						nameNextJob.put(cell.toString(),"Split_"+numbeSplit);
 						//copyFile("C:/Users/puls/workspace2/SoS-JobScheduler/dashboard/src/test/ressource/raw.xml", "D:/resultat/Split_"+numbeSplit+".xml");
 						Job jb=fabrique.createJob();
@@ -268,7 +254,23 @@ public class JobHelper {
 			tempCellIteratorL1=rowL1.iterator();
 			cellTemp=coloneExcelSuivant(tempCellIteratorL1,numeroColone);
 			if (!cellTemp.toString().isEmpty())
-				return cellTemp.toString();
+			{
+				
+				if(cellTemp.getCellType()==0)
+				{
+					
+						return String.valueOf((int)cellTemp.getNumericCellValue());
+				}
+				else
+				{
+					
+
+					return cellTemp.toString();
+				}
+	
+			}
+				
+			
 		}
 
 		return "NogetL1";
@@ -298,7 +300,20 @@ public class JobHelper {
 			tempCellIteratorL2=rowL2.iterator();
 			cellTemp=coloneExcelSuivant(tempCellIteratorL2,numeroColone);
 			if (!cellTemp.toString().isEmpty())
-				return cellTemp.toString();
+			{
+				if(cellTemp.getCellType()==0)
+				{
+					
+						return String.valueOf((int)cellTemp.getNumericCellValue());
+				}
+				else
+				{
+					
+
+					return cellTemp.toString();
+				}
+			}
+
 		}
 
 		return "NogetL2";
@@ -318,10 +333,20 @@ public class JobHelper {
 		Iterator<Cell> tempCellC;
 		Cell cellTemp;
 		rowC=sheet.getRow(ligne);
-		String st=rowC.getCell(2).toString();
+		
+		if(rowC.getCell(2).getCellType()==0)
+		{
+			if((int)rowC.getCell(2).getNumericCellValue()>999999)
+				return true;
+		}
+		else
+		{
+			String st=rowC.getCell(2).toString();
 
-		if(Integer.parseInt(st)>999999)
-			return true;
+			if(Integer.parseInt(st)>999999)
+				return true;
+		}
+		
 
 
 
@@ -381,7 +406,7 @@ public class JobHelper {
 
 	public Cell coloneExcelSuivant(Iterator<Cell> tempCellIteratorL1,int nbreCell) {
 
-
+		
 		for(int i=0;i<nbreCell-1;i++)
 		{
 			tempCellIteratorL1.next();
@@ -393,5 +418,70 @@ public class JobHelper {
 	{
 		return nameNextJob.get(name);
 	}
+	
+	public boolean isJobChainComplex(String name)
+	{
+		if(jobChainComplex.containsKey(name))
+		{return true;}
+		
+		return false;
+	}
+	
+	
 
+	/**
+	 * name - createConfigFile create a config job for a split
+	 * 
+	 * @author jean-vincent
+	 * @date 20/05/2015
+	 * @note
+	 */
+	public void createConfigFile()
+	{
+		configFile=true;
+		if(beginJobchain)
+		{
+			
+			jb=fabrique.createJob();
+			st=fabrique.createSettings();
+			jbc=fabrique.createJobChain();
+			jbc.setName(nameJobChain);
+			ord=fabrique.createOrder();
+			Order.Process proc=fabrique.createOrderProcess();
+			Params params=fabrique.createParams();
+			Param param=fabrique.createParam();
+			param.setName("state_names");
+			param.setValue(paramValue);
+			params.getParamOrCopyParamsOrInclude().add(param);
+			param=fabrique.createParam();
+			param.setName("sync_state_name");
+			param.setValue("Sync_"+numbeSyn);
+			params.getParamOrCopyParamsOrInclude().add(param);
+			proc.setState("Split_"+numbeSplit);
+			proc.setParams(params);
+			ord.getProcess().add(proc);
+			jbc.setOrder(ord);
+			st.setJobChain(jbc);
+			beginJobchain=false;
+		}
+		else //the job already exist we add a process
+		{
+			Order.Process proc=fabrique.createOrderProcess();
+			Params params=fabrique.createParams();
+			Param param=fabrique.createParam();
+			param.setName("state_names");
+			param.setValue(paramValue);
+			params.getParamOrCopyParamsOrInclude().add(param);
+			param=fabrique.createParam();
+			param.setName("sync_state_name");
+			param.setValue("Sync_"+numbeSyn);
+			params.getParamOrCopyParamsOrInclude().add(param);
+			proc.setState("Split_"+numbeSplit);
+			proc.setParams(params);
+			ord.getProcess().add(proc);
+
+
+
+		}
+	}
 }

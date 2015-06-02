@@ -229,13 +229,13 @@ public class ExcelReader {
 		} while (cellIterator.hasNext());
 
 		jobchain.put(jbc.getName(), jbc);
-
+        //for now if we treat a new jobchain
 		if (jobchainEnCour != jbc.getName() && jobchainEnCour!=null) {// reset correspondence between jobchain
 										// and order
 			
 			nbOrderParJobchain.put(jobchainEnCour, nbrDeOrder);
 			nbrDeOrder = 0;
-			
+			addBeginAndEndJobChain();
 		}
 		jobchainEnCour = jbc.getName();
 
@@ -291,7 +291,8 @@ public class ExcelReader {
 			jb.setTitle(cell.toString());
 			jbcn.setJob(cell.toString());
 			jbcn.setState(cell.toString());
-			//if next line is a split, then we have to create a new jobchainnode  in actual jobchain
+			
+			//if next line is a split, then we have to create a new jobchainnode (split)  in actual jobchain
 			if(jobhelp.getNextJob(cell.toString()).indexOf("Split_")!=-1)
 			{
 				jbcnSplitSync=fabrique.createJobChainJobChainNode();
@@ -352,11 +353,21 @@ public class ExcelReader {
 			
              if(!jobhelp.getNextJob(jb.getTitle()).equals("NogetL1"))
              {	 
-			jbcn.setNextState(jobhelp.getNextJob(jb.getTitle()));
-             }
+            	
+            	
+			     jbcn.setNextState(jobhelp.getNextJob(jb.getTitle()));
+            	
+            }
              else
              {
+            	 if(jobhelp.isJobChainComplex(jobchainEnCour)) //if it's a complex case next of the last jobchainode go to jobchainnode end
+             	{
+             		jbcn.setNextState("End");	
+             	}
+            	 else
+            	 {	 
             	 jbcn.setNextState("end_SUC_All");
+            	 }
              }
 			
 			break;
@@ -415,6 +426,7 @@ public class ExcelReader {
 		{
 			jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcnSplitSync);
 			jbcnSplitSyncBool=false;//for reset
+			
 			
 		}
 		
@@ -853,6 +865,7 @@ public String countDay(String day)
 			}
 
 		}
+		addBeginAndEndJobChain();
 		nbOrderParJobchain.put(jobchainEnCour, nbrDeOrder);
 		addEndErrorEndSucsses();
 		fis.close();
@@ -957,6 +970,29 @@ public String countDay(String day)
 		return fl.length;
 	}
 
+	public void addBeginAndEndJobChain()
+	{
+		if(jobhelp.isJobChainComplex(jobchainEnCour))
+		{   
+			
+			JobChain.JobChainNode jbcnTemp=fabrique.createJobChainJobChainNode();
+			jbcnTemp.setState("00_Start");
+			jbcnTemp.setJob("/sos/jitl/JobChainStart");
+			jbcnTemp.setErrorState("!end_ERR");
+			
+			JobChain.JobChainNode jbcnTemp2 =(JobChainNode) jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().get(0);
+			jbcnTemp.setNextState(jbcnTemp2.getState());
+			jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(0, jbcnTemp);
+			
+			jbcnTemp=fabrique.createJobChainJobChainNode();
+			jbcnTemp.setState("End");
+			jbcnTemp.setJob("/sos/jitl/JobChainEnd");
+			jbcnTemp.setErrorState("!end_ERR");
+			jbcnTemp.setNextState("end_SUC_All");
+			jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcnTemp);
+			
+		}	
+	}
 	public static void main(String[] args) throws IOException, JAXBException {
 
 		ExcelReader exrd = new ExcelReader(
