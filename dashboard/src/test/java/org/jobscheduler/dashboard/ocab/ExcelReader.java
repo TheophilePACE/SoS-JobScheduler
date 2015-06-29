@@ -230,12 +230,14 @@ public class ExcelReader {
 
 		jobchain.put(jbc.getName(), jbc);
         //for now if we treat a new jobchain
+		
 		if (jobchainEnCour != jbc.getName() && jobchainEnCour!=null) {// reset correspondence between jobchain
 										// and order
 			
 			nbOrderParJobchain.put(jobchainEnCour, nbrDeOrder);
 			nbrDeOrder = 0;
-			addBeginAndEndJobChain();
+			
+			addBeginAndEndJobChain(jobchainEnCour);
 		}
 		jobchainEnCour = jbc.getName();
 
@@ -865,7 +867,7 @@ public String countDay(String day)
 			}
 
 		}
-		addBeginAndEndJobChain();
+		addBeginAndEndJobChain(jobchainEnCour);
 		nbOrderParJobchain.put(jobchainEnCour, nbrDeOrder);
 		addEndErrorEndSucsses();
 		fis.close();
@@ -970,7 +972,7 @@ public String countDay(String day)
 		return fl.length;
 	}
 
-	public void addBeginAndEndJobChain()
+	public void addBeginAndEndJobChain(String jobChainEnCour)
 	{
 		if(jobhelp.isJobChainComplex(jobchainEnCour))
 		{   
@@ -979,17 +981,16 @@ public String countDay(String day)
 			jbcnTemp.setState("00_Start");
 			jbcnTemp.setJob("/sos/jitl/JobChainStart");
 			jbcnTemp.setErrorState("!end_ERR");
-			
-			JobChain.JobChainNode jbcnTemp2 =(JobChainNode) jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().get(0);
+			JobChain.JobChainNode jbcnTemp2 =(JobChainNode) jobchain.get(jobchainEnCour).getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().get(0);
 			jbcnTemp.setNextState(jbcnTemp2.getState());
-			jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(0, jbcnTemp);
+			jobchain.get(jobchainEnCour).getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(0, jbcnTemp);
 			
 			jbcnTemp=fabrique.createJobChainJobChainNode();
 			jbcnTemp.setState("End");
 			jbcnTemp.setJob("/sos/jitl/JobChainEnd");
 			jbcnTemp.setErrorState("!end_ERR");
 			jbcnTemp.setNextState("end_SUC_All");
-			jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcnTemp);
+			jobchain.get(jobchainEnCour).getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcnTemp);
 			
 		}	
 	}
