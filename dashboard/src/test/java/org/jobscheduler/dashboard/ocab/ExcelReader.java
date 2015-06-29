@@ -55,12 +55,30 @@ public class ExcelReader {
 	String chaine;
 	String outPut;
 	String saveAt;
+	int metrique;
+	
+	/**
+	 * For the conversion , we must know the next steps for each job,
+	 * but ExcelReader work sequentially and don't stock anything about the next 
+	 * JobHelper contain some operation for now who is the next, 
+	 * or if jobchain is complex. 
+	 * 
+	 */
     JobHelper jobhelp;
+    
+    /**
+     *this variable allows insert in a jobchain, a job split and a job for the synchronization
+     *we need those variables because there is no correspondence in the ocab file, we add the job manually. 
+     *jbcnSplitBool jbcnSyncBool, just for say if we need add a split/Sync job or not.
+     *alreadySync, many job can converge on a job of Synchronization, but there is only one job of Synchronization,
+     *when he exist, alreadySync is true  
+     */
     boolean jbcnSplitBool=false;
     boolean jbcnSyncBool=false;
-    
     boolean alreadySync=false;
-	/**
+	
+    
+    /**
 	 * Name the order based on jobchain
 	 */
 
@@ -77,15 +95,11 @@ public class ExcelReader {
 	 * Lists
 	 */
 
-	ArrayList<String> ligneTitre = new ArrayList<String>(); // title line of
-															// Excel
+	ArrayList<String> ligneTitre = new ArrayList<String>(); // title line of  Excel															
 	Hashtable job = new Hashtable();
 	LinkedHashMap<String, JobChain> jobchain = new LinkedHashMap<String, JobChain>();
-	Hashtable<String, Integer> nbOrderParJobchain = new Hashtable<String, Integer>();// amount
-																						// "order"
-																						// for
-																						// each
-																						// jobchain
+	// amount "order" for each jobchain
+	Hashtable<String, Integer> nbOrderParJobchain = new Hashtable<String, Integer>();
 	Hashtable<String, Job> ljob = new Hashtable<String, Job>();
 	LinkedHashMap<String, Order> lorder = new LinkedHashMap<String, Order>();
 	Iterator<Row> rowIterator;
@@ -114,12 +128,14 @@ public class ExcelReader {
 			throws JAXBException, IOException {
 		super();
 		this.outPut = output;
+		metrique=0;
 		file = new File(EmplacementFichierExcel);
 		jc = JAXBContext
 				.newInstance("org.jobscheduler.dashboard.jobdefinition.xml");
 		marshaller = jc.createMarshaller();
 		marshaller.setProperty("jaxb.encoding", "ISO-8859-1");
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+		//For add CDATA, jaxb don't allow the use of "<!" (special character in xml)
 		marshaller.setProperty("com.sun.xml.bind.characterEscapeHandler",
 				new CharacterEscapeHandler() {
 					@Override
@@ -143,7 +159,7 @@ public class ExcelReader {
 														// excel file
 		jobchainEnCour = null;
 		nbrDeOrder = 0;
-		saveAt="00:00";
+		saveAt="00:00";//Default Time
 
 	}
 
@@ -975,12 +991,10 @@ public String countDay(String day)
 
 		}
 
-		File di = new File("D:/resultat/");
+		File di = new File(outPut);
 		File fl[] = di.listFiles();
 
-		if (fl.length != 147)
-			throw new IllegalStateException(
-					"Nombre de fichiers attendus incorrect");
+	
 		return fl.length;
 	}
 
@@ -1010,12 +1024,13 @@ public String countDay(String day)
 
 		ExcelReader exrd = new ExcelReader(
 				"C:/Users/puls/workspace2/SoS-JobScheduler/dashboard/src/test/ressource/KARMA_QAL_1.4_FULL2.xlsm",
-				"D:/resultat/");
+				System.getProperty("user.dir")+"/");
 		// 1=job
 		// 2=jobchain
 		// 3=order
 		// 12= job et jobchain
 		// etc...
+		
 		if (exrd.treatExcelFile())
 			exrd.OutputTest(123);
 
