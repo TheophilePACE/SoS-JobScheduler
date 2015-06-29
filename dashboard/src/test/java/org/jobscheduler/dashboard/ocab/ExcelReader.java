@@ -56,7 +56,9 @@ public class ExcelReader {
 	String outPut;
 	String saveAt;
     JobHelper jobhelp;
-    boolean jbcnSplitSyncBool=false;
+    boolean jbcnSplitBool=false;
+    boolean jbcnSyncBool=false;
+    
     boolean alreadySync=false;
 	/**
 	 * Name the order based on jobchain
@@ -101,8 +103,9 @@ public class ExcelReader {
 	Order od;
 	Params oParams;
 	RunTime oRuntime;
-	JobChainNode jbcnSplitSync;
-
+	JobChainNode jbcnSplit;
+	JobChainNode jbcnSync;
+	
 	/**
 	 * Constructor using Excel and Xml path
 	 */
@@ -297,12 +300,12 @@ public class ExcelReader {
 			//if next line is a split, then we have to create a new jobchainnode (split)  in actual jobchain
 			if(jobhelp.getNextJob(cell.toString()).indexOf("Split_")!=-1)
 			{
-				jbcnSplitSync=fabrique.createJobChainJobChainNode();
+				jbcnSplit=fabrique.createJobChainJobChainNode();
 				String temp=jobhelp.getNextJob(cell.toString());//just a temporary variable
-				jbcnSplitSync.setState(temp);
-				jbcnSplitSync.setNextState(jobhelp.getNextJob(temp));
-				jbcnSplitSync.setJob("/sos/jitl/jobChainSplitter");
-				jbcnSplitSyncBool=true;
+				jbcnSplit.setState(temp);
+				jbcnSplit.setNextState(jobhelp.getNextJob(temp));
+				jbcnSplit.setJob("/sos/jitl/jobChainSplitter");
+				jbcnSplitBool=true;
 			}
 			
 			
@@ -310,17 +313,18 @@ public class ExcelReader {
 			{
 				if(!alreadySync)
 				{	
-				jbcnSplitSync=fabrique.createJobChainJobChainNode();
+				jbcnSync=fabrique.createJobChainJobChainNode();
 				String temp=jobhelp.getNextJob(cell.toString());
-				jbcnSplitSync.setState(temp);
-				jbcnSplitSync.setNextState(jobhelp.getNextJob(temp));
-				jbcnSplitSync.setJob(temp);
-				jbcnSplitSyncBool=true;
+				jbcnSync.setState(temp);
+				jbcnSync.setNextState(jobhelp.getNextJob(temp));
+				jbcnSync.setJob(temp);
+				
 				alreadySync=true;
 				}
 			}
-			else
+			else if(alreadySync)
 			{
+				jbcnSyncBool=true;
 				alreadySync=false;
 				
 			}
@@ -422,12 +426,20 @@ public class ExcelReader {
 
 		} while (cellIterator.hasNext());
 		
+		if(jbcnSyncBool)//if a split or a synchro file exist then add in the jobchain
+		{
+			jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcnSync);
+			jbcnSyncBool=false;//for reset
+			
+			
+		}
+		
 		jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcn);// add the jobchainnode in jobchain																 
 		
-		if(jbcnSplitSyncBool)//if a split or a synchro file exist then add in the jobchain
+		if(jbcnSplitBool)//if a split or a synchro file exist then add in the jobchain
 		{
-			jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcnSplitSync);
-			jbcnSplitSyncBool=false;//for reset
+			jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcnSplit);
+			jbcnSplitBool=false;//for reset
 			
 			
 		}
