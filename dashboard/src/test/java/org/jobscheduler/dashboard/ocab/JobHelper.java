@@ -22,7 +22,10 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.ss.format.CellDateFormatter;
+import org.apache.poi.ss.format.CellFormat;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.tools.ant.types.LogLevel;
@@ -44,6 +47,9 @@ public class JobHelper {
 	Iterator<Row> rowIterator;
 	Iterator<Cell> cellIterator;
 	Cell cell;
+	/*
+	 * count number split and synch
+	 */
 	int numbeSplit;
 	int numbeSyn;
 	XSSFSheet sheet;
@@ -61,7 +67,8 @@ public class JobHelper {
 	Order ord;
 	boolean configFile=false;
 	boolean complexe;
-	
+
+
 	public JobHelper(XSSFSheet sheet,Marshaller marshaller,JAXBContext jc)
 	{
 		this.sheet=sheet;
@@ -80,7 +87,8 @@ public class JobHelper {
 
 	/**
 	 * name - initialization, it's the main work
-	 *                           
+	 *        For each job we look the next values and save it,
+	 *        we look if a job is a part of a chain simple or complicate                  
 	 * 
 	 * @param String : the output file path
 	 * @author jean-vincent
@@ -90,19 +98,18 @@ public class JobHelper {
 	public void initialization(String outPut) throws JAXBException, FileNotFoundException
 	{
 		Integer jid = 0;
-		//it's a complicated case or not
 		
 		while (rowIterator.hasNext()) {
-
+             
 			Row row = rowIterator.next();//we start at the line number 2, the first line is for title in the excel file
+     
 
-           
 			if(!row.getCell(5).getStringCellValue().isEmpty()) //for check jobchain name 
 			{
-				
-				if(!beginJobchain&&configFile) //if it's false, we have generate a config file for the current jobchain, then we create a output file
+
+				if(!beginJobchain&&configFile) // here, we have generate a config file for the current jobchain, then we create a output file
 				{
-					
+
 					OutputStream os = new FileOutputStream(outPut+nameJobChain+".config.xml");
 					marshaller.marshal(st, os);
 					configFile=false;
@@ -115,23 +122,24 @@ public class JobHelper {
 
 			}
 			
+		
 			if(!row.getCell(2).toString().isEmpty())	//for check the jid of the line
 			{
-				
-				//jid=(int)row.getCell(2).getNumericCellValue();
-		        if(row.getCell(2).getCellType()==0)
-		        {
-		        	jid=(int)row.getCell(2).getNumericCellValue();
-		        }
-		        	else
-		        {
-		            jid=Integer.parseInt(row.getCell(2).getStringCellValue());
-		        }
+
+
+				if(row.getCell(2).getCellType()==0)
+				{
+					jid=(int)row.getCell(2).getNumericCellValue();
+				}
+				else
+				{
+					jid=Integer.parseInt(row.getCell(2).getStringCellValue());
+				}
 			}
 
 			cellIterator=row.cellIterator();
-			
-			cell=coloneExcelSuivant(7);	//we go to the column 7, the job name
+
+			cell=coloneExcelSuivant(7);	//we go to the column 7, the job name (of the current job)
 
 			if(!cell.toString().isEmpty()) //if it's not empty we treat a job
 			{
@@ -157,10 +165,11 @@ public class JobHelper {
 					complexe=true;//for notice we have treat a complex case
 
 
-                 if (!jobChainComplex.containsKey(nameJobChain))
-                 {
-                	 jobChainComplex.put(nameJobChain,true);
-                 }
+					if (!jobChainComplex.containsKey(nameJobChain))
+					{
+						jobChainComplex.put(nameJobChain,true);//For now if a jochain contain complex case,
+						                                       //We add for the complex jobchain a job start and a job end 
+					}
 				}
 				else
 				{
@@ -168,29 +177,30 @@ public class JobHelper {
 					{
 						//now we treat a simple case but before we treat a complex case then we have some thing to do
 						//set  next of the synchro and split 
-						nameNextJob.put("Split_"+numbeSplit,"Sync_"+numbeSyn);
+						nameNextJob.put("Split_"+numbeSplit,"Sync_"+numbeSyn);//next of a split is always a synchronization
 						nameNextJob.put("Sync_"+numbeSyn,cell.toString());
 						complexe=false;//reset
-						
-						//ir, we have treat the complex, we must create a job file
-						//if it's the first complex case in the jobchain we create a job 
+
+						//here, we have treat the complex, we must create a job file
+						//if it's the first complex case in the jobchain we create a jobchain with a new order and a new process
+						//else we add a new process, look a config file for understand
+						//jobchain in the config file it's not a common jobchain 
 						createConfigFile();
 
 
 
 
 						numbeSyn++;//for the next synchro
-						numbeSplit++;
+						numbeSplit++;//for the next split
 					} 
 
 					//if the 2 next row have the same previous Jid then the next line is a complicated cases
-                    //and the next of the current line is a split
-					System.out.println("getL1(12):"+getL1(12)+" getL2(12):"+getL2(12)+" jid"+jid);
+					//and the next of the current line is a split
+					
 					if(getL1(12).equals(getL2(12)) && getL1(12).equals(String.valueOf(jid)) && getL2(12).equals(String.valueOf(jid)))
 					{
-						System.out.println("test"+cell.toString());
+						
 						nameNextJob.put(cell.toString(),"Split_"+numbeSplit);
-						//copyFile("C:/Users/puls/workspace2/SoS-JobScheduler/dashboard/src/test/ressource/raw.xml", "D:/resultat/Split_"+numbeSplit+".xml");
 						Job jb=fabrique.createJob();
 						jb.setOrder("yes");
 						jb.setStopOnError("no");
@@ -221,7 +231,7 @@ public class JobHelper {
 
 			ligne++;
 		}
-		
+
 		//for generate the last config file
 		if(!beginJobchain)
 		{
@@ -240,7 +250,7 @@ public class JobHelper {
 	 * @date 20/05/2015
 	 * @note
 	 */
-	
+
 	public String getL1(int numeroColone)
 	{
 		Row rowL1;
@@ -255,29 +265,29 @@ public class JobHelper {
 			cellTemp=coloneExcelSuivant(tempCellIteratorL1,numeroColone);
 			if (!cellTemp.toString().isEmpty())
 			{
-				
+
 				if(cellTemp.getCellType()==0)
 				{
-					
-						return String.valueOf((int)cellTemp.getNumericCellValue());
+
+					return String.valueOf((int)cellTemp.getNumericCellValue());
 				}
 				else
 				{
-					
+
 
 					return cellTemp.toString();
 				}
-	
+
 			}
-				
-			
+
+
 		}
 
 		return "NogetL1";
 	}
 
 	/**
-	 * name - getL3 get in two next line, the column enter in parameter
+	 * name - getL2 get in two next line, the column enter in parameter
 	 *                           
 	 * 
 	 * @param int : column numbe
@@ -286,7 +296,7 @@ public class JobHelper {
 	 * @date 20/05/2015
 	 * @note
 	 */
-	
+
 	public String getL2(int numeroColone)
 	{
 		Row rowL2;
@@ -303,12 +313,12 @@ public class JobHelper {
 			{
 				if(cellTemp.getCellType()==0)
 				{
-					
-						return String.valueOf((int)cellTemp.getNumericCellValue());
+
+					return String.valueOf((int)cellTemp.getNumericCellValue());
 				}
 				else
 				{
-					
+
 
 					return cellTemp.toString();
 				}
@@ -333,7 +343,7 @@ public class JobHelper {
 		Iterator<Cell> tempCellC;
 		Cell cellTemp;
 		rowC=sheet.getRow(ligne);
-		
+
 		if(rowC.getCell(2).getCellType()==0)
 		{
 			if((int)rowC.getCell(2).getNumericCellValue()>999999)
@@ -346,7 +356,7 @@ public class JobHelper {
 			if(Integer.parseInt(st)>999999)
 				return true;
 		}
-		
+
 
 
 
@@ -406,7 +416,7 @@ public class JobHelper {
 
 	public Cell coloneExcelSuivant(Iterator<Cell> tempCellIteratorL1,int nbreCell) {
 
-		
+
 		for(int i=0;i<nbreCell-1;i++)
 		{
 			tempCellIteratorL1.next();
@@ -418,16 +428,16 @@ public class JobHelper {
 	{
 		return nameNextJob.get(name);
 	}
-	
+
 	public boolean isJobChainComplex(String name)
 	{
 		if(jobChainComplex.containsKey(name))
 		{return true;}
-		
+
 		return false;
 	}
-	
-	
+
+
 
 	/**
 	 * name - createConfigFile create a config job for a split
@@ -441,7 +451,7 @@ public class JobHelper {
 		configFile=true;
 		if(beginJobchain)
 		{
-			
+
 			jb=fabrique.createJob();
 			st=fabrique.createSettings();
 			jbc=fabrique.createJobChain();

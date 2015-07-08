@@ -45,7 +45,7 @@ public class ConvertisseurTwsJbs extends javax.swing.JFrame {
         "Excel", "xlsm","xlss");
         jFileChooser1.setAcceptAllFileFilterUsed(false);
         jFileChooser1.setFileFilter(filter);
-       
+        jProgressBar1.setMaximum(100);
        
 jLabel4.setVisible(false);
         
@@ -208,10 +208,13 @@ jLabel4.setVisible(false);
  			ExcelReader exrd = new ExcelReader(
  					jFileChooser1.getSelectedFile().getAbsolutePath(),
  					System.getProperty("user.dir")+"/");
+ 			jProgressBar1.setValue(20);
  			if (exrd.treatExcelFile())
  				{
+ 				jProgressBar1.setValue(80);
  				jTextArea1.setText(exrd.OutputTest(123)+" fichier(s) ont été générés");
  				jTextArea1.setText(jTextArea1.getText()+"\n"+"operation succeeded");
+ 				jProgressBar1.setValue(100);
  				}
  			else{
  				jTextArea1.setText(jTextArea1.getText()+"\n"+"Error, conversion failed");

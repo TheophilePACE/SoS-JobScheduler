@@ -32,6 +32,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -150,6 +151,29 @@ public class ExcelReader {
 		wb = new XSSFWorkbook(fis);
 		sheet = wb.getSheetAt(3);
 		
+		for(Row row : sheet) {
+			//System.out.println("");
+			   for(int cn=0; cn<row.getLastCellNum(); cn++) {
+			       // If the cell is missing from the file, generate a blank one
+			       // (Works by specifying a MissingCellPolicy)
+			       Cell cell = row.getCell(cn, Row.CREATE_NULL_AS_BLANK);
+			       // Print the cell for debugging
+			       //System.out.print("|CELL: " + cn + " --> " + cell.toString());
+			   }
+			}
+		ExcelClinner(sheet);
+/*System.out.println("\n*********************************************************************************************************");
+		for(Row row : sheet) {
+			System.out.println("");
+			   for(int cn=0; cn<row.getLastCellNum(); cn++) {
+			       // If the cell is missing from the file, generate a blank one
+			       // (Works by specifying a MissingCellPolicy)
+			       Cell cell = row.getCell(cn, Row.CREATE_NULL_AS_BLANK);
+			       // Print the cell for debugging
+			       System.out.print("|CELL: " + cn + " --> " + cell.toString());
+			   }
+			}
+		*/
 		jobhelp=new JobHelper(sheet,marshaller,jc);
 		jobhelp.initialization(output);
 		
@@ -236,8 +260,8 @@ public class ExcelReader {
 		do {
 
 			cell = coloneExcelSuivant();// first time, we pass to the case 3nd
-										// case
-										// it's why i=2 (0,1,2)=>3
+							// case
+									// it's why i=2 (0,1,2)=>3
 
 			if (!cell.toString().isEmpty()) {
 				treatJobChainOption(i); // treat a jobchain hut
@@ -285,6 +309,10 @@ public class ExcelReader {
 		case "priority":
 
 			break;
+			
+		
+			
+			
 
 		default:
 			break;
@@ -324,6 +352,10 @@ public class ExcelReader {
 				jbcnSplitBool=true;
 			}
 			
+			//if next line is a split, then we have to create a new synchro in actual jobchain
+			//but every job in a complex case have synch for next or we have only one synch
+			//then we notice we need create a job synch but we add it at the end of the complex case,
+			//when next of the current job is different of Synch and alreySync(=we have a job synch to add) is true    
 			
 			if(jobhelp.getNextJob(cell.toString()).indexOf("Sync_")!=-1)
 			{
@@ -399,6 +431,8 @@ public class ExcelReader {
 			jbcn.setState(cell.toString());
 
 			break;
+			
+		
 
 		default:
 			break;
@@ -793,6 +827,7 @@ public String countDay(String day)
 	 * @note
 	 */
 	public void treatOrderLine() {
+		
 		oRuntime = fabrique.createRunTime();
 		oParams = fabrique.createParams();
 		od = fabrique.createOrder();
@@ -807,11 +842,21 @@ public String countDay(String day)
 
 		if (runtime == true) {
 			od.setRunTime(oRuntime);
+			runtime=false;
 		}
-
-		lorder.put(od.getTitle(), od);
+		
+		String complement="";
+		while(lorder.containsKey(od.getTitle()+complement))
+			 complement+="bis";
+			
+	
+		lorder.put(od.getTitle()+complement, od);
+		
+		
 		nbrDeOrder++;
 		
+		if(!saveAt.equals("00:00"))
+		saveAt=new String("00:00");
 	}
 
 	/**
@@ -995,7 +1040,7 @@ public String countDay(String day)
 		File fl[] = di.listFiles();
 
 	
-		return fl.length;
+		return fl.length-1;
 	}
 
 	public void addBeginAndEndJobChain(String jobChainEnCour)
@@ -1020,11 +1065,47 @@ public String countDay(String day)
 			
 		}	
 	}
+	
+	public void ExcelClinner(XSSFSheet sheet)
+	{
+		Iterator<Row> rowIt=sheet.iterator();
+		rowIt.next();
+		Row row,rowPrec,rowSuiv;
+		 row = rowIt.next();
+		 rowPrec=row ;
+		 rowSuiv=rowIt.next();
+		
+		 while(rowIt.hasNext())
+		{	
+			
+			
+			if(!row.getCell(3).toString().isEmpty()&& row.getCell(3).toString().equals("R"))
+			{
+				
+				if(row.getCell(16).toString().isEmpty())
+				{
+					if(!rowPrec.getCell(16).toString().isEmpty())
+					{
+						row.getCell(16).setCellValue(rowPrec.getCell(16).toString());
+					}
+					if(!rowSuiv.getCell(16).toString().isEmpty())
+					{
+						row.getCell(16).setCellValue(rowSuiv.getCell(16).toString());
+					}
+				}
+				
+				
+			}
+			rowPrec=row;
+			row=rowSuiv ;
+			rowSuiv = rowIt.next();
+		}
+	}
 	public static void main(String[] args) throws IOException, JAXBException {
 
 		ExcelReader exrd = new ExcelReader(
-				"C:/Users/puls/workspace2/SoS-JobScheduler/dashboard/src/test/ressource/KARMA_QAL_1.4_FULL2.xlsm",
-				System.getProperty("user.dir")+"/");
+				"C:/Users/puls/workspace2/SoS-JobScheduler/dashboard/src/test/ressource/MARC-DEV.xlsm",
+				"D:/resultat/");
 		// 1=job
 		// 2=jobchain
 		// 3=order
@@ -1032,7 +1113,13 @@ public String countDay(String day)
 		// etc...
 		
 		if (exrd.treatExcelFile())
-			exrd.OutputTest(123);
+			
+			{
+			System.out.println("test");
+			exrd.OutputTest(123);}
+		else{
+			System.out.println("nofichir");
+		}
 
 	}
 }
