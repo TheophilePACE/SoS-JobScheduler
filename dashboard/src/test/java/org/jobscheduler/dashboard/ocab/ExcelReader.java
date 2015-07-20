@@ -31,9 +31,11 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
+import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jobscheduler.dashboard.jobdefinition.xml.*;
@@ -161,19 +163,10 @@ public class ExcelReader {
 			       //System.out.print("|CELL: " + cn + " --> " + cell.toString());
 			   }
 			}
-		ExcelClinner(sheet);
-/*System.out.println("\n*********************************************************************************************************");
-		for(Row row : sheet) {
-			System.out.println("");
-			   for(int cn=0; cn<row.getLastCellNum(); cn++) {
-			       // If the cell is missing from the file, generate a blank one
-			       // (Works by specifying a MissingCellPolicy)
-			       Cell cell = row.getCell(cn, Row.CREATE_NULL_AS_BLANK);
-			       // Print the cell for debugging
-			       System.out.print("|CELL: " + cn + " --> " + cell.toString());
-			   }
-			}
-		*/
+		ExcelCleaner(sheet);
+		/*FileOutputStream fileOut = new FileOutputStream("monfichier.xlsm");
+		wb.write(fileOut);*/
+
 		jobhelp=new JobHelper(sheet,marshaller,jc);
 		jobhelp.initialization(output);
 		
@@ -1066,19 +1059,35 @@ public String countDay(String day)
 		}	
 	}
 	
-	public void ExcelClinner(XSSFSheet sheet)
+	public void ExcelCleaner(XSSFSheet sheet)
 	{
 		Iterator<Row> rowIt=sheet.iterator();
 		rowIt.next();
 		Row row,rowPrec,rowSuiv;
-		 row = rowIt.next();
+		 row = sheet.getRow(1);
 		 rowPrec=row ;
-		 rowSuiv=rowIt.next();
+		 rowSuiv=sheet.getRow(2);
+		int numLigne=1;
 		
-		 while(rowIt.hasNext())
+		// while(rowIt.hasNext())
+		for(int p=2;p<=sheet.getLastRowNum();p++)	 
 		{	
 			
-			
+			 
+			//Add order
+			 if(!row.getCell(16).toString().isEmpty()&& !row.getCell(1).toString().isEmpty())
+			 {
+				
+				 if(!rowSuiv.getCell(3).toString().equals("R"))
+				 {
+					 
+					 copyRow(sheet,numLigne+1); 
+					 
+				 }
+			 }
+			//End add order
+			 
+			//Cleaning excel order
 			if(!row.getCell(3).toString().isEmpty()&& row.getCell(3).toString().equals("R"))
 			{
 				
@@ -1096,15 +1105,128 @@ public String countDay(String day)
 				
 				
 			}
+			//End cleaning excel order
+			
+			/*if(!row.getCell(2).toString().isEmpty()&& row.getCell(11).toString().equals(rowSuiv.getCell(11).toString()))
+			{
+				int jid=Integer.parseInt(row.getCell(2).getStringCellValue());
+				
+				if(row.getCell(2).getStringCellValue().length()<=6)
+				{
+					replaceNumber( sheet, Integer.parseInt(row.getCell(2).getStringCellValue()),Integer.parseInt(row.getCell(2).getStringCellValue()+"01"));
+					replaceNumber( sheet, Integer.parseInt(rowSuiv.getCell(2).getStringCellValue()),Integer.parseInt(row.getCell(2).getStringCellValue()+"02"));
+				}
+				else
+				{
+					replaceNumber( sheet, Integer.parseInt(rowSuiv.getCell(2).getStringCellValue()),Integer.parseInt(row.getCell(2).getStringCellValue())+1);
+				}
+			}*/
+			
 			rowPrec=row;
 			row=rowSuiv ;
-			rowSuiv = rowIt.next();
+			if(p+1<=sheet.getLastRowNum())
+			rowSuiv = sheet.getRow(p+1);
+			
+			numLigne++;
+			
+			
+			
 		}
 	}
+	
+	public void copyRow(XSSFSheet worksheet, int destinationRowNum) {
+		  // Get the source / new row
+		  Row newRow = worksheet.getRow(destinationRowNum);
+		 
+
+		  // If the row exist in destination, push down all rows by 1 else create a new row
+		  if (newRow != null) {
+		    worksheet.shiftRows(destinationRowNum, worksheet.getLastRowNum(), 1);
+		  } 
+		   
+		  worksheet.createRow(destinationRowNum);
+		  Row row= worksheet.getRow(destinationRowNum);
+		  
+		
+		  
+				   for(int cn=0; cn<newRow.getLastCellNum(); cn++) {
+					   
+				        row.createCell(cn);
+				        newRow.getCell(cn, Row.CREATE_NULL_AS_BLANK);
+				      
+				       if(cn==3)
+				      {
+				    	 row.getCell(cn).setCellValue("R");
+				    	
+				    	 
+				      }
+				       if(cn==28)
+					      {
+					    	 row.getCell(cn).setCellValue("FREQ=DAILY;INTERVAL=1");
+					    	 
+					      }
+				       
+				   }
+				
+		  
+		}
+	
+	
+	public void replaceNumber(XSSFSheet worksheet, int numbeToReplace,int replace)	
+	{
+		Iterator<Row> rowIt=worksheet.iterator();
+		rowIt.next();
+		Row row;
+		while(rowIt.hasNext())
+		{
+			row=rowIt.next();
+			if(row.getCell(2).getStringCellValue().equals(numbeToReplace))
+			{
+				row.getCell(2).setCellValue(replace);
+			}
+			
+			if(row.getCell(11).getStringCellValue().indexOf(numbeToReplace)!=-1)
+			{
+			
+				if(row.getCell(11).getStringCellValue().equals(numbeToReplace))
+					{row.getCell(11).setCellValue(replace);
+					}
+				else{
+					String[] listNum = row.getCell(11).getStringCellValue().split(",");
+					row.getCell(11).setCellValue("");
+					
+					for(String st :listNum)
+					{
+						
+						if(st.equals(String.valueOf(numbeToReplace)))
+						{
+							st=String.valueOf(replace);
+						}
+						
+						if(row.getCell(11).getStringCellValue().isEmpty())
+						{
+							row.getCell(11).setCellValue(st);	
+						}
+						else
+						{
+							row.getCell(11).setCellValue(row.getCell(11).getStringCellValue()+","+st);	
+						}
+						
+					}
+					
+					
+				}
+				
+				
+			}
+		}
+	}
+	
+	
 	public static void main(String[] args) throws IOException, JAXBException {
 
 		ExcelReader exrd = new ExcelReader(
-				"C:/Users/puls/workspace2/SoS-JobScheduler/dashboard/src/test/ressource/MARC-DEV.xlsm",
+				"C:/Users/puls/workspace2/SoS-JobScheduler/dashboard/src/test/ressource/KARMA_QAL_1.4_FULL2.xlsm",
 				"D:/resultat/");
 		// 1=job
 		// 2=jobchain

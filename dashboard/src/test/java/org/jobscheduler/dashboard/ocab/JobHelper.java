@@ -339,26 +339,50 @@ public class JobHelper {
 	 */
 	public boolean isComplex()
 	{
-		Row rowC;
+		Row rowC,rowCN,rowCP;
 		Iterator<Cell> tempCellC;
 		Cell cellTemp;
 		rowC=sheet.getRow(ligne);
-
-		if(rowC.getCell(2).getCellType()==0)
+		
+		if(!rowC.getCell(11).toString().isEmpty()&& rowC.getCell(11).toString().indexOf(";")==-1)
+		{	
+		if(sheet.getLastRowNum()>ligne+1)
 		{
-			if((int)rowC.getCell(2).getNumericCellValue()>999999)
+			rowCN=sheet.getRow(ligne+1);
+		
+		if(rowC.getCell(11).getCellType()==0)
+		{
+			if((int)rowC.getCell(11).getNumericCellValue()==(int)rowCN.getCell(11).getNumericCellValue())
 				return true;
 		}
 		else
 		{
-			String st=rowC.getCell(2).toString();
-
-			if(Integer.parseInt(st)>999999)
+			String st=rowC.getCell(11).toString();
+			String stN=rowCN.getCell(11).toString();
+			System.out.println("encore une galere... st="+st+"st2 ="+stN);
+			if(Integer.parseInt(st)==Integer.parseInt(st))
 				return true;
 		}
 
-
-
+		}
+		else
+		{
+			rowCN=sheet.getRow(ligne-1);
+			
+			if(rowC.getCell(11).getCellType()==0)
+			{
+				if((int)rowC.getCell(11).getNumericCellValue()==(int)rowCN.getCell(11).getNumericCellValue())
+					return true;
+			}
+			else
+			{
+				String st=rowC.getCell(11).toString();
+				String stN=rowCN.getCell(11).toString();
+				if(Integer.parseInt(st)==Integer.parseInt(st))
+					return true;
+			}
+		}
+	}
 
 		return false;
 	}
