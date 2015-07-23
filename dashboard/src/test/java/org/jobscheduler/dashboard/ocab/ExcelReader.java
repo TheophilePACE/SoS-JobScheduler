@@ -12,6 +12,7 @@
 
 package org.jobscheduler.dashboard.ocab;
 
+import java.awt.Font;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -26,19 +27,27 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.StringTokenizer;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jobscheduler.dashboard.jobdefinition.xml.*;
+import org.jobscheduler.dashboard.jobdefinition.xml.JobChain.FileOrderSink;
+import org.jobscheduler.dashboard.jobdefinition.xml.JobChain.FileOrderSource;
 import org.jobscheduler.dashboard.jobdefinition.xml.JobChain.JobChainNode;
 
 import com.sun.xml.bind.marshaller.CharacterEscapeHandler;
@@ -55,11 +64,13 @@ public class ExcelReader {
 	XSSFWorkbook wb;
 	XSSFSheet sheet;
 	Cell cell;
-	String chaine;
 	String outPut;
 	String saveAt;
 	int metrique;
-	
+	boolean fichier=false;
+	String contenuFichier="";
+	String timeJob="";
+	String untilJob="";
 	/**
 	 * For the conversion , we must know the next steps for each job,
 	 * but ExcelReader work sequentially and don't stock anything about the next 
@@ -164,10 +175,10 @@ public class ExcelReader {
 			   }
 			}
 		ExcelCleaner(sheet);
-		/*FileOutputStream fileOut = new FileOutputStream("monfichier.xlsm");
-		wb.write(fileOut);*/
+		FileOutputStream fileOut = new FileOutputStream("monfichier.xlsm");
+		wb.write(fileOut);
 
-		jobhelp=new JobHelper(sheet,marshaller,jc);
+		jobhelp=new JobHelper(sheet,marshaller);
 		jobhelp.initialization(output);
 		
 		rowIterator = sheet.iterator();// Iterate through each rows one by one
@@ -303,7 +314,17 @@ public class ExcelReader {
 
 			break;
 			
-		
+		case "at":
+			timeJob= cell.toString().substring(0, 2) + ":"
+					+ cell.toString().substring(2, 4);
+			
+			break;
+			
+		case "until":
+			untilJob= cell.toString().substring(0, 2) + ":"
+					+ cell.toString().substring(2, 4);
+			
+			break;
 			
 			
 
@@ -325,7 +346,6 @@ public class ExcelReader {
 
 	public void treatJobOption(int i) {
 		
-      
 		switch (ligneTitre.get(i).toString()) {
 
 		case "job":
@@ -411,7 +431,11 @@ public class ExcelReader {
              	{
              		jbcn.setNextState("End");	
              	}
-            	 else
+            	 else if(fichier)
+            	 {
+            		 jbcn.setNextState("S_cleanfile"); 
+            	 }
+            	 else	 
             	 {	 
             	 jbcn.setNextState("end_SUC_All");
             	 }
@@ -451,6 +475,20 @@ public class ExcelReader {
 
 		int i = 2;// information about job begin in the 2nd column
 		
+		if(!timeJob.isEmpty() && fichier)
+	      {
+	    	  RunTime rt= new  RunTime();
+	    	  rt.setBegin(timeJob);
+	    	  
+	    	  if(!untilJob.isEmpty() && !untilJob.equals("23:59"))
+	    		 rt.setEnd(untilJob); 
+	    	  
+	    	  jb.setRunTime(rt);
+	    	  
+	    	  timeJob="";
+	    	  untilJob="";
+	      }
+		
 		do {
 
 			
@@ -459,6 +497,7 @@ public class ExcelReader {
 				
 				
 			if (!cell.toString().isEmpty()||i==11) {
+				 
 				
 				
 				treatJobOption(i); // treat a job hut
@@ -753,11 +792,14 @@ public String countDay(String day)
                           if (oRuntime.getMonthdays() == null) {
                         	  Monthdays tmpMonthday=fabrique.createMonthdays();
                         	  oRuntime.setMonthdays(tmpMonthday);
+                        	  
                           }  
 							
-							Monthdays.Weekday tmpWekkday=fabrique.createMonthdaysWeekday();;
+							Monthdays.Weekday tmpWekkday=fabrique.createMonthdaysWeekday();
 							Period tmpPeriod3 = fabrique.createPeriod();
+							
 							tmpPeriod3.setSingleStart(saveAt);
+							
 							for(int t=1;t<listCommande.length;t++)
 							{
 								if(listCommande[t].indexOf("BYDAY")!=-1)
@@ -789,6 +831,17 @@ public String countDay(String day)
 									}
 									oRuntime.getMonthdays().getDayOrWeekday().add(tmpWekkday);
 									
+								}
+								else if(listCommande[t].indexOf("BYMONTHDAY")!=-1)
+								{
+									String[] numberDay = listCommande[t].substring(11).split(",");
+									Monthdays.Day day=fabrique.createMonthdaysDay();
+									for(int a=0;a<numberDay.length;a++)
+									{
+										day.getDay().add(Integer.parseInt(numberDay[a]));
+									}
+									day.getPeriod().add(tmpPeriod3);
+									oRuntime.getMonthdays().getDayOrWeekday().add(day);
 								}
 								
 							}
@@ -852,6 +905,10 @@ public String countDay(String day)
 		saveAt=new String("00:00");
 	}
 
+	
+	public void treatFileOrderSource() {
+		
+	}
 	/**
 	 * name - addEndErrorEndSucsses add jobchainnodestate : EndError, EndSucces
 	 *
@@ -893,7 +950,8 @@ public String countDay(String day)
 	public boolean treatExcelFile() throws IOException {
 		copyLineTitle();
 		nextExcelLine();
-
+		String chaine;
+		int numLigne=1;
 		while (rowIterator.hasNext()) {
 
 			Row row = rowIterator.next();// get a line in the file
@@ -927,11 +985,19 @@ public String countDay(String day)
 					if (cell.toString().equals("R")) {
 						treatOrderLine();
 					}
+					else if(cell.toString().equals("O"))
+					{
+						contenuFichier=sheet.getRow(numLigne).getCell(30).toString();
+						fichier=true;
+						
+					}
+					
 
 				}
 
 			}
-
+			
+			numLigne++;
 		}
 		addBeginAndEndJobChain(jobchainEnCour);
 		nbOrderParJobchain.put(jobchainEnCour, nbrDeOrder);
@@ -1011,12 +1077,16 @@ public String countDay(String day)
 			
 		
 			while (eOrder.hasNext()) {
-				Order ordTemp = (Order) eOrder.next();
-
+				
+			
+				
 				if (tmp == nbOrderParJobchain.get(jobch.getName())) {
 					jobch = (JobChain) ejobchain.next();
+					
 					tmp = 0;
-				}
+				}else
+				{	
+					Order ordTemp = (Order) eOrder.next();
 				OutputStream os = new FileOutputStream(outPut + jobch.getName()
 						+ "," + ordTemp.getTitle() + ".order.xml");
 			
@@ -1024,6 +1094,7 @@ public String countDay(String day)
 				
 			
 				tmp++;
+				}
 			}
 				
 
@@ -1052,15 +1123,65 @@ public String countDay(String day)
 			jbcnTemp=fabrique.createJobChainJobChainNode();
 			jbcnTemp.setState("End");
 			jbcnTemp.setJob("/sos/jitl/JobChainEnd");
-			jbcnTemp.setErrorState("!end_ERR");
-			jbcnTemp.setNextState("end_SUC_All");
-			jobchain.get(jobchainEnCour).getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcnTemp);
+			if(fichier)
+			{
+				jbcnTemp.setErrorState("!end_ERR");
+		     jbcnTemp.setNextState("S_cleanfile");
+		     jobchain.get(jobchainEnCour).getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcnTemp);
+		     
+		     AddFileJobChain();
+			}
+			else
+			{
+				jbcnTemp.setErrorState("!end_ERR");
+				jbcnTemp.setNextState("end_SUC_All");
+				jobchain.get(jobchainEnCour).getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcnTemp);	
+			}
 			
-		}	
+			
+		}
+		else if(fichier)
+		{
+			AddFileJobChain();
+		}
+			
+	}
+	
+	public void AddFileJobChain()
+	{
+		JobChain.FileOrderSource file=fabrique.createJobChainFileOrderSource();
+	     String[] split=contenuFichier.split("/");
+	     String directory="t";
+	     for(int j=0;j<split.length-1;j++)
+	     {
+	    	 if(j<split.length-2)
+	    		 {
+	    		 directory+=split[j]+"/";
+	    		 }
+	    	 else
+	    	 {
+	    		 directory+=split[j]; 
+	    	 }
+	     }
+	     file.setDirectory(directory);
+	     file.setRegex(split[split.length-1]);
+	     jobchain.get(jobchainEnCour).getFileOrderSource().add(file);
+	     JobChain.FileOrderSink deletFile=fabrique.createJobChainFileOrderSink();
+	     deletFile.setState("S_cleanfile");
+	     deletFile.setRemove("yes");
+	     jobchain.get(jobchainEnCour).getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(deletFile);
+	     fichier=false;
+	     contenuFichier="";
 	}
 	
 	public void ExcelCleaner(XSSFSheet sheet)
 	{
+		//couleur cellule modifier
+		XSSFFont font = wb.createFont();
+		font.setColor((short)45);
+		CellStyle csCF = wb.createCellStyle();
+		csCF.setFont(font);
+		//Fin couleur cellule modifier
 		Iterator<Row> rowIt=sheet.iterator();
 		rowIt.next();
 		Row row,rowPrec,rowSuiv;
@@ -1068,7 +1189,7 @@ public String countDay(String day)
 		 rowPrec=row ;
 		 rowSuiv=sheet.getRow(2);
 		int numLigne=1;
-		
+		boolean delete=false;
 		// while(rowIt.hasNext())
 		for(int p=2;p<=sheet.getLastRowNum();p++)	 
 		{	
@@ -1078,7 +1199,7 @@ public String countDay(String day)
 			 if(!row.getCell(16).toString().isEmpty()&& !row.getCell(1).toString().isEmpty())
 			 {
 				
-				 if(!rowSuiv.getCell(3).toString().equals("R"))
+				 if(!rowSuiv.getCell(3).toString().equals("R")&&!rowSuiv.getCell(3).toString().equals("O"))
 				 {
 					 
 					 copyRow(sheet,numLigne+1); 
@@ -1087,16 +1208,64 @@ public String countDay(String day)
 			 }
 			//End add order
 			 
+			
+			
+			if(row.getCell(3).toString().equals("O"))
+			{
+				 row.getCell(30).setCellValue(row.getCell(30).toString().replace("//", "/"));
+				 String correction=row.getCell(30).toString();
+				 
+					 
+				String[] cheminEtRegex=correction.split("/");
+				
+				String regex=cheminEtRegex[cheminEtRegex.length-1];	
+				StringTokenizer chaine = new StringTokenizer(regex,"?*",true);
+				row.getCell(30).setCellValue("");
+				String temps=chaine.nextToken();
+				String tempsNext;
+				for(int z=0;z<cheminEtRegex.length-1;z++)
+				{
+					row.getCell(30).setCellValue(row.getCell(30).toString()+cheminEtRegex[z]+"/");
+				}
+				
+				while(chaine.hasMoreTokens())
+				{
+					tempsNext=chaine.nextToken();
+					if(!temps.contains(".")&&(tempsNext.equals("*")||tempsNext.equals("?")))
+					{
+						
+						row.getCell(30).setCellStyle(csCF);
+						
+						
+						row.getCell(30).setCellValue(row.getCell(30).toString()+temps+"."+tempsNext);
+					}
+					else
+					{
+						row.getCell(30).setCellValue(row.getCell(30).toString()+temps+tempsNext);
+					}
+					temps=tempsNext;
+					
+				}
+				
+				
+			}
+			
+			
+			
+			
 			//Cleaning excel order
-			if(!row.getCell(3).toString().isEmpty()&& row.getCell(3).toString().equals("R"))
+			if(row.getCell(3).toString().equals("R"))
 			{
 				
 				if(row.getCell(16).toString().isEmpty())
 				{
+					
 					if(!rowPrec.getCell(16).toString().isEmpty())
 					{
+						
 						row.getCell(16).setCellValue(rowPrec.getCell(16).toString());
 					}
+					
 					if(!rowSuiv.getCell(16).toString().isEmpty())
 					{
 						row.getCell(16).setCellValue(rowSuiv.getCell(16).toString());
@@ -1107,25 +1276,34 @@ public String countDay(String day)
 			}
 			//End cleaning excel order
 			
-			/*if(!row.getCell(2).toString().isEmpty()&& row.getCell(11).toString().equals(rowSuiv.getCell(11).toString()))
-			{
-				int jid=Integer.parseInt(row.getCell(2).getStringCellValue());
-				
-				if(row.getCell(2).getStringCellValue().length()<=6)
-				{
-					replaceNumber( sheet, Integer.parseInt(row.getCell(2).getStringCellValue()),Integer.parseInt(row.getCell(2).getStringCellValue()+"01"));
-					replaceNumber( sheet, Integer.parseInt(rowSuiv.getCell(2).getStringCellValue()),Integer.parseInt(row.getCell(2).getStringCellValue()+"02"));
-				}
-				else
-				{
-					replaceNumber( sheet, Integer.parseInt(rowSuiv.getCell(2).getStringCellValue()),Integer.parseInt(row.getCell(2).getStringCellValue())+1);
-				}
-			}*/
 			
-			rowPrec=row;
-			row=rowSuiv ;
-			if(p+1<=sheet.getLastRowNum())
-			rowSuiv = sheet.getRow(p+1);
+			//Delete order
+			if(row.getCell(3).toString().equals("O")&&rowPrec.getCell(3).toString().equals("R"))
+			{
+				sheet.removeRow(sheet.getRow(p-2));
+				
+				sheet.shiftRows(p-1, sheet.getLastRowNum(),-1);
+				delete=true;
+			}
+			//End Delete order
+			
+			if(delete)
+			{
+				rowPrec=sheet.getRow(p-1);
+					row = sheet.getRow(p);
+				if(p+1<=sheet.getLastRowNum())
+					rowSuiv = sheet.getRow(p+1);
+				delete=false;
+			}
+			else
+			{
+				rowPrec=row;
+				row=rowSuiv ;
+				if(p+1<=sheet.getLastRowNum())
+				rowSuiv = sheet.getRow(p+1);
+			}
+			
+			
 			
 			numLigne++;
 			
@@ -1226,7 +1404,7 @@ public String countDay(String day)
 	public static void main(String[] args) throws IOException, JAXBException {
 
 		ExcelReader exrd = new ExcelReader(
-				"C:/Users/puls/workspace2/SoS-JobScheduler/dashboard/src/test/ressource/KARMA_QAL_1.4_FULL2.xlsm",
+				"C:/Users/puls/workspace2/SoS-JobScheduler/dashboard/src/test/ressource/Facile/ARIANE.xlsm",
 				"D:/resultat/");
 		// 1=job
 		// 2=jobchain

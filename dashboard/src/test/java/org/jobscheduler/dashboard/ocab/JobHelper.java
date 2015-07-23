@@ -55,7 +55,7 @@ public class JobHelper {
 	XSSFSheet sheet;
 	int ligne=1;
 	Marshaller marshaller;
-	JAXBContext jc;
+	
 	String paramValue;
 	LinkedHashMap<String,Boolean> jobChainComplex;
 	String nameJobChain;
@@ -69,7 +69,7 @@ public class JobHelper {
 	boolean complexe;
 
 
-	public JobHelper(XSSFSheet sheet,Marshaller marshaller,JAXBContext jc)
+	public JobHelper(XSSFSheet sheet,Marshaller marshaller)
 	{
 		this.sheet=sheet;
 		rowIterator=sheet.iterator();
@@ -77,7 +77,6 @@ public class JobHelper {
 		nameNextJob = new Hashtable<String, String>();
 		numbeSplit=1;
 		numbeSyn=1;
-		this.jc=jc;
 		this. marshaller= marshaller;
 		fabrique = new ObjectFactory();
 		beginJobchain=true;
@@ -98,11 +97,11 @@ public class JobHelper {
 	public void initialization(String outPut) throws JAXBException, FileNotFoundException
 	{
 		Integer jid = 0;
-		
+
 		while (rowIterator.hasNext()) {
-             
+
 			Row row = rowIterator.next();//we start at the line number 2, the first line is for title in the excel file
-     
+
 
 			if(!row.getCell(5).getStringCellValue().isEmpty()) //for check jobchain name 
 			{
@@ -121,8 +120,8 @@ public class JobHelper {
 
 
 			}
-			
-		
+
+
 			if(!row.getCell(2).toString().isEmpty())	//for check the jid of the line
 			{
 
@@ -136,7 +135,8 @@ public class JobHelper {
 					jid=Integer.parseInt(row.getCell(2).getStringCellValue());
 				}
 			}
-
+			
+			
 			cellIterator=row.cellIterator();
 
 			cell=coloneExcelSuivant(7);	//we go to the column 7, the job name (of the current job)
@@ -168,7 +168,7 @@ public class JobHelper {
 					if (!jobChainComplex.containsKey(nameJobChain))
 					{
 						jobChainComplex.put(nameJobChain,true);//For now if a jochain contain complex case,
-						                                       //We add for the complex jobchain a job start and a job end 
+						//We add for the complex jobchain a job start and a job end 
 					}
 				}
 				else
@@ -196,10 +196,10 @@ public class JobHelper {
 
 					//if the 2 next row have the same previous Jid then the next line is a complicated cases
 					//and the next of the current line is a split
-					
+
 					if(getL1(12).equals(getL2(12)) && getL1(12).equals(String.valueOf(jid)) && getL2(12).equals(String.valueOf(jid)))
 					{
-						
+
 						nameNextJob.put(cell.toString(),"Split_"+numbeSplit);
 						Job jb=fabrique.createJob();
 						jb.setOrder("yes");
@@ -339,53 +339,54 @@ public class JobHelper {
 	 */
 	public boolean isComplex()
 	{
-		Row rowC,rowCN,rowCP;
+		Row rowC;
 		Iterator<Cell> tempCellC;
 		Cell cellTemp;
 		rowC=sheet.getRow(ligne);
+		String valeurCourante=rowC.getCell(11).toString();
+		String ValeurAcomparer=getL1(12);
 		
-		if(!rowC.getCell(11).toString().isEmpty()&& rowC.getCell(11).toString().indexOf(";")==-1)
+		if(!valeurCourante.isEmpty()&& valeurCourante.indexOf(";")==-1)
 		{	
-		if(sheet.getLastRowNum()>ligne+1)
-		{
-			rowCN=sheet.getRow(ligne+1);
-		
-		if(rowC.getCell(11).getCellType()==0)
-		{
-			if((int)rowC.getCell(11).getNumericCellValue()==(int)rowCN.getCell(11).getNumericCellValue())
-				return true;
-		}
-		else
-		{
-			String st=rowC.getCell(11).toString();
-			String stN=rowCN.getCell(11).toString();
-			System.out.println("encore une galere... st="+st+"st2 ="+stN);
-			if(Integer.parseInt(st)==Integer.parseInt(st))
-				return true;
-		}
+			System.out.println("encore une galere... st="+valeurCourante+"st2 ="+ValeurAcomparer);
+			
+			if(!ValeurAcomparer.equals("NogetL1") )
+			{
+				if(ValeurAcomparer.indexOf(";")!=-1)
+				{
+					ValeurAcomparer=sheet.getRow(ligne-1).getCell(11).toString();
+				}
+
+				if(valeurCourante.indexOf(".")!=-1)
+				{
+					String[] tmp=valeurCourante.split("\\.");
+					valeurCourante=tmp[0];
+
+				}
+
+				if(ValeurAcomparer.indexOf(".")!=-1)
+				{
+					String[] tmp2=ValeurAcomparer.split("\\.");
+
+					ValeurAcomparer=tmp2[0];
+
+				}
+
+				if(Integer.parseInt(valeurCourante)==Integer.parseInt(ValeurAcomparer))
+					return true;
+			}
 
 		}
-		else
-		{
-			rowCN=sheet.getRow(ligne-1);
-			
-			if(rowC.getCell(11).getCellType()==0)
-			{
-				if((int)rowC.getCell(11).getNumericCellValue()==(int)rowCN.getCell(11).getNumericCellValue())
-					return true;
-			}
-			else
-			{
-				String st=rowC.getCell(11).toString();
-				String stN=rowCN.getCell(11).toString();
-				if(Integer.parseInt(st)==Integer.parseInt(st))
-					return true;
-			}
-		}
-	}
+
+		
+		
+		
+
 
 		return false;
 	}
+	
+	
 
 	public Cell coloneExcelSuivant(int nbColSuivant) {
 

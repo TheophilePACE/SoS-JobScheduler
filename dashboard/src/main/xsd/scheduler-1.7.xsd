@@ -539,6 +539,7 @@
                             </xsd:complexType>
                         </xsd:element>
                         <xsd:choice maxOccurs="unbounded">
+
                             <xsd:element name="job_chain_node">
                                 <xsd:complexType>
                                     <xsd:sequence>
