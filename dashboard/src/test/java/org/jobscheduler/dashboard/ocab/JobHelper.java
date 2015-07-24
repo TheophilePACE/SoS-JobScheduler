@@ -348,7 +348,7 @@ public class JobHelper {
 		
 		if(!valeurCourante.isEmpty()&& valeurCourante.indexOf(";")==-1)
 		{	
-			System.out.println("encore une galere... st="+valeurCourante+"st2 ="+ValeurAcomparer);
+			
 			
 			if(!ValeurAcomparer.equals("NogetL1") )
 			{

@@ -165,13 +165,11 @@ public class ExcelReader {
 		sheet = wb.getSheetAt(3);
 		
 		for(Row row : sheet) {
-			//System.out.println("");
+			
 			   for(int cn=0; cn<row.getLastCellNum(); cn++) {
-			       // If the cell is missing from the file, generate a blank one
-			       // (Works by specifying a MissingCellPolicy)
-			       Cell cell = row.getCell(cn, Row.CREATE_NULL_AS_BLANK);
-			       // Print the cell for debugging
-			       //System.out.print("|CELL: " + cn + " --> " + cell.toString());
+			      
+			      row.getCell(cn, Row.CREATE_NULL_AS_BLANK);
+			       
 			   }
 			}
 		ExcelCleaner(sheet);
@@ -449,7 +447,12 @@ public class ExcelReader {
 
 			break;
 			
-		
+		case "at":
+			RunTime rt= new  RunTime();
+	    	  rt.setBegin(cell.toString().substring(0, 2) + ":"
+						+ cell.toString().substring(2, 4));	  
+	    	  jb.setRunTime(rt);
+		break;
 
 		default:
 			break;
@@ -475,6 +478,8 @@ public class ExcelReader {
 
 		int i = 2;// information about job begin in the 2nd column
 		
+		//if the jobchain wait a file and have a time for execute
+		//the only way for convert in jobscheduler is the runtime in a job 
 		if(!timeJob.isEmpty() && fichier)
 	      {
 	    	  RunTime rt= new  RunTime();
@@ -704,8 +709,20 @@ public String countDay(String day)
 						Weekdays.Day tmpDay2 = fabrique.createWeekdaysDay();
 						Period tmpPeriod2 = fabrique.createPeriod();
 						tmpPeriod2.setSingleStart(saveAt);
-						tmpDay2.getDay().add("1 2 3 4 5 6 7");
+						String day="1 2 3 4 5 6 7";
+						for(int j=1;j<listCommande.length;j++)
+						{
+							
+							if(listCommande[j].equals("BYWORKDAY"))
+								day="1 2 3 4 5";
+						}
+						
+						tmpDay2.getDay().add(day);
+						
+						
 						tmpDay2.getPeriod().add(tmpPeriod2);
+						
+						
 						if (oRuntime.getWeekdays() != null) {
 							
 							
@@ -1190,11 +1207,54 @@ public String countDay(String day)
 		 rowSuiv=sheet.getRow(2);
 		int numLigne=1;
 		boolean delete=false;
-		// while(rowIt.hasNext())
+		
 		for(int p=2;p<=sheet.getLastRowNum();p++)	 
 		{	
 			
-			 
+			 if(!row.getCell(2).toString().isEmpty()&&!row.getCell(16).toString().isEmpty()&&!rowSuiv.getCell(16).toString().isEmpty()&&(!rowPrec.getCell(3).toString().isEmpty()||!rowPrec.getCell(5).toString().isEmpty()))
+			 {
+				 String timeRow=row.getCell(16).toString();
+				 int aComparer=numLigne;
+				 int nbJob=aComparer+1;
+				 int ligneEchange=0;
+				 boolean echange=true;
+				 
+				 while(echange)
+				 {	 
+				 while(!sheet.getRow(nbJob).getCell(2).toString().isEmpty())
+				 {
+						if(Integer.parseInt(timeRow)>Integer.parseInt(sheet.getRow(nbJob).getCell(16).toString()))
+						{
+							ligneEchange=nbJob;
+							timeRow=sheet.getRow(nbJob).getCell(16).toString();
+						}
+						nbJob++;
+				 }
+				 
+				 if(ligneEchange!=0)
+				 {
+					 switchRow( sheet,  aComparer, ligneEchange);
+					 ligneEchange=0;
+				 }
+				
+				 
+				 if(aComparer==nbJob-1)
+				 {
+					 echange=false; 
+				 }
+				 
+				 aComparer++;
+				 nbJob=aComparer+1;
+				 timeRow=sheet.getRow(aComparer).getCell(16).toString();
+				 }
+				 
+				 if(rowPrec.getCell(3).toString().equals("R"))
+				 {
+					 rowPrec.getCell(16).setCellValue(row.getCell(16).toString()); 
+				 }
+			 }
+			
+			
 			//Add order
 			 if(!row.getCell(16).toString().isEmpty()&& !row.getCell(1).toString().isEmpty())
 			 {
@@ -1231,6 +1291,7 @@ public String countDay(String day)
 				while(chaine.hasMoreTokens())
 				{
 					tempsNext=chaine.nextToken();
+					
 					if(!temps.contains(".")&&(tempsNext.equals("*")||tempsNext.equals("?")))
 					{
 						
@@ -1239,8 +1300,9 @@ public String countDay(String day)
 						
 						row.getCell(30).setCellValue(row.getCell(30).toString()+temps+"."+tempsNext);
 					}
-					else
+					else if(!temps.equals("*")&&!temps.equals("?"))
 					{
+						
 						row.getCell(30).setCellValue(row.getCell(30).toString()+temps+tempsNext);
 					}
 					temps=tempsNext;
@@ -1312,12 +1374,34 @@ public String countDay(String day)
 		}
 	}
 	
+	public void switchRow(XSSFSheet worksheet, int ligne1, int ligne2)
+	{
+		Row row=worksheet.getRow(ligne1);
+		Row row2=worksheet.getRow(ligne2);
+		
+		  
+		
+		  
+				   for(int cn=0; cn<row.getLastCellNum(); cn++) {
+				
+				        String stringRow=row.getCell(cn).toString();
+				        String stringRow2=row2.getCell(cn).toString();
+				       
+				       
+				        row.getCell(cn).setCellValue(stringRow2);
+				       row2.getCell(cn).setCellValue(stringRow);
+				      
+				      
+				       
+				   }
+	}
+	
 	public void copyRow(XSSFSheet worksheet, int destinationRowNum) {
 		  // Get the source / new row
 		  Row newRow = worksheet.getRow(destinationRowNum);
 		 
 
-		  // If the row exist in destination, push down all rows by 1 else create a new row
+		  // If the row exist in destination, push down all rows by 1 
 		  if (newRow != null) {
 		    worksheet.shiftRows(destinationRowNum, worksheet.getLastRowNum(), 1);
 		  } 
@@ -1330,7 +1414,7 @@ public String countDay(String day)
 				   for(int cn=0; cn<newRow.getLastCellNum(); cn++) {
 					   
 				        row.createCell(cn);
-				        newRow.getCell(cn, Row.CREATE_NULL_AS_BLANK);
+				        newRow.getCell(cn, Row.CREATE_NULL_AS_BLANK);//plutot row.getcell(cn,R...);
 				      
 				       if(cn==3)
 				      {
@@ -1404,7 +1488,7 @@ public String countDay(String day)
 	public static void main(String[] args) throws IOException, JAXBException {
 
 		ExcelReader exrd = new ExcelReader(
-				"C:/Users/puls/workspace2/SoS-JobScheduler/dashboard/src/test/ressource/Facile/ARIANE.xlsm",
+				"C:/Users/puls/workspace2/SoS-JobScheduler/dashboard/src/test/ressource/Facile/GEO-RCT1.xlsm",
 				"D:/resultat/");
 		// 1=job
 		// 2=jobchain
