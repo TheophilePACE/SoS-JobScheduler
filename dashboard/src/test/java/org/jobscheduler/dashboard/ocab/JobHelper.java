@@ -58,6 +58,7 @@ public class JobHelper {
 	
 	String paramValue;
 	LinkedHashMap<String,Boolean> jobChainComplex;
+	Hashtable  <String , String > nextJobChain;
 	String nameJobChain;
 	Job jb;
 	ObjectFactory fabrique ;
@@ -75,6 +76,7 @@ public class JobHelper {
 		rowIterator=sheet.iterator();
 		rowIterator.next();
 		nameNextJob = new Hashtable<String, String>();
+		nextJobChain= new Hashtable<String, String>();
 		numbeSplit=1;
 		numbeSyn=1;
 		this. marshaller= marshaller;
@@ -104,7 +106,14 @@ public class JobHelper {
 
 
 			if(!row.getCell(5).getStringCellValue().isEmpty()) //for check jobchain name 
-			{
+			{  
+				if(!row.getCell(11).toString().isEmpty())
+				{
+					System.out.println("888 "+row.getCell(11).toString().substring(1));
+					String followJobChain =getJobChaine(row.getCell(11).toString().substring(1));
+					System.out.println("999 "+followJobChain);
+					this.nextJobChain.put(followJobChain,row.getCell(5).getStringCellValue());
+				}
 
 				if(!beginJobchain&&configFile) // here, we have generate a config file for the current jobchain, then we create a output file
 				{
@@ -462,8 +471,28 @@ public class JobHelper {
 		return false;
 	}
 
+public String jobChainSuivant(String nameJobchain)
+{
+	
+	if(nextJobChain.containsKey(nameJobchain))
+	{
+		return nextJobChain.get(nameJobchain);
+	}
+	return "noJobchainNext";
+}
 
 
+public String getJobChaine(String JID)
+{
+	
+	for(int t=1;t<sheet.getLastRowNum();t++)	 
+	{	
+		if(sheet.getRow(t).getCell(1).toString().equals(JID)&&!sheet.getRow(t).getCell(1).toString().isEmpty())
+		return sheet.getRow(t).getCell(5).toString();
+	}
+	
+	return "NoJobchain";
+}
 	/**
 	 * name - createConfigFile create a config job for a split
 	 * 

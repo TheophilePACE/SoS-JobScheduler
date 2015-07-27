@@ -425,6 +425,18 @@ public class ExcelReader {
             }
              else
              {
+            	 //add a dependence on a other jobchain
+            	 if(!jobhelp.jobChainSuivant(jobchainEnCour).equals("noJobchainNext"))
+            	 {
+            		Commands cmd=fabrique.createCommands();
+            		cmd.getOnExitCode().add("success");
+            		Order tmp=fabrique.createOrder();
+            		tmp.setJobChain(jobhelp.jobChainSuivant(jobchainEnCour));
+            		cmd.getAddJobsOrAddOrderOrCheckFolders().add(fabrique.createOrder(tmp));
+            		jb.getCommands().add(cmd);
+            		System.out.println("**************");
+            	 }
+            	 
             	 if(jobhelp.isJobChainComplex(jobchainEnCour)) //if it's a complex case next of the last jobchainode go to jobchainnode end
              	{
              		jbcn.setNextState("End");	
@@ -1221,7 +1233,7 @@ public String countDay(String day)
 				 
 				 while(echange)
 				 {	 
-				 while(!sheet.getRow(nbJob).getCell(2).toString().isEmpty())
+				 while(!sheet.getRow(nbJob).getCell(2).toString().isEmpty()&&!sheet.getRow(nbJob).getCell(16).toString().isEmpty())
 				 {
 						if(Integer.parseInt(timeRow)>Integer.parseInt(sheet.getRow(nbJob).getCell(16).toString()))
 						{
@@ -1488,7 +1500,7 @@ public String countDay(String day)
 	public static void main(String[] args) throws IOException, JAXBException {
 
 		ExcelReader exrd = new ExcelReader(
-				"C:/Users/puls/workspace2/SoS-JobScheduler/dashboard/src/test/ressource/Facile/GEO-RCT1.xlsm",
+				"C:/Users/puls/workspace2/SoS-JobScheduler/dashboard/src/test/ressource/Facile/EPFMRCT1_OLD.xlsm",
 				"D:/resultat/");
 		// 1=job
 		// 2=jobchain
