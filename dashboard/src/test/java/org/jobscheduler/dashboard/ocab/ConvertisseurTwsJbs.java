@@ -79,7 +79,7 @@ jLabel4.setVisible(false);
         jRadioButton1 = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("The Social Network.. Stay Connected !!");
+        setTitle("Convertisseur TWS >>>> JobScheduler ");
         setBounds(new java.awt.Rectangle(0, 0, 0, 0));
         setResizable(false);
 

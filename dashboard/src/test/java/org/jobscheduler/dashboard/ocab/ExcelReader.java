@@ -190,8 +190,8 @@ public class ExcelReader {
 			   }
 			}
 		ExcelCleaner(sheet);
-		FileOutputStream fileOut = new FileOutputStream(outPut+file.getName());
-		wb.write(fileOut);
+		//FileOutputStream fileOut = new FileOutputStream(outPut+file.getName());
+		//wb.write(fileOut);
 		jobhelp=new JobHelper(sheet,marshaller);
 		
 		log+="Exécution du JobHelper \n";
@@ -1165,7 +1165,7 @@ public String countDay(String day)
 		log+="Fin du traitement pour le fichier: "+file.getName() +" \n";
 		log+="**********************************************************\n";
 		interfaceGraphique.notification(log);
-		File f = new File (outPut+"LOG");
+		/*File f = new File (outPut+"LOG");
 		PrintWriter pw;
 		try {
 			pw = new PrintWriter (new BufferedWriter (new FileWriter (f)));
@@ -1175,12 +1175,12 @@ public String countDay(String day)
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		 
+		 */
 		File di = new File(outPut);
 		File fl[] = di.listFiles();
 
 	
-		return fl.length-1;
+		return fl.length;
 	}
 
 	public void addBeginAndEndJobChain(String jobChainEnCour)
