@@ -147,7 +147,6 @@ public class ExcelReader {
 	public ExcelReader(String EmplacementFichierExcel, String output, ConvertisseurTwsJbs ctj)
 			throws JAXBException, IOException {
 		super();
-		
 		interfaceGraphique=ctj;
 		this.outPut = output;
 		metrique=0;
