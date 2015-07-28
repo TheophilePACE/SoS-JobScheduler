@@ -48,6 +48,7 @@ import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.tools.ant.taskdefs.Exit;
 import org.jobscheduler.dashboard.jobdefinition.xml.*;
 import org.jobscheduler.dashboard.jobdefinition.xml.JobChain.FileOrderSink;
 import org.jobscheduler.dashboard.jobdefinition.xml.JobChain.FileOrderSource;
@@ -1546,8 +1547,8 @@ public String countDay(String day)
 	public static void main(String[] args) throws IOException, JAXBException {
 
 		ExcelReader exrd = new ExcelReader(
-				"C:/Users/puls/workspace2/SoS-JobScheduler/dashboard/src/test/ressource/Facile/EPFMRCT1_OLD.xlsm",
-				"D:/resultat/",null);
+				"C:/Users/m419099/Documents/Facile/EPFMRCT1_OLD.xlsm",
+				"C:/Users/m419099/Documents/résultat",null);
 		// 1=job
 		// 2=jobchain
 		// 3=order
@@ -1562,6 +1563,7 @@ public String countDay(String day)
 		else{
 			System.out.println("nofichir");
 		}
-
+		
+		System.exit(0);
 	}
 }
