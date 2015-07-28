@@ -77,6 +77,8 @@ public class ExcelReader {
 	String untilJob="";
 	String log="";
 	ConvertisseurTwsJbs interfaceGraphique;
+	boolean modeTest;
+	
 	
 	/**
 	 * For the conversion , we must know the next steps for each job,
@@ -145,9 +147,10 @@ public class ExcelReader {
 	 * Constructor using Excel and Xml path
 	 */
 
-	public ExcelReader(String EmplacementFichierExcel, String output, ConvertisseurTwsJbs ctj)
+	public ExcelReader(String EmplacementFichierExcel, String output, ConvertisseurTwsJbs ctj,boolean modTest)
 			throws JAXBException, IOException {
 		super();
+		modeTest=modTest;
 		interfaceGraphique=ctj;
 		this.outPut = output;
 		metrique=0;
@@ -405,9 +408,18 @@ public class ExcelReader {
 			break;
 
 		case "scriptname":
-
-			scrpt.getContent().add(cdata(cell.toString()));
-			jb.setScript(scrpt);
+            
+			if(modeTest)
+			{
+				scrpt.getContent().add(cdata("sleep 12"));
+				jb.setScript(scrpt);
+			}
+			else
+			{
+				scrpt.getContent().add(cdata(cell.toString()));
+				jb.setScript(scrpt);
+			}
+			
 			break;
 
 		case "recovery_option":
@@ -1011,7 +1023,7 @@ public String countDay(String day)
 			// check if SID exist for create a jobchain
 			if (!chaine.isEmpty()) {
 				treatJobChainLine();
-
+				
 			} else {
 				// if SID don't exist we look the JID
 				// if JID exist we create a job
@@ -1030,6 +1042,7 @@ public String countDay(String day)
 
 					if (cell.toString().equals("R")) {
 						treatOrderLine();
+						
 					}
 					else if(cell.toString().equals("O"))
 					{
@@ -1548,7 +1561,7 @@ public String countDay(String day)
 
 		ExcelReader exrd = new ExcelReader(
 				"C:/Users/m419099/Documents/Facile/EPFMRCT1_OLD.xlsm",
-				"C:/Users/m419099/Documents/résultat",null);
+				"C:/Users/m419099/Documents/résultat",null,true);
 		// 1=job
 		// 2=jobchain
 		// 3=order
