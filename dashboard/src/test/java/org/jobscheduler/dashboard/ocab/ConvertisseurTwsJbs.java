@@ -207,12 +207,13 @@ jLabel4.setVisible(false);
     	 try {
  			ExcelReader exrd = new ExcelReader(
  					jFileChooser1.getSelectedFile().getAbsolutePath(),
- 					System.getProperty("user.dir")+"/");
+ 					System.getProperty("user.dir")+"/", this);
  			jProgressBar1.setValue(20);
  			if (exrd.treatExcelFile())
  				{
  				jProgressBar1.setValue(80);
- 				jTextArea1.setText(exrd.OutputTest(123)+" fichier(s) ont été générés");
+ 				int nbFichier=exrd.OutputTest(123);
+ 				jTextArea1.setText(jTextArea1.getText()+nbFichier+" fichier(s) ont été générés");
  				jTextArea1.setText(jTextArea1.getText()+"\n"+"operation succeeded");
  				jProgressBar1.setValue(100);
  				}
@@ -238,6 +239,12 @@ jLabel4.setVisible(true);
     /**
      * @param args the command line arguments
      */
+    
+    public void notification(String st)
+    {
+    	jTextArea1.setText(jTextArea1.getText()+"\n"+st);
+    }
+    
     public static void main(String args[]) throws RemoteException {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

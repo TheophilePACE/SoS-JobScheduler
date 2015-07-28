@@ -13,12 +13,15 @@
 package org.jobscheduler.dashboard.ocab;
 
 import java.awt.Font;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.io.Writer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
@@ -71,6 +74,9 @@ public class ExcelReader {
 	String contenuFichier="";
 	String timeJob="";
 	String untilJob="";
+	String log="";
+	ConvertisseurTwsJbs interfaceGraphique;
+	
 	/**
 	 * For the conversion , we must know the next steps for each job,
 	 * but ExcelReader work sequentially and don't stock anything about the next 
@@ -138,12 +144,19 @@ public class ExcelReader {
 	 * Constructor using Excel and Xml path
 	 */
 
-	public ExcelReader(String EmplacementFichierExcel, String output)
+	public ExcelReader(String EmplacementFichierExcel, String output, ConvertisseurTwsJbs ctj)
 			throws JAXBException, IOException {
 		super();
+		
+		interfaceGraphique=ctj;
 		this.outPut = output;
 		metrique=0;
 		file = new File(EmplacementFichierExcel);
+		File dir = new File (outPut+"/"+file.getName().split("\\.")[0]);
+		dir.mkdirs();
+		outPut=dir.getAbsolutePath()+"/";
+		log="**********************************************************\n";
+		log+="Traitement du fichier Excel : "+file.getName()+" destination: "+outPut+"\n";
 		jc = JAXBContext
 				.newInstance("org.jobscheduler.dashboard.jobdefinition.xml");
 		marshaller = jc.createMarshaller();
@@ -162,6 +175,7 @@ public class ExcelReader {
 		fabrique = new ObjectFactory();
 		fis = new FileInputStream(file);
 		wb = new XSSFWorkbook(fis);
+		
 		sheet = wb.getSheetAt(3);
 		
 		for(Row row : sheet) {
@@ -173,10 +187,11 @@ public class ExcelReader {
 			   }
 			}
 		ExcelCleaner(sheet);
-		FileOutputStream fileOut = new FileOutputStream("monfichier.xlsm");
+		FileOutputStream fileOut = new FileOutputStream(outPut+file.getName());
 		wb.write(fileOut);
-
 		jobhelp=new JobHelper(sheet,marshaller);
+		
+		log+="Exécution du JobHelper \n";
 		jobhelp.initialization(output);
 		
 		rowIterator = sheet.iterator();// Iterate through each rows one by one
@@ -431,10 +446,10 @@ public class ExcelReader {
             		Commands cmd=fabrique.createCommands();
             		cmd.getOnExitCode().add("success");
             		Order tmp=fabrique.createOrder();
-            		tmp.setJobChain(jobhelp.jobChainSuivant(jobchainEnCour));
+            		tmp.setJobChain("/"+file.getName().split("\\.")[0]+"/"+jobhelp.jobChainSuivant(jobchainEnCour));
             		cmd.getAddJobsOrAddOrderOrCheckFolders().add(fabrique.createOrder(tmp));
             		jb.getCommands().add(cmd);
-            		System.out.println("**************");
+            		
             	 }
             	 
             	 if(jobhelp.isJobChainComplex(jobchainEnCour)) //if it's a complex case next of the last jobchainode go to jobchainnode end
@@ -977,6 +992,8 @@ public String countDay(String day)
 	 */
 
 	public boolean treatExcelFile() throws IOException {
+		
+		log+="Traitement du fichier Excel \n";
 		copyLineTitle();
 		nextExcelLine();
 		String chaine;
@@ -1032,6 +1049,7 @@ public String countDay(String day)
 		nbOrderParJobchain.put(jobchainEnCour, nbrDeOrder);
 		addEndErrorEndSucsses();
 		fis.close();
+		log+="Fin du traitement, les fichiers ont été chargés en mémoire \n";
 		return true;
 	}
 
@@ -1063,10 +1081,11 @@ public String countDay(String day)
 		Iterator eOrder=c2.iterator();
 		
 		int i = 0;
-
+		
 		if (lancement == 1 || lancement == 12 || lancement == 123
 				|| lancement == 13) {
 			Job job;
+			log+="génération des jobs \n";
 			while (eLjob.hasMoreElements())
 
 			{
@@ -1082,9 +1101,11 @@ public String countDay(String day)
 		if (lancement == 2 || lancement == 12 || lancement == 123
 				|| lancement == 23) {
 			JobChain jobch;
+			log+="génération des jobchains \n";
 			while (ejobchain.hasNext())
 
 			{
+				
 				jobch = (JobChain) ejobchain.next();
 
 				OutputStream os = new FileOutputStream(outPut + jobch.getName()
@@ -1104,7 +1125,7 @@ public String countDay(String day)
 			
 			jobch = (JobChain) ejobchain.next();
 			
-		
+			log+="génération des orders \n";
 			while (eOrder.hasNext()) {
 				
 			
@@ -1128,7 +1149,20 @@ public String countDay(String day)
 				
 
 		}
-
+		log+="Fin du traitement pour le fichier: "+file.getName() +" \n";
+		log+="**********************************************************\n";
+		interfaceGraphique.notification(log);
+		File f = new File (outPut+"LOG");
+		PrintWriter pw;
+		try {
+			pw = new PrintWriter (new BufferedWriter (new FileWriter (f)));
+			pw.println (log);
+		    pw.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
 		File di = new File(outPut);
 		File fl[] = di.listFiles();
 
@@ -1205,6 +1239,7 @@ public String countDay(String day)
 	
 	public void ExcelCleaner(XSSFSheet sheet)
 	{
+		log+="Nettoyage du fichier Excel \n";
 		//couleur cellule modifier
 		XSSFFont font = wb.createFont();
 		font.setColor((short)45);
@@ -1237,15 +1272,18 @@ public String countDay(String day)
 				 {
 						if(Integer.parseInt(timeRow)>Integer.parseInt(sheet.getRow(nbJob).getCell(16).toString()))
 						{
+							
 							ligneEchange=nbJob;
 							timeRow=sheet.getRow(nbJob).getCell(16).toString();
+							
 						}
 						nbJob++;
 				 }
 				 
 				 if(ligneEchange!=0)
 				 {
-					 switchRow( sheet,  aComparer, ligneEchange);
+					 log+="Une incohérence dans la listes des jobs a été détectée et corrigée, la ligne "+(ligneEchange+1)+ "a été échangée avec la ligne "+ (aComparer+1)+" à cause de la colonne <<at>> \n";
+					 switchRow( sheet,  aComparer, ligneEchange,csCF);
 					 ligneEchange=0;
 				 }
 				
@@ -1262,7 +1300,9 @@ public String countDay(String day)
 				 
 				 if(rowPrec.getCell(3).toString().equals("R"))
 				 {
+					 log+="Modification de l'order: "+rowPrec.getCell(14).toString()+ ", mise à jour de la colone <<at>> \n";
 					 rowPrec.getCell(16).setCellValue(row.getCell(16).toString()); 
+					 rowPrec.getCell(16).setCellStyle(csCF);
 				 }
 			 }
 			
@@ -1273,8 +1313,8 @@ public String countDay(String day)
 				
 				 if(!rowSuiv.getCell(3).toString().equals("R")&&!rowSuiv.getCell(3).toString().equals("O"))
 				 {
-					 
-					 copyRow(sheet,numLigne+1); 
+					 log+="Ajout d'un order à la ligne :"+(numLigne+1)+" \n";
+					 copyRow(sheet,numLigne+1, csCF); 
 					 
 				 }
 			 }
@@ -1311,6 +1351,8 @@ public String countDay(String day)
 						
 						
 						row.getCell(30).setCellValue(row.getCell(30).toString()+temps+"."+tempsNext);
+						log+="Modification du regex à la ligne :"+(numLigne+1)+" \n";
+						row.getCell(30).setCellStyle(csCF);
 					}
 					else if(!temps.equals("*")&&!temps.equals("?"))
 					{
@@ -1338,11 +1380,13 @@ public String countDay(String day)
 					{
 						
 						row.getCell(16).setCellValue(rowPrec.getCell(16).toString());
+						row.getCell(16).setCellStyle(csCF);
 					}
 					
 					if(!rowSuiv.getCell(16).toString().isEmpty())
 					{
 						row.getCell(16).setCellValue(rowSuiv.getCell(16).toString());
+						row.getCell(16).setCellStyle(csCF);
 					}
 				}
 				
@@ -1358,8 +1402,9 @@ public String countDay(String day)
 				
 				sheet.shiftRows(p-1, sheet.getLastRowNum(),-1);
 				delete=true;
+				log+="Suppression d'un order à la ligne :"+(p-1)+" \n";
 			}
-			//End Delete order
+			
 			
 			if(delete)
 			{
@@ -1376,7 +1421,7 @@ public String countDay(String day)
 				if(p+1<=sheet.getLastRowNum())
 				rowSuiv = sheet.getRow(p+1);
 			}
-			
+			//End Delete order
 			
 			
 			numLigne++;
@@ -1384,13 +1429,14 @@ public String countDay(String day)
 			
 			
 		}
+		log+="Fin du nettoyage, génération du nouveau fichier Excel \n";
 	}
 	
-	public void switchRow(XSSFSheet worksheet, int ligne1, int ligne2)
+	public void switchRow(XSSFSheet worksheet, int ligne1, int ligne2, CellStyle csCF)
 	{
 		Row row=worksheet.getRow(ligne1);
 		Row row2=worksheet.getRow(ligne2);
-		
+		row.setRowStyle(csCF);
 		  
 		
 		  
@@ -1408,7 +1454,7 @@ public String countDay(String day)
 				   }
 	}
 	
-	public void copyRow(XSSFSheet worksheet, int destinationRowNum) {
+	public void copyRow(XSSFSheet worksheet, int destinationRowNum, CellStyle csCF) {
 		  // Get the source / new row
 		  Row newRow = worksheet.getRow(destinationRowNum);
 		 
@@ -1441,6 +1487,7 @@ public String countDay(String day)
 					      }
 				       
 				   }
+				   row.setRowStyle(csCF);
 				
 		  
 		}
@@ -1501,7 +1548,7 @@ public String countDay(String day)
 
 		ExcelReader exrd = new ExcelReader(
 				"C:/Users/puls/workspace2/SoS-JobScheduler/dashboard/src/test/ressource/Facile/EPFMRCT1_OLD.xlsm",
-				"D:/resultat/");
+				"D:/resultat/",null);
 		// 1=job
 		// 2=jobchain
 		// 3=order
