@@ -78,8 +78,9 @@ public class ExcelReader {
 	String log="";
 	ConvertisseurTwsJbs interfaceGraphique;
 	boolean modeTest;
-	
-	
+	boolean beginJob=false; 
+	int numeroOrder=1;
+	int numLigne=1;
 	/**
 	 * For the conversion , we must know the next steps for each job,
 	 * but ExcelReader work sequentially and don't stock anything about the next 
@@ -276,6 +277,8 @@ public class ExcelReader {
 					// correspond to cell
 		jbc = fabrique.createJobChain();
 		jbc.setVisible("yes");
+		beginJob=false;
+		numeroOrder=1;
 
 		do {
 
@@ -487,12 +490,151 @@ public class ExcelReader {
 			break;
 			
 		case "at":
+			
+			if(beginJob)
+			{
 			RunTime rt= new  RunTime();
 	    	  rt.setBegin(cell.toString().substring(0, 2) + ":"
 						+ cell.toString().substring(2, 4));	  
 	    	  jb.setRunTime(rt);
-		break;
+			}
+			else
+			{
+				beginJob=true;
+			}
+	    	  break;
+		
+		case "every":
 
+			
+				Commands cmds=fabrique.createCommands();
+				Order tmp=fabrique.createOrder();
+				RunTime rt= new  RunTime();
+				JobChain tmpJobchain=fabrique.createJobChain();
+				tmpJobchain.setName("repeat"+jb.getTitle());
+				tmpJobchain.setVisible("yes");
+				
+				JobChain.JobChainNode temp = fabrique.createJobChainJobChainNode();
+				temp.setState(jbcn.getState()+"_R");
+				temp.setJob(jbcn.getJob()+"_R");
+				temp.setNextState(jbcn.getNextState());
+				tmpJobchain.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(temp);
+			   
+				temp = fabrique.createJobChainJobChainNode();
+				temp.setState("end_SUC_All");
+				tmpJobchain.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(temp);
+				
+				temp = fabrique.createJobChainJobChainNode();
+				temp.setState("!end_ERR");
+				tmpJobchain.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(temp);
+				
+			
+				rt.setRepeat(cell.toString().substring(0, 2) + ":"
+						+ cell.toString().substring(2, 4));	 
+				
+				if(!sheet.getRow(numLigne).getCell(16).toString().isEmpty()&&!sheet.getRow(numLigne).getCell(19).toString().isEmpty())
+				{
+					
+					rt.setBegin(sheet.getRow(numLigne).getCell(16).toString().substring(0, 2) + ":"
+							+sheet.getRow(numLigne).getCell(16).toString().substring(2,4));
+					
+					rt.setEnd(sheet.getRow(numLigne).getCell(19).toString().substring(0, 2) + ":"
+							+sheet.getRow(numLigne).getCell(19).toString().substring(2,4));
+					
+				}
+				else{
+					
+					int n=numLigne-1;
+					while(n!=1)
+					{
+						if(!sheet.getRow(n).getCell(16).toString().isEmpty()&&
+								!sheet.getRow(n).getCell(19).toString().isEmpty()&&
+								sheet.getRow(n).getCell(3).toString().equals("N"))
+						{
+							rt.setBegin(sheet.getRow(n).getCell(16).toString().substring(0, 2) + ":"
+									+sheet.getRow(n).getCell(16).toString().substring(2,4));
+							
+							rt.setEnd(sheet.getRow(n).getCell(19).toString().substring(0, 2) + ":"
+									+sheet.getRow(n).getCell(19).toString().substring(2,4));
+							n=2;
+						}
+						
+						if(!sheet.getRow(n).getCell(16).toString().isEmpty()&&
+								!sheet.getRow(n).getCell(19).toString().isEmpty()&&
+								!sheet.getRow(n).getCell(1).toString().isEmpty())
+						{
+							rt.setBegin(sheet.getRow(n).getCell(16).toString().substring(0, 2) + ":"
+									+sheet.getRow(n).getCell(16).toString().substring(2,4));
+							
+							rt.setEnd(sheet.getRow(n).getCell(19).toString().substring(0, 2) + ":"
+									+sheet.getRow(n).getCell(19).toString().substring(2,4));
+							n=2;
+							
+						}
+						
+						if(!sheet.getRow(n).getCell(1).toString().isEmpty()&&
+						   (sheet.getRow(n).getCell(16).toString().isEmpty()||sheet.getRow(n).getCell(19).toString().isEmpty())
+						  )
+						{
+							n=2;
+							rt.setBegin("00:00");
+							rt.setEnd("24:00");
+							log+="Attention! un job répétitif sans plage de répétition a été detecté! plage par defaut : 24h";
+							
+						}
+						
+						n--;
+					}
+				}
+				
+				
+				tmp.setRunTime(rt);
+				tmp.setJobChain(file.getName().split("\\.")[0]+"/"+"repeat"+jb.getTitle());
+				
+				OutputStream os;
+				
+			try {
+				os = new FileOutputStream(outPut + jb.getTitle()+"_R"
+						+ ".job.xml");
+				marshaller.marshal(jb, os);
+			} catch (FileNotFoundException | JAXBException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+				
+				
+				
+				
+				if(jb.getCommands().isEmpty())
+				{
+					cmds.getOnExitCode().add("success");
+					
+					cmds.getAddJobsOrAddOrderOrCheckFolders().add(fabrique.createOrder(tmp));
+					jb.getCommands().add(cmds);
+				}
+				else
+				{
+					cmds=jb.getCommands().get(0);
+					cmds.getAddJobsOrAddOrderOrCheckFolders().add(fabrique.createOrder(tmp));
+				}
+				
+				
+	
+				
+				
+				try {
+					os = new FileOutputStream(outPut + tmpJobchain.getName()
+							+ ".job_chain.xml");
+					marshaller.marshal(tmpJobchain, os);
+				} catch (FileNotFoundException | JAXBException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			
+
+			break;
 		default:
 			break;
 		}
@@ -512,6 +654,7 @@ public class ExcelReader {
 		jbcn = fabrique.createJobChainJobChainNode();
 		jb = fabrique.createJob();
 		jb.setOrder("yes");
+		jb.setStopOnError("no");
 		scrpt = fabrique.createScript();
 		scrpt.setLanguage("shell");
 
@@ -708,8 +851,8 @@ public String countDay(String day)
 
 			case "runcycle":
 
-				od.setTitle(cell.toString());
-
+				od.setTitle("Order_"+jobchainEnCour+"_"+numeroOrder);
+				numeroOrder++;
 				break;
 			case "until":
 
@@ -1009,7 +1152,7 @@ public String countDay(String day)
 		copyLineTitle();
 		nextExcelLine();
 		String chaine;
-		int numLigne=1;
+		
 		while (rowIterator.hasNext()) {
 
 			Row row = rowIterator.next();// get a line in the file
