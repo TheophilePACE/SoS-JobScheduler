@@ -511,7 +511,7 @@ public class ExcelReader {
 				Order tmp=fabrique.createOrder();
 				RunTime rt= new  RunTime();
 				JobChain tmpJobchain=fabrique.createJobChain();
-				tmpJobchain.setName("repeat"+jb.getTitle());
+				tmpJobchain.setName(jb.getTitle()+"repeat");
 				tmpJobchain.setVisible("yes");
 				
 				JobChain.JobChainNode temp = fabrique.createJobChainJobChainNode();
@@ -589,7 +589,7 @@ public class ExcelReader {
 				
 				
 				tmp.setRunTime(rt);
-				tmp.setJobChain(file.getName().split("\\.")[0]+"/"+"repeat"+jb.getTitle());
+				tmp.setJobChain(file.getName().split("\\.")[0]+"/"+jb.getTitle()+"repeat");
 				
 				OutputStream os;
 				
@@ -851,7 +851,20 @@ public String countDay(String day)
 
 			case "runcycle":
 
-				od.setTitle("Order_"+jobchainEnCour+"_"+numeroOrder);
+				String zero="";
+				if(numeroOrder<10)
+				{
+					zero="00"+numeroOrder;
+				}
+				else if(numeroOrder<100)
+				{
+					zero="0"+numeroOrder;
+				}
+				else
+				{
+					zero=String.valueOf(numeroOrder);
+				}
+				od.setTitle("O"+zero+"_"+jobchainEnCour);
 				numeroOrder++;
 				break;
 			case "until":
