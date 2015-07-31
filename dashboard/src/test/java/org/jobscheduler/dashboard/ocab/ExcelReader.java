@@ -504,7 +504,16 @@ public class ExcelReader {
 		
 		case "every":
 
-			if(!sheet.getRow(numLigne-1).getCell(2).toString().isEmpty()||!sheet.getRow(numLigne+1).getCell(2).toString().isEmpty())
+			boolean noOtherJob=false;
+			if(numLigne+1<sheet.getLastRowNum())
+			{
+				if(!sheet.getRow(numLigne+1).getCell(2).toString().isEmpty())
+				noOtherJob=true;
+				
+			}
+			
+			
+			if(!sheet.getRow(numLigne-1).getCell(2).toString().isEmpty()||noOtherJob)
 				{
 				
 				
@@ -1819,7 +1828,7 @@ public String countDay(String day)
 	public static void main(String[] args) throws IOException, JAXBException {
 
 		ExcelReader exrd = new ExcelReader(
-				"C:/Users/m419099/Documents/Facile/AJCP.xlsm",
+				"C:/Users/m419099/Documents/Facile/CONNECTIT.xlsm",
 				"C:/Users/m419099/Documents/résultat",null,true);
 		// 1=job
 		// 2=jobchain
