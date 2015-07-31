@@ -881,12 +881,13 @@ public String countDay(String day)
 				break;
 			case "until":
 
-				oRuntime.setBegin("00:00");
+				
 				String heureEnd = cell.toString().substring(0, 2) + ":"
 						+ cell.toString().substring(2, 4);
-				oRuntime.setEnd(heureEnd);
+				if(!heureEnd.toString().equals("23:59"))
+				{oRuntime.setEnd(heureEnd);
 				runtime = true;
-
+				}
 				break;
 				
 			case "timezone":
@@ -915,7 +916,12 @@ public String countDay(String day)
 						
 						Weekdays.Day tmpDay2 = fabrique.createWeekdaysDay();
 						Period tmpPeriod2 = fabrique.createPeriod();
-						tmpPeriod2.setSingleStart(saveAt);
+
+						
+							tmpPeriod2.setSingleStart(saveAt);
+							
+						
+						
 						String day="1 2 3 4 5 6 7";
 						for(int j=1;j<listCommande.length;j++)
 						{
@@ -1667,6 +1673,15 @@ public String countDay(String day)
 						row.getCell(16).setCellValue(rowSuiv.getCell(16).toString());
 						row.getCell(16).setCellStyle(csCF);
 					}
+					
+					if(!rowPrec.getCell(19).toString().isEmpty()&&!rowPrec.getCell(19).toString().equals("2359"))
+					{
+						
+						row.getCell(19).setCellValue(rowPrec.getCell(19).toString());
+						row.getCell(19).setCellStyle(csCF);
+					}
+					
+					
 				}
 				
 				
