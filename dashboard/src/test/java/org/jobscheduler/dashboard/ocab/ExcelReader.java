@@ -78,7 +78,6 @@ public class ExcelReader {
 	String log="";
 	ConvertisseurTwsJbs interfaceGraphique;
 	boolean modeTest;
-	boolean beginJob=false; 
 	int numeroOrder=1;
 	int numLigne=1;
 	/**
@@ -277,7 +276,7 @@ public class ExcelReader {
 					// correspond to cell
 		jbc = fabrique.createJobChain();
 		jbc.setVisible("yes");
-		beginJob=false;
+		
 		numeroOrder=1;
 
 		do {
@@ -491,23 +490,26 @@ public class ExcelReader {
 			
 		case "at":
 			
-			if(beginJob)
+			
+			
+			if(sheet.getRow(numLigne-1).getCell(3).toString().isEmpty())
 			{
 			RunTime rt= new  RunTime();
 	    	  rt.setBegin(cell.toString().substring(0, 2) + ":"
 						+ cell.toString().substring(2, 4));	  
 	    	  jb.setRunTime(rt);
 			}
-			else
-			{
-				beginJob=true;
-			}
+			
 	    	  break;
 		
 		case "every":
 
-			
+			if(!sheet.getRow(numLigne-1).getCell(2).toString().isEmpty()||!sheet.getRow(numLigne+1).getCell(2).toString().isEmpty())
+				{
+				
+				
 				Commands cmds=fabrique.createCommands();
+				
 				Order tmp=fabrique.createOrder();
 				RunTime rt= new  RunTime();
 				JobChain tmpJobchain=fabrique.createJobChain();
@@ -579,7 +581,7 @@ public class ExcelReader {
 							n=2;
 							rt.setBegin("00:00");
 							rt.setEnd("24:00");
-							log+="Attention! un job répétitif sans plage de répétition a été detecté! plage par defaut : 24h";
+							log+="Attention! un job répétitif sans plage de répétition a été détecté! plage par defaut : 24h \n";
 							
 						}
 						
@@ -632,7 +634,7 @@ public class ExcelReader {
 					e.printStackTrace();
 				}
 				
-			
+				}
 
 			break;
 		default:
@@ -641,6 +643,7 @@ public class ExcelReader {
 
 	}
 
+	
 	/**
 	 * name - traiterUneLigneJob treat a job
 	 * 
@@ -914,7 +917,7 @@ public String countDay(String day)
 						
 						tmpDay2.getDay().add(day);
 						
-						
+						detectBoucle(tmpPeriod2);
 						tmpDay2.getPeriod().add(tmpPeriod2);
 						
 						
@@ -950,7 +953,9 @@ public String countDay(String day)
 						
 						Weekdays.Day tmpDay2 = fabrique.createWeekdaysDay();
 						Period tmpPeriod2 = fabrique.createPeriod();
-						tmpPeriod2.setSingleStart(saveAt);						
+						tmpPeriod2.setSingleStart(saveAt);
+						
+						detectBoucle(tmpPeriod2);
 						tmpDay2.getPeriod().add(tmpPeriod2);
 						
 						if (oRuntime.getWeekdays() != null) {
@@ -1011,7 +1016,7 @@ public String countDay(String day)
 							Period tmpPeriod3 = fabrique.createPeriod();
 							
 							tmpPeriod3.setSingleStart(saveAt);
-							
+							detectBoucle(tmpPeriod3);
 							for(int t=1;t<listCommande.length;t++)
 							{
 								if(listCommande[t].indexOf("BYDAY")!=-1)
@@ -1074,6 +1079,88 @@ public String countDay(String day)
 
 		}
 
+	}
+	
+	public void detectBoucle(Period period)
+	{
+		int ligne=numLigne+1;
+		
+		while(sheet.getRow(ligne).getCell(2).toString().isEmpty()&&!sheet.getRow(ligne).getCell(3).toString().isEmpty())
+		{
+			ligne++;
+		}
+		
+		boolean unSeulJob=false;
+		if(ligne+1<sheet.getLastRowNum())
+		{
+			if(sheet.getRow(ligne+1).getCell(2).toString().isEmpty())
+				unSeulJob=true;
+		}
+		else
+		{
+			unSeulJob=true;
+		}
+	
+		if(unSeulJob&&!sheet.getRow(ligne).getCell(47).toString().isEmpty())
+		{
+			
+			period.setBegin(period.getSingleStart());
+			period.setRepeat(sheet.getRow(ligne).getCell(47).toString().substring(0,2) + ":"
+					+ sheet.getRow(ligne).getCell(47).toString().substring(2,4));
+			
+			if(!sheet.getRow(ligne).getCell(16).toString().isEmpty()&&!sheet.getRow(ligne).getCell(19).toString().isEmpty())
+			{
+				
+				
+				
+				period.setEnd(sheet.getRow(ligne).getCell(19).toString().substring(0, 2) + ":"
+						+ sheet.getRow(ligne).getCell(19).toString().substring(2,4));
+			}
+			else if(!sheet.getRow(numLigne).getCell(16).toString().isEmpty()&&!sheet.getRow(numLigne).getCell(19).toString().isEmpty())
+			{
+				
+				
+				
+				
+				period.setEnd(sheet.getRow(numLigne).getCell(19).toString().substring(0, 2) + ":"
+						+ sheet.getRow(numLigne).getCell(19).toString().substring(2,4));
+				
+			}
+			else
+			{
+				int n=numLigne-1;
+				
+				while(n!=1)
+				{
+	
+					if(!sheet.getRow(n).getCell(16).toString().isEmpty()&&
+							!sheet.getRow(n).getCell(19).toString().isEmpty()&&
+							!sheet.getRow(n).getCell(1).toString().isEmpty())
+					{
+						
+						
+						period.setEnd(sheet.getRow(n).getCell(19).toString().substring(0, 2) + ":"
+								+sheet.getRow(n).getCell(19).toString().substring(2,4));
+						n=2;
+						
+					}
+					
+					if(!sheet.getRow(n).getCell(1).toString().isEmpty()&&
+					   (sheet.getRow(n).getCell(16).toString().isEmpty()||sheet.getRow(n).getCell(19).toString().isEmpty())
+					  )
+					{
+						n=2;
+						period.setBegin("00:00");
+						period.setEnd("24:00");
+						log+="Attention! un job répétitif sans plage de répétition a été détecté! plage par defaut : 24h \n";
+						
+					}
+					
+					n--;
+				}
+			}
+			period.setSingleStart(null);
+		}
 	}
 
 	/**
@@ -1475,7 +1562,7 @@ public String countDay(String day)
 				 }
 			 }
 			
-			
+			/*
 			//Add order
 			 if(!row.getCell(16).toString().isEmpty()&& !row.getCell(1).toString().isEmpty())
 			 {
@@ -1488,9 +1575,23 @@ public String countDay(String day)
 				 }
 			 }
 			//End add order
+			 */
+			
+			 if(!row.getCell(1).toString().isEmpty()&&!row.getCell(16).toString().isEmpty()&&!row.getCell(16).toString().isEmpty())
+				{
+				 if(!rowSuiv.getCell(2).toString().isEmpty())
+				 {
+					 if(rowSuiv.getCell(16).toString().isEmpty())
+					 rowSuiv.getCell(16).setCellValue(row.getCell(16).toString());
+					 
+					 if(rowSuiv.getCell(19).toString().isEmpty())
+						 rowSuiv.getCell(19).setCellValue(row.getCell(19).toString());
+				 }
+				 
+				}
 			 
-			
-			
+			 
+			 
 			if(row.getCell(3).toString().equals("O"))
 			{
 				 row.getCell(30).setCellValue(row.getCell(30).toString().replace("//", "/"));
@@ -1643,17 +1744,19 @@ public String countDay(String day)
 				        row.createCell(cn);
 				        newRow.getCell(cn, Row.CREATE_NULL_AS_BLANK);//plutot row.getcell(cn,R...);
 				      
-				       if(cn==3)
-				      {
-				    	 row.getCell(cn).setCellValue("R");
-				    	
-				    	 
-				      }
-				       if(cn==28)
-					      {
-					    	 row.getCell(cn).setCellValue("FREQ=DAILY;INTERVAL=1");
-					    	 
-					      }
+				       switch (cn)
+				       
+				       {
+				       case 3:
+				    	   row.getCell(cn).setCellValue("R");
+				    	   break;
+				    	   
+				     
+				       case 28 :
+				    	   row.getCell(cn).setCellValue("FREQ=DAILY;INTERVAL=1");
+				    	   break;
+				       }
+				       
 				       
 				   }
 				   row.setRowStyle(csCF);
@@ -1716,7 +1819,7 @@ public String countDay(String day)
 	public static void main(String[] args) throws IOException, JAXBException {
 
 		ExcelReader exrd = new ExcelReader(
-				"C:/Users/m419099/Documents/Facile/EPFMRCT1_OLD.xlsm",
+				"C:/Users/m419099/Documents/Facile/AJCP.xlsm",
 				"C:/Users/m419099/Documents/résultat",null,true);
 		// 1=job
 		// 2=jobchain
