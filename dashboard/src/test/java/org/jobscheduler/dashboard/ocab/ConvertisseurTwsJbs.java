@@ -9,9 +9,17 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
+import javax.swing.text.MutableAttributeSet;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 import org.jobscheduler.dashboard.jobdefinition.xml.Job;
 
@@ -230,8 +238,9 @@ jLabel4.setVisible(false);
  				jProgressBar1.setValue(80);
  				int nbFichier=exrd.OutputTest(123);
  				jTextPane1.setText(jTextPane1.getText()+nbFichier+" fichier(s) ont été générés");
- 				jTextPane1.setText(jTextPane1.getText()+"\n"+"operation succeeded");
+ 				jTextPane1.setText(jTextPane1.getText()+"\n"+"Operation succeeded");
  				jProgressBar1.setValue(100);
+ 				sQLHighlight(jTextPane1);
  				}
  			else{
  				jTextPane1.setText(jTextPane1.getText()+"\n"+"Error, conversion failed");
@@ -268,7 +277,57 @@ jLabel4.setVisible(true);
     /**
      * @param args the command line arguments
      */
-    
+    private void colorWords(String[] strsToHighlight,String text,final StyledDocument doc, Color color, boolean bold){
+    	 
+        for(String strToHL : strsToHighlight){
+                Pattern p = Pattern.compile(strToHL);
+                Matcher m = p.matcher(text);
+     
+                while(m.find() == true){                                                
+                        MutableAttributeSet attri = new SimpleAttributeSet();
+                        StyleConstants.setForeground(attri, color);
+                        StyleConstants.setBold(attri, bold);
+     
+                        final int start = m.start();
+                        final int end = m.end();
+                        final int length = end-start;
+                        final MutableAttributeSet style = attri;
+     
+                        SwingUtilities.invokeLater(new Runnable(){
+                            public void run(){
+                                    doc.setCharacterAttributes(start, length, style, true);
+                            }
+                        });
+                }
+        }
+    }
+     
+     
+    /**
+     * Fonction qui recupere le texte d'un TextePane et lance le coloriage des mot a partir de ses tableau de mot 
+     * @param c 
+     */
+    public void sQLHighlight(JTextPane c) {
+        String[] strsToHighlightFunction ={"ATTENTION","Modification","Error"};
+        String[] succes ={"succeeded"};
+     
+      
+        String text = c.getText().replaceAll("\n", " ");
+        final StyledDocument doc = c.getStyledDocument();
+        final MutableAttributeSet normal= new SimpleAttributeSet();
+        StyleConstants.setForeground(normal, Color.black);
+        StyleConstants.setBold(normal, false);
+     
+        SwingUtilities.invokeLater(new Runnable() {
+     
+        public void run() {
+                doc.setCharacterAttributes(0, doc.getLength(), normal, true);
+            }
+        });
+        colorWords(strsToHighlightFunction, text, doc,  Color.RED, true);
+        colorWords(succes, text, doc,  Color.GREEN, true);
+       
+    } 
     public void notification(String st)
     {
     	jTextPane1.setText(jTextPane1.getText()+"\n"+st);

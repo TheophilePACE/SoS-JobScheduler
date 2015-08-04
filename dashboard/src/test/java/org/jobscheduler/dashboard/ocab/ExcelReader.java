@@ -414,7 +414,7 @@ public class ExcelReader {
 			{
 				
 
-				log+="[ATTENTION] les jobs dans le fichier ont plusieurs utilisateurs! \n";
+				log+="ATTENTION les jobs dans le fichier ont plusieurs utilisateurs! \n";
 				
 			}
 			
