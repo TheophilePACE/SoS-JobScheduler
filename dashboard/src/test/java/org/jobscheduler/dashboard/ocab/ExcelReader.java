@@ -1732,7 +1732,7 @@ public String countDay(String day)
 		Row row2=worksheet.getRow(ligne2);
 		row.setRowStyle(csCF);
 		  
-		
+		log+="Echanghe entre la ligne n: "+ligne1+"et la ligne n2: " +ligne2+ "\n";
 		  
 				   for(int cn=0; cn<row.getLastCellNum(); cn++) {
 				
