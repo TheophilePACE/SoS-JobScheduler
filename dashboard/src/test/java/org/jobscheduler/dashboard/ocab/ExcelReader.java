@@ -128,6 +128,7 @@ public class ExcelReader {
 	Iterator<Row> rowIterator;
 	Iterator<Cell> cellFirstLigne;
 	Iterator<Cell> cellIterator;
+	
 
 	/**
 	 * Objects generated from the schema
@@ -408,6 +409,17 @@ public class ExcelReader {
 				
 			}
 			break;
+		case "user":
+			if(!cell.toString().equals(file.getName().split("\\.")[0].toLowerCase()))
+			{
+				
+
+				log+="[ATTENTION] les jobs dans le fichier ont plusieurs utilisateurs! \n";
+				
+			}
+			
+			
+			break;
 
 		case "scriptname":
             
@@ -444,7 +456,7 @@ public class ExcelReader {
 			break;
 
 		case "follows":
-			System.out.println(jb.getTitle()+" next "+jobhelp.getNextJob(jb.getTitle()));
+			
              if(!jobhelp.getNextJob(jb.getTitle()).equals("NogetL1"))
              {	 
             	
@@ -1526,6 +1538,7 @@ public String countDay(String day)
 		int numLigne=1;
 		boolean delete=false;
 		
+		
 		for(int p=2;p<=sheet.getLastRowNum();p++)	 
 		{	
 			
@@ -1578,9 +1591,9 @@ public String countDay(String day)
 			 }
 			 else  if(!row.getCell(2).toString().isEmpty() &&!row.getCell(11).toString().isEmpty())
 			 { 
-				 System.out.println("ohéohéohé");
+				 
 				 int nextLine=numLigne+1;
-				 System.out.println(nextLine+" numero de ligne "+ sheet.getLastRowNum() +" "+ sheet.getRow(nextLine).getCell(2).toString());
+				 
 				 while(nextLine<=sheet.getLastRowNum())
 				 {
 					 if(sheet.getRow(nextLine).getCell(2).toString().isEmpty()){

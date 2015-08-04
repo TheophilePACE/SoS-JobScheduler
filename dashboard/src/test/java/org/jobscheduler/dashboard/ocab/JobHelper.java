@@ -253,7 +253,7 @@ public class JobHelper {
 	 * name - getL1 get in next line, the column enter in parameter
 	 *                           
 	 * 
-	 * @param int : column numbe
+	 * @param int : column number
 	 * @return String :  case specified in parameter of the next line
 	 * @author jean-vincent
 	 * @date 20/05/2015
