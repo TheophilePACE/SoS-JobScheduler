@@ -2,6 +2,7 @@ package org.jobscheduler.dashboard.ocab;
 
 
 import java.awt.Color;
+import java.io.File;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
@@ -10,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
 
 import org.jobscheduler.dashboard.jobdefinition.xml.Job;
 
@@ -75,11 +77,13 @@ jLabel4.setVisible(false);
         jFileChooser1 = new javax.swing.JFileChooser();
         jProgressBar1 = new javax.swing.JProgressBar();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jTextPane1 = new javax.swing.JTextPane();
         jRadioButton1 = new javax.swing.JRadioButton();
+        File f = new File (System.getProperty("user.dir")+"/");
+        jFileChooser1.setCurrentDirectory(f);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Convertisseur TWS >>>> JobScheduler ");
+        setTitle("Convertisseur TWS >>>>> JobScheduler");
         setBounds(new java.awt.Rectangle(0, 0, 0, 0));
         setResizable(false);
 
@@ -120,10 +124,7 @@ jLabel4.setVisible(false);
             }
         });
 
-        jTextArea1.setEditable(false);
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        jScrollPane1.setViewportView(jTextPane1);
 
         jRadioButton1.setText("Mode test");
         jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -228,17 +229,17 @@ jLabel4.setVisible(false);
  				{
  				jProgressBar1.setValue(80);
  				int nbFichier=exrd.OutputTest(123);
- 				jTextArea1.setText(jTextArea1.getText()+nbFichier+" fichier(s) ont été générés");
- 				jTextArea1.setText(jTextArea1.getText()+"\n"+"operation succeeded");
+ 				jTextPane1.setText(jTextPane1.getText()+nbFichier+" fichier(s) ont été générés");
+ 				jTextPane1.setText(jTextPane1.getText()+"\n"+"operation succeeded");
  				jProgressBar1.setValue(100);
  				}
  			else{
- 				jTextArea1.setText(jTextArea1.getText()+"\n"+"Error, conversion failed");
+ 				jTextPane1.setText(jTextPane1.getText()+"\n"+"Error, conversion failed");
  			    }
  			
  		} catch (Throwable e) {
  			// TODO Auto-generated catch block
- 			jTextArea1.setText(jTextArea1.getText()+"\n"+e.getMessage());
+ 			jTextPane1.setText(jTextPane1.getText()+"\n"+e.getMessage());
  		}
         
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -270,7 +271,7 @@ jLabel4.setVisible(true);
     
     public void notification(String st)
     {
-    	jTextArea1.setText(jTextArea1.getText()+"\n"+st);
+    	jTextPane1.setText(jTextPane1.getText()+"\n"+st);
     }
     
     public static void main(String args[]) throws RemoteException {
@@ -329,7 +330,7 @@ jLabel4.setVisible(true);
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextPane jTextPane1;
     // End of variables declaration//GEN-END:variables
     boolean modeTest=false;
 
