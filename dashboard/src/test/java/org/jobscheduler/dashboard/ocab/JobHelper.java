@@ -109,9 +109,9 @@ public class JobHelper {
 			{  
 				if(!row.getCell(11).toString().isEmpty())
 				{
-					System.out.println("888 "+row.getCell(11).toString().substring(1));
+					
 					String followJobChain =getJobChaine(row.getCell(11).toString().substring(1));
-					System.out.println("999 "+followJobChain);
+					
 					this.nextJobChain.put(followJobChain,row.getCell(5).getStringCellValue());
 				}
 
@@ -265,9 +265,11 @@ public class JobHelper {
 		Row rowL1;
 		Iterator<Cell> tempCellIteratorL1;
 		Cell cellTemp;
-
-		if(sheet.getLastRowNum()>ligne+1)
+		
+		
+		if(sheet.getLastRowNum()>=ligne+1)
 		{
+			
 			rowL1=sheet.getRow(ligne+1);
 
 			tempCellIteratorL1=rowL1.iterator();
@@ -277,7 +279,6 @@ public class JobHelper {
 
 				if(cellTemp.getCellType()==0)
 				{
-
 					return String.valueOf((int)cellTemp.getNumericCellValue());
 				}
 				else
@@ -312,7 +313,7 @@ public class JobHelper {
 		Iterator<Cell> tempCellIteratorL2;
 		Cell cellTemp;
 
-		if(sheet.getLastRowNum()>ligne+2)
+		if(sheet.getLastRowNum()>=ligne+2)
 		{
 			rowL2=sheet.getRow(ligne+2);
 
@@ -453,7 +454,8 @@ public class JobHelper {
 
 		for(int i=0;i<nbreCell-1;i++)
 		{
-			tempCellIteratorL1.next();
+			tempCellIteratorL1.next().getStringCellValue();
+		
 		}
 		return tempCellIteratorL1.next(); 
 	}

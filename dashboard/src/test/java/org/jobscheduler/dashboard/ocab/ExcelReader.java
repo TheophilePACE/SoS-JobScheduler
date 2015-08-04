@@ -444,7 +444,7 @@ public class ExcelReader {
 			break;
 
 		case "follows":
-			
+			System.out.println(jb.getTitle()+" next "+jobhelp.getNextJob(jb.getTitle()));
              if(!jobhelp.getNextJob(jb.getTitle()).equals("NogetL1"))
              {	 
             	
@@ -1554,7 +1554,7 @@ public String countDay(String day)
 				 if(ligneEchange!=0)
 				 {
 					 log+="Une incohérence dans la listes des jobs a été détectée et corrigée, la ligne "+(ligneEchange+1)+ "a été échangée avec la ligne "+ (aComparer+1)+" à cause de la colonne <<at>> \n";
-					 switchRow( sheet,  aComparer, ligneEchange,csCF);
+					 switchRow(aComparer, ligneEchange,csCF);
 					 ligneEchange=0;
 				 }
 				
@@ -1576,7 +1576,33 @@ public String countDay(String day)
 					 rowPrec.getCell(16).setCellStyle(csCF);
 				 }
 			 }
+			 else  if(!row.getCell(2).toString().isEmpty() &&!row.getCell(11).toString().isEmpty())
+			 { 
+				 System.out.println("ohéohéohé");
+				 int nextLine=numLigne+1;
+				 System.out.println(nextLine+" numero de ligne "+ sheet.getLastRowNum() +" "+ sheet.getRow(nextLine).getCell(2).toString());
+				 while(nextLine<=sheet.getLastRowNum())
+				 {
+					 if(sheet.getRow(nextLine).getCell(2).toString().isEmpty()){
+						 nextLine=sheet.getLastRowNum(); 
+						
+					 }
+					 else if(sheet.getRow(nextLine).getCell(2).toString().equals(sheet.getRow(numLigne).getCell(11).toString()))
+					 {
+						 
+						 switchRow(numLigne, nextLine,csCF);
+						 nextLine=numLigne;
+					 }
+					 nextLine++;
+				 }
+					 
+			 }
 			
+			 
+			 
+			 
+			
+				 
 			/*
 			//Add order
 			 if(!row.getCell(16).toString().isEmpty()&& !row.getCell(1).toString().isEmpty())
@@ -1726,10 +1752,10 @@ public String countDay(String day)
 		log+="Fin du nettoyage, génération du nouveau fichier Excel \n";
 	}
 	
-	public void switchRow(XSSFSheet worksheet, int ligne1, int ligne2, CellStyle csCF)
+	public void switchRow( int ligne1, int ligne2, CellStyle csCF)
 	{
-		Row row=worksheet.getRow(ligne1);
-		Row row2=worksheet.getRow(ligne2);
+		Row row=sheet.getRow(ligne1);
+		Row row2=sheet.getRow(ligne2);
 		row.setRowStyle(csCF);
 		  
 		log+="Echanghe entre la ligne n: "+ligne1+"et la ligne n2: " +ligne2+ "\n";
@@ -1739,11 +1765,24 @@ public String countDay(String day)
 				        String stringRow=row.getCell(cn).toString();
 				        String stringRow2=row2.getCell(cn).toString();
 				       
-				       
 				        row.getCell(cn).setCellValue(stringRow2);
-				       row2.getCell(cn).setCellValue(stringRow);
+				        row2.getCell(cn).setCellValue(stringRow);
+				    
+				       if(stringRow.equals("") && (row2.getCell(cn).getCellType()==Cell.CELL_TYPE_STRING)){
+				    	   row2.removeCell(row2.getCell(cn));
+				    	   row2.getCell(cn, Row.CREATE_NULL_AS_BLANK);
+				    	   
+				       }
+				      
+				       if(stringRow2.equals("")&& (row.getCell(cn).getCellType()==Cell.CELL_TYPE_STRING)){
+				    	   row.removeCell(row.getCell(cn));
+				    	   row.getCell(cn, Row.CREATE_NULL_AS_BLANK);
+				    	  
+				       }
+				     
 				      
 				      
+				       
 				       
 				   }
 	}
@@ -1843,8 +1882,8 @@ public String countDay(String day)
 	public static void main(String[] args) throws IOException, JAXBException {
 
 		ExcelReader exrd = new ExcelReader(
-				"C:/Users/m419099/Documents/Facile/CONNECTIT.xlsm",
-				"C:/Users/m419099/Documents/résultat",null,true);
+				"C:/Users/m419099/Documents/Facile/CASTING_TM1.xlsm",
+				"C:/Users/m419099/Documents/résultat",new ConvertisseurTwsJbs(),true);
 		// 1=job
 		// 2=jobchain
 		// 3=order
