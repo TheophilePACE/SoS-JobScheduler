@@ -149,7 +149,12 @@ public class JobHelper {
 			cellIterator=row.cellIterator();
 
 			cell=coloneExcelSuivant(7);	//we go to the column 7, the job name (of the current job)
+			
+			
+			
+			
 
+			
 			if(!cell.toString().isEmpty()) //if it's not empty we treat a job
 			{
 
@@ -244,9 +249,13 @@ public class JobHelper {
 		//for generate the last config file
 		if(!beginJobchain)
 		{
-			OutputStream os = new FileOutputStream("D:/resultat/"+nameJobChain+".config.xml");
+			OutputStream os = new FileOutputStream(outPut+nameJobChain+".config.xml");
 			marshaller.marshal(st, os);
 		}
+		
+		System.out.println("*****************************");
+		System.out.println(nameNextJob.toString());
+		System.out.println("+++*****************************+++");
 	}
 
 	/**
@@ -274,7 +283,7 @@ public class JobHelper {
 
 			tempCellIteratorL1=rowL1.iterator();
 			cellTemp=coloneExcelSuivant(tempCellIteratorL1,numeroColone);
-			if (!cellTemp.toString().isEmpty())
+			if (!cellTemp.toString().isEmpty()&&cellTemp.toString().indexOf("s")==-1)
 			{
 
 				if(cellTemp.getCellType()==0)
@@ -356,15 +365,23 @@ public class JobHelper {
 		String valeurCourante=rowC.getCell(11).toString();
 		String ValeurAcomparer=getL1(12);
 		
-		if(!valeurCourante.isEmpty()&& valeurCourante.indexOf(";")==-1)
+		if(!valeurCourante.isEmpty()&& valeurCourante.indexOf(";")==-1 && valeurCourante.indexOf(",")==-1)
 		{	
 			
 			
-			if(!ValeurAcomparer.equals("NogetL1") )
-			{
-				if(ValeurAcomparer.indexOf(";")!=-1)
+			
+			
+				if(ValeurAcomparer.indexOf(";")!=-1 || ValeurAcomparer.indexOf(",")!=-1||ValeurAcomparer.equals("NogetL1"))
 				{
+					if(!sheet.getRow(ligne-1).getCell(11).toString().isEmpty())
+					{System.out.println("valeur a comparer "+ ValeurAcomparer);
 					ValeurAcomparer=sheet.getRow(ligne-1).getCell(11).toString();
+					System.out.println("valeur a comparer  apres"+ ValeurAcomparer);
+					}
+					else
+					{
+						return false;
+					}
 				}
 
 				if(valeurCourante.indexOf(".")!=-1)
@@ -384,7 +401,7 @@ public class JobHelper {
 
 				if(Integer.parseInt(valeurCourante)==Integer.parseInt(ValeurAcomparer))
 					return true;
-			}
+			
 
 		}
 

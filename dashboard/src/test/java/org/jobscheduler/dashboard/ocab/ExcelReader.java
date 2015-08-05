@@ -196,7 +196,7 @@ public class ExcelReader {
 		jobhelp=new JobHelper(sheet,marshaller);
 		
 		log+="Exécution du JobHelper \n";
-		jobhelp.initialization(output);
+		jobhelp.initialization(outPut);
 		
 		rowIterator = sheet.iterator();// Iterate through each rows one by one
 
@@ -374,6 +374,8 @@ public class ExcelReader {
 			jbcn.setState(cell.toString());
 			
 			//if next line is a split, then we have to create a new jobchainnode (split)  in actual jobchain
+			System.out.println(jobhelp.getNextJob(cell.toString()));;
+			System.out.println("test "+cell.toString());
 			if(jobhelp.getNextJob(cell.toString()).indexOf("Split_")!=-1)
 			{
 				jbcnSplit=fabrique.createJobChainJobChainNode();
@@ -1497,7 +1499,7 @@ public String countDay(String day)
 	{
 		JobChain.FileOrderSource file=fabrique.createJobChainFileOrderSource();
 	     String[] split=contenuFichier.split("/");
-	     String directory="t";
+	     String directory="";
 	     for(int j=0;j<split.length-1;j++)
 	     {
 	    	 if(j<split.length-2)
@@ -1656,6 +1658,8 @@ public String countDay(String day)
 				
 				String regex=cheminEtRegex[cheminEtRegex.length-1];	
 				StringTokenizer chaine = new StringTokenizer(regex,"?*",true);
+				if(chaine.countTokens()>1)
+				{
 				row.getCell(30).setCellValue("");
 				String temps=chaine.nextToken();
 				String tempsNext;
@@ -1687,7 +1691,7 @@ public String countDay(String day)
 					
 				}
 				
-				
+			 }
 			}
 			
 			
@@ -1895,7 +1899,7 @@ public String countDay(String day)
 	public static void main(String[] args) throws IOException, JAXBException {
 
 		ExcelReader exrd = new ExcelReader(
-				"C:/Users/m419099/Documents/Facile/CASTING_TM1.xlsm",
+				"C:/Users/m419099/Documents/Moyen/ALTEAYI.xlsm",
 				"C:/Users/m419099/Documents/résultat",new ConvertisseurTwsJbs(),true);
 		// 1=job
 		// 2=jobchain
