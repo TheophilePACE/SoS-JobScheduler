@@ -107,6 +107,12 @@ public class JobHelper {
 
 			if(!row.getCell(5).getStringCellValue().isEmpty()) //for check jobchain name 
 			{  
+				if (complexe)
+				{
+					EndComplexCase("End");
+					
+				} 
+				
 				if(!row.getCell(11).toString().isEmpty())
 				{
 					
@@ -189,23 +195,7 @@ public class JobHelper {
 				{
 					if (complexe)
 					{
-						//now we treat a simple case but before we treat a complex case then we have some thing to do
-						//set  next of the synchro and split 
-						nameNextJob.put("Split_"+numbeSplit,"Sync_"+numbeSyn);//next of a split is always a synchronization
-						nameNextJob.put("Sync_"+numbeSyn,cell.toString());
-						complexe=false;//reset
-
-						//here, we have treat the complex, we must create a job file
-						//if it's the first complex case in the jobchain we create a jobchain with a new order and a new process
-						//else we add a new process, look a config file for understand
-						//jobchain in the config file it's not a common jobchain 
-						createConfigFile();
-
-
-
-
-						numbeSyn++;//for the next synchro
-						numbeSplit++;//for the next split
+						EndComplexCase(cell.toString());
 					} 
 
 					//if the 2 next row have the same previous Jid then the next line is a complicated cases
@@ -242,6 +232,7 @@ public class JobHelper {
 				}
 
 			}
+			
 
 			ligne++;
 		}
@@ -253,11 +244,29 @@ public class JobHelper {
 			marshaller.marshal(st, os);
 		}
 		
-		System.out.println("*****************************");
-		System.out.println(nameNextJob.toString());
-		System.out.println("+++*****************************+++");
+		
 	}
 
+	public void EndComplexCase(String nextSynchro)
+	{
+		//now we treat a simple case or a jobchain but before we treat a complex case then we have some thing to do
+		//set  next of the synchro and split 
+		nameNextJob.put("Split_"+numbeSplit,"Sync_"+numbeSyn);//next of a split is always a synchronization
+		nameNextJob.put("Sync_"+numbeSyn,nextSynchro);
+		complexe=false;//reset
+
+		//here, we have treat the complex, we must create a job file
+		//if it's the first complex case in the jobchain we create a jobchain with a new order and a new process
+		//else we add a new process, look a config file for understand
+		//jobchain in the config file it's not a common jobchain 
+		createConfigFile();
+
+
+
+
+		numbeSyn++;//for the next synchro
+		numbeSplit++;//for the next split
+	}
 	/**
 	 * name - getL1 get in next line, the column enter in parameter
 	 *                           
@@ -374,9 +383,9 @@ public class JobHelper {
 				if(ValeurAcomparer.indexOf(";")!=-1 || ValeurAcomparer.indexOf(",")!=-1||ValeurAcomparer.equals("NogetL1"))
 				{
 					if(!sheet.getRow(ligne-1).getCell(11).toString().isEmpty())
-					{System.out.println("valeur a comparer "+ ValeurAcomparer);
+					{
 					ValeurAcomparer=sheet.getRow(ligne-1).getCell(11).toString();
-					System.out.println("valeur a comparer  apres"+ ValeurAcomparer);
+					
 					}
 					else
 					{

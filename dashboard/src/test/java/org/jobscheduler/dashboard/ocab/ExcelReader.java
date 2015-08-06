@@ -275,11 +275,19 @@ public class ExcelReader {
 
 		int i = 2;// cell and "i"(column title) must be synchronized, title must
 					// correspond to cell
+		if(alreadySync)
+		{
+			alreadySync=false;
+			jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcnSync);
+		}
+		
 		jbc = fabrique.createJobChain();
 		jbc.setVisible("yes");
 		
 		numeroOrder=1;
-
+        //The last job was a split with no end, the only way for add it it's in the next jobchain because, 
+		//next of the last job is always a jobchain or nothing (end of the file) 
+		
 		do {
 
 			cell = coloneExcelSuivant();// first time, we pass to the case 3nd
@@ -374,8 +382,7 @@ public class ExcelReader {
 			jbcn.setState(cell.toString());
 			
 			//if next line is a split, then we have to create a new jobchainnode (split)  in actual jobchain
-			System.out.println(jobhelp.getNextJob(cell.toString()));;
-			System.out.println("test "+cell.toString());
+			
 			if(jobhelp.getNextJob(cell.toString()).indexOf("Split_")!=-1)
 			{
 				jbcnSplit=fabrique.createJobChainJobChainNode();
@@ -518,16 +525,16 @@ public class ExcelReader {
 		
 		case "every":
 
-			boolean noOtherJob=false;
+			boolean OtherJob=false;
 			if(numLigne+1<sheet.getLastRowNum())
 			{
 				if(!sheet.getRow(numLigne+1).getCell(2).toString().isEmpty())
-				noOtherJob=true;
+				OtherJob=true;
 				
 			}
 			
 			
-			if(!sheet.getRow(numLigne-1).getCell(2).toString().isEmpty()||noOtherJob)
+			if(!sheet.getRow(numLigne-1).getCell(2).toString().isEmpty()||OtherJob)
 				{
 				
 				
@@ -542,7 +549,8 @@ public class ExcelReader {
 				JobChain.JobChainNode temp = fabrique.createJobChainJobChainNode();
 				temp.setState(jbcn.getState()+"_R");
 				temp.setJob(jbcn.getJob()+"_R");
-				temp.setNextState(jbcn.getNextState());
+				temp.setNextState("end_SUC_All");
+				temp.setErrorState("!end_ERR");
 				tmpJobchain.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(temp);
 			   
 				temp = fabrique.createJobChainJobChainNode();
