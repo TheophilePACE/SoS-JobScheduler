@@ -50,6 +50,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.tools.ant.taskdefs.Exit;
 import org.jobscheduler.dashboard.jobdefinition.xml.*;
+import org.jobscheduler.dashboard.jobdefinition.xml.Job.LockUse;
 import org.jobscheduler.dashboard.jobdefinition.xml.JobChain.FileOrderSink;
 import org.jobscheduler.dashboard.jobdefinition.xml.JobChain.FileOrderSource;
 import org.jobscheduler.dashboard.jobdefinition.xml.JobChain.JobChainNode;
@@ -80,6 +81,7 @@ public class ExcelReader {
 	boolean modeTest;
 	int numeroOrder=1;
 	int numLigne=1;
+	String lockInUse="";
 	/**
 	 * For the conversion , we must know the next steps for each job,
 	 * but ExcelReader work sequentially and don't stock anything about the next 
@@ -272,7 +274,7 @@ public class ExcelReader {
 	 */
 
 	public void treatJobChainLine() {
-
+		lockInUse=""; //initialization
 		int i = 2;// cell and "i"(column title) must be synchronized, title must
 					// correspond to cell
 		if(alreadySync)
@@ -692,6 +694,13 @@ public class ExcelReader {
 		jb.setStopOnError("no");
 		scrpt = fabrique.createScript();
 		scrpt.setLanguage("shell");
+		if(!lockInUse.isEmpty())
+		{
+			LockUse temp=fabrique.createJobLockUse();
+			temp.setLock(lockInUse);
+			temp.setExclusive("yes");
+			jb.getLockUse().add(temp);
+		}
 
 		int i = 2;// information about job begin in the 2nd column
 		
@@ -1322,7 +1331,23 @@ public String countDay(String day)
 					cell = coloneExcelSuivant();
 
 					if (cell.toString().equals("R")) {
-						treatOrderLine();
+						
+						if(sheet.getRow(numLigne).getCell(15).toString().isEmpty())
+						{treatOrderLine();}
+						else if(sheet.getRow(numLigne-1).getCell(3).toString().equals("R"))
+						{
+							Holidays hlds=fabrique.createHolidays();
+							Holiday hld=fabrique.createHoliday();
+							String [] vacs=sheet.getRow(numLigne).getCell(25).toString().split(",");
+							
+							for(int w=0;w<vacs.length;w++)
+							{
+								hld.setDate(vacs[w]);
+								hlds.getWeekdaysOrHolidayOrInclude().add(hld);
+								hld=fabrique.createHoliday();
+							}
+							od.getRunTime().setHolidays(hlds);
+						}
 						
 					}
 					else if(cell.toString().equals("O"))
@@ -1331,7 +1356,10 @@ public String countDay(String day)
 						fichier=true;
 						
 					}
-					
+					else if(cell.toString().equals("N"))
+							{
+								lockInUse=sheet.getRow(numLigne).getCell(32).toString();
+							}
 
 				}
 
@@ -1579,6 +1607,8 @@ public String countDay(String day)
 				 {
 					 log+="Une incohérence dans la listes des jobs a été détectée et corrigée, la ligne "+(ligneEchange+1)+ "a été échangée avec la ligne "+ (aComparer+1)+" à cause de la colonne <<at>> \n";
 					 switchRow(aComparer, ligneEchange,csCF);
+					 System.out.println("wtf.."+sheet.getRow(aComparer).getCell(2).toString());
+					 rebuildDependency(aComparer);
 					 ligneEchange=0;
 				 }
 				
@@ -1778,14 +1808,71 @@ public String countDay(String day)
 		log+="Fin du nettoyage, génération du nouveau fichier Excel \n";
 	}
 	
+	public void rebuildDependency(int numLgne)
+	{
+		int follower=0;
+		int i=1;
+		int aEchanger=0;
+
+		while(!sheet.getRow(numLgne+i).getCell(2).toString().isEmpty())
+		{
+			sheet.getRow(numLgne+i).getCell(11).toString();
+			
+			if(sheet.getRow(numLgne+i).getCell(11).toString().equals(sheet.getRow(numLgne).getCell(2).toString()))
+				{follower++;
+			aEchanger=numLgne+i;
+				}
+			i++;
+		}
+		
+		
+		if(follower==1 && aEchanger!=(numLgne+1))
+		{FileOutputStream fileOut;
+			XSSFFont font = wb.createFont();
+			font.setColor((short)55);
+			CellStyle csCF = wb.createCellStyle();
+			csCF.setFont(font);
+			sheet.shiftRows(numLgne+1, sheet.getLastRowNum(), 1);
+			sheet.createRow(numLgne+1);
+			
+			Row row=sheet.getRow(numLgne+1);
+			Row row2=sheet.getRow(aEchanger+1);
+			
+			 for(int cn=0; cn<row2.getLastCellNum(); cn++) {
+					
+			        String stringRow=row2.getCell(cn).toString();
+			        row.createCell(cn);
+			       
+			        row.getCell(cn).setCellValue(stringRow);
+			        
+			        
+			    
+			     
+			       }
+    
+			
+		
+			
+			sheet.removeRow(sheet.getRow(aEchanger+1));
+			sheet.shiftRows(aEchanger+2, sheet.getLastRowNum(),-1);
+			
+		
+			
+			rebuildDependency(numLgne+1);
+			
+			
+		}
+	}
+	
+
 	public void switchRow( int ligne1, int ligne2, CellStyle csCF)
 	{
 		Row row=sheet.getRow(ligne1);
 		Row row2=sheet.getRow(ligne2);
 		row.setRowStyle(csCF);
 		  
-		log+="Echanghe entre la ligne n: "+ligne1+"et la ligne n2: " +ligne2+ "\n";
-		  
+		log+="Echange entre la ligne n: "+ligne1+"et la ligne n2: " +ligne2+ "\n";
+		
 				   for(int cn=0; cn<row.getLastCellNum(); cn++) {
 				
 				        String stringRow=row.getCell(cn).toString();
@@ -1793,6 +1880,7 @@ public String countDay(String day)
 				       
 				        row.getCell(cn).setCellValue(stringRow2);
 				        row2.getCell(cn).setCellValue(stringRow);
+				        
 				    
 				       if(stringRow.equals("") && (row2.getCell(cn).getCellType()==Cell.CELL_TYPE_STRING)){
 				    	   row2.removeCell(row2.getCell(cn));
@@ -1908,7 +1996,7 @@ public String countDay(String day)
 	public static void main(String[] args) throws IOException, JAXBException {
 
 		ExcelReader exrd = new ExcelReader(
-				"C:/Users/m419099/Documents/Moyen/ALTEAYI.xlsm",
+				"C:/Users/m419099/Documents/Moyen/AFLS.xlsm",
 				"C:/Users/m419099/Documents/résultat",new ConvertisseurTwsJbs(),true);
 		// 1=job
 		// 2=jobchain

@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.math.BigInteger;
 import java.nio.channels.FileChannel;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -33,6 +34,7 @@ import org.h2.tools.Script;
 import org.jobscheduler.dashboard.jobdefinition.xml.Job;
 import org.jobscheduler.dashboard.jobdefinition.xml.JobChain;
 import org.jobscheduler.dashboard.jobdefinition.xml.JobSettings;
+import org.jobscheduler.dashboard.jobdefinition.xml.Lock;
 import org.jobscheduler.dashboard.jobdefinition.xml.ObjectFactory;
 import org.jobscheduler.dashboard.jobdefinition.xml.Order;
 import org.jobscheduler.dashboard.jobdefinition.xml.Param;
@@ -151,6 +153,18 @@ public class JobHelper {
 				}
 			}
 			
+
+			if(row.getCell(3).toString().equals("N"))	//for check if it's a lock line
+			{
+
+
+			Lock lc=fabrique.createLock();
+			lc.setMaxNonExclusive(new BigInteger(row.getCell(33).toString()));
+			
+			OutputStream os = new FileOutputStream(outPut+row.getCell(32).toString()+".lock.xml");
+			marshaller.marshal(fabrique.createLock(lc), os);
+			
+			}
 			
 			cellIterator=row.cellIterator();
 
