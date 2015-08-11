@@ -82,6 +82,7 @@ public class ExcelReader {
 	int numeroOrder=1;
 	int numLigne=1;
 	String lockInUse="";
+	String jobchainRunOtherJobChain;
 	/**
 	 * For the conversion , we must know the next steps for each job,
 	 * but ExcelReader work sequentially and don't stock anything about the next 
@@ -273,7 +274,7 @@ public class ExcelReader {
 	 * 
 	 */
 
-	public void treatJobChainLine() {
+	public void treatJobChainLine(boolean MAJ) {
 		lockInUse=""; //initialization
 		int i = 2;// cell and "i"(column title) must be synchronized, title must
 					// correspond to cell
@@ -315,7 +316,13 @@ public class ExcelReader {
 			
 			addBeginAndEndJobChain(jobchainEnCour);
 		}
+		
+		
 		jobchainEnCour = jbc.getName();
+		if(MAJ) //cela veux dire que l'on traite un jobchaine lié a lancienne jochaine deja traiter il 
+			//faut donc garder le nom de lancienne jobchain pour savoir d'ou il vient
+			
+		jobchainRunOtherJobChain=jobchainEnCour;
 
 	}
 
@@ -1312,8 +1319,24 @@ public String countDay(String day)
 
 			// check if SID exist for create a jobchain
 			if (!chaine.isEmpty()) {
-				treatJobChainLine();
+				if(chaine.equals("-1"))
+				{
+					Commands cmd=fabrique.createCommands();
+            		cmd.getOnExitCode().add("success");
+            		Order tmp=fabrique.createOrder();
+            		tmp.setJobChain("/"+file.getName().split("\\.")[0]+"/"+sheet.getRow(numLigne).getCell(5).toString());
+            		cmd.getAddJobsOrAddOrderOrCheckFolders().add(fabrique.createOrder(tmp));
+            	
+            		ljob.get(sheet.getRow(numLigne).getCell(5).toString().substring(jobchainRunOtherJobChain.length()+3)).getCommands().add(cmd);
+            		//+3 le chiffre rajouter pour distinger le jobchain + le "_" cela fait trois caracteres à sauter
 				
+            		treatJobChainLine(false);
+            		
+				}
+				else
+				{	
+				treatJobChainLine(true);
+				}
 			} else {
 				// if SID don't exist we look the JID
 				// if JID exist we create a job
@@ -1576,8 +1599,8 @@ public String countDay(String day)
 		 rowSuiv=sheet.getRow(2);
 		int numLigne=1;
 		boolean delete=false;
-		
-		
+		String nameOfJobChain="";
+		int NumberJobchainsup=10;
 		for(int p=2;p<=sheet.getLastRowNum();p++)	 
 		{	
 			
@@ -1607,8 +1630,10 @@ public String countDay(String day)
 				 {
 					 log+="Une incohérence dans la listes des jobs a été détectée et corrigée, la ligne "+(ligneEchange+1)+ "a été échangée avec la ligne "+ (aComparer+1)+" à cause de la colonne <<at>> \n";
 					 switchRow(aComparer, ligneEchange,csCF);
-					 System.out.println("wtf.."+sheet.getRow(aComparer).getCell(2).toString());
-					 rebuildDependency(aComparer);
+				
+					if(rebuildDependency(aComparer,nameOfJobChain+NumberJobchainsup))
+					 NumberJobchainsup++;
+					
 					 ligneEchange=0;
 				 }
 				
@@ -1653,7 +1678,10 @@ public String countDay(String day)
 			 }
 			
 			 
-			 
+			if(!row.getCell(1).toString().isEmpty())
+			{
+				nameOfJobChain=row.getCell(5).toString();
+			}
 			 
 			
 				 
@@ -1808,60 +1836,112 @@ public String countDay(String day)
 		log+="Fin du nettoyage, génération du nouveau fichier Excel \n";
 	}
 	
-	public void rebuildDependency(int numLgne)
+	public void addExcelJobChain(int line, String name)
+	{
+		sheet.shiftRows(line, sheet.getLastRowNum(), 1);
+		sheet.createRow(line);
+		Row row=sheet.getRow(line);
+		for (int i=0;i<62;i++)
+		{
+			row.createCell(i);
+			row.getCell(i, Row.CREATE_NULL_AS_BLANK);
+			
+			switch(i)
+			{
+			case 1:
+				row.getCell(i).setCellValue("-1");
+				break;
+				
+			case 5:
+				row.getCell(i).setCellValue(name);
+				break;
+				
+				
+			}
+		}
+	}
+	
+	public void copyExcelJob(int line, int  newLine )
+	{
+		sheet.shiftRows(newLine, sheet.getLastRowNum(), 1);
+		sheet.createRow(newLine);
+		
+		Row row=sheet.getRow(line);
+		Row row2=sheet.getRow(newLine);
+		
+		for (int i=0;i<61;i++)
+		{
+			row2.createCell(i);
+			row2.getCell(i).setCellValue(row.getCell(i).toString());
+			row2.getCell(i, Row.CREATE_NULL_AS_BLANK);
+			
+			
+		}
+		
+		
+	}
+	public boolean rebuildDependency(int numLgne, String Chaine)
 	{
 		int follower=0;
 		int i=1;
 		int aEchanger=0;
 
-		while(!sheet.getRow(numLgne+i).getCell(2).toString().isEmpty())
+		boolean boucle=(numLgne+i)<=sheet.getLastRowNum();
+				
+				if(boucle)
+			     boucle=!sheet.getRow(numLgne+i).getCell(2).toString().isEmpty();
+
+		String numjob=sheet.getRow(numLgne).getCell(2).toString();
+		while(boucle)
 		{
 			sheet.getRow(numLgne+i).getCell(11).toString();
 			
-			if(sheet.getRow(numLgne+i).getCell(11).toString().equals(sheet.getRow(numLgne).getCell(2).toString()))
-				{follower++;
-			aEchanger=numLgne+i;
+			if(sheet.getRow(numLgne+i).getCell(11).toString().equals(numjob))
+				{
+				
+				follower++;
+				if(aEchanger==0)
+			    aEchanger=numLgne+i;
+				
 				}
 			i++;
+			
+			boucle=(numLgne+i)<=sheet.getLastRowNum();
+			if(boucle)
+			boucle=!sheet.getRow(numLgne+i).getCell(2).toString().isEmpty();
 		}
 		
 		
-		if(follower==1 && aEchanger!=(numLgne+1))
-		{FileOutputStream fileOut;
-			XSSFFont font = wb.createFont();
-			font.setColor((short)55);
-			CellStyle csCF = wb.createCellStyle();
-			csCF.setFont(font);
-			sheet.shiftRows(numLgne+1, sheet.getLastRowNum(), 1);
-			sheet.createRow(numLgne+1);
-			
-			Row row=sheet.getRow(numLgne+1);
-			Row row2=sheet.getRow(aEchanger+1);
-			
-			 for(int cn=0; cn<row2.getLastCellNum(); cn++) {
-					
-			        String stringRow=row2.getCell(cn).toString();
-			        row.createCell(cn);
-			       
-			        row.getCell(cn).setCellValue(stringRow);
-			        
-			        
-			    
-			     
-			       }
-    
-			
-		
-			
-			sheet.removeRow(sheet.getRow(aEchanger+1));
-			sheet.shiftRows(aEchanger+2, sheet.getLastRowNum(),-1);
-			
-		
-			
-			rebuildDependency(numLgne+1);
+		if(follower!=0 && aEchanger!=(numLgne+1)&&sheet.getRow(aEchanger).getCell(16).toString().isEmpty())
+		{
 			
 			
+			int firstLineToDelete=aEchanger;
+			i=numLgne+i;
+			
+			addExcelJobChain(i, Chaine+"_"+sheet.getRow(numLgne).getCell(6).toString());
+			
+			i++;
+			copyExcelJob(aEchanger, i );
+			i++;
+			aEchanger++;
+			while(sheet.getRow(aEchanger-1).getCell(2).toString().equals(sheet.getRow(aEchanger).getCell(11).toString()))
+			{
+				copyExcelJob(aEchanger, i );
+				i++;
+				aEchanger++;
+				
+			}
+			for(int t=firstLineToDelete;t<aEchanger;t++)
+			{
+				sheet.removeRow(sheet.getRow(t));
+			}
+			
+			sheet.shiftRows(aEchanger, sheet.getLastRowNum(),(aEchanger-firstLineToDelete)*-1);
+			
+			return true;
 		}
+		return false;
 	}
 	
 
@@ -1996,7 +2076,7 @@ public String countDay(String day)
 	public static void main(String[] args) throws IOException, JAXBException {
 
 		ExcelReader exrd = new ExcelReader(
-				"C:/Users/m419099/Documents/Moyen/AFLS.xlsm",
+				"C:/Users/m419099/Documents/Facile/GEO-RCT2.xlsm",
 				"C:/Users/m419099/Documents/résultat",new ConvertisseurTwsJbs(),true);
 		// 1=job
 		// 2=jobchain
