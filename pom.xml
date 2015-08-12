@@ -15,11 +15,11 @@
 	</parent>
 
 	<modules>
+		<module>jobschedulerschema</module>
 		<module>dashboard</module>
 		<module>dashboard-install</module>
-		<!-- 
 		<module>jobstreamconverter</module>
-		 -->
+		<module>ocabconverter</module>
 	</modules>
 
 	<url>https://github.com/bigloupe/SoS-JobScheduler</url>
