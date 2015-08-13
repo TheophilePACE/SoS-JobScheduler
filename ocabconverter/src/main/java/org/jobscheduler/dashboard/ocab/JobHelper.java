@@ -25,6 +25,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.jobscheduler.dashboard.jobdefinition.xml.Job;
+import org.jobscheduler.dashboard.jobdefinition.xml.Job.Monitor;
 import org.jobscheduler.dashboard.jobdefinition.xml.JobChain;
 import org.jobscheduler.dashboard.jobdefinition.xml.JobSettings;
 import org.jobscheduler.dashboard.jobdefinition.xml.Lock;
@@ -33,7 +34,9 @@ import org.jobscheduler.dashboard.jobdefinition.xml.Order;
 import org.jobscheduler.dashboard.jobdefinition.xml.Param;
 import org.jobscheduler.dashboard.jobdefinition.xml.Params;
 import org.jobscheduler.dashboard.jobdefinition.xml.RunTime;
+import org.jobscheduler.dashboard.jobdefinition.xml.Script;
 import org.jobscheduler.dashboard.jobdefinition.xml.Settings;
+import org.w3c.dom.CDATASection;
 
 public class JobHelper {
 
@@ -63,8 +66,8 @@ public class JobHelper {
 	Order ord;
 	boolean configFile=false;
 	boolean complexe;
-
-
+    int numberFile=0;
+    String outPut;
 	public JobHelper(XSSFSheet sheet,Marshaller marshaller)
 	{
 		this.sheet=sheet;
@@ -92,7 +95,7 @@ public class JobHelper {
 	 * @note
 	 */
 	public void initialization(String outPut) throws JAXBException, FileNotFoundException
-	{
+	{this.outPut=outPut;
 		Integer jid = 0;
 
 		while (rowIterator.hasNext()) {
@@ -299,6 +302,7 @@ public class JobHelper {
 
 			tempCellIteratorL1=rowL1.iterator();
 			cellTemp=coloneExcelSuivant(tempCellIteratorL1,numeroColone);
+			
 			if (!cellTemp.toString().isEmpty()&&cellTemp.toString().indexOf("s")==-1)
 			{
 
@@ -314,6 +318,13 @@ public class JobHelper {
 				}
 
 			}
+			else if(rowL1.getCell(3).toString().equals("O"))
+			{
+				waitFileForExecute(rowL1.getCell(30).toString());
+				//un job peut avoir le nom de (numberfile+_file) meme si cela est peu probable
+				//je rajoute Unique pour etre sur qu'il n'y est pas de conflit
+				return "EvntSchler_"+numberFile+"_file";
+			}
 
 
 		}
@@ -321,6 +332,116 @@ public class JobHelper {
 		return "NogetL1";
 	}
 
+	public String cdata(String st) {
+		return "<![CDATA[" + st + "]]>"; // for add CDATA in Xml file
+	}
+
+	public void waitFileForExecute(String contenuFichier)
+	{
+		numberFile++;
+		createSubMitJobEvent( numberFile , contenuFichier);
+		
+	}
+	
+	/**
+	 * name - createSubMitJobEvent create a envent 
+	 *                           
+	 * 
+	 * @param String : the name of event
+	 * 
+	 * @author fourat
+	 * @date 13/08/2015
+	 * @note
+	 */
+	
+	public void createSubMitJobEvent(int id ,String contenuFichier){
+		
+		
+		Job job = fabrique.createJob();
+		
+		Params parameters = fabrique.createParams() ;
+		Param add = fabrique.createParam() ;
+		
+		add.setName("scheduler_event_action") ;
+		add.setValue("add") ;
+		parameters.getParamOrCopyParamsOrInclude().add(add) ;
+		
+		Param classe = new Param() ;
+		classe.setName("scheduler_event_class") ;
+		classe.setValue("file") ;
+		parameters.getParamOrCopyParamsOrInclude().add(classe) ;
+		
+		Param idP= new Param() ;
+		idP.setName("scheduler_event_id") ;
+		idP.setValue(id+"_file") ;
+		parameters.getParamOrCopyParamsOrInclude().add(idP) ;
+		
+		
+		job.setParams(parameters) ;
+		Script script =fabrique.createScript();
+		script.setLanguage("shell") ;
+		script.getContent().add("EVENT ADDED");
+		job.setScript(script) ;
+		job.setStopOnError("no") ;
+		job.setOrder("yes") ;
+		
+		Monitor moni=fabrique.createJobMonitor();
+		moni.setName(id+"_file");
+		
+		script =fabrique.createScript();
+		script.setLanguage("java");
+		script.setJavaClass("com.sos.jitl.eventing.EventMonitorTaskAfter");
+		
+		moni.setScript(script);
+		job.getMonitor().add(moni);
+		
+				
+		JobChain jbc=fabrique.createJobChain();
+		JobChain.JobChainNode jbcn=fabrique.createJobChainJobChainNode();
+		jbcn.setState(id+"_file");
+		jbcn.setJob(id+"_file");
+		jbcn.setNextState("S_cleanfile");
+		JobChain.FileOrderSource file=fabrique.createJobChainFileOrderSource();
+		
+		String[] split=contenuFichier.split("/");
+	     String directory="";
+	     for(int j=0;j<split.length-1;j++)
+	     {
+	    	 if(j<split.length-2)
+	    		 {
+	    		 directory+=split[j]+"/";
+	    		 }
+	    	 else
+	    	 {
+	    		 directory+=split[j]; 
+	    	 }
+	     }
+	     file.setDirectory(directory);
+	     file.setRegex(split[split.length-1]);
+		jbc.getFileOrderSource().add(file);
+		jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcn);
+		
+		JobChain.FileOrderSink deletFile=fabrique.createJobChainFileOrderSink();
+	     deletFile.setState("S_cleanfile");
+	     deletFile.setRemove("yes");
+	     jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(deletFile);
+		
+	     OutputStream os;
+	     try { 
+	    	 
+	    	 os = new FileOutputStream(outPut+id+"_file"+".job.xml");
+				marshaller.marshal(job, os);
+				
+	    	 os = new FileOutputStream(outPut+nameJobChain+"_"+id+"_file"+ ".job_chain.xml");
+			marshaller.marshal(jbc, os); 
+			
+	     
+	     } catch (FileNotFoundException | JAXBException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	}
+	
 	/**
 	 * name - getL2 get in two next line, the column enter in parameter
 	 *                           

@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -43,13 +44,17 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jobscheduler.dashboard.jobdefinition.xml.Commands;
 import org.jobscheduler.dashboard.jobdefinition.xml.Holiday;
 import org.jobscheduler.dashboard.jobdefinition.xml.Holidays;
+import org.jobscheduler.dashboard.jobdefinition.xml.Include;
 import org.jobscheduler.dashboard.jobdefinition.xml.Job;
+import org.jobscheduler.dashboard.jobdefinition.xml.Job.DelayOrderAfterSetback;
+import org.jobscheduler.dashboard.jobdefinition.xml.Job.Description;
 import org.jobscheduler.dashboard.jobdefinition.xml.Job.LockUse;
 import org.jobscheduler.dashboard.jobdefinition.xml.JobChain;
 import org.jobscheduler.dashboard.jobdefinition.xml.JobChain.JobChainNode;
 import org.jobscheduler.dashboard.jobdefinition.xml.Monthdays;
 import org.jobscheduler.dashboard.jobdefinition.xml.ObjectFactory;
 import org.jobscheduler.dashboard.jobdefinition.xml.Order;
+import org.jobscheduler.dashboard.jobdefinition.xml.Param;
 import org.jobscheduler.dashboard.jobdefinition.xml.Params;
 import org.jobscheduler.dashboard.jobdefinition.xml.Period;
 import org.jobscheduler.dashboard.jobdefinition.xml.RunTime;
@@ -476,7 +481,77 @@ public class ExcelReader {
 
 		case "follows":
 			
-             if(!jobhelp.getNextJob(jb.getTitle()).equals("NogetL1"))
+			if(jobhelp.getNextJob(jb.getTitle()).contains("EvntSchler"))
+            {
+				Job job = fabrique.createJob();	
+				job.setStopOnError("no") ;
+				job.setOrder("yes") ;
+				String titre=jobhelp.getNextJob(jb.getTitle()).substring(10);
+				job.setName(titre+"Boucle");
+				
+				Description desc =fabrique.createJobDescription();
+				Include inc=fabrique.createInclude();
+				inc.setFile("jobs/JobSchedulerExistsEventJob.xml");
+				desc.getContent().add(inc);
+				job.setDescription(desc);
+				
+				Params parameters = fabrique.createParams() ;
+				Param add = fabrique.createParam();
+				add.setName("scheduler_event_spec");
+				add.setValue("//events[event/@event_id="+"'"+titre+"'"+"]");
+				parameters.getParamOrCopyParamsOrInclude().add(add);
+				job.setParams(parameters);
+				
+				Script script =fabrique.createScript();
+				script.setLanguage("java");
+				script.setJavaClass("sos.scheduler.job.JobSchedulerExistsEventJob");
+				job.setScript(script);
+				
+				DelayOrderAfterSetback d1 = fabrique.createJobDelayOrderAfterSetback();
+				d1.setDelay("10") ;
+				d1.setSetbackCount(new BigInteger("1")) ;
+				d1.setIsMaximum("no") ;
+				job.getDelayOrderAfterSetback().add(d1) ;
+				
+				DelayOrderAfterSetback d2 = fabrique.createJobDelayOrderAfterSetback();
+				d2.setDelay("0") ;
+				d2.setSetbackCount(new BigInteger("999")) ;
+				d2.setIsMaximum("yes") ;
+				job.getDelayOrderAfterSetback().add(d2) ;
+				
+				OutputStream os;
+				try { 
+			    	 
+			    	 
+						
+			    	 os = new FileOutputStream(outPut+"_"+titre+"Boucle"+ ".job.xml");
+					marshaller.marshal(jbc, os); 
+					
+			     
+			     } catch (FileNotFoundException | JAXBException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				
+				
+				JobChain.JobChainNode jobchnode=fabrique.createJobChainJobChainNode();
+				jobchnode.setState(titre+"Boucle");
+				jobchnode.setErrorState("!end_ERR");
+				jobchnode.setOnError("setback");
+				jbcn.setNextState(titre+"Boucle");
+				
+				if(sheet.getLastRowNum()<numLigne+2)
+				{
+					//prevoir l'attente de plusieur fichier apres un job
+				}else if(sheet.getRow(numLigne+2).getCell(cellnum))
+				 if(jobhelp.isJobChainComplex(jobchainEnCour)) //if it's a complex case next of the last jobchainode go to jobchainnode end
+	             	{
+					 jobchnode.setNextState("End");	
+	             	}
+				
+				
+            }
+			else if(!jobhelp.getNextJob(jb.getTitle()).equals("NogetL1"))
              {	 
             	
             	
