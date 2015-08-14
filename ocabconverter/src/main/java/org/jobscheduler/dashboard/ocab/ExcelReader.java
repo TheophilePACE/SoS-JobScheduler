@@ -31,6 +31,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.StringTokenizer;
 
+import javax.swing.JOptionPane;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -59,6 +60,7 @@ import org.jobscheduler.dashboard.jobdefinition.xml.Params;
 import org.jobscheduler.dashboard.jobdefinition.xml.Period;
 import org.jobscheduler.dashboard.jobdefinition.xml.RunTime;
 import org.jobscheduler.dashboard.jobdefinition.xml.Script;
+import org.jobscheduler.dashboard.jobdefinition.xml.StartJob;
 import org.jobscheduler.dashboard.jobdefinition.xml.Weekdays;
 
 import com.sun.xml.bind.marshaller.CharacterEscapeHandler;
@@ -137,7 +139,7 @@ public class ExcelReader {
 	Iterator<Row> rowIterator;
 	Iterator<Cell> cellFirstLigne;
 	Iterator<Cell> cellIterator;
-	
+	ArrayList<JobChainNode> listjobchain=new ArrayList<JobChain.JobChainNode>();
 
 	/**
 	 * Objects generated from the schema
@@ -481,82 +483,55 @@ public class ExcelReader {
 
 		case "follows":
 			
-			if(jobhelp.getNextJob(jb.getTitle()).contains("EvntSchler"))
+			if(!jobhelp.getJobWithFiles(jb.getTitle()).equals("nofiles"))//si le prochain job a un fichier
             {
-				Job job = fabrique.createJob();	
-				job.setStopOnError("no") ;
-				job.setOrder("yes") ;
-				String titre=jobhelp.getNextJob(jb.getTitle()).substring(10);
-				job.setName(titre+"Boucle");
 				
-				Description desc =fabrique.createJobDescription();
-				Include inc=fabrique.createInclude();
-				inc.setFile("jobs/JobSchedulerExistsEventJob.xml");
-				desc.getContent().add(inc);
-				job.setDescription(desc);
+				String titre=jobhelp.getJobWithFiles(jobhelp.getNextJob(jb.getTitle()));
 				
-				Params parameters = fabrique.createParams() ;
-				Param add = fabrique.createParam();
-				add.setName("scheduler_event_spec");
-				add.setValue("//events[event/@event_id="+"'"+titre+"'"+"]");
-				parameters.getParamOrCopyParamsOrInclude().add(add);
-				job.setParams(parameters);
-				
-				Script script =fabrique.createScript();
-				script.setLanguage("java");
-				script.setJavaClass("sos.scheduler.job.JobSchedulerExistsEventJob");
-				job.setScript(script);
-				
-				DelayOrderAfterSetback d1 = fabrique.createJobDelayOrderAfterSetback();
-				d1.setDelay("10") ;
-				d1.setSetbackCount(new BigInteger("1")) ;
-				d1.setIsMaximum("no") ;
-				job.getDelayOrderAfterSetback().add(d1) ;
-				
-				DelayOrderAfterSetback d2 = fabrique.createJobDelayOrderAfterSetback();
-				d2.setDelay("0") ;
-				d2.setSetbackCount(new BigInteger("999")) ;
-				d2.setIsMaximum("yes") ;
-				job.getDelayOrderAfterSetback().add(d2) ;
-				
-				OutputStream os;
-				try { 
-			    	 
-			    	 
-						
-			    	 os = new FileOutputStream(outPut+"_"+titre+"Boucle"+ ".job.xml");
-					marshaller.marshal(jbc, os); 
-					
-			     
-			     } catch (FileNotFoundException | JAXBException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				
-				
-				JobChain.JobChainNode jobchnode=fabrique.createJobChainJobChainNode();
-				jobchnode.setState(titre+"Boucle");
-				jobchnode.setErrorState("!end_ERR");
-				jobchnode.setOnError("setback");
-				jbcn.setNextState(titre+"Boucle");
+				addNodeBoucle(titre);
+			
 				
 				if(sheet.getLastRowNum()<numLigne+2)
 				{
-					//prevoir l'attente de plusieur fichier apres un job
-				}else if(sheet.getRow(numLigne+2).getCell(cellnum))
-				 if(jobhelp.isJobChainComplex(jobchainEnCour)) //if it's a complex case next of the last jobchainode go to jobchainnode end
-	             	{
-					 jobchnode.setNextState("End");	
-	             	}
+					putNextFileBoucle(titre);
+				}
+				else
+				{
+
+					JobChain.JobChainNode jobchnode=fabrique.createJobChainJobChainNode();
+					jobchnode.setState(titre+"Boucle");
+					jobchnode.setErrorState("!end_ERR");
+					jobchnode.setOnError("setback");
+					jobchnode.setNextState(jb.getTitle());
+					listjobchain.add(jobchnode);
+				}
+				
+				
+				for(int a=0;a<listjobchain.size();a++)
+				{
+					jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(listjobchain.get(a));
+				}
+				listjobchain=new ArrayList<JobChain.JobChainNode>();
+				
 				
 				
             }
-			else if(!jobhelp.getNextJob(jb.getTitle()).equals("NogetL1"))
+			
+			if(!jobhelp.getNextJob(jb.getTitle()).equals("NogetL1"))
              {	 
-            	
-            	
+				if(!jobhelp.getJobWithFiles(jobhelp.getNextJob(jb.getTitle())).equals("nofiles"))//si le prochain job a un fichier
+	            {
+					
+					String titre=jobhelp.getJobWithFiles(jobhelp.getNextJob(jb.getTitle()));
+
+					jbcn.setNextState(titre+"Boucle");
+					
+					
+					
+	            }else
+	            {
 			     jbcn.setNextState(jobhelp.getNextJob(jb.getTitle()));
-            	
+	            }
             }
              else
              {
@@ -760,6 +735,136 @@ public class ExcelReader {
 
 	}
 
+	public void putEndFileBoucle(String titre,JobChain.JobChainNode jobchnode)
+	{
+		
+		if(jobhelp.isJobChainComplex(jobchainEnCour)) //if it's a complex case next of the last jobchainode go to jobchainnode end
+     	{
+			jobchnode.setNextState("End");	
+     	}
+    	 else if(fichier)
+    	 {
+    		 jobchnode.setNextState("S_cleanfile"); 
+    	 }
+    	 else	 
+    	 {	 
+    		 jobchnode.setNextState("end_SUC_All");
+    	 
+    	 }
+		
+		listjobchain.add(jobchnode);
+	}
+	public void putNextFileBoucle(String titre)
+	{
+		JobChain.JobChainNode jobchnode=fabrique.createJobChainJobChainNode();
+		jobchnode.setState(titre+"Boucle");
+		jobchnode.setErrorState("!end_ERR");
+		jobchnode.setOnError("setback");	
+		
+		boolean noEndFileEndChain=false;
+		int add=2;
+		
+			noEndFileEndChain=true;
+			
+			
+				while(noEndFileEndChain)
+				{
+					if(sheet.getRow(numLigne+add).getCell(3).toString().equals("O"))	
+					{
+						titre=(Integer.getInteger(titre.substring(0,2))+1)+titre.substring(2);
+						jobchnode.setNextState(titre+"Boucle");
+	                    addNodeBoucle( titre);
+	                    listjobchain.add(jobchnode);
+	                    
+	                    jobchnode=fabrique.createJobChainJobChainNode();
+	            		jobchnode.setState(titre+"Boucle");
+	            		jobchnode.setErrorState("!end_ERR");
+	            		jobchnode.setOnError("setback");	
+						
+	            		add++;
+	            		
+	            		//does not change what you do not understand..
+	            		if(sheet.getLastRowNum()<numLigne+add)
+	            		   {
+	            			jobchnode.setNextState(jb.getTitle());
+	    					noEndFileEndChain=false;
+	            		   }
+					}
+					else
+         		   {
+						jobchnode.setNextState(jb.getTitle());
+    					noEndFileEndChain=false;
+         		   }
+					
+			
+				
+				}
+				
+			
+		
+	}
+	
+	
+	public Job addNodeBoucle(String titre)
+	{
+		Job job = fabrique.createJob();	
+		job.setStopOnError("no") ;
+		job.setOrder("yes") ;
+		job.setName(titre+"Boucle");
+		
+		Description desc =fabrique.createJobDescription();
+		Include inc=fabrique.createInclude();
+		inc.setFile("jobs/JobSchedulerExistsEventJob.xml");
+		desc.getContent().add(inc);
+		job.setDescription(desc);
+		
+		Params parameters = fabrique.createParams() ;
+		Param add = fabrique.createParam();
+		add.setName("scheduler_event_spec");
+		add.setValue("//events[event/@event_id="+"'"+titre+"'"+"]");
+		parameters.getParamOrCopyParamsOrInclude().add(add);
+		job.setParams(parameters);
+		
+		Script script =fabrique.createScript();
+		script.setLanguage("java");
+		script.setJavaClass("sos.scheduler.job.JobSchedulerExistsEventJob");
+		job.setScript(script);
+		
+		DelayOrderAfterSetback d1 = fabrique.createJobDelayOrderAfterSetback();
+		d1.setDelay("10") ;
+		d1.setSetbackCount(new BigInteger("1")) ;
+		d1.setIsMaximum("no") ;
+		job.getDelayOrderAfterSetback().add(d1) ;
+		
+		DelayOrderAfterSetback d2 = fabrique.createJobDelayOrderAfterSetback();
+		d2.setDelay("0") ;
+		d2.setSetbackCount(new BigInteger("999")) ;
+		d2.setIsMaximum("yes") ;
+		job.getDelayOrderAfterSetback().add(d2) ;
+		Commands cmd=fabrique.createCommands();
+		cmd.getOnExitCode().add("success");
+		StartJob startjb=fabrique.createStartJob();
+		startjb.setJob(file.getName().split("\\.")[0]+"/"+titre+"_removeEvent");
+		startjb.setAt("now");
+		cmd.getAddJobsOrAddOrderOrCheckFolders().add(startjb);
+		job.getCommands().add(cmd);
+		OutputStream os;
+		try { 
+	    	 
+	    	 
+				
+	    	 os = new FileOutputStream(outPut+titre+"Boucle"+ ".job.xml");
+			marshaller.marshal(job, os); 
+			
+	     
+	     } catch (FileNotFoundException | JAXBException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		
+		return job;
+	}
 	
 	/**
 	 * name - traiterUneLigneJob treat a job
@@ -822,6 +927,7 @@ public class ExcelReader {
 
 		} while (cellIterator.hasNext());
 		
+		
 		if(jbcnSyncBool)//if a split or a synchro file exist then add in the jobchain
 		{
 			jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcnSync);
@@ -829,6 +935,8 @@ public class ExcelReader {
 			
 			
 		}
+		
+		
 		
 		jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcn);// add the jobchainnode in jobchain																 
 		

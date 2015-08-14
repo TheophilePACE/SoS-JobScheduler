@@ -17,6 +17,7 @@ import java.nio.channels.FileChannel;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -57,6 +58,7 @@ public class JobHelper {
 	String paramValue;
 	LinkedHashMap<String,Boolean> jobChainComplex;
 	Hashtable  <String , String > nextJobChain;
+	Hashtable  <String , String > jobWithFiles=new Hashtable<String, String>();
 	String nameJobChain;
 	Job jb;
 	ObjectFactory fabrique ;
@@ -66,7 +68,7 @@ public class JobHelper {
 	Order ord;
 	boolean configFile=false;
 	boolean complexe;
-    int numberFile=0;
+    int numberFile=10;
     String outPut;
 	public JobHelper(XSSFSheet sheet,Marshaller marshaller)
 	{
@@ -211,7 +213,7 @@ public class JobHelper {
 					//if the 2 next row have the same previous Jid then the next line is a complicated cases
 					//and the next of the current line is a split
 
-					if(getL1(12).equals(getL2(12)) && getL1(12).equals(String.valueOf(jid)) && getL2(12).equals(String.valueOf(jid)))
+					if(getL1(12,1).equals(getL2(12)) && getL1(12,1).equals(String.valueOf(jid)) && getL2(12).equals(String.valueOf(jid)))
 					{
 
 						nameNextJob.put(cell.toString(),"Split_"+numbeSplit);
@@ -236,7 +238,15 @@ public class JobHelper {
 
 					}else{
 						//a normal case, just put the next job in a hashtable
-						nameNextJob.put(cell.toString(),getL1(7));
+						String temp=getL1File();
+						if(temp.equals("NogetL1File"))
+						{nameNextJob.put(cell.toString(),getL1(7,1));
+						
+						}
+						else{
+							jobWithFiles.put(cell.toString(), temp);
+							nameNextJob.put(cell.toString(),getL1(7,2)); //on s	it deja que le prochain est un fichier
+						}
 					}
 
 				}
@@ -256,6 +266,15 @@ public class JobHelper {
 		
 		
 	}
+
+	public String getJobWithFiles(String st) {
+		if(jobWithFiles.containsKey(st))
+		return jobWithFiles.get(st);
+		
+		return "nofiles";
+	}
+
+	
 
 	public void EndComplexCase(String nextSynchro)
 	{
@@ -288,17 +307,17 @@ public class JobHelper {
 	 * @note
 	 */
 
-	public String getL1(int numeroColone)
+	public String getL1(int numeroColone,int indice)
 	{
 		Row rowL1;
 		Iterator<Cell> tempCellIteratorL1;
 		Cell cellTemp;
 		
 		
-		if(sheet.getLastRowNum()>=ligne+1)
+		if(sheet.getLastRowNum()>=ligne+indice)
 		{
 			
-			rowL1=sheet.getRow(ligne+1);
+			rowL1=sheet.getRow(ligne+indice);
 
 			tempCellIteratorL1=rowL1.iterator();
 			cellTemp=coloneExcelSuivant(tempCellIteratorL1,numeroColone);
@@ -317,19 +336,57 @@ public class JobHelper {
 					return cellTemp.toString();
 				}
 
-			}
-			else if(rowL1.getCell(3).toString().equals("O"))
+			}else if(rowL1.getCell(3).toString().equals("O"))
 			{
-				waitFileForExecute(rowL1.getCell(30).toString());
-				//un job peut avoir le nom de (numberfile+_file) meme si cela est peu probable
-				//je rajoute Unique pour etre sur qu'il n'y est pas de conflit
-				return "EvntSchler_"+numberFile+"_file";
+				return getL1(numeroColone,indice+1);
+				
 			}
+			
 
 
 		}
 
 		return "NogetL1";
+	}
+	
+	public String getL1File()
+	{
+		if(sheet.getLastRowNum()>=ligne+1)
+		{
+			Row rowL1=sheet.getRow(ligne+1);
+		if(rowL1.getCell(3).toString().equals("O"))
+		{
+			int tempNumberFile=numberFile;
+			waitFileForExecute(rowL1.getCell(30).toString());
+			boolean noEndFileEndChain=false;
+			int add=2;
+			if(sheet.getLastRowNum()>=ligne+add)
+				noEndFileEndChain=true;
+			
+			while(noEndFileEndChain)
+			{
+				
+			if(sheet.getRow(ligne+add).getCell(3).toString().equals("O"))
+			{
+				waitFileForExecute(sheet.getRow(ligne+add).getCell(30).toString());
+			    add++;
+			    
+			    if(sheet.getLastRowNum()<ligne+add)
+					noEndFileEndChain=false;
+			
+			}
+			else
+			{
+				noEndFileEndChain=false;
+			}
+			
+			}
+			//un job peut avoir le nom de (numberfile+_file) meme si cela est peu probable
+			//je rajoute Unique pour etre sur qu'il n'y est pas de conflit
+			return tempNumberFile+"_file";
+		}
+	 }
+		return "NogetL1File";
 	}
 
 	public String cdata(String st) {
@@ -338,8 +395,9 @@ public class JobHelper {
 
 	public void waitFileForExecute(String contenuFichier)
 	{
-		numberFile++;
+		
 		createSubMitJobEvent( numberFile , contenuFichier);
+		numberFile++;
 		
 	}
 	
@@ -380,7 +438,7 @@ public class JobHelper {
 		job.setParams(parameters) ;
 		Script script =fabrique.createScript();
 		script.setLanguage("shell") ;
-		script.getContent().add("EVENT ADDED");
+		script.getContent().add("EVENT Add/Delete");
 		job.setScript(script) ;
 		job.setStopOnError("no") ;
 		job.setOrder("yes") ;
@@ -432,8 +490,26 @@ public class JobHelper {
 	    	 os = new FileOutputStream(outPut+id+"_file"+".job.xml");
 				marshaller.marshal(job, os);
 				
+				List lst=job.getParams().getParamOrCopyParamsOrInclude();
+				
+				for(int z=0;z<lst.size();z++)
+				{
+					Param pr=(Param)lst.get(z);
+					if(pr.getValue().equals("add"))
+						pr.setValue("remove");
+				}
+				
+				
+	    	
+		
+				os = new FileOutputStream(outPut+id+"_file_removeEvent"+".job.xml");
+				marshaller.marshal(job, os);
+				
+				
+				
 	    	 os = new FileOutputStream(outPut+nameJobChain+"_"+id+"_file"+ ".job_chain.xml");
 			marshaller.marshal(jbc, os); 
+			
 			
 	     
 	     } catch (FileNotFoundException | JAXBException e) {
@@ -500,7 +576,7 @@ public class JobHelper {
 		Cell cellTemp;
 		rowC=sheet.getRow(ligne);
 		String valeurCourante=rowC.getCell(11).toString();
-		String ValeurAcomparer=getL1(12);
+		String ValeurAcomparer=getL1(12,1);
 		
 		if(!valeurCourante.isEmpty()&& valeurCourante.indexOf(";")==-1 && valeurCourante.indexOf(",")==-1)
 		{	
