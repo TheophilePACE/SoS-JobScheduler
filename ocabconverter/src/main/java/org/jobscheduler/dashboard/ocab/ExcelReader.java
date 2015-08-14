@@ -81,7 +81,7 @@ public class ExcelReader {
 	String saveAt;
 	int metrique;
 	boolean fichier=false;
-	String contenuFichier="";
+	ArrayList<String> contenuFichier=new ArrayList<String>();
 	String timeJob="";
 	String untilJob="";
 	String log="";
@@ -486,7 +486,7 @@ public class ExcelReader {
 			if(!jobhelp.getJobWithFiles(jb.getTitle()).equals("nofiles"))//si le prochain job a un fichier
             {
 				
-				String titre=jobhelp.getJobWithFiles(jobhelp.getNextJob(jb.getTitle()));
+				String titre=jobhelp.getJobWithFiles(jb.getTitle());
 				
 				addNodeBoucle(titre);
 			
@@ -500,6 +500,7 @@ public class ExcelReader {
 
 					JobChain.JobChainNode jobchnode=fabrique.createJobChainJobChainNode();
 					jobchnode.setState(titre+"Boucle");
+					jobchnode.setJob(titre+"Boucle");
 					jobchnode.setErrorState("!end_ERR");
 					jobchnode.setOnError("setback");
 					jobchnode.setNextState(jb.getTitle());
@@ -735,29 +736,12 @@ public class ExcelReader {
 
 	}
 
-	public void putEndFileBoucle(String titre,JobChain.JobChainNode jobchnode)
-	{
-		
-		if(jobhelp.isJobChainComplex(jobchainEnCour)) //if it's a complex case next of the last jobchainode go to jobchainnode end
-     	{
-			jobchnode.setNextState("End");	
-     	}
-    	 else if(fichier)
-    	 {
-    		 jobchnode.setNextState("S_cleanfile"); 
-    	 }
-    	 else	 
-    	 {	 
-    		 jobchnode.setNextState("end_SUC_All");
-    	 
-    	 }
-		
-		listjobchain.add(jobchnode);
-	}
+	
 	public void putNextFileBoucle(String titre)
 	{
 		JobChain.JobChainNode jobchnode=fabrique.createJobChainJobChainNode();
 		jobchnode.setState(titre+"Boucle");
+		jobchnode.setJob(titre+"Boucle");
 		jobchnode.setErrorState("!end_ERR");
 		jobchnode.setOnError("setback");	
 		
@@ -778,6 +762,7 @@ public class ExcelReader {
 	                    
 	                    jobchnode=fabrique.createJobChainJobChainNode();
 	            		jobchnode.setState(titre+"Boucle");
+	            		jobchnode.setJob(titre+"Boucle");
 	            		jobchnode.setErrorState("!end_ERR");
 	            		jobchnode.setOnError("setback");	
 						
@@ -787,12 +772,14 @@ public class ExcelReader {
 	            		if(sheet.getLastRowNum()<numLigne+add)
 	            		   {
 	            			jobchnode.setNextState(jb.getTitle());
+	            			listjobchain.add(jobchnode);
 	    					noEndFileEndChain=false;
 	            		   }
 					}
 					else
          		   {
 						jobchnode.setNextState(jb.getTitle());
+						listjobchain.add(jobchnode);
     					noEndFileEndChain=false;
          		   }
 					
@@ -1490,11 +1477,11 @@ public String countDay(String day)
 		copyLineTitle();
 		nextExcelLine();
 		String chaine;
-		
+		System.out.println("ok");
 		while (rowIterator.hasNext()) {
 
 			Row row = rowIterator.next();// get a line in the file
-
+            boolean ActivateMultiFileOrder=false;
 			cellIterator = row.cellIterator(); // get huts in the line
 
 			coloneExcelSuivant();
@@ -1503,6 +1490,8 @@ public String countDay(String day)
 
 			// check if SID exist for create a jobchain
 			if (!chaine.isEmpty()) {
+				ActivateMultiFileOrder=true;
+				
 				if(chaine.equals("-1"))
 				{
 					Commands cmd=fabrique.createCommands();
@@ -1530,8 +1519,9 @@ public String countDay(String day)
 				if (!cell.toString().isEmpty()) {
 					// we treat the entire line (it's a job)
 
-					
+					ActivateMultiFileOrder=false;
 					treatJobLine();
+					
 				} else {
 					// if JID don't exist we look the DEP
 					// if DEP exist and equal "R" we create a order
@@ -1559,9 +1549,12 @@ public String countDay(String day)
 					}
 					else if(cell.toString().equals("O"))
 					{
-						contenuFichier=sheet.getRow(numLigne).getCell(30).toString();
+						if(ActivateMultiFileOrder)
+						{//beug ici
+							System.out.println("prob");
+						contenuFichier.add(sheet.getRow(numLigne).getCell(30).toString());
 						fichier=true;
-						
+						}
 					}
 					else if(cell.toString().equals("N"))
 							{
@@ -1742,7 +1735,10 @@ public String countDay(String day)
 	public void AddFileJobChain()
 	{
 		JobChain.FileOrderSource file=fabrique.createJobChainFileOrderSource();
-	     String[] split=contenuFichier.split("/");
+	     
+		for(int i=0;i<contenuFichier.size();i++)
+		{
+		String[] split=contenuFichier.get(i).split("/");
 	     String directory="";
 	     for(int j=0;j<split.length-1;j++)
 	     {
@@ -1758,12 +1754,15 @@ public String countDay(String day)
 	     file.setDirectory(directory);
 	     file.setRegex(split[split.length-1]);
 	     jobchain.get(jobchainEnCour).getFileOrderSource().add(file);
-	     JobChain.FileOrderSink deletFile=fabrique.createJobChainFileOrderSink();
+	     file=fabrique.createJobChainFileOrderSource();
+		}
+		
+		 JobChain.FileOrderSink deletFile=fabrique.createJobChainFileOrderSink();
 	     deletFile.setState("S_cleanfile");
 	     deletFile.setRemove("yes");
 	     jobchain.get(jobchainEnCour).getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(deletFile);
-	     fichier=false;
-	     contenuFichier="";
+		 fichier=false;
+	     contenuFichier=new ArrayList<String>();
 	}
 	
 	public void ExcelCleaner(XSSFSheet sheet)

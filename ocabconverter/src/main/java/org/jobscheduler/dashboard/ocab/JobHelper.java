@@ -438,7 +438,7 @@ public class JobHelper {
 		job.setParams(parameters) ;
 		Script script =fabrique.createScript();
 		script.setLanguage("shell") ;
-		script.getContent().add("EVENT Add/Delete");
+		script.getContent().add("echo \"EVENT Add/Delete\"");
 		job.setScript(script) ;
 		job.setStopOnError("no") ;
 		job.setOrder("yes") ;
