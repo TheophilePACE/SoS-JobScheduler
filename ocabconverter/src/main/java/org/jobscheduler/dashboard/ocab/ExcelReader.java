@@ -406,7 +406,7 @@ public class ExcelReader {
 				String temp=jobhelp.getNextJob(cell.toString());//just a temporary variable
 				jbcnSplit.setState(temp);
 				jbcnSplit.setNextState(jobhelp.getNextJob(temp));
-				jbcnSplit.setJob("/sos/jitl/jobChainSplitter");
+				jbcnSplit.setJob("/sos/jitl/JobChainSplitter");
 				jbcnSplitBool=true;
 			}
 			
@@ -605,7 +605,7 @@ public class ExcelReader {
 				Order tmp=fabrique.createOrder();
 				RunTime rt= new  RunTime();
 				JobChain tmpJobchain=fabrique.createJobChain();
-				tmpJobchain.setName(jb.getTitle()+"repeat");
+				tmpJobchain.setName(jobchainEnCour+"_"+jb.getTitle()+"repeat");
 				tmpJobchain.setVisible("yes");
 				
 				JobChain.JobChainNode temp = fabrique.createJobChainJobChainNode();
@@ -684,7 +684,7 @@ public class ExcelReader {
 				
 				
 				tmp.setRunTime(rt);
-				tmp.setJobChain(file.getName().split("\\.")[0]+"/"+jb.getTitle()+"repeat");
+				tmp.setJobChain(file.getName().split("\\.")[0]+"/"+jobchainEnCour+"_"+jb.getTitle()+"repeat");
 				
 				OutputStream os;
 				
@@ -1478,10 +1478,11 @@ public String countDay(String day)
 		nextExcelLine();
 		String chaine;
 		System.out.println("ok");
+		boolean ActivateMultiFileOrder=false;
 		while (rowIterator.hasNext()) {
 
 			Row row = rowIterator.next();// get a line in the file
-            boolean ActivateMultiFileOrder=false;
+            
 			cellIterator = row.cellIterator(); // get huts in the line
 
 			coloneExcelSuivant();
