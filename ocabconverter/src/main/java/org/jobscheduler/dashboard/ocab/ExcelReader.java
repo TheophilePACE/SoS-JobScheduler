@@ -171,7 +171,11 @@ public class ExcelReader {
 		dir.mkdirs();
 		outPut=dir.getAbsolutePath()+"/";
 		log="**********************************************************\n";
-		log+="Traitement du fichier Excel : "+file.getName()+" destination: "+outPut+"\n";
+        
+		
+        log+="Traitement du fichier Excel : "+file.getName()+" destination: "+outPut+"\n";
+		
+		
 		jc = JAXBContext
 				.newInstance("org.jobscheduler.dashboard.jobdefinition.xml");
 		marshaller = jc.createMarshaller();
@@ -201,13 +205,21 @@ public class ExcelReader {
 			       
 			   }
 			}
+		interfaceGraphique.addValueProgressBar(5);
+		
+		
 		ExcelCleaner(sheet);
+		System.out.println("etape1");
 		FileOutputStream fileOut = new FileOutputStream(outPut+file.getName());
 		wb.write(fileOut);
+		System.out.println("etape2");
 		jobhelp=new JobHelper(sheet,marshaller);
 		
 		log+="Exécution du JobHelper \n";
+		
 		jobhelp.initialization(outPut);
+		System.out.println("etape3");
+		interfaceGraphique.addValueProgressBar(20);
 		
 		rowIterator = sheet.iterator();// Iterate through each rows one by one
 
@@ -442,6 +454,7 @@ public class ExcelReader {
 
 				log+="ATTENTION les jobs dans le fichier ont plusieurs utilisateurs! \n";
 				
+				
 			}
 			
 			
@@ -675,6 +688,7 @@ public class ExcelReader {
 							rt.setBegin("00:00");
 							rt.setEnd("24:00");
 							log+="Attention! un job répétitif sans plage de répétition a été détecté! plage par defaut : 24h \n";
+							
 							
 						}
 						
@@ -1378,6 +1392,7 @@ public String countDay(String day)
 						period.setBegin("00:00");
 						period.setEnd("24:00");
 						log+="Attention! un job répétitif sans plage de répétition a été détecté! plage par defaut : 24h \n";
+				
 						
 					}
 					
@@ -1474,13 +1489,20 @@ public String countDay(String day)
 	public boolean treatExcelFile() throws IOException {
 		
 		log+="Traitement du fichier Excel \n";
+		
 		copyLineTitle();
 		nextExcelLine();
 		String chaine;
-		
+		double size=40/sheet.getLastRowNum();
+		double valeur=0;
 		boolean ActivateMultiFileOrder=false;
 		while (rowIterator.hasNext()) {
-
+valeur+=size;
+if(valeur>=1)
+{
+	interfaceGraphique.addValueProgressBar((int)valeur);
+	valeur=0;
+}
 			Row row = rowIterator.next();// get a line in the file
             
 			cellIterator = row.cellIterator(); // get huts in the line
@@ -1573,6 +1595,7 @@ public String countDay(String day)
 		addEndErrorEndSucsses();
 		fis.close();
 		log+="Fin du traitement, les fichiers ont été chargés en mémoire \n";
+		
 		return true;
 	}
 
@@ -1603,12 +1626,12 @@ public String countDay(String day)
 		Collection c2=lorder.values();
 		Iterator eOrder=c2.iterator();
 		
-		int i = 0;
 		
-		if (lancement == 1 || lancement == 12 || lancement == 123
-				|| lancement == 13) {
+		
+		
 			Job job;
 			log+="génération des jobs \n";
+			
 			while (eLjob.hasMoreElements())
 
 			{
@@ -1617,14 +1640,14 @@ public String countDay(String day)
 						+ ".job.xml");
 
 				marshaller.marshal(job, os);
-				i++;
+				
 			}
 
-		}
-		if (lancement == 2 || lancement == 12 || lancement == 123
-				|| lancement == 23) {
+		
+		
 			JobChain jobch;
 			log+="génération des jobchains \n";
+			
 			while (ejobchain.hasNext())
 
 			{
@@ -1634,33 +1657,33 @@ public String countDay(String day)
 				OutputStream os = new FileOutputStream(outPut + jobch.getName()
 						+ ".job_chain.xml");
 				marshaller.marshal(jobch, os);
-				i++;
+				
 			}
 
-		}
+		
 
-		if (lancement == 3 || lancement == 13 || lancement == 123
-				|| lancement == 23) {
+		
 			int tmp = 0;
-			JobChain jobch;
+			JobChain jobch3;
 			
 			ejobchain=c.iterator();
 			
-			jobch = (JobChain) ejobchain.next();
+			jobch3 = (JobChain) ejobchain.next();
 			
 			log+="génération des orders \n";
+			
 			while (eOrder.hasNext()) {
 				
 			
 				
-				if (tmp == nbOrderParJobchain.get(jobch.getName())) {
-					jobch = (JobChain) ejobchain.next();
+				if (tmp == nbOrderParJobchain.get(jobch3.getName())) {
+					jobch3 = (JobChain) ejobchain.next();
 					
 					tmp = 0;
 				}else
 				{	
 					Order ordTemp = (Order) eOrder.next();
-				OutputStream os = new FileOutputStream(outPut + jobch.getName()
+				OutputStream os = new FileOutputStream(outPut + jobch3.getName()
 						+ "," + ordTemp.getTitle() + ".order.xml");
 			
 				marshaller.marshal(fabrique.createOrder(ordTemp), os);
@@ -1671,9 +1694,11 @@ public String countDay(String day)
 			}
 				
 
-		}
+		
 		log+="Fin du traitement pour le fichier: "+file.getName() +" \n";
+		
 		log+="**********************************************************\n";
+		
 		interfaceGraphique.notification(log);
 		File f = new File (outPut+"LOG.txt");
 		PrintWriter pw;
@@ -1769,6 +1794,7 @@ public String countDay(String day)
 	public void ExcelCleaner(XSSFSheet sheet)
 	{
 		log+="Nettoyage du fichier Excel \n";
+		
 		//couleur cellule modifier
 		XSSFFont font = wb.createFont();
 		font.setColor((short)45);
@@ -1813,6 +1839,7 @@ public String countDay(String day)
 				 if(ligneEchange!=0)
 				 {
 					 log+="Une incohérence dans la listes des jobs a été détectée et corrigée, la ligne "+(ligneEchange+1)+ "a été échangée avec la ligne "+ (aComparer+1)+" à cause de la colonne <<at>> \n";
+					
 					 switchRow(aComparer, ligneEchange,csCF);
 				
 					if(rebuildDependency(aComparer,nameOfJobChain+NumberJobchainsup))
@@ -1835,6 +1862,7 @@ public String countDay(String day)
 				 if(rowPrec.getCell(3).toString().equals("R"))
 				 {
 					 log+="Modification de l'order: "+rowPrec.getCell(14).toString()+ ", mise à jour de la colone <<at>> \n";
+					 
 					 rowPrec.getCell(16).setCellValue(row.getCell(16).toString()); 
 					 rowPrec.getCell(16).setCellStyle(csCF);
 				 }
@@ -1931,6 +1959,7 @@ public String countDay(String day)
 						
 						row.getCell(30).setCellValue(row.getCell(30).toString()+temps+"."+tempsNext);
 						log+="Modification du regex à la ligne :"+(numLigne+1)+" \n";
+						
 						row.getCell(30).setCellStyle(csCF);
 					}
 					else if(!temps.equals("*")&&!temps.equals("?"))
@@ -1991,6 +2020,7 @@ public String countDay(String day)
 				sheet.shiftRows(p-1, sheet.getLastRowNum(),-1);
 				delete=true;
 				log+="Suppression d'un order à la ligne :"+(p-1)+" \n";
+			
 			}
 			
 			
@@ -2018,6 +2048,8 @@ public String countDay(String day)
 			
 		}
 		log+="Fin du nettoyage, génération du nouveau fichier Excel \n";
+	
+		interfaceGraphique.addValueProgressBar(15);
 	}
 	
 	public void addExcelJobChain(int line, String name)
@@ -2136,6 +2168,7 @@ public String countDay(String day)
 		row.setRowStyle(csCF);
 		  
 		log+="Echange entre la ligne n: "+ligne1+"et la ligne n2: " +ligne2+ "\n";
+		
 		
 				   for(int cn=0; cn<row.getLastCellNum(); cn++) {
 				
@@ -2260,7 +2293,7 @@ public String countDay(String day)
 	public static void main(String[] args) throws IOException, JAXBException {
 
 		ExcelReader exrd = new ExcelReader(
-				"C:/Users/m419099/Documents/Facile/GEO-RCT2.xlsm",
+				"C:/Users/m419099/Documents/TLSP.xlsm",
 				"C:/Users/m419099/Documents/résultat",new ConvertisseurTwsJbs(),true);
 		// 1=job
 		// 2=jobchain

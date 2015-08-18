@@ -3,17 +3,21 @@ package org.jobscheduler.dashboard.ocab;
 
 import java.awt.Color;
 import java.io.File;
+import java.io.FileFilter;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.swing.JFileChooser;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.text.MutableAttributeSet;
@@ -228,16 +232,82 @@ jLabel4.setVisible(false);
 //convertir
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-    	 try {
- 			ExcelReader exrd = new ExcelReader(
- 					jFileChooser1.getSelectedFile().getAbsolutePath(),
- 					System.getProperty("user.dir")+"/", this,modeTest);
+    	if(jFileChooser1.getSelectedFile()!=null)
+    	{
+    		TraiterExcel(jFileChooser1.getSelectedFile().getAbsolutePath());
+    	}
+    	else{
+    		
+    		 File di = new File(jFileChooser1.getCurrentDirectory().getAbsolutePath());
+    		
+    		FileFilter flft=new FileFilter() {
+				
+				@Override
+				public boolean accept(File pathname) {
+					if(pathname.isDirectory()) return false;
+					else if(pathname.getName().endsWith(".xlsm")||pathname.getName().endsWith(".xlsx")) return true;
+						else return false;
+				}
+			};
+			final File fl2[] = di.listFiles(flft);
+			
+			jLabel4.setText("ATTENTE DES FICHIERS");
+			jLabel4.setVisible(true);
+			
+
+		SwingWorker sw = new SwingWorker(){
+
+		      protected Object doInBackground() throws Exception {
+
+		    	  for(int i=0;i<fl2.length;i++)
+	    			{
+	    				TraiterExcel(fl2[i].getAbsolutePath());
+	    				jLabel4.setText(fl2[i].getName());
+	    			}
+		    	 
+		    	  FileFilter flft2 =new FileFilter() {
+						
+						@Override
+						public boolean accept(File pathname) {
+							Date dt=new Date();
+							
+							if(pathname.isDirectory()&& (dt.getTime()-pathname.lastModified()<=1800000)) return true;
+								else return false;
+							
+						}
+					};
+					 File di2 = new File(System.getProperty("user.dir"));
+					File taille[]=di2.listFiles(flft2);
+					
+					jLabel4.setText("Traitement terminé, Fichier en entrée :  " +fl2.length+", Dossier récent (-30 minutes) dans le répertoire courant :"+taille.length);
+		        return null;
+
+		      }  
+
+		    };
+
+		    //On lance le SwingWorker
+
+		    sw.execute();
+		
+
+    	}
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    
+    public void TraiterExcel(String absolutePath)
+    {jProgressBar1.setValue(0);
+    
+    	try {
+ 			ExcelReader exrd = new ExcelReader(absolutePath,System.getProperty("user.dir")+"/", this,modeTest);
  			jProgressBar1.setValue(20);
  			if (exrd.treatExcelFile())
  				{
- 				jProgressBar1.setValue(80);
+ 				
  				int nbFichier=exrd.OutputTest(123);
  				jTextPane1.setText(jTextPane1.getText()+nbFichier+" fichier(s) ont été générés");
+ 				
  				jTextPane1.setText(jTextPane1.getText()+"\n"+"Operation succeeded");
  				jProgressBar1.setValue(100);
  				sQLHighlight(jTextPane1);
@@ -250,13 +320,12 @@ jLabel4.setVisible(false);
  			// TODO Auto-generated catch block
  			jTextPane1.setText(jTextPane1.getText()+"\n"+e.getMessage());
  		}
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
-
+    }
+    
     private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
         // TODO add your handling code here:
         String name;
-        name = jFileChooser1.getSelectedFile().getAbsolutePath();
+        name = jFileChooser1.getSelectedFile().getName();
         jLabel4.setText(name);
 jLabel4.setVisible(true);
     }//GEN-LAST:event_jFileChooser1ActionPerformed
@@ -390,7 +459,13 @@ jLabel4.setVisible(true);
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextPane jTextPane1;
-    // End of variables declaration//GEN-END:variables
+    
+ 
+    public void addValueProgressBar(int vlr) {
+    	jProgressBar1.setValue(jProgressBar1.getValue()+vlr);
+	}
+
+	// End of variables declaration//GEN-END:variables
     boolean modeTest=false;
 
 }
