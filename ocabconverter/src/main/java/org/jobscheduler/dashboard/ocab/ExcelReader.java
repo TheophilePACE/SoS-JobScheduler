@@ -1477,7 +1477,7 @@ public String countDay(String day)
 		copyLineTitle();
 		nextExcelLine();
 		String chaine;
-		System.out.println("ok");
+		
 		boolean ActivateMultiFileOrder=false;
 		while (rowIterator.hasNext()) {
 
@@ -1551,8 +1551,8 @@ public String countDay(String day)
 					else if(cell.toString().equals("O"))
 					{
 						if(ActivateMultiFileOrder)
-						{//beug ici
-							System.out.println("prob");
+						{
+							
 						contenuFichier.add(sheet.getRow(numLigne).getCell(30).toString());
 						fichier=true;
 						}
@@ -2271,7 +2271,7 @@ public String countDay(String day)
 		if (exrd.treatExcelFile())
 			
 			{
-			System.out.println("test");
+			System.out.println("Fichier Excel traité");
 			exrd.OutputTest(123);}
 		else{
 			System.out.println("nofichir");
