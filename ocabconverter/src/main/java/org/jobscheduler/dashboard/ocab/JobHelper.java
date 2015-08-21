@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigInteger;
 import java.nio.channels.FileChannel;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -54,7 +55,7 @@ public class JobHelper {
 	XSSFSheet sheet;
 	int ligne=1;
 	Marshaller marshaller;
-	
+
 	String paramValue;
 	LinkedHashMap<String,Boolean> jobChainComplex;
 	Hashtable  <String , String > nextJobChain;
@@ -68,8 +69,17 @@ public class JobHelper {
 	Order ord;
 	boolean configFile=false;
 	boolean complexe;
-    int numberFile=10;
-    String outPut;
+	int numberFile=10;
+	String outPut;
+	LinkedHashMap<String, Integer>  EndCmplex= new  LinkedHashMap<String, Integer>();
+	String jobEndComplex="";
+	Hashtable <String, String> addSynch=new Hashtable<String, String>();
+	int indiceEndSplit=-1;
+
+	public boolean AddSynch(String st) {
+		return addSynch.containsKey(st);
+	}
+
 	public JobHelper(XSSFSheet sheet,Marshaller marshaller)
 	{
 		this.sheet=sheet;
@@ -84,6 +94,7 @@ public class JobHelper {
 		beginJobchain=true;
 		complexe=false;
 		jobChainComplex=new LinkedHashMap<String,Boolean>();
+		paramValue="";
 	}
 
 	/**
@@ -98,184 +109,345 @@ public class JobHelper {
 	 */
 	public void initialization(String outPut) throws JAXBException, FileNotFoundException
 	{this.outPut=outPut;
-		Integer jid = 0;
+	Integer jid = 0;
 
-		while (rowIterator.hasNext()) {
+	while (rowIterator.hasNext()) {
 
-			Row row = rowIterator.next();//we start at the line number 2, the first line is for title in the excel file
-
-
-			if(!row.getCell(5).getStringCellValue().isEmpty()) //for check jobchain name 
-			{  
-				if (complexe)
-				{
-					EndComplexCase("End");
-					
-				} 
-				
-				if(!row.getCell(11).toString().isEmpty())
-				{
-					
-					String followJobChain =getJobChaine(row.getCell(11).toString().substring(1));
-					
-					this.nextJobChain.put(followJobChain,row.getCell(5).getStringCellValue());
-				}
-
-				if(!beginJobchain&&configFile) // here, we have generate a config file for the current jobchain, then we create a output file
-				{
-
-					OutputStream os = new FileOutputStream(outPut+nameJobChain+".config.xml");
-					marshaller.marshal(st, os);
-					configFile=false;
+		Row row = rowIterator.next();//we start at the line number 2, the first line is for title in the excel file
 
 
-				}
-				nameJobChain=row.getCell(5).getStringCellValue(); //for check jobchain name
-				beginJobchain=true; //initialization for a new jobchain
+		if(!row.getCell(5).getStringCellValue().isEmpty()) //for check jobchain name 
+		{  
+			if (complexe)
+			{
+				EndComplexCase("End");
+				jobEndComplex="";
+			} 
+			EndCmplex=new LinkedHashMap<String, Integer>();
 
+			if(!row.getCell(11).toString().isEmpty())
+			{
 
+				String followJobChain =getJobChaine(row.getCell(11).toString().substring(1));
+
+				this.nextJobChain.put(followJobChain,row.getCell(5).getStringCellValue());
 			}
 
 
-			if(!row.getCell(2).toString().isEmpty())	//for check the jid of the line
+			configFile=false;
+			nameJobChain=row.getCell(5).getStringCellValue(); //for check jobchain name
+			beginJobchain=true; //initialization for a new jobchain
+
+
+		}
+
+
+		if(!row.getCell(2).toString().isEmpty())	//for check the jid of the line
+		{
+
+
+			if(row.getCell(2).getCellType()==0)
 			{
-
-
-				if(row.getCell(2).getCellType()==0)
-				{
-					jid=(int)row.getCell(2).getNumericCellValue();
-				}
-				else
-				{
-					jid=Integer.parseInt(row.getCell(2).getStringCellValue());
-				}
+				jid=(int)row.getCell(2).getNumericCellValue();
 			}
-			
-
-			if(row.getCell(3).toString().equals("N"))	//for check if it's a lock line
+			else
 			{
+				jid=Integer.parseInt(row.getCell(2).getStringCellValue());
+			}
+		}
+
+
+		if(row.getCell(3).toString().equals("N"))	//for check if it's a lock line
+		{
 
 
 			Lock lc=fabrique.createLock();
 			lc.setMaxNonExclusive(new BigInteger(row.getCell(33).toString()));
-			
+
 			OutputStream os = new FileOutputStream(outPut+row.getCell(32).toString()+".lock.xml");
 			marshaller.marshal(fabrique.createLock(lc), os);
-			
-			}
-			
-			cellIterator=row.cellIterator();
 
-			cell=coloneExcelSuivant(7);	//we go to the column 7, the job name (of the current job)
-			
-			
-			
-			
+		}
 
-			
-			if(!cell.toString().isEmpty()) //if it's not empty we treat a job
+		cellIterator=row.cellIterator();
+
+		cell=coloneExcelSuivant(7);	//we go to the column 7, the job name (of the current job)
+
+
+
+
+
+
+		if(!cell.toString().isEmpty()) //if it's not empty we treat a job
+		{
+
+			if(isEndComplex(String.valueOf(jid))) //we treat a complicated case because the jid in the ocab >999999 look ocab for understand
 			{
+				nameNextJob.put(cell.toString(),"Sync_"+numbeSyn);//next of all complicated case is a synchro 
+				//if we treat a complex case for first time, complex==false
+				//we build a String like the example : mot1;mots2;mots3;
+				//it's for the config file
 
-				if(isComplex()) //we treat a complicated case because the jid in the ocab >999999 look ocab for understand
+
+
+
+			}
+			else
+			{
+				
+				if (jobEndComplex.equals(String.valueOf(jid)))
+				{System.out.println("eeee");
+				EndComplexCase(cell.toString());
+				jobEndComplex="";
+				} 
+
+				//if the 2 next row have the same previous Jid then the next line is a complicated cases
+				//and the next of the current line is a split
+				String endSplit=splitPoint(String.valueOf(jid));
+				if(!endSplit.equals("-1")&&indiceEndSplit!=-1)
 				{
-					nameNextJob.put(cell.toString(),"Sync_"+numbeSyn);//next of all complicated case is a synchro 
-					//if we treat a complex case for first time, complex==false
-					//we build a String like the example : mot1;mots2;mots3;
-					//it's for the config file
-					if(complexe==false)
+
+					System.out.println(":"+endSplit);
+					String[] value=endSplit.split(",");
+					if(indiceEndSplit!=-2)
+					jobEndComplex=sheet.getRow(indiceEndSplit).getCell(2).toString();
+
+					indiceEndSplit=-1;
+
+					addSynch.put(value[value.length-1],"Sync_"+numbeSyn);
+
+					for(int z=0;z<value.length;z++)
 					{
-
-						paramValue=cell.toString(); //for build all
-
+						EndCmplex.put(value[z],numbeSyn);
 					}
-					else
-					{
-						paramValue=paramValue+";"+cell.toString();
-					}
-
-
-					complexe=true;//for notice we have treat a complex case
-
 
 					if (!jobChainComplex.containsKey(nameJobChain))
 					{
 						jobChainComplex.put(nameJobChain,true);//For now if a jochain contain complex case,
 						//We add for the complex jobchain a job start and a job end 
 					}
-				}
-				else
-				{
-					if (complexe)
-					{
-						EndComplexCase(cell.toString());
-					} 
+					complexe=true;
 
-					//if the 2 next row have the same previous Jid then the next line is a complicated cases
-					//and the next of the current line is a split
+				}else{
+					//a normal case, just put the next job in a hashtable
+					String temp=getL1File();
+					if(temp.equals("NogetL1File"))
+					{nameNextJob.put(cell.toString(),getL1(7,1));
 
-					if(getL1(12,1).equals(getL2(12)) && getL1(12,1).equals(String.valueOf(jid)) && getL2(12).equals(String.valueOf(jid)))
-					{
-
-						nameNextJob.put(cell.toString(),"Split_"+numbeSplit);
-						Job jb=fabrique.createJob();
-						jb.setOrder("yes");
-						jb.setStopOnError("no");
-						jb.setTitle("EndSpleet"+numbeSplit);
-						JobSettings jbs=fabrique.createJobSettings();
-						jb.setSettings(jbs);
-						org.jobscheduler.dashboard.jobdefinition.xml.Script src=fabrique.createScript();
-						src.setJavaClass("com.sos.jitl.sync.JobSchedulerSynchronizeJobChainsJSAdapterClass");
-						src.setJavaClassPath("");
-						src.setLanguage("java");
-						jb.setScript(src);
-						RunTime rt=fabrique.createRunTime();
-						jb.setRunTime(rt);
-						OutputStream os = new FileOutputStream(outPut+"Sync_"+numbeSyn+".job.xml");
-						marshaller.marshal(jb, os);
-
-
-
-
-					}else{
-						//a normal case, just put the next job in a hashtable
-						String temp=getL1File();
-						if(temp.equals("NogetL1File"))
-						{nameNextJob.put(cell.toString(),getL1(7,1));
-						
-						}
-						else{
-							jobWithFiles.put(cell.toString(), temp);
-							nameNextJob.put(cell.toString(),getL1(7,2)); //on s	it deja que le prochain est un fichier
-						}
 					}
-
+					else{
+						jobWithFiles.put(cell.toString(), temp);
+						nameNextJob.put(cell.toString(),getL1(7,2)); //on s	it deja que le prochain est un fichier
+					}
 				}
 
 			}
-			
 
-			ligne++;
 		}
 
-		//for generate the last config file
-		if(!beginJobchain)
-		{
-			OutputStream os = new FileOutputStream(outPut+nameJobChain+".config.xml");
-			marshaller.marshal(st, os);
-		}
-		
-		
+
+		ligne++;
+	}
+
+	if (complexe)
+	{
+		EndComplexCase("End");
+		jobEndComplex="";
+	} 
+
+
 	}
 
 	public String getJobWithFiles(String st) {
 		if(jobWithFiles.containsKey(st))
-		return jobWithFiles.get(st);
-		
+			return jobWithFiles.get(st);
+
 		return "nofiles";
 	}
 
-	
 
+	public String splitPoint(String Job)
+	{
+		String returnn="";
+		boolean boucle,endSplit=false;
+		int numLigne=ligne+1;
+		boolean happyEnd=false;
+
+		ArrayList<Integer> parallelJob=new ArrayList<Integer> ();
+
+		if(haveNextIndice(numLigne))
+		{
+			boucle=sheet.getRow(numLigne).getCell(1).toString().isEmpty();	
+
+			while(boucle&&!endSplit)
+			{
+
+
+
+				if(sheet.getRow(numLigne).getCell(11).toString().equals(Job))
+					parallelJob.add(new Integer(Integer.valueOf(numLigne)));
+
+				if(!endSplit&&parallelJob.size()>1)
+				{
+					if(sheet.getRow(numLigne).getCell(11).toString().contains(","))
+					{
+						endSplit=true;
+						happyEnd=true;
+						indiceEndSplit=numLigne;
+					}
+				}
+
+
+				numLigne++;
+				if(haveNextIndice(numLigne))
+				{
+					boucle=sheet.getRow(numLigne).getCell(1).toString().isEmpty();		
+				}
+				else
+				{
+					boucle=false;
+				}
+
+			}
+
+
+		}
+
+		if(parallelJob.size()>1)
+		{paramValue="";
+			nameNextJob.put(cell.toString(),"Split_"+numbeSplit);
+			Job jb=fabrique.createJob();
+			jb.setOrder("yes");
+			jb.setStopOnError("no");
+			jb.setTitle("EndSpleet"+numbeSplit);
+			JobSettings jbs=fabrique.createJobSettings();
+			jb.setSettings(jbs);
+			org.jobscheduler.dashboard.jobdefinition.xml.Script src=fabrique.createScript();
+			src.setJavaClass("com.sos.jitl.sync.JobSchedulerSynchronizeJobChainsJSAdapterClass");
+			src.setJavaClassPath("");
+			src.setLanguage("java");
+			jb.setScript(src);
+			RunTime rt=fabrique.createRunTime();
+			jb.setRunTime(rt);
+			OutputStream os;
+
+			
+			
+			if(happyEnd){
+				
+				returnn=sheet.getRow(indiceEndSplit).getCell(11).toString();
+			}
+			else
+			{
+				for(int j=0;j<parallelJob.size();j++)
+				{
+
+					if(returnn.isEmpty())
+						returnn=ResolvLink(parallelJob.get(j));
+					else
+						returnn+=","+ResolvLink(parallelJob.get(j));	
+
+				}
+				indiceEndSplit=-2;
+			}
+			
+			for(int j=0;j<parallelJob.size();j++)
+			{
+
+				if(paramValue.isEmpty())
+				{
+
+					paramValue=sheet.getRow(parallelJob.get(j)).getCell(6).toString();
+
+				}
+				else
+				{
+					paramValue=paramValue+";"+sheet.getRow(parallelJob.get(j)).getCell(6).toString();
+				}
+
+
+			}
+
+
+			createConfigFile();
+
+
+
+
+
+			try {
+				os = new FileOutputStream(outPut+"Sync_"+numbeSyn+".job.xml");
+				marshaller.marshal(jb, os);
+
+				os = new FileOutputStream(outPut+nameJobChain+".config.xml");
+				marshaller.marshal(st, os);
+			} catch (FileNotFoundException | JAXBException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return returnn;
+		}
+
+
+
+
+		return "-1";
+
+	}
+
+	public String ResolvLink(int line)
+	{
+		int i=1;
+		boolean boucle;
+		
+		if(haveNextIndice(line+1))
+		{
+			if(!sheet.getRow(line+1).getCell(3).toString().isEmpty())
+			{
+				
+				Boolean loop=true;
+				
+				
+				while(loop)
+				{i++;
+					
+					if(haveNextIndice(line+i))
+						{
+						
+						loop=!sheet.getRow(line+i).getCell(3).toString().isEmpty();
+						
+						}
+					else
+					{
+						return sheet.getRow(line).getCell(2).toString();
+					}
+					
+					
+					
+				}
+				
+				if(sheet.getRow(line).getCell(2).toString().equals(sheet.getRow(line+i).getCell(11).toString()))
+					return  ResolvLink(line+i);
+				
+				return sheet.getRow(line).getCell(2).toString();
+				
+			}
+			else if(sheet.getRow(line).getCell(2).toString().equals(sheet.getRow(line+1).getCell(11).toString()))
+				return  ResolvLink(line+1);
+			
+			return sheet.getRow(line).getCell(2).toString();
+		}
+
+		return sheet.getRow(line).getCell(2).toString();
+	}
+	
+	public boolean haveNextIndice(int i)
+	{
+		if(sheet.getLastRowNum()>=i)
+			return true;
+		return false;
+
+	}
 	public void EndComplexCase(String nextSynchro)
 	{
 		//now we treat a simple case or a jobchain but before we treat a complex case then we have some thing to do
@@ -288,7 +460,7 @@ public class JobHelper {
 		//if it's the first complex case in the jobchain we create a jobchain with a new order and a new process
 		//else we add a new process, look a config file for understand
 		//jobchain in the config file it's not a common jobchain 
-		createConfigFile();
+		
 
 
 
@@ -312,16 +484,16 @@ public class JobHelper {
 		Row rowL1;
 		Iterator<Cell> tempCellIteratorL1;
 		Cell cellTemp;
-		
-		
+
+
 		if(sheet.getLastRowNum()>=ligne+indice)
 		{
-			
+
 			rowL1=sheet.getRow(ligne+indice);
 
 			tempCellIteratorL1=rowL1.iterator();
 			cellTemp=coloneExcelSuivant(tempCellIteratorL1,numeroColone);
-			
+
 			if (!cellTemp.toString().isEmpty()&&cellTemp.toString().indexOf("s")==-1)
 			{
 
@@ -339,53 +511,53 @@ public class JobHelper {
 			}else if(rowL1.getCell(3).toString().equals("O"))
 			{
 				return getL1(numeroColone,indice+1);
-				
+
 			}
-			
+
 
 
 		}
 
 		return "NogetL1";
 	}
-	
+
 	public String getL1File()
 	{
 		if(sheet.getLastRowNum()>=ligne+1)
 		{
 			Row rowL1=sheet.getRow(ligne+1);
-		if(rowL1.getCell(3).toString().equals("O"))
-		{
-			int tempNumberFile=numberFile;
-			waitFileForExecute(rowL1.getCell(30).toString());
-			boolean noEndFileEndChain=false;
-			int add=2;
-			if(sheet.getLastRowNum()>=ligne+add)
-				noEndFileEndChain=true;
-			
-			while(noEndFileEndChain)
+			if(rowL1.getCell(3).toString().equals("O"))
 			{
-				
-			if(sheet.getRow(ligne+add).getCell(3).toString().equals("O"))
-			{
-				waitFileForExecute(sheet.getRow(ligne+add).getCell(30).toString());
-			    add++;
-			    
-			    if(sheet.getLastRowNum()<ligne+add)
-					noEndFileEndChain=false;
-			
+				int tempNumberFile=numberFile;
+				waitFileForExecute(rowL1.getCell(30).toString());
+				boolean noEndFileEndChain=false;
+				int add=2;
+				if(sheet.getLastRowNum()>=ligne+add)
+					noEndFileEndChain=true;
+
+				while(noEndFileEndChain)
+				{
+
+					if(sheet.getRow(ligne+add).getCell(3).toString().equals("O"))
+					{
+						waitFileForExecute(sheet.getRow(ligne+add).getCell(30).toString());
+						add++;
+
+						if(sheet.getLastRowNum()<ligne+add)
+							noEndFileEndChain=false;
+
+					}
+					else
+					{
+						noEndFileEndChain=false;
+					}
+
+				}
+				//un job peut avoir le nom de (numberfile+_file) meme si cela est peu probable
+				//je rajoute Unique pour etre sur qu'il n'y est pas de conflit
+				return tempNumberFile+"_file";
 			}
-			else
-			{
-				noEndFileEndChain=false;
-			}
-			
-			}
-			//un job peut avoir le nom de (numberfile+_file) meme si cela est peu probable
-			//je rajoute Unique pour etre sur qu'il n'y est pas de conflit
-			return tempNumberFile+"_file";
 		}
-	 }
 		return "NogetL1File";
 	}
 
@@ -395,12 +567,12 @@ public class JobHelper {
 
 	public void waitFileForExecute(String contenuFichier)
 	{
-		
+
 		createSubMitJobEvent( numberFile , contenuFichier);
 		numberFile++;
-		
+
 	}
-	
+
 	/**
 	 * name - createSubMitJobEvent create a envent 
 	 *                           
@@ -411,30 +583,30 @@ public class JobHelper {
 	 * @date 13/08/2015
 	 * @note
 	 */
-	
+
 	public void createSubMitJobEvent(int id ,String contenuFichier){
-		
-		
+
+
 		Job job = fabrique.createJob();
-		
+
 		Params parameters = fabrique.createParams() ;
 		Param add = fabrique.createParam() ;
-		
+
 		add.setName("scheduler_event_action") ;
 		add.setValue("add") ;
 		parameters.getParamOrCopyParamsOrInclude().add(add) ;
-		
+
 		Param classe = new Param() ;
 		classe.setName("scheduler_event_class") ;
 		classe.setValue("file") ;
 		parameters.getParamOrCopyParamsOrInclude().add(classe) ;
-		
+
 		Param idP= new Param() ;
 		idP.setName("scheduler_event_id") ;
 		idP.setValue(id+"_file") ;
 		parameters.getParamOrCopyParamsOrInclude().add(idP) ;
-		
-		
+
+
 		job.setParams(parameters) ;
 		Script script =fabrique.createScript();
 		script.setLanguage("shell") ;
@@ -442,82 +614,82 @@ public class JobHelper {
 		job.setScript(script) ;
 		job.setStopOnError("no") ;
 		job.setOrder("yes") ;
-		
+
 		Monitor moni=fabrique.createJobMonitor();
 		moni.setName(id+"_file");
-		
+
 		script =fabrique.createScript();
 		script.setLanguage("java");
 		script.setJavaClass("com.sos.jitl.eventing.EventMonitorTaskAfter");
-		
+
 		moni.setScript(script);
 		job.getMonitor().add(moni);
-		
-				
+
+
 		JobChain jbc=fabrique.createJobChain();
 		JobChain.JobChainNode jbcn=fabrique.createJobChainJobChainNode();
 		jbcn.setState(id+"_file");
 		jbcn.setJob(id+"_file");
 		jbcn.setNextState("S_cleanfile");
 		JobChain.FileOrderSource file=fabrique.createJobChainFileOrderSource();
-		
+
 		String[] split=contenuFichier.split("/");
-	     String directory="";
-	     for(int j=0;j<split.length-1;j++)
-	     {
-	    	 if(j<split.length-2)
-	    		 {
-	    		 directory+=split[j]+"/";
-	    		 }
-	    	 else
-	    	 {
-	    		 directory+=split[j]; 
-	    	 }
-	     }
-	     file.setDirectory(directory);
-	     file.setRegex(split[split.length-1]);
+		String directory="";
+		for(int j=0;j<split.length-1;j++)
+		{
+			if(j<split.length-2)
+			{
+				directory+=split[j]+"/";
+			}
+			else
+			{
+				directory+=split[j]; 
+			}
+		}
+		file.setDirectory(directory);
+		file.setRegex(split[split.length-1]);
 		jbc.getFileOrderSource().add(file);
 		jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcn);
-		
+
 		JobChain.FileOrderSink deletFile=fabrique.createJobChainFileOrderSink();
-	     deletFile.setState("S_cleanfile");
-	     deletFile.setRemove("yes");
-	     jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(deletFile);
-		
-	     OutputStream os;
-	     try { 
-	    	 
-	    	 os = new FileOutputStream(outPut+id+"_file"+".job.xml");
-				marshaller.marshal(job, os);
-				
-				List lst=job.getParams().getParamOrCopyParamsOrInclude();
-				
-				for(int z=0;z<lst.size();z++)
-				{
-					Param pr=(Param)lst.get(z);
-					if(pr.getValue().equals("add"))
-						pr.setValue("remove");
-				}
-				
-				
-	    	
-		
-				os = new FileOutputStream(outPut+id+"_file_removeEvent"+".job.xml");
-				marshaller.marshal(job, os);
-				
-				
-				
-	    	 os = new FileOutputStream(outPut+nameJobChain+"_"+id+"_file"+ ".job_chain.xml");
-			marshaller.marshal(jbc, os); 
-			
-			
-	     
-	     } catch (FileNotFoundException | JAXBException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		deletFile.setState("S_cleanfile");
+		deletFile.setRemove("yes");
+		jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(deletFile);
+
+		OutputStream os;
+		try { 
+
+			os = new FileOutputStream(outPut+id+"_file"+".job.xml");
+			marshaller.marshal(job, os);
+
+			List lst=job.getParams().getParamOrCopyParamsOrInclude();
+
+			for(int z=0;z<lst.size();z++)
+			{
+				Param pr=(Param)lst.get(z);
+				if(pr.getValue().equals("add"))
+					pr.setValue("remove");
 			}
+
+
+
+
+			os = new FileOutputStream(outPut+id+"_file_removeEvent"+".job.xml");
+			marshaller.marshal(job, os);
+
+
+
+			os = new FileOutputStream(outPut+nameJobChain+"_"+id+"_file"+ ".job_chain.xml");
+			marshaller.marshal(jbc, os); 
+
+
+
+		} catch (FileNotFoundException | JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-	
+
 	/**
 	 * name - getL2 get in two next line, the column enter in parameter
 	 *                           
@@ -569,64 +741,12 @@ public class JobHelper {
 	 * @date 20/05/2015
 	 * @note
 	 */
-	public boolean isComplex()
+	public boolean isEndComplex(String leJob)
 	{
-		Row rowC;
-		Iterator<Cell> tempCellC;
-		Cell cellTemp;
-		rowC=sheet.getRow(ligne);
-		String valeurCourante=rowC.getCell(11).toString();
-		String ValeurAcomparer=getL1(12,1);
-		
-		if(!valeurCourante.isEmpty()&& valeurCourante.indexOf(";")==-1 && valeurCourante.indexOf(",")==-1)
-		{	
-			
-			
-			
-			
-				if(ValeurAcomparer.indexOf(";")!=-1 || ValeurAcomparer.indexOf(",")!=-1||ValeurAcomparer.equals("NogetL1"))
-				{
-					if(!sheet.getRow(ligne-1).getCell(11).toString().isEmpty())
-					{
-					ValeurAcomparer=sheet.getRow(ligne-1).getCell(11).toString();
-					
-					}
-					else
-					{
-						return false;
-					}
-				}
-
-				if(valeurCourante.indexOf(".")!=-1)
-				{
-					String[] tmp=valeurCourante.split("\\.");
-					valeurCourante=tmp[0];
-
-				}
-
-				if(ValeurAcomparer.indexOf(".")!=-1)
-				{
-					String[] tmp2=ValeurAcomparer.split("\\.");
-
-					ValeurAcomparer=tmp2[0];
-
-				}
-
-				if(Integer.parseInt(valeurCourante)==Integer.parseInt(ValeurAcomparer))
-					return true;
-			
-
-		}
-
-		
-		
-		
-
-
-		return false;
+		return EndCmplex.containsKey(leJob);
 	}
-	
-	
+
+
 
 	public Cell coloneExcelSuivant(int nbColSuivant) {
 
@@ -685,7 +805,7 @@ public class JobHelper {
 		for(int i=0;i<nbreCell-1;i++)
 		{
 			tempCellIteratorL1.next().getStringCellValue();
-		
+
 		}
 		return tempCellIteratorL1.next(); 
 	}
@@ -703,28 +823,28 @@ public class JobHelper {
 		return false;
 	}
 
-public String jobChainSuivant(String nameJobchain)
-{
-	
-	if(nextJobChain.containsKey(nameJobchain))
+	public String jobChainSuivant(String nameJobchain)
 	{
-		return nextJobChain.get(nameJobchain);
+
+		if(nextJobChain.containsKey(nameJobchain))
+		{
+			return nextJobChain.get(nameJobchain);
+		}
+		return "noJobchainNext";
 	}
-	return "noJobchainNext";
-}
 
 
-public String getJobChaine(String JID)
-{
-	
-	for(int t=1;t<sheet.getLastRowNum();t++)	 
-	{	
-		if(sheet.getRow(t).getCell(1).toString().equals(JID)&&!sheet.getRow(t).getCell(1).toString().isEmpty())
-		return sheet.getRow(t).getCell(5).toString();
+	public String getJobChaine(String JID)
+	{
+
+		for(int t=1;t<sheet.getLastRowNum();t++)	 
+		{	
+			if(sheet.getRow(t).getCell(1).toString().equals(JID)&&!sheet.getRow(t).getCell(1).toString().isEmpty())
+				return sheet.getRow(t).getCell(5).toString();
+		}
+
+		return "NoJobchain";
 	}
-	
-	return "NoJobchain";
-}
 	/**
 	 * name - createConfigFile create a config job for a split
 	 * 

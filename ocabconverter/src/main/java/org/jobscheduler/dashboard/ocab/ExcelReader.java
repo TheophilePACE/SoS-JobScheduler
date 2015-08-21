@@ -171,11 +171,9 @@ public class ExcelReader {
 		dir.mkdirs();
 		outPut=dir.getAbsolutePath()+"/";
 		log="**********************************************************\n";
-        
 		
         log+="Traitement du fichier Excel : "+file.getName()+" destination: "+outPut+"\n";
-		
-		
+				
 		jc = JAXBContext
 				.newInstance("org.jobscheduler.dashboard.jobdefinition.xml");
 		marshaller = jc.createMarshaller();
@@ -298,9 +296,10 @@ public class ExcelReader {
 		lockInUse=""; //initialization
 		int i = 2;// cell and "i"(column title) must be synchronized, title must
 					// correspond to cell
-		if(alreadySync)
+		if(jbcnSyncBool)
 		{
-			alreadySync=false;
+			
+			jbcnSyncBool=false;
 			jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcnSync);
 		}
 		
@@ -427,25 +426,20 @@ public class ExcelReader {
 			//then we notice we need create a job synch but we add it at the end of the complex case,
 			//when next of the current job is different of Synch and alreySync(=we have a job synch to add) is true    
 			
-			if(jobhelp.getNextJob(cell.toString()).indexOf("Sync_")!=-1)
+			if(jobhelp.AddSynch(sheet.getRow(numLigne).getCell(2).toString()))
 			{
-				if(!alreadySync)
-				{	
+					
 				jbcnSync=fabrique.createJobChainJobChainNode();
 				String temp=jobhelp.getNextJob(cell.toString());
+				
 				jbcnSync.setState(temp);
 				jbcnSync.setNextState(jobhelp.getNextJob(temp));
 				jbcnSync.setJob(temp);
-				
-				alreadySync=true;
-				}
-			}
-			else if(alreadySync)
-			{
 				jbcnSyncBool=true;
-				alreadySync=false;
-				
+				System.out.println("innnn");
 			}
+			
+			
 			break;
 		case "user":
 			if(!cell.toString().equals(file.getName().split("\\.")[0].toLowerCase()))
@@ -929,6 +923,12 @@ public class ExcelReader {
 		} while (cellIterator.hasNext());
 		
 		
+		
+		
+		
+		
+		jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcn);// add the jobchainnode in jobchain																 
+		
 		if(jbcnSyncBool)//if a split or a synchro file exist then add in the jobchain
 		{
 			jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcnSync);
@@ -936,10 +936,6 @@ public class ExcelReader {
 			
 			
 		}
-		
-		
-		
-		jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcn);// add the jobchainnode in jobchain																 
 		
 		if(jbcnSplitBool)//if a split or a synchro file exist then add in the jobchain
 		{
@@ -2293,7 +2289,7 @@ if(valeur>=1)
 	public static void main(String[] args) throws IOException, JAXBException {
 
 		ExcelReader exrd = new ExcelReader(
-				"C:/Users/m419099/Documents/TLSP.xlsm",
+				"C:/Users/m419099/Documents/AEPBetaT2.xlsm",
 				"C:/Users/m419099/Documents/résultat",new ConvertisseurTwsJbs(),true);
 		// 1=job
 		// 2=jobchain
