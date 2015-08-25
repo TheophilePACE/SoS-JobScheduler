@@ -59,6 +59,7 @@ import org.jobscheduler.dashboard.jobdefinition.xml.Param;
 import org.jobscheduler.dashboard.jobdefinition.xml.Params;
 import org.jobscheduler.dashboard.jobdefinition.xml.Period;
 import org.jobscheduler.dashboard.jobdefinition.xml.RunTime;
+import org.jobscheduler.dashboard.jobdefinition.xml.RunTime.Date;
 import org.jobscheduler.dashboard.jobdefinition.xml.Script;
 import org.jobscheduler.dashboard.jobdefinition.xml.StartJob;
 import org.jobscheduler.dashboard.jobdefinition.xml.Weekdays;
@@ -1124,6 +1125,19 @@ public String countDay(String day)
                 saveAt=heure;
 
 				break;
+				
+			case "dates":
+
+				
+				Date dt=fabrique.createRunTimeDate();
+				dt.setDate(cell.toString());
+				Period prd=fabrique.createPeriod();
+				prd.setSingleStart(saveAt);
+				dt.getPeriod().add(prd);
+				oRuntime.getDate().add(dt);
+				runtime = true;
+				break;
+
 
 			case "ical":
 				
@@ -2289,7 +2303,7 @@ if(valeur>=1)
 	public static void main(String[] args) throws IOException, JAXBException {
 
 		ExcelReader exrd = new ExcelReader(
-				"C:/Users/m419099/Documents/AEPBetaT2.xlsm",
+				"C:/Users/m419099/Documents/AEPBetaT3.xlsm",
 				"C:/Users/m419099/Documents/résultat",new ConvertisseurTwsJbs(),true);
 		// 1=job
 		// 2=jobchain

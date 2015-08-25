@@ -59,6 +59,7 @@ public class ConvertisseurTwsJbs extends javax.swing.JFrame {
         "Excel", "xlsm","xlss");
         jFileChooser1.setAcceptAllFileFilterUsed(false);
         jFileChooser1.setFileFilter(filter);
+        jFileChooser1.setMultiSelectionEnabled(true);
         jProgressBar1.setMaximum(100);
        
 jLabel4.setVisible(false);
@@ -232,11 +233,16 @@ jLabel4.setVisible(false);
 //convertir
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-    	if(jFileChooser1.getSelectedFile()!=null)
+    	if(jFileChooser1.getSelectedFiles()!=null)
     	{
-    		TraiterExcel(jFileChooser1.getSelectedFile().getAbsolutePath());
+    		File[] f=jFileChooser1.getSelectedFiles();
+    		for(int p=0; p<f.length;p++)
+    		{
+    		TraiterExcel(f[p].getAbsolutePath());
+    		}   	
     	}
-    	else{
+    	else
+    	{
     		
     		 File di = new File(jFileChooser1.getCurrentDirectory().getAbsolutePath());
     		
