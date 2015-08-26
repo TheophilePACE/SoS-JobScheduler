@@ -757,11 +757,12 @@ public class ExcelReader {
 		boolean noEndFileEndChain=false;
 		int add=2;
 		
-			noEndFileEndChain=true;
+			noEndFileEndChain=sheet.getLastRowNum()>=(numLigne+add);
 			
 			
 				while(noEndFileEndChain)
 				{
+					
 					if(sheet.getRow(numLigne+add).getCell(3).toString().equals("O"))	
 					{
 						titre=(Integer.getInteger(titre.substring(0,2))+1)+titre.substring(2);
@@ -778,7 +779,8 @@ public class ExcelReader {
 	            		add++;
 	            		
 	            		//does not change what you do not understand..
-	            		if(sheet.getLastRowNum()<numLigne+add)
+	         
+	            		if(sheet.getLastRowNum()<(numLigne+add))
 	            		   {
 	            			jobchnode.setNextState(jb.getTitle());
 	            			listjobchain.add(jobchnode);
@@ -1937,24 +1939,25 @@ if(valeur>=1)
 			 
 			 
 			 
-			if(row.getCell(3).toString().equals("O"))
+			if(rowSuiv.getCell(3).toString().equals("O"))
 			{
-				 row.getCell(30).setCellValue(row.getCell(30).toString().replace("//", "/"));
-				 String correction=row.getCell(30).toString();
+				rowSuiv.getCell(30).setCellValue(rowSuiv.getCell(30).toString().replace("//", "/"));
+				 String correction=rowSuiv.getCell(30).toString();
 				 
 					 
 				String[] cheminEtRegex=correction.split("/");
 				
 				String regex=cheminEtRegex[cheminEtRegex.length-1];	
+				
 				StringTokenizer chaine = new StringTokenizer(regex,"?*",true);
 				if(chaine.countTokens()>1)
 				{
-				row.getCell(30).setCellValue("");
+				rowSuiv.getCell(30).setCellValue("");
 				String temps=chaine.nextToken();
 				String tempsNext;
 				for(int z=0;z<cheminEtRegex.length-1;z++)
 				{
-					row.getCell(30).setCellValue(row.getCell(30).toString()+cheminEtRegex[z]+"/");
+					rowSuiv.getCell(30).setCellValue(rowSuiv.getCell(30).toString()+cheminEtRegex[z]+"/");
 				}
 				
 				while(chaine.hasMoreTokens())
@@ -1964,18 +1967,18 @@ if(valeur>=1)
 					if(!temps.contains(".")&&(tempsNext.equals("*")||tempsNext.equals("?")))
 					{
 						
-						row.getCell(30).setCellStyle(csCF);
+						rowSuiv.getCell(30).setCellStyle(csCF);
 						
 						
-						row.getCell(30).setCellValue(row.getCell(30).toString()+temps+"."+tempsNext);
+						rowSuiv.getCell(30).setCellValue(rowSuiv.getCell(30).toString()+temps+"."+tempsNext);
 						log+="Modification du regex à la ligne :"+(numLigne+1)+" \n";
 						
-						row.getCell(30).setCellStyle(csCF);
+						rowSuiv.getCell(30).setCellStyle(csCF);
 					}
 					else if(!temps.equals("*")&&!temps.equals("?"))
 					{
 						
-						row.getCell(30).setCellValue(row.getCell(30).toString()+temps+tempsNext);
+						rowSuiv.getCell(30).setCellValue(rowSuiv.getCell(30).toString()+temps+tempsNext);
 					}
 					temps=tempsNext;
 					
@@ -2057,6 +2060,9 @@ if(valeur>=1)
 			
 			
 		}
+		
+
+			
 		log+="Fin du nettoyage, génération du nouveau fichier Excel \n";
 	
 		interfaceGraphique.addValueProgressBar(15);
@@ -2303,7 +2309,7 @@ if(valeur>=1)
 	public static void main(String[] args) throws IOException, JAXBException {
 
 		ExcelReader exrd = new ExcelReader(
-				"C:/Users/m419099/Documents/AEPBetaT3.xlsm",
+				"C:/Users/m419099/Documents/Moyen/GSMPN.xlsm",
 				"C:/Users/m419099/Documents/résultat",new ConvertisseurTwsJbs(),true);
 		// 1=job
 		// 2=jobchain

@@ -15,6 +15,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
@@ -233,7 +234,7 @@ jLabel4.setVisible(false);
 //convertir
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-    	if(jFileChooser1.getSelectedFiles()!=null)
+    	if(jFileChooser1.getSelectedFiles().length!=0)
     	{
     		File[] f=jFileChooser1.getSelectedFiles();
     		for(int p=0; p<f.length;p++)
@@ -325,6 +326,8 @@ jLabel4.setVisible(false);
  		} catch (Throwable e) {
  			// TODO Auto-generated catch block
  			jTextPane1.setText(jTextPane1.getText()+"\n"+e.getMessage());
+ 			JOptionPane  jope = null;
+	jope.showMessageDialog(null, "Erreur, fichier "+absolutePath+" "+e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
  		}
     }
     
@@ -383,7 +386,7 @@ jLabel4.setVisible(true);
      * @param c 
      */
     public void sQLHighlight(JTextPane c) {
-        String[] strsToHighlightFunction ={"ATTENTION","Modification","Error"};
+        String[] strsToHighlightFunction ={"ATTENTION","Modification","Error","null"};
         String[] succes ={"succeeded"};
      
       
@@ -401,6 +404,7 @@ jLabel4.setVisible(true);
         });
         colorWords(strsToHighlightFunction, text, doc,  Color.RED, true);
         colorWords(succes, text, doc,  Color.GREEN, true);
+       
        
     } 
     public void notification(String st)
