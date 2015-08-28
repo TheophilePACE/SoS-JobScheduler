@@ -469,14 +469,26 @@ public class ExcelReader {
 			}
 			
 			break;
-
+			
 		case "recovery_option":
 			
-			
-			if (cell.toString().equals("stop")) {
+			if (cell.toString().equals("stop")||cell.toString().isEmpty()) {
 				jbcn.setErrorState("!end_ERR");
-			} else {
-				if(jbcn.getNextState().isEmpty())
+				
+				
+			} else if(cell.toString().equals("RERUN"))
+			{
+				jbcn.setOnError("setback");
+				DelayOrderAfterSetback dl=fabrique.createJobDelayOrderAfterSetback();
+				dl.setIsMaximum("yes");
+				dl.setDelay("0");
+				dl.setSetbackCount(new BigInteger("1"));
+				jb.getDelayOrderAfterSetback().add(dl);
+				jbcn.setErrorState("!end_ERR");
+			}	
+			else{
+				
+				if(jbcn.getNextState().toString().isEmpty())
 				{	
 				
 					jbcn.setErrorState("!end_ERR");
@@ -913,7 +925,7 @@ public class ExcelReader {
 				i++;
 				
 				
-			if (!cell.toString().isEmpty()||i==11) {
+			if (!cell.toString().isEmpty()||i==11||i==41) {
 				 
 				
 				

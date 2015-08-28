@@ -96,7 +96,7 @@ jLabel4.setVisible(false);
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("The Social Network.. Stay Connected !!");
+        setTitle("Convertisseur jobscheduler");
         setBounds(new java.awt.Rectangle(0, 0, 0, 0));
         setResizable(false);
 
@@ -293,7 +293,7 @@ jLabel4.setVisible(false);
 							
 						}
 					};
-					 File di2 = new File(System.getProperty("user.dir"));
+					 File di2 = new File(destination);
 					File taille[]=di2.listFiles(flft2);
 					
 					jLabel4.setText("Traitement terminé, Fichier en entrée :  " +fl2.length+", Dossier récent (-30 minutes) dans le répertoire courant :"+taille.length);
@@ -317,7 +317,7 @@ jLabel4.setVisible(false);
     {jProgressBar1.setValue(0);
     
     	try {
- 			ExcelReader exrd = new ExcelReader(absolutePath,System.getProperty("user.dir")+"/", this,modeTest);
+ 			ExcelReader exrd = new ExcelReader(absolutePath,destination, this,modeTest);
  			jProgressBar1.setValue(20);
  			if (exrd.treatExcelFile())
  				{
@@ -343,10 +343,12 @@ jLabel4.setVisible(false);
     
     private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
         // TODO add your handling code here:
-        String name;
+    	if(evt.getActionCommand().equals(JFileChooser.APPROVE_SELECTION))
+    	{String name;
         name = jFileChooser1.getSelectedFile().getName();
         jLabel4.setText(name);
 jLabel4.setVisible(true);
+    	}
     }//GEN-LAST:event_jFileChooser1ActionPerformed
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
@@ -364,10 +366,32 @@ jLabel4.setVisible(true);
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
-        
+    	 temp=   new JFileChooser();
+    	
+    	
+    	temp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	jFileChooserTempActionPerformed(evt);
+            }
+        });
+    	temp.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+    	returnVal= temp.showOpenDialog(null);
+    	
+    	
 // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    public void  jFileChooserTempActionPerformed(java.awt.event.ActionEvent evt)
+    {
+    	
+  if(evt.getActionCommand().equals(JFileChooser.APPROVE_SELECTION))
+    
+	  {if(temp.getSelectedFile().exists())
+    	destination=temp.getSelectedFile().getAbsolutePath()+"\\";
+    	System.out.println(destination);
+	  }
+    	
+    }
     /**
      * @param args the command line arguments
      */
@@ -486,13 +510,14 @@ jLabel4.setVisible(true);
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextPane jTextPane1;
+    JFileChooser temp;
     // End of variables declaration//GEN-END:variables
     boolean modeTest=false;
-    
+    String destination=System.getProperty("user.dir")+"/";
     public void addValueProgressBar(int vlr) {
     	jProgressBar1.setValue(jProgressBar1.getValue()+vlr);
 	}
-
+    int returnVal ;
 	// End of variables declaration//GEN-END:variables
     
 }
