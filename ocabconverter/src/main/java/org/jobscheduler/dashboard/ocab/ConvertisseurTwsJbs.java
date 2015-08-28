@@ -265,8 +265,9 @@ jLabel4.setVisible(false);
 					else if(pathname.getName().endsWith(".xlsm")||pathname.getName().endsWith(".xlsx")) return true;
 						else return false;
 				}
-			};
+			}; 
 			final File fl2[] = di.listFiles(flft);
+			
 			
 			jLabel4.setText("ATTENTE DES FICHIERS");
 			jLabel4.setVisible(true);
