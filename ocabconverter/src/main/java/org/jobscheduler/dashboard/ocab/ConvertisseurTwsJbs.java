@@ -65,6 +65,13 @@ public class ConvertisseurTwsJbs extends javax.swing.JFrame {
        
 jLabel4.setVisible(false);
 jLabel9.setText(System.getProperty("user.dir")+"/");
+
+temp.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(java.awt.event.ActionEvent evt) {
+    	jFileChooserTempActionPerformed(evt);
+    }
+});
+temp.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         
     }
      
@@ -382,15 +389,9 @@ jLabel4.setVisible(true);
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
-    	 temp=   new JFileChooser();
+    	 
     	
-    	
-    	temp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	jFileChooserTempActionPerformed(evt);
-            }
-        });
-    	temp.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+    
     	returnVal= temp.showOpenDialog(null);
     	
     	
@@ -529,7 +530,7 @@ jLabel4.setVisible(true);
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextPane jTextPane1;
     // End of variables declaration//GEN-END:variables
-       JFileChooser temp;
+       JFileChooser temp=new JFileChooser();;
     // End of variables declaration//GEN-END:variables
     boolean modeTest=false;
     String destination=System.getProperty("user.dir")+"/";

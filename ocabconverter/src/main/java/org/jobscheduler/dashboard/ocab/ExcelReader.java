@@ -306,6 +306,7 @@ public class ExcelReader {
 		
 		jbc = fabrique.createJobChain();
 		jbc.setVisible("yes");
+		jbc.setOrdersRecoverable("yes");
 		
 		numeroOrder=1;
         //The last job was a split with no end, the only way for add it it's in the next jobchain because, 
