@@ -208,16 +208,16 @@ public class ExcelReader {
 		
 		
 		ExcelCleaner(sheet);
-		System.out.println("etape1");
+		
 		FileOutputStream fileOut = new FileOutputStream(outPut+file.getName());
 		wb.write(fileOut);
-		System.out.println("etape2");
+		
 		jobhelp=new JobHelper(sheet,marshaller);
 		
 		log+="Exécution du JobHelper \n";
 		
 		jobhelp.initialization(outPut);
-		System.out.println("etape3");
+	
 		interfaceGraphique.addValueProgressBar(20);
 		
 		rowIterator = sheet.iterator();// Iterate through each rows one by one
@@ -307,7 +307,7 @@ public class ExcelReader {
 		jbc = fabrique.createJobChain();
 		jbc.setVisible("yes");
 		jbc.setOrdersRecoverable("yes");
-		
+		timeJob="";
 		numeroOrder=1;
         //The last job was a split with no end, the only way for add it it's in the next jobchain because, 
 		//next of the last job is always a jobchain or nothing (end of the file) 
@@ -364,6 +364,16 @@ public class ExcelReader {
 
 		case "jobstream":
 			jbc.setName(cell.toString());
+			
+			if(!jobhelp.splitAtBegening(cell.toString()).equals("No"))
+					{
+				jbcnSplit=fabrique.createJobChainJobChainNode();
+				String temp=jobhelp.splitAtBegening(cell.toString());//just a temporary variable
+				jbcnSplit.setState(temp);
+				jbcnSplit.setNextState(jobhelp.getNextJob(temp));
+				jbcnSplit.setJob("/sos/jitl/JobChainSplitter");
+				jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcnSplit);
+					}
 
 			break;
 
@@ -438,7 +448,7 @@ public class ExcelReader {
 				jbcnSync.setNextState(jobhelp.getNextJob(temp));
 				jbcnSync.setJob(temp);
 				jbcnSyncBool=true;
-				System.out.println("innnn");
+				
 			}
 			
 			
@@ -460,7 +470,8 @@ public class ExcelReader {
             
 			if(modeTest)
 			{
-				scrpt.getContent().add(cdata("sleep 12"));
+				scrpt.getContent().add(cdata("sleep 12 " +"#"+cell.toString()));
+				
 				jb.setScript(scrpt);
 			}
 			else
@@ -504,21 +515,23 @@ public class ExcelReader {
 
 		case "follows":
 			
+			
 			if(!jobhelp.getJobWithFiles(jb.getTitle()).equals("nofiles"))//si le prochain job a un fichier
-            {
+            { 
 				
 				String titre=jobhelp.getJobWithFiles(jb.getTitle());
 				
 				addNodeBoucle(titre);
 			
 				
-				if(sheet.getLastRowNum()<numLigne+2)
+				if(sheet.getLastRowNum()>numLigne+2)
 				{
 					putNextFileBoucle(titre);
+					 
 				}
 				else
 				{
-
+					
 					JobChain.JobChainNode jobchnode=fabrique.createJobChainJobChainNode();
 					jobchnode.setState(titre+"Boucle");
 					jobchnode.setJob(titre+"Boucle");
@@ -601,6 +614,7 @@ public class ExcelReader {
 			RunTime rt= new  RunTime();
 	    	  rt.setBegin(cell.toString().substring(0, 2) + ":"
 						+ cell.toString().substring(2, 4));	  
+	    	  System.out.println("***");
 	    	  jb.setRunTime(rt);
 			}
 			
@@ -778,7 +792,11 @@ public class ExcelReader {
 					
 					if(sheet.getRow(numLigne+add).getCell(3).toString().equals("O"))	
 					{
-						titre=(Integer.getInteger(titre.substring(0,2))+1)+titre.substring(2);
+					
+					titre.substring(2);
+					int nbr= new Integer(titre.substring(0,2));  
+					nbr++;
+						titre=nbr+titre.substring(2);
 						jobchnode.setNextState(titre+"Boucle");
 	                    addNodeBoucle( titre);
 	                    listjobchain.add(jobchnode);
@@ -1954,6 +1972,7 @@ if(valeur>=1)
 			 
 			if(rowSuiv.getCell(3).toString().equals("O"))
 			{
+				
 				rowSuiv.getCell(30).setCellValue(rowSuiv.getCell(30).toString().replace("//", "/"));
 				 String correction=rowSuiv.getCell(30).toString();
 				 
@@ -2045,10 +2064,18 @@ if(valeur>=1)
 				
 				sheet.shiftRows(p-1, sheet.getLastRowNum(),-1);
 				delete=true;
-				log+="Suppression d'un order à la ligne :"+(p-1)+" \n";
-			
+				log+="Suppression d'un order à la ligne :"+(p-1)+" vérifier que tous les orders ont été supprimés! \n";
+			p--;
 			}
-			
+			else if(row.getCell(3).toString().equals("N")&&rowPrec.getCell(3).toString().equals("R")&&rowSuiv.getCell(3).toString().equals("O"))
+			{
+				
+                sheet.removeRow(sheet.getRow(p-2));		
+				sheet.shiftRows(p-1, sheet.getLastRowNum(),-1);
+				delete=true;
+				log+="Suppression d'un order à la ligne :"+(p-1)+" vérifier que tous les orders ont été supprimés! \n";
+			p--;
+			}
 			
 			if(delete)
 			{
@@ -2322,7 +2349,7 @@ if(valeur>=1)
 	public static void main(String[] args) throws IOException, JAXBException {
 
 		ExcelReader exrd = new ExcelReader(
-				"C:/Users/m419099/Documents/Moyen/GSMPN.xlsm",
+				"C:/Users/m419099/Documents/Moyen/AMPHORE01.xlsm",
 				"C:/Users/m419099/Documents/résultat",new ConvertisseurTwsJbs(),true);
 		// 1=job
 		// 2=jobchain

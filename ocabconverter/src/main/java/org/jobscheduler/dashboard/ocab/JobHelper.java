@@ -60,6 +60,7 @@ public class JobHelper {
 	LinkedHashMap<String,Boolean> jobChainComplex;
 	Hashtable  <String , String > nextJobChain;
 	Hashtable  <String , String > jobWithFiles=new Hashtable<String, String>();
+	LinkedHashMap<String,String> splitAtBegening;
 	String nameJobChain;
 	Job jb;
 	ObjectFactory fabrique ;
@@ -94,6 +95,7 @@ public class JobHelper {
 		beginJobchain=true;
 		complexe=false;
 		jobChainComplex=new LinkedHashMap<String,Boolean>();
+		splitAtBegening=new LinkedHashMap<String,String>();
 		paramValue="";
 	}
 
@@ -137,7 +139,7 @@ public class JobHelper {
 			configFile=false;
 			nameJobChain=row.getCell(5).getStringCellValue(); //for check jobchain name
 			beginJobchain=true; //initialization for a new jobchain
-
+			CheckSplitAtTheBegening();
 
 		}
 
@@ -181,12 +183,9 @@ public class JobHelper {
 		if(!cell.toString().isEmpty()) //if it's not empty we treat a job
 		{
 
-			if(isEndComplex(String.valueOf(jid))) //we treat a complicated case because the jid in the ocab >999999 look ocab for understand
-			{
-				nameNextJob.put(cell.toString(),"Sync_"+numbeSyn);//next of all complicated case is a synchro 
-				//if we treat a complex case for first time, complex==false
-				//we build a String like the example : mot1;mots2;mots3;
-				//it's for the config file
+			if(isEndComplex(String.valueOf(jid))) //here, we look if this job is the end of a complex case
+			{//end of a complex case is always a synchronization 
+				nameNextJob.put(cell.toString(),"Sync_"+numbeSyn);
 
 
 
@@ -194,20 +193,19 @@ public class JobHelper {
 			}
 			else
 			{
-				
+				//the last job in parallel execution, we can up the number of synchronization and split
 				if (jobEndComplex.equals(String.valueOf(jid)))
-				{System.out.println("eeee");
+				{
 				EndComplexCase(cell.toString());
 				jobEndComplex="";
 				} 
 
-				//if the 2 next row have the same previous Jid then the next line is a complicated cases
-				//and the next of the current line is a split
+				//here we find a split point, this is the beginning of a complex case 
 				String endSplit=splitPoint(String.valueOf(jid));
 				if(!endSplit.equals("-1")&&indiceEndSplit!=-1)
 				{
 
-					System.out.println(":"+endSplit);
+					
 					String[] value=endSplit.split(",");
 					if(indiceEndSplit!=-2)
 					jobEndComplex=sheet.getRow(indiceEndSplit).getCell(2).toString();
@@ -257,7 +255,41 @@ public class JobHelper {
 
 
 	}
+public void CheckSplitAtTheBegening()
+{
+	
+		
+	String jid="";
+		//here we find a split point, this is the beginning of a complex case 
+		String endSplit=splitBegeningPoint(jid);
+		if(!endSplit.equals("-1")&&indiceEndSplit!=-1)
+		{
 
+			
+			String[] value=endSplit.split(",");
+			if(indiceEndSplit!=-2)
+			jobEndComplex=sheet.getRow(indiceEndSplit).getCell(2).toString();
+
+			indiceEndSplit=-1;
+
+			addSynch.put(value[value.length-1],"Sync_"+numbeSyn);
+
+			for(int z=0;z<value.length;z++)
+			{
+				EndCmplex.put(value[z],numbeSyn);
+			}
+
+			if (!jobChainComplex.containsKey(nameJobChain))
+			{
+				jobChainComplex.put(nameJobChain,true);//For now if a jochain contain complex case,
+				//We add for the complex jobchain a job start and a job end 
+			}
+			complexe=true;
+
+		}
+   
+	
+}
 	public String getJobWithFiles(String st) {
 		if(jobWithFiles.containsKey(st))
 			return jobWithFiles.get(st);
@@ -334,7 +366,7 @@ public class JobHelper {
 			
 			
 			if(happyEnd){
-				System.out.println("okok");
+				
 				returnn=sheet.getRow(indiceEndSplit).getCell(11).toString();
 			}
 			else
@@ -350,6 +382,140 @@ public class JobHelper {
 				}
 				indiceEndSplit=-2;
 			}
+			
+			for(int j=0;j<parallelJob.size();j++)
+			{
+
+				if(paramValue.isEmpty())
+				{
+
+					paramValue=sheet.getRow(parallelJob.get(j)).getCell(6).toString();
+
+				}
+				else
+				{
+					paramValue=paramValue+";"+sheet.getRow(parallelJob.get(j)).getCell(6).toString();
+				}
+
+
+			}
+
+
+			createConfigFile();
+
+
+
+
+
+			try {
+				os = new FileOutputStream(outPut+"Sync_"+numbeSyn+".job.xml");
+				marshaller.marshal(jb, os);
+
+				os = new FileOutputStream(outPut+nameJobChain+".config.xml");
+				marshaller.marshal(st, os);
+			} catch (FileNotFoundException | JAXBException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return returnn;
+		}
+
+
+
+
+		return "-1";
+
+	}
+
+	public String splitBegeningPoint(String Job)
+	{
+		String returnn="";
+		boolean boucle,endSplit=false;
+		int numLigne=ligne;
+		boolean happyEnd=false;
+        int firstJob=-1;
+		
+		ArrayList<Integer> parallelJob=new ArrayList<Integer> ();
+
+		if(haveNextIndice(numLigne))
+		{
+			while(haveNextIndice(numLigne)&& sheet.getRow(numLigne).getCell(2).toString().isEmpty())
+            {
+	            numLigne++;
+	            firstJob=numLigne;
+	            
+            }
+			
+			boucle=sheet.getRow(numLigne).getCell(1).toString().isEmpty();	
+
+			while(boucle&&!endSplit)
+			{
+
+				
+
+				if(sheet.getRow(numLigne).getCell(11).toString().equals(Job))
+					{
+					parallelJob.add(new Integer(Integer.valueOf(numLigne)));
+					
+					}
+
+				if(!endSplit&&parallelJob.size()>1)
+				{
+					if(sheet.getRow(numLigne).getCell(11).toString().contains(","))
+					{
+						endSplit=true;
+						happyEnd=true;
+						indiceEndSplit=numLigne;
+					}
+				}
+
+
+				numLigne++;
+				if(haveNextIndice(numLigne))
+				{
+					boucle=sheet.getRow(numLigne).getCell(1).toString().isEmpty();		
+				}
+				else
+				{
+					boucle=false;
+				}
+
+			}
+
+
+		}
+
+		if(parallelJob.size()>1&& happyEnd)
+		{
+			paramValue="";
+		splitAtBegening.put(nameJobChain, "Split_"+numbeSplit);
+		
+		if(firstJob==-1)
+		throw new Error("Problème dans le fichier Excel");
+		
+			nameNextJob.put("Split_"+numbeSplit,sheet.getRow(firstJob).getCell(6).toString());
+			Job jb=fabrique.createJob();
+			jb.setOrder("yes");
+			jb.setStopOnError("no");
+			jb.setTitle("EndSpleet"+numbeSplit);
+			JobSettings jbs=fabrique.createJobSettings();
+			jb.setSettings(jbs);
+			org.jobscheduler.dashboard.jobdefinition.xml.Script src=fabrique.createScript();
+			src.setJavaClass("com.sos.jitl.sync.JobSchedulerSynchronizeJobChainsJSAdapterClass");
+			src.setJavaClassPath("");
+			src.setLanguage("java");
+			jb.setScript(src);
+			RunTime rt=fabrique.createRunTime();
+			jb.setRunTime(rt);
+			OutputStream os;
+
+			
+			
+		
+				
+				returnn=sheet.getRow(indiceEndSplit).getCell(11).toString();
+			
+			
 			
 			for(int j=0;j<parallelJob.size();j++)
 			{
@@ -833,7 +999,13 @@ public class JobHelper {
 		return "noJobchainNext";
 	}
 
-
+public String splitAtBegening(String chaine)
+{
+	if(!splitAtBegening.containsKey(chaine))
+	return "No";
+	
+	return splitAtBegening.get(chaine);
+}
 	public String getJobChaine(String JID)
 	{
 
