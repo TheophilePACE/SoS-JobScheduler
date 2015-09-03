@@ -1,3 +1,19 @@
+/**
+ * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
+
 /*
  * Nom de classe : ExcelReader
  *
@@ -155,6 +171,8 @@ public class ExcelReader {
 	RunTime oRuntime;
 	JobChainNode jbcnSplit;
 	JobChainNode jbcnSync;
+	RunTime runTimeFiles;
+	boolean haveRunTimeFiles;
 	
 	/**
 	 * Constructor using Excel and Xml path
@@ -227,6 +245,7 @@ public class ExcelReader {
 		jobchainEnCour = null;
 		nbrDeOrder = 0;
 		saveAt="00:00";//Default Time
+		 haveRunTimeFiles=false;
 
 	}
 
@@ -309,6 +328,8 @@ public class ExcelReader {
 		jbc.setOrdersRecoverable("yes");
 		timeJob="";
 		numeroOrder=1;
+		 haveRunTimeFiles=false;
+   	     runTimeFiles=fabrique.createRunTime();
         //The last job was a split with no end, the only way for add it it's in the next jobchain because, 
 		//next of the last job is always a jobchain or nothing (end of the file) 
 		
@@ -614,7 +635,7 @@ public class ExcelReader {
 			RunTime rt= new  RunTime();
 	    	  rt.setBegin(cell.toString().substring(0, 2) + ":"
 						+ cell.toString().substring(2, 4));	  
-	    	  System.out.println("***");
+	    	 
 	    	  jb.setRunTime(rt);
 			}
 			
@@ -915,7 +936,7 @@ public class ExcelReader {
 		{
 			LockUse temp=fabrique.createJobLockUse();
 			temp.setLock(lockInUse);
-			temp.setExclusive("yes");
+			temp.setExclusive("no");
 			jb.getLockUse().add(temp);
 		}
 
@@ -923,18 +944,15 @@ public class ExcelReader {
 		
 		//if the jobchain wait a file and have a time for execute
 		//the only way for convert in jobscheduler is the runtime in a job 
-		if(!timeJob.isEmpty() && fichier)
+		if(haveRunTimeFiles && fichier)
 	      {
-	    	  RunTime rt= new  RunTime();
-	    	  rt.setBegin(timeJob);
+	    	 
+ 
 	    	  
-	    	  if(!untilJob.isEmpty() && !untilJob.equals("23:59"))
-	    		 rt.setEnd(untilJob); 
+	    	  jb.setRunTime(runTimeFiles);    	  
+	    	  runTimeFiles=fabrique.createRunTime();
+	    	  haveRunTimeFiles=false;
 	    	  
-	    	  jb.setRunTime(rt);
-	    	  
-	    	  timeJob="";
-	    	  untilJob="";
 	      }
 		
 		do {
@@ -1141,6 +1159,8 @@ public String countDay(String day)
 				if(!heureEnd.toString().equals("23:59"))
 				{oRuntime.setEnd(heureEnd);
 				runtime = true;
+				runTimeFiles.setEnd(heureEnd);
+				 haveRunTimeFiles=true;
 				}
 				break;
 				
@@ -1148,7 +1168,8 @@ public String countDay(String day)
 
 				oRuntime.setTimeZone(cell.toString());
 				runtime=true;
-
+				runTimeFiles.setTimeZone(cell.toString());
+				 haveRunTimeFiles=true;
 				break;
 			case "at":
 
@@ -1168,6 +1189,10 @@ public String countDay(String day)
 				prd.setSingleStart(saveAt);
 				dt.getPeriod().add(prd);
 				oRuntime.getDate().add(dt);
+				
+				runTimeFiles.getDate().add(dt);
+				 haveRunTimeFiles=true;
+				 
 				runtime = true;
 				break;
 
@@ -1183,10 +1208,12 @@ public String countDay(String day)
 						
 						Weekdays.Day tmpDay2 = fabrique.createWeekdaysDay();
 						Period tmpPeriod2 = fabrique.createPeriod();
-
+						
+						Weekdays.Day tmpDayfile = fabrique.createWeekdaysDay();
+						Period tmpPeriodfile = fabrique.createPeriod();
 						
 							tmpPeriod2.setSingleStart(saveAt);
-							
+							tmpPeriodfile.setBegin(saveAt);
 						
 						
 						String day="1 2 3 4 5 6 7";
@@ -1198,47 +1225,59 @@ public String countDay(String day)
 						}
 						
 						tmpDay2.getDay().add(day);
-						
+						tmpDayfile.getDay().add(day);
 						detectBoucle(tmpPeriod2);
-						tmpDay2.getPeriod().add(tmpPeriod2);
 						
+										
+						tmpDay2.getPeriod().add(tmpPeriod2);
+						tmpDayfile.getPeriod().add(tmpPeriodfile);
 						
 						if (oRuntime.getWeekdays() != null) {
 							
 							
 								oRuntime.getWeekdays().getDay().add(tmpDay2);
-							
-
+								runTimeFiles.getWeekdays().getDay().add(tmpDayfile);
+								
 						}
 						else
 						{
 							Weekdays tmpWeek2 = fabrique.createWeekdays();
-							
-							
-							
-												
-								
-								
-														
+							Weekdays tmpWeekFile = fabrique.createWeekdays();
+											
 							tmpWeek2.getDay().add(tmpDay2);
+							tmpWeekFile.getDay().add(tmpDayfile);
 							
 							oRuntime.setWeekdays(tmpWeek2);
+							
+							if(runTimeFiles.getWeekdays()==null)
+								runTimeFiles.setWeekdays(tmpWeekFile);
+								else
+								runTimeFiles.getWeekdays().getDay().add(tmpDayfile);
+							
+						
 							runtime = true;
 
 							
 							
 						}
-						
+						haveRunTimeFiles=true;
 					}
 					else if (listCommande[0].indexOf("FREQ=WEEKLY")!=-1)
 					{
 						
 						Weekdays.Day tmpDay2 = fabrique.createWeekdaysDay();
-						Period tmpPeriod2 = fabrique.createPeriod();
-						tmpPeriod2.setSingleStart(saveAt);
+						Weekdays.Day tmpDayFile = fabrique.createWeekdaysDay();
 						
-						detectBoucle(tmpPeriod2);
+						Period tmpPeriod2 = fabrique.createPeriod();
+						Period tmpPeriodFile = fabrique.createPeriod();
+						
+						tmpPeriod2.setSingleStart(saveAt);
+						tmpPeriodFile.setBegin(saveAt);
+						
+						detectBoucle(tmpPeriod2);//une boucle est ajouter si les conditions sont ok
+						
 						tmpDay2.getPeriod().add(tmpPeriod2);
+						tmpDayFile.getPeriod().add(tmpPeriodFile);
 						
 						if (oRuntime.getWeekdays() != null) {
 							
@@ -1249,14 +1288,18 @@ public String countDay(String day)
 									String substringDay = listCommande[t].substring(6);
 									
 									String[] days = substringDay.split(",");
+									
 									tmpDay2.getDay().add(countDay(days));
+									tmpDayFile.getDay().add(countDay(days));
+									
 									oRuntime.getWeekdays().getDay().add(tmpDay2);
+									runTimeFiles.getWeekdays().getDay().add(tmpDayFile);
 									
 								}
 								
 							}
 							
-						
+							
 
 					}
 					else
@@ -1266,38 +1309,55 @@ public String countDay(String day)
 							if(listCommande[t].indexOf("BYDAY")!=-1)
 							{
 								Weekdays tmpWeek2 = fabrique.createWeekdays();
-													
+								Weekdays tmpWeekFile = fabrique.createWeekdays();
+								
 								String substringDay = listCommande[t].substring(6);
 								String[] days = substringDay.split(",");
 								
 								tmpDay2.getDay().add(countDay(days));
+								tmpDayFile.getDay().add(countDay(days));
+								
 								tmpWeek2.getDay().add(tmpDay2);
+								tmpWeekFile.getDay().add(tmpDayFile);
 								
 								oRuntime.setWeekdays(tmpWeek2);
+								if(runTimeFiles.getWeekdays()==null)
+								runTimeFiles.setWeekdays(tmpWeekFile);
+								else
+								runTimeFiles.getWeekdays().getDay().add(tmpDayFile);
+								
 								runtime = true;
 							}
 						}	
 						
 
-						
+						haveRunTimeFiles=true;
 						
 					}
 						
 					}
 					else if (listCommande[0].indexOf("FREQ=MONTHLY")!=-1)
-					{                               
+					{   haveRunTimeFiles=true;                            
 						runtime = true;
 						String whichPrecedent="";
                           if (oRuntime.getMonthdays() == null) {
                         	  Monthdays tmpMonthday=fabrique.createMonthdays();
+                        	  Monthdays tmpMonthdayFile=fabrique.createMonthdays();
+                        	  
                         	  oRuntime.setMonthdays(tmpMonthday);
+                        	  runTimeFiles.setMonthdays(tmpMonthdayFile);
                         	  
                           }  
 							
 							Monthdays.Weekday tmpWekkday=fabrique.createMonthdaysWeekday();
+							Monthdays.Weekday tmpWekkdayFile=fabrique.createMonthdaysWeekday();
+							
 							Period tmpPeriod3 = fabrique.createPeriod();
+							Period tmpPeriodFile = fabrique.createPeriod();
 							
 							tmpPeriod3.setSingleStart(saveAt);
+							tmpPeriodFile.setBegin(saveAt);
+							
 							detectBoucle(tmpPeriod3);
 							for(int t=1;t<listCommande.length;t++)
 							{
@@ -1314,33 +1374,53 @@ public String countDay(String day)
 										if(f==0)
 										{
 											tmpWekkday = fabrique.createMonthdaysWeekday();
+											tmpWekkdayFile=fabrique.createMonthdaysWeekday();
+											
 											tmpWekkday.setWhich(which);
+											tmpWekkdayFile.setWhich(which);
+											
 											whichPrecedent=which;
 											tmpWekkday.getPeriod().add(tmpPeriod3);
+											tmpWekkdayFile.getPeriod().add(tmpPeriodFile);
 										}
 										else if(!whichPrecedent.equals(which))
 										{
 											oRuntime.getMonthdays().getDayOrWeekday().add(tmpWekkday);
+											runTimeFiles.getMonthdays().getDayOrWeekday().add(tmpWekkdayFile);
+											
 											tmpWekkday = fabrique.createMonthdaysWeekday();
+											tmpWekkdayFile=fabrique.createMonthdaysWeekday();
+											
 											tmpWekkday.setWhich(which);
+											tmpWekkdayFile.setWhich(which);
+											
 											tmpWekkday.getPeriod().add(tmpPeriod3);
+											tmpWekkdayFile.getPeriod().add(tmpPeriodFile);
 										}
-										tmpWekkday.getDay().add(countDay(day));
 										
+										tmpWekkday.getDay().add(countDay(day));
+										tmpWekkdayFile.getDay().add(countDay(day));
 									}
 									oRuntime.getMonthdays().getDayOrWeekday().add(tmpWekkday);
-									
+									runTimeFiles.getMonthdays().getDayOrWeekday().add(tmpWekkdayFile);
 								}
 								else if(listCommande[t].indexOf("BYMONTHDAY")!=-1)
 								{
 									String[] numberDay = listCommande[t].substring(11).split(",");
 									Monthdays.Day day=fabrique.createMonthdaysDay();
+									Monthdays.Day dayFile=fabrique.createMonthdaysDay();
+									
 									for(int a=0;a<numberDay.length;a++)
 									{
 										day.getDay().add(Integer.parseInt(numberDay[a]));
+										dayFile.getDay().add(Integer.parseInt(numberDay[a]));
 									}
+									
 									day.getPeriod().add(tmpPeriod3);
+									dayFile.getPeriod().add(tmpPeriodFile);
+									
 									oRuntime.getMonthdays().getDayOrWeekday().add(day);
+									runTimeFiles.getMonthdays().getDayOrWeekday().add(dayFile);
 								}
 								
 							}
@@ -2056,7 +2136,7 @@ if(valeur>=1)
 			}
 			//End cleaning excel order
 			
-			
+			/*
 			//Delete order
 			if(row.getCell(3).toString().equals("O")&&rowPrec.getCell(3).toString().equals("R"))
 			{
@@ -2076,6 +2156,7 @@ if(valeur>=1)
 				log+="Suppression d'un order à la ligne :"+(p-1)+" vérifier que tous les orders ont été supprimés! \n";
 			p--;
 			}
+			*/
 			
 			if(delete)
 			{
