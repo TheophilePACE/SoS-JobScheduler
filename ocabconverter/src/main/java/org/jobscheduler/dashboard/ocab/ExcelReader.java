@@ -45,6 +45,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 import javax.swing.JOptionPane;
@@ -108,6 +109,10 @@ public class ExcelReader {
 	int numLigne=1;
 	String lockInUse="";
 	String jobchainRunOtherJobChain;
+	
+	String orderfileName;
+	String jobchainFileName;
+	String jobFileName;
 	/**
 	 * For the conversion , we must know the next steps for each job,
 	 * but ExcelReader work sequentially and don't stock anything about the next 
@@ -151,7 +156,7 @@ public class ExcelReader {
 	LinkedHashMap<String, JobChain> jobchain = new LinkedHashMap<String, JobChain>();
 	// amount "order" for each jobchain
 	Hashtable<String, Integer> nbOrderParJobchain = new Hashtable<String, Integer>();
-	Hashtable<String, Job> ljob = new Hashtable<String, Job>();
+	LinkedHashMap<String, Job> ljob = new LinkedHashMap<String, Job>();
 	LinkedHashMap<String, Order> lorder = new LinkedHashMap<String, Order>();
 	Iterator<Row> rowIterator;
 	Iterator<Cell> cellFirstLigne;
@@ -185,6 +190,9 @@ public class ExcelReader {
 		interfaceGraphique=ctj;
 		this.outPut = output;
 		metrique=0;
+		orderfileName="";
+		jobchainFileName="";
+		jobFileName="";
 		file = new File(EmplacementFichierExcel);
 		File dir = new File (outPut+"/"+file.getName().split("\\.")[0]);
 		dir.mkdirs();
@@ -437,8 +445,7 @@ public class ExcelReader {
 		switch (ligneTitre.get(i).toString()) {
 
 		case "job":
-
-			jb.setTitle(cell.toString());
+			jobchainFileName=cell.toString();
 			jbcn.setJob(cell.toString());
 			jbcn.setState(cell.toString());
 			
@@ -483,6 +490,13 @@ public class ExcelReader {
 				
 				
 			}
+			
+			
+			break;
+		case "description":
+			
+			if(cell.toString().indexOf("by composer")==-1)
+				jb.setTitle(cell.toString());
 			
 			
 			break;
@@ -537,10 +551,10 @@ public class ExcelReader {
 		case "follows":
 			
 			
-			if(!jobhelp.getJobWithFiles(jb.getTitle()).equals("nofiles"))//si le prochain job a un fichier
+			if(!jobhelp.getJobWithFiles(jobchainFileName).equals("nofiles"))//si le prochain job a un fichier
             { 
 				
-				String titre=jobhelp.getJobWithFiles(jb.getTitle());
+				String titre=jobhelp.getJobWithFiles(jobchainFileName);
 				
 				addNodeBoucle(titre);
 			
@@ -558,7 +572,7 @@ public class ExcelReader {
 					jobchnode.setJob(titre+"Boucle");
 					jobchnode.setErrorState("!end_ERR");
 					jobchnode.setOnError("setback");
-					jobchnode.setNextState(jb.getTitle());
+					jobchnode.setNextState(jobchainFileName);
 					listjobchain.add(jobchnode);
 				}
 				
@@ -573,12 +587,12 @@ public class ExcelReader {
 				
             }
 			
-			if(!jobhelp.getNextJob(jb.getTitle()).equals("NogetL1"))
+			if(!jobhelp.getNextJob(jobchainFileName).equals("NogetL1"))
              {	 
-				if(!jobhelp.getJobWithFiles(jobhelp.getNextJob(jb.getTitle())).equals("nofiles"))//si le prochain job a un fichier
+				if(!jobhelp.getJobWithFiles(jobhelp.getNextJob(jobchainFileName)).equals("nofiles"))//si le prochain job a un fichier
 	            {
 					
-					String titre=jobhelp.getJobWithFiles(jobhelp.getNextJob(jb.getTitle()));
+					String titre=jobhelp.getJobWithFiles(jobhelp.getNextJob(jobchainFileName));
 
 					jbcn.setNextState(titre+"Boucle");
 					
@@ -586,7 +600,7 @@ public class ExcelReader {
 					
 	            }else
 	            {
-			     jbcn.setNextState(jobhelp.getNextJob(jb.getTitle()));
+			     jbcn.setNextState(jobhelp.getNextJob(jobchainFileName));
 	            }
             }
              else
@@ -661,7 +675,7 @@ public class ExcelReader {
 				Order tmp=fabrique.createOrder();
 				RunTime rt= new  RunTime();
 				JobChain tmpJobchain=fabrique.createJobChain();
-				tmpJobchain.setName(jobchainEnCour+"_"+jb.getTitle()+"repeat");
+				tmpJobchain.setName(jobchainEnCour+"_"+jobchainFileName+"repeat");
 				tmpJobchain.setVisible("yes");
 				
 				JobChain.JobChainNode temp = fabrique.createJobChainJobChainNode();
@@ -741,12 +755,12 @@ public class ExcelReader {
 				
 				
 				tmp.setRunTime(rt);
-				tmp.setJobChain(file.getName().split("\\.")[0]+"/"+jobchainEnCour+"_"+jb.getTitle()+"repeat");
+				tmp.setJobChain(file.getName().split("\\.")[0]+"/"+jobchainEnCour+"_"+jobchainFileName+"repeat");
 				
 				OutputStream os;
 				
 			try {
-				os = new FileOutputStream(outPut + jb.getTitle()+"_R"
+				os = new FileOutputStream(outPut + jobchainFileName+"_R"
 						+ ".job.xml");
 				marshaller.marshal(jb, os);
 			} catch (FileNotFoundException | JAXBException e1) {
@@ -834,14 +848,14 @@ public class ExcelReader {
 	         
 	            		if(sheet.getLastRowNum()<(numLigne+add))
 	            		   {
-	            			jobchnode.setNextState(jb.getTitle());
+	            			jobchnode.setNextState(jobchainFileName);
 	            			listjobchain.add(jobchnode);
 	    					noEndFileEndChain=false;
 	            		   }
 					}
 					else
          		   {
-						jobchnode.setNextState(jb.getTitle());
+						jobchnode.setNextState(jobchainFileName);
 						listjobchain.add(jobchnode);
     					noEndFileEndChain=false;
          		   }
@@ -932,6 +946,7 @@ public class ExcelReader {
 		jb.setStopOnError("no");
 		scrpt = fabrique.createScript();
 		scrpt.setLanguage("shell");
+		jobchainFileName="";
 		if(!lockInUse.isEmpty())
 		{
 			LockUse temp=fabrique.createJobLockUse();
@@ -997,7 +1012,7 @@ public class ExcelReader {
 			
 		}
 		
-		ljob.put(jb.getTitle(), jb);
+		ljob.put(jobchainFileName, jb);
 		
 	}
 	
@@ -1148,8 +1163,16 @@ public String countDay(String day)
 				{
 					zero=String.valueOf(numeroOrder);
 				}
-				od.setTitle("O"+zero+"_"+jobchainEnCour);
+				
+				orderfileName="O"+zero+"_"+jobchainEnCour;
+				
 				numeroOrder++;
+				break;
+			
+			case "description":
+               od.setTitle(cell.toString());
+
+
 				break;
 			case "until":
 
@@ -1539,6 +1562,7 @@ public String countDay(String day)
 		oRuntime = fabrique.createRunTime();
 		oParams = fabrique.createParams();
 		od = fabrique.createOrder();
+		orderfileName="";
 
 		int i = 3;
 
@@ -1553,12 +1577,10 @@ public String countDay(String day)
 			runtime=false;
 		}
 		
-		String complement="";
-		while(lorder.containsKey(od.getTitle()+complement))
-			 complement+="bis";
+		
 			
 	
-		lorder.put(od.getTitle()+complement, od);
+		lorder.put(orderfileName,od);
 		
 		
 		nbrDeOrder++;
@@ -1744,22 +1766,29 @@ if(valeur>=1)
 		Iterator ejobchain=c.iterator();
 		
 		
-		Enumeration eLjob = ljob.elements();
+		Collection cjob = ljob.values();
+		Iterator ejob=cjob.iterator();
+		Set keyset2=ljob.keySet();
+		Iterator nameFileJob=keyset2.iterator();
+		
+		
+		
 		
 		Collection c2=lorder.values();
 		Iterator eOrder=c2.iterator();
+		Set keyset=lorder.keySet();
+		Iterator nameFileOrder=keyset.iterator();
 		
 		
-		
-		
-			Job job;
+			
+		Job job;
 			log+="génération des jobs \n";
 			
-			while (eLjob.hasMoreElements())
+			while (ejob.hasNext())
 
 			{
-				job = (Job) eLjob.nextElement();
-				OutputStream os = new FileOutputStream(outPut + job.getTitle()
+				job = (Job) ejob.next();
+				OutputStream os = new FileOutputStream(outPut + nameFileJob.next()
 						+ ".job.xml");
 
 				marshaller.marshal(job, os);
@@ -1807,7 +1836,7 @@ if(valeur>=1)
 				{	
 					Order ordTemp = (Order) eOrder.next();
 				OutputStream os = new FileOutputStream(outPut + jobch3.getName()
-						+ "," + ordTemp.getTitle() + ".order.xml");
+						+ "," + nameFileOrder.next().toString()+ ".order.xml");
 			
 				marshaller.marshal(fabrique.createOrder(ordTemp), os);
 				
