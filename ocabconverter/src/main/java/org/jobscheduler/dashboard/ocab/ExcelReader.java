@@ -69,6 +69,7 @@ import org.jobscheduler.dashboard.jobdefinition.xml.Job.Description;
 import org.jobscheduler.dashboard.jobdefinition.xml.Job.LockUse;
 import org.jobscheduler.dashboard.jobdefinition.xml.JobChain;
 import org.jobscheduler.dashboard.jobdefinition.xml.JobChain.JobChainNode;
+import org.jobscheduler.dashboard.jobdefinition.xml.Lock;
 import org.jobscheduler.dashboard.jobdefinition.xml.Monthdays;
 import org.jobscheduler.dashboard.jobdefinition.xml.ObjectFactory;
 import org.jobscheduler.dashboard.jobdefinition.xml.Order;
@@ -109,10 +110,12 @@ public class ExcelReader {
 	int numLigne=1;
 	String lockInUse="";
 	String jobchainRunOtherJobChain;
-	
 	String orderfileName;
 	String jobchainFileName;
 	String jobFileName;
+	boolean Orderauthorization;
+	boolean boucleExterne;
+	int numberSpleat=0;
 	/**
 	 * For the conversion , we must know the next steps for each job,
 	 * but ExcelReader work sequentially and don't stock anything about the next 
@@ -132,7 +135,7 @@ public class ExcelReader {
     boolean jbcnSplitBool=false;
     boolean jbcnSyncBool=false;
     boolean alreadySync=false;
-	
+    
     
     /**
 	 * Name the order based on jobchain
@@ -146,7 +149,7 @@ public class ExcelReader {
 	 */
 	boolean runtime = false;
 	boolean params = false;
-
+	boolean haveRunTimeFiles;
 	/**
 	 * Lists
 	 */
@@ -177,7 +180,8 @@ public class ExcelReader {
 	JobChainNode jbcnSplit;
 	JobChainNode jbcnSync;
 	RunTime runTimeFiles;
-	boolean haveRunTimeFiles;
+	
+	
 	
 	/**
 	 * Constructor using Excel and Xml path
@@ -193,10 +197,18 @@ public class ExcelReader {
 		orderfileName="";
 		jobchainFileName="";
 		jobFileName="";
+		Orderauthorization=true;
+		boucleExterne=false;
 		file = new File(EmplacementFichierExcel);
 		File dir = new File (outPut+"/"+file.getName().split("\\.")[0]);
+		
 		dir.mkdirs();
 		outPut=dir.getAbsolutePath()+"/";
+		
+		
+		
+		
+		
 		log="**********************************************************\n";
 		
         log+="Traitement du fichier Excel : "+file.getName()+" destination: "+outPut+"\n";
@@ -254,7 +266,11 @@ public class ExcelReader {
 		nbrDeOrder = 0;
 		saveAt="00:00";//Default Time
 		 haveRunTimeFiles=false;
-
+		 
+		 Lock lc=fabrique.createLock();
+			lc.setMaxNonExclusive(new BigInteger("50"));
+			OutputStream os = new FileOutputStream(outPut+file.getName().split("\\.")[0]+".lock.xml");
+			marshaller.marshal(fabrique.createLock(lc), os);
 	}
 
 	public String cdata(String st) {
@@ -322,6 +338,8 @@ public class ExcelReader {
 
 	public void treatJobChainLine(boolean MAJ) {
 		lockInUse=""; //initialization
+		boucleExterne=true;
+		numberSpleat=0;
 		int i = 2;// cell and "i"(column title) must be synchronized, title must
 					// correspond to cell
 		if(jbcnSyncBool)
@@ -331,6 +349,7 @@ public class ExcelReader {
 			jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcnSync);
 		}
 		
+		Orderauthorization=Orderauthorization(numLigne+1);
 		jbc = fabrique.createJobChain();
 		jbc.setVisible("yes");
 		jbc.setOrdersRecoverable("yes");
@@ -369,6 +388,10 @@ public class ExcelReader {
 		
 		
 		jobchainEnCour = jbc.getName();
+		
+		
+		
+		
 		if(MAJ) //cela veux dire que l'on traite un jobchaine lié a lancienne jochaine deja traiter il 
 			//faut donc garder le nom de lancienne jobchain pour savoir d'ou il vient
 			
@@ -397,7 +420,9 @@ public class ExcelReader {
 			if(!jobhelp.splitAtBegening(cell.toString()).equals("No"))
 					{
 				jbcnSplit=fabrique.createJobChainJobChainNode();
-				String temp=jobhelp.splitAtBegening(cell.toString());//just a temporary variable
+				String temp=jobhelp.splitAtBegening(cell.toString()).split(";")[0];//just a temporary variable
+				numberSpleat=Integer.parseInt(jobhelp.splitAtBegening(cell.toString()).split(";")[1]);
+				System.out.println(numberSpleat);
 				jbcnSplit.setState(temp);
 				jbcnSplit.setNextState(jobhelp.getNextJob(temp));
 				jbcnSplit.setJob("/sos/jitl/JobChainSplitter");
@@ -450,6 +475,7 @@ public class ExcelReader {
 			jbcn.setState(cell.toString());
 			
 			//if next line is a split, then we have to create a new jobchainnode (split)  in actual jobchain
+			//see split at begening of jobchain in treatJobchainoption
 			
 			if(jobhelp.getNextJob(cell.toString()).indexOf("Split_")!=-1)
 			{
@@ -649,29 +675,25 @@ public class ExcelReader {
 			RunTime rt= new  RunTime();
 	    	  rt.setBegin(cell.toString().substring(0, 2) + ":"
 						+ cell.toString().substring(2, 4));	  
-	    	 
+	    	 if(jb.getRunTime()==null)
 	    	  jb.setRunTime(rt);
+	    	 else
+	    		 jb.getRunTime().setBegin(cell.toString().substring(0, 2) + ":"
+						+ cell.toString().substring(2, 4));
 			}
 			
 	    	  break;
 		
 		case "every":
 
-			boolean OtherJob=false;
-			if(numLigne+1<sheet.getLastRowNum())
-			{
-				if(!sheet.getRow(numLigne+1).getCell(2).toString().isEmpty())
-				OtherJob=true;
-				
-			}
 			
 			
-			if(!sheet.getRow(numLigne-1).getCell(2).toString().isEmpty()||OtherJob)
+			
+			if(boucleExterne)
 				{
 				
 				
 				Commands cmds=fabrique.createCommands();
-				
 				Order tmp=fabrique.createOrder();
 				RunTime rt= new  RunTime();
 				JobChain tmpJobchain=fabrique.createJobChain();
@@ -954,6 +976,11 @@ public class ExcelReader {
 			temp.setExclusive("no");
 			jb.getLockUse().add(temp);
 		}
+		
+		LockUse lck=fabrique.createJobLockUse();
+		lck.setLock(file.getName().split("\\.")[0]);
+		lck.setExclusive("no");
+		jb.getLockUse().add(lck);
 
 		int i = 2;// information about job begin in the 2nd column
 		
@@ -965,9 +992,14 @@ public class ExcelReader {
  
 	    	  
 	    	  jb.setRunTime(runTimeFiles);    	  
+	    	 
+	    	  numberSpleat--;
+	    	  if(numberSpleat==0)
+	    	  { haveRunTimeFiles=false;
 	    	  runTimeFiles=fabrique.createRunTime();
-	    	  haveRunTimeFiles=false;
-	    	  
+	    	  }
+	      
+	      
 	      }
 		
 		do {
@@ -1465,86 +1497,70 @@ public String countDay(String day)
 		}
 
 	}
-	
+	public boolean Orderauthorization(int line)
+	{//les order on t'il le droit d'etre utilisé ici dans la chaine ? si il y a un fichier non
+		
+		
+		for( int i=line; i<=sheet.getLastRowNum();i++)
+		{
+			
+			if(!sheet.getRow(i).getCell(2).toString().isEmpty())
+				return true;
+			else if(sheet.getRow(i).getCell(3).toString().equals("O"))
+				return false;
+			else if(!sheet.getRow(i).getCell(1).toString().isEmpty())
+			return false;	
+		}
+		
+		return false;
+	}
 	public void detectBoucle(Period period)
 	{
 		int ligne=numLigne+1;
-		
-		while(sheet.getRow(ligne).getCell(2).toString().isEmpty()&&!sheet.getRow(ligne).getCell(3).toString().isEmpty())
+		//je me déplace pour arriver sur le premier job
+		while(sheet.getRow(ligne).getCell(2).toString().isEmpty())
 		{
 			ligne++;
 		}
 		
-		boolean unSeulJob=false;
-		if(ligne+1<sheet.getLastRowNum())
-		{
-			if(sheet.getRow(ligne+1).getCell(2).toString().isEmpty())
-				unSeulJob=true;
+		boolean canBoucleInOrder=true;
+		String timeBoucle=sheet.getRow(ligne).getCell(47).toString();
+		canBoucleInOrder=!timeBoucle.isEmpty();
+		boolean run=true;
+		//traite deux fois la meme ligne pas très propre
+		while(!sheet.getRow(ligne).getCell(2).toString().isEmpty() && run && canBoucleInOrder)
+		{	
+			if(!timeBoucle.equals(sheet.getRow(ligne).getCell(47).toString()))
+				canBoucleInOrder=false;
+			
+			if(ligne+1<=sheet.getLastRowNum())
+			ligne++;
+			else
+			run=false;	
 		}
-		else
-		{
-			unSeulJob=true;
-		}
+		
+		
 	
-		if(unSeulJob&&!sheet.getRow(ligne).getCell(47).toString().isEmpty())
+		if(canBoucleInOrder)
 		{
+			boucleExterne=false;
 			
 			period.setBegin(period.getSingleStart());
-			period.setRepeat(sheet.getRow(ligne).getCell(47).toString().substring(0,2) + ":"
-					+ sheet.getRow(ligne).getCell(47).toString().substring(2,4));
+			period.setRepeat(timeBoucle.substring(0,2) + ":"
+					+ timeBoucle.substring(2,4));
 			
-			if(!sheet.getRow(ligne).getCell(16).toString().isEmpty()&&!sheet.getRow(ligne).getCell(19).toString().isEmpty())
+			if(runtime)
+			period.setEnd(oRuntime.getEnd());
+			
+			if(!sheet.getRow(ligne-1).getCell(16).toString().isEmpty()&&!sheet.getRow(ligne-1).getCell(19).toString().isEmpty())
 			{
 				
 				
 				
-				period.setEnd(sheet.getRow(ligne).getCell(19).toString().substring(0, 2) + ":"
-						+ sheet.getRow(ligne).getCell(19).toString().substring(2,4));
+				period.setEnd(sheet.getRow(ligne-1).getCell(19).toString().substring(0, 2) + ":"
+						+ sheet.getRow(ligne-1).getCell(19).toString().substring(2,4));
 			}
-			else if(!sheet.getRow(numLigne).getCell(16).toString().isEmpty()&&!sheet.getRow(numLigne).getCell(19).toString().isEmpty())
-			{
-				
-				
-				
-				
-				period.setEnd(sheet.getRow(numLigne).getCell(19).toString().substring(0, 2) + ":"
-						+ sheet.getRow(numLigne).getCell(19).toString().substring(2,4));
-				
-			}
-			else
-			{
-				int n=numLigne-1;
-				
-				while(n!=1)
-				{
-	
-					if(!sheet.getRow(n).getCell(16).toString().isEmpty()&&
-							!sheet.getRow(n).getCell(19).toString().isEmpty()&&
-							!sheet.getRow(n).getCell(1).toString().isEmpty())
-					{
-						
-						
-						period.setEnd(sheet.getRow(n).getCell(19).toString().substring(0, 2) + ":"
-								+sheet.getRow(n).getCell(19).toString().substring(2,4));
-						n=2;
-						
-					}
-					
-					if(!sheet.getRow(n).getCell(1).toString().isEmpty()&&
-					   (sheet.getRow(n).getCell(16).toString().isEmpty()||sheet.getRow(n).getCell(19).toString().isEmpty())
-					  )
-					{
-						n=2;
-						period.setBegin("00:00");
-						period.setEnd("24:00");
-						log+="Attention! un job répétitif sans plage de répétition a été détecté! plage par defaut : 24h \n";
-				
-						
-					}
-					
-					n--;
-				}
-			}
+		
 			period.setSingleStart(null);
 		}
 	}
@@ -1579,20 +1595,17 @@ public String countDay(String day)
 		
 		
 			
-	
+	if(Orderauthorization)
+	{
 		lorder.put(orderfileName,od);
-		
-		
 		nbrDeOrder++;
-		
+	}	
 		if(!saveAt.equals("00:00"))
 		saveAt=new String("00:00");
 	}
 
 	
-	public void treatFileOrderSource() {
-		
-	}
+
 	/**
 	 * name - addEndErrorEndSucsses add jobchainnodestate : EndError, EndSucces
 	 *
@@ -2459,7 +2472,7 @@ if(valeur>=1)
 	public static void main(String[] args) throws IOException, JAXBException {
 
 		ExcelReader exrd = new ExcelReader(
-				"C:/Users/m419099/Documents/Moyen/AMPHORE01.xlsm",
+				"C:/Users/m419099/Documents/OCAB-Extraction/QVI/PROD/Facile/CMS-MONET.xlsm",
 				"C:/Users/m419099/Documents/résultat",new ConvertisseurTwsJbs(),true);
 		// 1=job
 		// 2=jobchain
