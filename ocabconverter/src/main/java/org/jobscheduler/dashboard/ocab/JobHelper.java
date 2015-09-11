@@ -512,7 +512,14 @@ public void CheckSplitAtTheBegening()
 		if(parallelJob.size()>1)
 		{
 			paramValue="";
-		splitAtBegening.put(nameJobChain, "Split_"+numbeSplit+";"+parallelJob.size());
+			
+			String tempo=";";
+			for(int h=0;h<parallelJob.size();h++)
+			{
+				tempo+=parallelJob.get(h)+";";
+			}
+			
+		splitAtBegening.put(nameJobChain, "Split_"+numbeSplit+tempo);
 		
 		if(firstJob==-1)
 		throw new Error("Problème dans le fichier Excel");

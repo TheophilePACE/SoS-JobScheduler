@@ -115,7 +115,7 @@ public class ExcelReader {
 	String jobFileName;
 	boolean Orderauthorization;
 	boolean boucleExterne;
-	int numberSpleat=0;
+	String[] LineSpleat;
 	/**
 	 * For the conversion , we must know the next steps for each job,
 	 * but ExcelReader work sequentially and don't stock anything about the next 
@@ -339,7 +339,7 @@ public class ExcelReader {
 	public void treatJobChainLine(boolean MAJ) {
 		lockInUse=""; //initialization
 		boucleExterne=true;
-		numberSpleat=0;
+		LineSpleat=null;
 		int i = 2;// cell and "i"(column title) must be synchronized, title must
 					// correspond to cell
 		if(jbcnSyncBool)
@@ -421,8 +421,8 @@ public class ExcelReader {
 					{
 				jbcnSplit=fabrique.createJobChainJobChainNode();
 				String temp=jobhelp.splitAtBegening(cell.toString()).split(";")[0];//just a temporary variable
-				numberSpleat=Integer.parseInt(jobhelp.splitAtBegening(cell.toString()).split(";")[1]);
-				System.out.println(numberSpleat);
+				LineSpleat=jobhelp.splitAtBegening(cell.toString()).split(";");
+				
 				jbcnSplit.setState(temp);
 				jbcnSplit.setNextState(jobhelp.getNextJob(temp));
 				jbcnSplit.setJob("/sos/jitl/JobChainSplitter");
@@ -989,16 +989,25 @@ public class ExcelReader {
 		if(haveRunTimeFiles && fichier)
 	      {
 	    	 
- 
-	    	  
-	    	  jb.setRunTime(runTimeFiles);    	  
-	    	 
-	    	  numberSpleat--;
-	    	  if(numberSpleat==0)
+          if(LineSpleat!=null) 
+          {
+	    	  for(int u=1;u<LineSpleat.length;u++)
+	    	  {
+	    		  if(numLigne==Integer.parseInt(LineSpleat[u]))
+	    			  jb.setRunTime(runTimeFiles);
+	    	  }
+
+	    	  if(Integer.parseInt(LineSpleat[LineSpleat.length-1])<numLigne)
 	    	  { haveRunTimeFiles=false;
 	    	  runTimeFiles=fabrique.createRunTime();
 	    	  }
-	      
+          }
+          else
+          {
+        	  jb.setRunTime(runTimeFiles);
+        	  haveRunTimeFiles=false;
+	    	  runTimeFiles=fabrique.createRunTime();
+          }
 	      
 	      }
 		
@@ -1899,13 +1908,14 @@ if(valeur>=1)
 			jbcnTemp=fabrique.createJobChainJobChainNode();
 			jbcnTemp.setState("End");
 			jbcnTemp.setJob("/sos/jitl/JobChainEnd");
+			
 			if(fichier)
 			{
 				jbcnTemp.setErrorState("!end_ERR");
 		     jbcnTemp.setNextState("S_cleanfile");
 		     jobchain.get(jobchainEnCour).getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcnTemp);
 		     
-		     AddFileJobChain();
+		     AddFileJobChain(true);
 			}
 			else
 			{
@@ -1918,15 +1928,130 @@ if(valeur>=1)
 		}
 		else if(fichier)
 		{
-			AddFileJobChain();
+			AddFileJobChain(false);
 		}
 			
 	}
 	
-	public void AddFileJobChain()
+	public void AddFileJobChain(boolean complexe)
 	{
 		JobChain.FileOrderSource file=fabrique.createJobChainFileOrderSource();
+	     Job jobSchedulerExistsFile=fabrique.createJob();
+	     Description dsc=fabrique.createJobDescription();
 	     
+	     Include inc=fabrique.createInclude();
+	     inc.setFile("jobs/JobSchedulerExistsFile.xml");
+	     dsc.getContent().add(inc);
+	     
+	     Script scr= fabrique.createScript();
+	     scr.setJavaClass("sos.scheduler.file.JobSchedulerExistsFile");
+	     scr.setLanguage("java");
+	     
+	     Params prms=fabrique.createParams();
+	     
+	     Param file1=fabrique.createParam();
+	     file1.setName("file");
+	     
+	     Param regex=fabrique.createParam();
+	     regex.setName("file_spec");
+	     
+	     Param skip_first_files=fabrique.createParam();
+	     skip_first_files.setName("skip_first_files");
+	    
+	     
+//par défaut	 
+	     Param on_empty_result_set=fabrique.createParam();
+	     on_empty_result_set.setName("on_empty_result_set");
+	     on_empty_result_set.setValue(jobchainEnCour+"Wait_Files");
+	     prms.getParamOrCopyParamsOrInclude().add(on_empty_result_set);
+	     
+	     Param max_file_age=fabrique.createParam();
+	     max_file_age.setName("max_file_age");
+	     max_file_age.setValue("1000");
+	     prms.getParamOrCopyParamsOrInclude().add(max_file_age);
+	    		 
+	     Param gracious=fabrique.createParam();
+	     gracious.setName("gracious");
+	     gracious.setValue("true");
+	     prms.getParamOrCopyParamsOrInclude().add(gracious);
+	    		 
+	     Param min_file_age=fabrique.createParam();
+	     min_file_age.setName("min_file_age");
+	     min_file_age.setValue("0");
+	     prms.getParamOrCopyParamsOrInclude().add(min_file_age);
+	    		 
+	     Param max_file_size=fabrique.createParam();
+	     max_file_size.setName("max_file_size");
+	     max_file_size.setValue("1000");
+	     prms.getParamOrCopyParamsOrInclude().add(max_file_size);
+	    		 
+	     Param min_file_size=fabrique.createParam();
+	     min_file_size.setName("min_file_size");
+	     min_file_size.setValue("0");
+	     prms.getParamOrCopyParamsOrInclude().add( min_file_size);
+	    		 
+	     Param skip_last_files=fabrique.createParam();
+	     skip_last_files.setName("skip_last_files");
+	     skip_last_files.setValue("0");
+	     prms.getParamOrCopyParamsOrInclude().add(skip_last_files);
+	    		 
+	     Param count_files=fabrique.createParam();
+	     count_files.setName("count_files");
+	     count_files.setValue("false");
+	     prms.getParamOrCopyParamsOrInclude().add(count_files);
+	    		 
+	     Param create_order=fabrique.createParam();     
+	     create_order.setName("create_order");
+	     create_order.setValue("");
+	     prms.getParamOrCopyParamsOrInclude().add(create_order);
+	     
+	     Param create_order_for_all_files=fabrique.createParam();
+	     create_order_for_all_files.setName("create_order_for_all_files");
+	     create_order_for_all_files.setValue("");
+	     prms.getParamOrCopyParamsOrInclude().add(create_order_for_all_files);
+	    		 
+	     Param order_jobchain_name=fabrique.createParam();
+	     order_jobchain_name.setName("order_jobchain_name");
+	     order_jobchain_name.setValue("");
+	     prms.getParamOrCopyParamsOrInclude().add(order_jobchain_name);
+	    		 
+	     Param next_state=fabrique.createParam();
+	     next_state.setName("next_state");
+	     next_state.setValue("");
+	     prms.getParamOrCopyParamsOrInclude().add( next_state);
+	    		 
+	     Param merge_order_parameter=fabrique.createParam();
+	     merge_order_parameter.setName("merge_order_parameter");
+	     merge_order_parameter.setValue("false");
+	     prms.getParamOrCopyParamsOrInclude().add(merge_order_parameter);
+	    		 
+	     Param expected_size_of_result_set=fabrique.createParam();
+	     expected_size_of_result_set.setName("expected_size_of_result_set");
+	     expected_size_of_result_set.setValue("");
+	     prms.getParamOrCopyParamsOrInclude().add(expected_size_of_result_set);
+	     
+	     Param raise_error_if_result_set_is=fabrique.createParam();
+	     raise_error_if_result_set_is.setName("raise_error_if_result_set_is");
+	     raise_error_if_result_set_is.setValue("");
+	     prms.getParamOrCopyParamsOrInclude().add(raise_error_if_result_set_is);
+	    		 
+	     Param check_steady_state_of_files=fabrique.createParam();
+	     check_steady_state_of_files.setName("check_steady_state_of_files");
+	     check_steady_state_of_files.setValue("false");
+	     prms.getParamOrCopyParamsOrInclude().add(check_steady_state_of_files);
+	    		 
+	     Param steady_state_count=fabrique.createParam();
+	     steady_state_count.setName("steady_state_count");
+	     steady_state_count.setValue("30");
+	     prms.getParamOrCopyParamsOrInclude().add(steady_state_count);
+	    		 
+	     Param check_steady_state_interval=fabrique.createParam();
+	     check_steady_state_interval.setName("check_steady_state_interval");
+	     check_steady_state_interval.setValue("1");
+	     prms.getParamOrCopyParamsOrInclude().add(check_steady_state_interval);
+	//End défaut    		 
+	     
+	     int nbFiles=0;
 		for(int i=0;i<contenuFichier.size();i++)
 		{
 		String[] split=contenuFichier.get(i).split("/");
@@ -1942,12 +2067,59 @@ if(valeur>=1)
 	    		 directory+=split[j]; 
 	    	 }
 	     }
+	     
+	     if(i==0)
+	     {	 
 	     file.setDirectory(directory);
 	     file.setRegex(split[split.length-1]);
 	     jobchain.get(jobchainEnCour).getFileOrderSource().add(file);
-	     file=fabrique.createJobChainFileOrderSource();
+	     }
+	     else if(i==1)
+	     {
+	    	  
+	    	  file1.setValue(directory);
+		     regex.setValue(split[split.length-1]); 
+	    	 
+	     }
+	     else
+	     {
+	    	 regex.setValue(regex.getValue()+" || "+split[split.length-1]);
+	     }
+	     nbFiles=i;
 		}
 		
+		if(nbFiles==1)
+		skip_first_files.setValue("0");
+		else if(nbFiles>1)
+	    skip_first_files.setValue(String.valueOf(nbFiles));// you think it's a error ? it's not don't tuch...  
+		
+		if(nbFiles>0)
+		{ 
+		 prms.getParamOrCopyParamsOrInclude().add(file1);	
+		 prms.getParamOrCopyParamsOrInclude().add(regex);
+		 prms.getParamOrCopyParamsOrInclude().add(skip_first_files);
+		 jobSchedulerExistsFile.setDescription(dsc);
+		 jobSchedulerExistsFile.setParams(prms);
+		 jobSchedulerExistsFile.setScript(scr);
+			OutputStream os;
+			try {
+				os = new FileOutputStream(outPut+jobchainEnCour+"Wait_Files"+".job.xml");
+				marshaller.marshal(jobSchedulerExistsFile, os);
+			} catch (FileNotFoundException | JAXBException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+			JobChainNode temp=fabrique.createJobChainJobChainNode();
+			temp.setState(jobchainEnCour+"Wait_Files");
+			temp.setJob(jobchainEnCour+"Wait_Files");
+			JobChain jbctemp=jobchain.get(jobchainEnCour);			
+			JobChain.JobChainNode jbcnTemp2 =(JobChainNode) jobchain.get(jobchainEnCour).getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().get(0);
+			temp.setNextState(jbcnTemp2.getState());
+			jobchain.get(jobchainEnCour).getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(0, temp);
+			
+			
+		}
 		 JobChain.FileOrderSink deletFile=fabrique.createJobChainFileOrderSink();
 	     deletFile.setState("S_cleanfile");
 	     deletFile.setRemove("yes");
