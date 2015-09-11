@@ -197,13 +197,16 @@ public class JobHelper {
 
 
 		if(!cell.toString().isEmpty()) //if it's not empty we treat a job
-		{
+		{String temp=getL1File();
 
 			if(isEndComplex(String.valueOf(jid))) //here, we look if this job is the end of a complex case
 			{//end of a complex case is always a synchronization 
 				nameNextJob.put(cell.toString(),"Sync_"+numbeSyn);
-
-
+				
+				if(!temp.equals("NogetL1File"))
+				{
+				jobWithFiles.put(cell.toString(), temp);
+				}
 
 
 			}
@@ -244,14 +247,15 @@ public class JobHelper {
 
 				}else{
 					//a normal case, just put the next job in a hashtable
-					String temp=getL1File();
+					
+					
 					if(temp.equals("NogetL1File"))
 					{
-						if(!nameNextJob.containsKey(cell.toString()))
-					      {nameNextJob.put(cell.toString(),getL1(7,1));
-                      System.out.println("test");}
+						nameNextJob.put(cell.toString(),getL1(7,1));
+                      System.out.println("eeee");
 					}
 					else{
+						
 						jobWithFiles.put(cell.toString(), temp);
 						nameNextJob.put(cell.toString(),getL1(7,2)); //on s	it deja que le prochain est un fichier
 					}
@@ -740,13 +744,12 @@ public void CheckSplitAtTheBegening()
 
 	public String getL1File()
 	{
-		if(sheet.getLastRowNum()>=ligne+1)
+		if(haveNextIndice(ligne))
 		{
 			Row rowL1=sheet.getRow(ligne+1);
 			if(rowL1.getCell(3).toString().equals("O"))
 			{
-				int tempNumberFile=numberFile;
-				waitFileForExecute(rowL1.getCell(30).toString());
+		        String lineFile=String.valueOf(ligne+1);
 				boolean noEndFileEndChain=false;
 				int add=2;
 				if(sheet.getLastRowNum()>=ligne+add)
@@ -757,7 +760,7 @@ public void CheckSplitAtTheBegening()
 
 					if(sheet.getRow(ligne+add).getCell(3).toString().equals("O"))
 					{
-						waitFileForExecute(sheet.getRow(ligne+add).getCell(30).toString());
+						lineFile+=";"+(ligne+add);
 						add++;
 
 						if(sheet.getLastRowNum()<ligne+add)
@@ -772,16 +775,18 @@ public void CheckSplitAtTheBegening()
 				}
 				//un job peut avoir le nom de (numberfile+_file) meme si cela est peu probable
 				//je rajoute Unique pour etre sur qu'il n'y est pas de conflit
-				return tempNumberFile+"_file";
+				
+				return lineFile;
 			}
 		}
+		System.out.println("inin");
 		return "NogetL1File";
 	}
 
 	public String cdata(String st) {
 		return "<![CDATA[" + st + "]]>"; // for add CDATA in Xml file
 	}
-
+/*
 	public void waitFileForExecute(String contenuFichier)
 	{
 
@@ -801,7 +806,7 @@ public void CheckSplitAtTheBegening()
 	 * @note
 	 */
 
-	public void createSubMitJobEvent(int id ,String contenuFichier){
+	/*public void createSubMitJobEvent(int id ,String contenuFichier){
 
 
 		Job job = fabrique.createJob();
@@ -907,6 +912,7 @@ public void CheckSplitAtTheBegening()
 		}
 	}
 
+*/
 	/**
 	 * name - getL2 get in two next line, the column enter in parameter
 	 *                           
