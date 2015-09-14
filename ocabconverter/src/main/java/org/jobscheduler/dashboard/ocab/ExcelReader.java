@@ -576,10 +576,10 @@ public class ExcelReader {
 
 		case "follows":
 
-			System.out.println(jobFileName);
+			
 			if(!jobhelp.getJobWithFiles(jobFileName).equals("nofiles"))
 			{ 
-                System.out.println("****");
+                
 				String[] Line=jobhelp.getJobWithFiles(jobFileName).split(";");
                 
 				JobChainNode tempBoucle=fabrique.createJobChainJobChainNode();
@@ -608,7 +608,7 @@ public class ExcelReader {
 
 				String directory="";
 				//par défaut	 
-				initialiseParamsJobBoucle(prms);
+				initialiseParamsJobBoucle(prms,jobSchedulerExistsFile);
 				//End défaut  
 				
 				String[] splitdirectory=null;
@@ -617,7 +617,7 @@ public class ExcelReader {
 				{
 					for(int a=0;a< Line.length;a++)
 					{
-						splitdirectory=sheet.getRow(Integer.parseInt(Line[a])).getCell(30).toString().split(";");
+						splitdirectory=sheet.getRow(Integer.parseInt(Line[a])).getCell(30).toString().split("/");
 						
 						
 						
@@ -643,11 +643,12 @@ public class ExcelReader {
 						 regex.setValue(regex.getValue()+" || "+splitdirectory[splitdirectory.length-1]);
 						}
 					}
+					skip_first_files.setValue(String.valueOf(Line.length));
 				}
 				else
 				{
-					splitdirectory=sheet.getRow(Integer.parseInt(Line[0])).getCell(30).toString().split(";");
-					
+					splitdirectory=sheet.getRow(Integer.parseInt(Line[0])).getCell(30).toString().split("/");
+					skip_first_files.setValue("0");
 					for(int j=0;j<splitdirectory.length-1;j++)
 					{
 						if(j<splitdirectory.length-2)
@@ -668,6 +669,10 @@ public class ExcelReader {
 				tempBoucle.setJob(jobFileName+"_WaitFiles");
 				tempBoucle.setNextState(jbcn.getState());
 				jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(tempBoucle);
+				prms.getParamOrCopyParamsOrInclude().add(file1);
+				prms.getParamOrCopyParamsOrInclude().add(regex);
+				prms.getParamOrCopyParamsOrInclude().add(skip_first_files);
+				jobSchedulerExistsFile.setParams(prms);
 				outJob(jobSchedulerExistsFile,jobFileName+"_WaitFiles");
 				
 
@@ -1886,16 +1891,7 @@ public class ExcelReader {
 	{
 		JobChain.FileOrderSource file=fabrique.createJobChainFileOrderSource();
 		Job jobSchedulerExistsFile=fabrique.createJob();
-		Description dsc=fabrique.createJobDescription();
-
-		Include inc=fabrique.createInclude();
-		inc.setFile("jobs/JobSchedulerExistsFile.xml");
-		dsc.getContent().add(inc);
-
-		Script scr= fabrique.createScript();
-		scr.setJavaClass("sos.scheduler.file.JobSchedulerExistsFile");
-		scr.setLanguage("java");
-
+		
 		Params prms=fabrique.createParams();
 
 		Param file1=fabrique.createParam();
@@ -1909,10 +1905,10 @@ public class ExcelReader {
 
 
 		//par défaut	 
-		initialiseParamsJobBoucle(prms);
+		initialiseParamsJobBoucle(prms,jobSchedulerExistsFile);
 		//End défaut    		 
 
-		int nbFiles=0;
+		
 		for(int i=0;i<contenuFichier.size();i++)
 		{
 			String[] split=contenuFichier.get(i).split("/");
@@ -1946,22 +1942,23 @@ public class ExcelReader {
 			{
 				regex.setValue(regex.getValue()+" || "+split[split.length-1]);
 			}
-			nbFiles=i;
+			
+		
 		}
 
-		if(nbFiles==1)
+		if(contenuFichier.size()==2)
 			skip_first_files.setValue("0");
-		else if(nbFiles>1)
-			skip_first_files.setValue(String.valueOf(nbFiles));// you think it's a error ? it's not don't tuch...  
+		else if(contenuFichier.size()>2)
+			skip_first_files.setValue(String.valueOf(contenuFichier.size()));// you think it's a error ? it's not don't tuch...  
 
-		if(nbFiles>0)
+		if(contenuFichier.size()>1)
 		{ 
 			prms.getParamOrCopyParamsOrInclude().add(file1);	
 			prms.getParamOrCopyParamsOrInclude().add(regex);
 			prms.getParamOrCopyParamsOrInclude().add(skip_first_files);
-			jobSchedulerExistsFile.setDescription(dsc);
+			
 			jobSchedulerExistsFile.setParams(prms);
-			jobSchedulerExistsFile.setScript(scr);
+			
 			
 			outJob(jobSchedulerExistsFile, jobchainEnCour+"Wait_Files");
 			
@@ -1984,7 +1981,7 @@ public class ExcelReader {
 		contenuFichier=new ArrayList<String>();
 	}
 
-	public void initialiseParamsJobBoucle(Params prms)
+	public void initialiseParamsJobBoucle(Params prms, Job jb)
 	{
 		Param on_empty_result_set=fabrique.createParam();
 		on_empty_result_set.setName("on_empty_result_set");
@@ -2075,6 +2072,22 @@ public class ExcelReader {
 		check_steady_state_interval.setName("check_steady_state_interval");
 		check_steady_state_interval.setValue("1");
 		prms.getParamOrCopyParamsOrInclude().add(check_steady_state_interval);
+		
+		Description dsc=fabrique.createJobDescription();
+
+		Include inc=fabrique.createInclude();
+		inc.setFile("jobs/JobSchedulerExistsFile.xml");
+		dsc.getContent().add(inc);
+		jb.setDescription(dsc);
+		
+		Script scr= fabrique.createScript();
+		scr.setJavaClass("sos.scheduler.file.JobSchedulerExistsFile");
+		scr.setLanguage("java");
+		jb.setScript(scr);
+		
+		jb.setOrder("yes");
+		jb.setStopOnError("no");
+		
 	}
 	public void ExcelCleaner(XSSFSheet sheet)
 	{
@@ -2129,7 +2142,7 @@ public class ExcelReader {
 
 						if(rebuildDependency(aComparer,nameOfJobChain+NumberJobchainsup))
 							NumberJobchainsup++;
-
+						 
 						ligneEchange=0;
 					}
 

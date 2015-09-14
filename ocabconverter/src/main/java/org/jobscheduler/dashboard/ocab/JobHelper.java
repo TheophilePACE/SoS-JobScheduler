@@ -197,71 +197,73 @@ public class JobHelper {
 
 
 		if(!cell.toString().isEmpty()) //if it's not empty we treat a job
-		{String temp=getL1File();
+		{
+			String temp=getL1File();
 
-			if(isEndComplex(String.valueOf(jid))) //here, we look if this job is the end of a complex case
-			{//end of a complex case is always a synchronization 
-				nameNextJob.put(cell.toString(),"Sync_"+numbeSyn);
-				
-				if(!temp.equals("NogetL1File"))
-				{
-				jobWithFiles.put(cell.toString(), temp);
-				}
+		if(isEndComplex(String.valueOf(jid))) //here, we look if this job is the end of a complex case
+		{//end of a complex case is always a synchronization 
+			nameNextJob.put(cell.toString(),"Sync_"+numbeSyn);
 
-
-			}
-			else
+			if(!temp.equals("NogetL1File"))
 			{
-				//the last job in parallel execution, we can up the number of synchronization and split
-				if (jobEndComplex.equals(String.valueOf(jid)))
-				{
+				jobWithFiles.put(cell.toString(), temp);
+			}
+
+
+		}
+		else
+		{
+			//the last job in parallel execution, we can up the number of synchronization and split
+			if (jobEndComplex.equals(String.valueOf(jid)))
+			{
 				EndComplexCase(cell.toString());
 				jobEndComplex="";
-				} 
+			} 
 
-				//here we find a split point, this is the beginning of a complex case 
-				String endSplit=splitPoint(String.valueOf(jid));
-				if(!endSplit.equals("-1")&&indiceEndSplit!=-1)
-				{
+			//here we find a split point, this is the beginning of a complex case 
+			String endSplit=splitPoint(String.valueOf(jid));
+			if(!endSplit.equals("-1")&&indiceEndSplit!=-1)
+			{
 
-					
-					String[] value=endSplit.split(",");
-					if(indiceEndSplit!=-2)
+
+				String[] value=endSplit.split(",");
+				if(indiceEndSplit!=-2)
 					jobEndComplex=sheet.getRow(indiceEndSplit).getCell(2).toString();
 
-					indiceEndSplit=-1;
+				indiceEndSplit=-1;
 
-					addSynch.put(value[value.length-1],"Sync_"+numbeSyn);
+				addSynch.put(value[value.length-1],"Sync_"+numbeSyn);
 
-					for(int z=0;z<value.length;z++)
-					{
-						EndCmplex.put(value[z],numbeSyn);
-					}
-
-					if (!jobChainComplex.containsKey(nameJobChain))
-					{
-						jobChainComplex.put(nameJobChain,true);//For now if a jochain contain complex case,
-						//We add for the complex jobchain a job start and a job end 
-					}
-					complexe=true;
-
-				}else{
-					//a normal case, just put the next job in a hashtable
-					
-					
-					if(temp.equals("NogetL1File"))
-					{
-						nameNextJob.put(cell.toString(),getL1(7,1));
-                      System.out.println("eeee");
-					}
-					else{
-						
-						jobWithFiles.put(cell.toString(), temp);
-						nameNextJob.put(cell.toString(),getL1(7,2)); //on s	it deja que le prochain est un fichier
-					}
+				for(int z=0;z<value.length;z++)
+				{
+					EndCmplex.put(value[z],numbeSyn);
 				}
 
+				if (!jobChainComplex.containsKey(nameJobChain))
+				{
+					jobChainComplex.put(nameJobChain,true);//For now if a jochain contain complex case,
+					//We add for the complex jobchain a job start and a job end 
+				}
+				complexe=true;
+
+			}else{
+				//a normal case, just put the next job in a hashtable
+
+
+				if(temp.equals("NogetL1File"))
+				{
+					if(!nameNextJob.containsKey(cell.toString()))
+					nameNextJob.put(cell.toString(),getL1(7,1));
+					
+				}
+				else{
+
+					jobWithFiles.put(cell.toString(), temp);
+					nameNextJob.put(cell.toString(),getL1(7,2)); //on s	it deja que le prochain est un fichier
+				}
 			}
+
+		}
 
 		}
 
@@ -277,20 +279,20 @@ public class JobHelper {
 
 
 	}
-public void CheckSplitAtTheBegening()
-{
-	
-		
-	String jid="";
+	public void CheckSplitAtTheBegening()
+	{
+
+
+		String jid="";
 		//here we find a split point, this is the beginning of a complex case 
 		String endSplit=splitBegeningPoint(jid);
 		if(!endSplit.equals("-1")&&indiceEndSplit!=-1)
 		{
 
-			
+
 			String[] value=endSplit.split(",");
 			if(indiceEndSplit!=-2)
-			jobEndComplex=sheet.getRow(indiceEndSplit).getCell(2).toString();
+				jobEndComplex=sheet.getRow(indiceEndSplit).getCell(2).toString();
 
 			indiceEndSplit=-1;
 
@@ -309,9 +311,9 @@ public void CheckSplitAtTheBegening()
 			complexe=true;
 
 		}
-   
-	
-}
+
+
+	}
 	public String getJobWithFiles(String st) {
 		if(jobWithFiles.containsKey(st))
 			return jobWithFiles.get(st);
@@ -368,7 +370,8 @@ public void CheckSplitAtTheBegening()
 		}
 
 		if(parallelJob.size()>1)
-		{paramValue="";
+		{
+			paramValue="";
 			nameNextJob.put(cell.toString(),"Split_"+numbeSplit);
 			Job jb=fabrique.createJob();
 			jb.setOrder("yes");
@@ -385,10 +388,10 @@ public void CheckSplitAtTheBegening()
 			jb.setRunTime(rt);
 			OutputStream os;
 
-			
-			
+
+
 			if(happyEnd){
-				
+
 				returnn=sheet.getRow(indiceEndSplit).getCell(11).toString();
 			}
 			else
@@ -404,19 +407,40 @@ public void CheckSplitAtTheBegening()
 				}
 				indiceEndSplit=-2;
 			}
-			
+
 			for(int j=0;j<parallelJob.size();j++)
 			{
 
 				if(paramValue.isEmpty())
 				{
+					if(haveNextIndice(parallelJob.get(j)))
+					{
+						if(sheet.getRow(parallelJob.get(j)+1).getCell(3).toString().equals("O"))
+							paramValue=sheet.getRow(parallelJob.get(j)).getCell(6).toString()+"_WaitFiles"; 
+						else
+							paramValue=sheet.getRow(parallelJob.get(j)).getCell(6).toString();
 
-					paramValue=sheet.getRow(parallelJob.get(j)).getCell(6).toString();
+					}
+					else
+					{
+						paramValue=sheet.getRow(parallelJob.get(j)).getCell(6).toString();
+					}
 
 				}
 				else
 				{
-					paramValue=paramValue+";"+sheet.getRow(parallelJob.get(j)).getCell(6).toString();
+					if(haveNextIndice(parallelJob.get(j)))
+					{
+						if(sheet.getRow(parallelJob.get(j)+1).getCell(3).toString().equals("O"))
+							paramValue=paramValue+";"+sheet.getRow(parallelJob.get(j)).getCell(6).toString()+"_WaitFiles"; 
+						else
+							paramValue=paramValue+";"+sheet.getRow(parallelJob.get(j)).getCell(6).toString();
+					}
+					else
+					{
+						paramValue=paramValue+";"+sheet.getRow(parallelJob.get(j)).getCell(6).toString();	
+					}
+
 				}
 
 
@@ -455,20 +479,20 @@ public void CheckSplitAtTheBegening()
 		boolean boucle,endSplit=false;
 		int numLigne=ligne;
 		boolean happyEnd=false;
-        int firstJob=-1;
+		int firstJob=-1;
 		boolean noTime=true;
-		
+
 		ArrayList<Integer> parallelJob=new ArrayList<Integer> ();
 
 		if(haveNextIndice(numLigne))
 		{
 			while(haveNextIndice(numLigne)&& sheet.getRow(numLigne).getCell(2).toString().isEmpty())//a rectifier trop compliquer faire le contraire
-            {
-	            numLigne++;
-	            firstJob=numLigne;
-	            
-            }
-			
+			{
+				numLigne++;
+				firstJob=numLigne;
+
+			}
+
 			boucle=sheet.getRow(numLigne).getCell(1).toString().isEmpty(); //n'est pas un jobchain vérification	
 
 			while(boucle&&!endSplit)
@@ -476,13 +500,13 @@ public void CheckSplitAtTheBegening()
 
 				if(!sheet.getRow(numLigne).getCell(16).toString().isEmpty())
 					noTime=false;
-					
-					
-				if(sheet.getRow(numLigne).getCell(11).toString().equals(Job))
-					{
+
+
+				if(sheet.getRow(numLigne).getCell(11).toString().equals(Job) && !sheet.getRow(numLigne).getCell(2).toString().isEmpty() )
+				{
 					parallelJob.add(new Integer(Integer.valueOf(numLigne)));
-					
-					}
+
+				}
 
 				if(!endSplit&&parallelJob.size()>1)
 				{
@@ -495,12 +519,12 @@ public void CheckSplitAtTheBegening()
 				}
 
 
-				
+
 				if(haveNextIndice(numLigne))
 				{
 					boucle=sheet.getRow(numLigne+1).getCell(1).toString().isEmpty();
 					if(!boucle)
-					indiceEndSplit=numLigne;
+						indiceEndSplit=numLigne;
 				}
 				else
 				{
@@ -512,22 +536,22 @@ public void CheckSplitAtTheBegening()
 
 
 		}
-		
+
 		if(parallelJob.size()>1)
 		{
 			paramValue="";
-			
+
 			String tempo=";";
 			for(int h=0;h<parallelJob.size();h++)
 			{
 				tempo+=parallelJob.get(h)+";";
 			}
-			
-		splitAtBegening.put(nameJobChain, "Split_"+numbeSplit+tempo);
-		
-		if(firstJob==-1)
-		throw new Error("Problème dans le fichier Excel");
-		
+
+			splitAtBegening.put(nameJobChain, "Split_"+numbeSplit+tempo);
+
+			if(firstJob==-1)
+				throw new Error("Problème dans le fichier Excel");
+
 			//nameNextJob.put("Split_"+numbeSplit,sheet.getRow(firstJob).getCell(6).toString()); à sup
 			Job jb=fabrique.createJob();
 			jb.setOrder("yes");
@@ -544,29 +568,42 @@ public void CheckSplitAtTheBegening()
 			jb.setRunTime(rt);
 			OutputStream os;
 
-			
-			
-		if(happyEnd)
-		{
+
+
+			if(happyEnd)
+			{
 				returnn=sheet.getRow(indiceEndSplit).getCell(11).toString();
-		}
-		
-			
-			
+			}
+
+
+
 			for(int j=0;j<parallelJob.size();j++)
 			{
 
-				
-				
-				
-				
+
+
+
+
 				if(paramValue.isEmpty())
 				{
 					if(!happyEnd)
 					{
 						returnn=ResolvLink(parallelJob.get(j));
 					}
-					paramValue=sheet.getRow(parallelJob.get(j)).getCell(6).toString();
+					
+					if(haveNextIndice(parallelJob.get(j)))
+					{
+						if(sheet.getRow(parallelJob.get(j)+1).getCell(3).toString().equals("O"))
+							paramValue=sheet.getRow(parallelJob.get(j)).getCell(6).toString()+"_WaitFiles"; 
+						else
+							paramValue=sheet.getRow(parallelJob.get(j)).getCell(6).toString();
+
+					}
+					else
+					{
+						paramValue=sheet.getRow(parallelJob.get(j)).getCell(6).toString();
+					}
+					
 
 				}
 				else
@@ -575,7 +612,18 @@ public void CheckSplitAtTheBegening()
 					{
 						returnn=returnn+","+ResolvLink(parallelJob.get(j));
 					}
-					paramValue=paramValue+";"+sheet.getRow(parallelJob.get(j)).getCell(6).toString();
+					
+					if(haveNextIndice(parallelJob.get(j)))
+					{
+						if(sheet.getRow(parallelJob.get(j)+1).getCell(3).toString().equals("O"))
+							paramValue=paramValue+";"+sheet.getRow(parallelJob.get(j)).getCell(6).toString()+"_WaitFiles"; 
+						else
+							paramValue=paramValue+";"+sheet.getRow(parallelJob.get(j)).getCell(6).toString();
+					}
+					else
+					{
+						paramValue=paramValue+";"+sheet.getRow(parallelJob.get(j)).getCell(6).toString();	
+					}
 				}
 
 
@@ -612,38 +660,38 @@ public void CheckSplitAtTheBegening()
 	{
 		int i=1;
 		boolean boucle;
-		
+
 		if(valableIndice(line+1))
 		{
-			if(!sheet.getRow(line+1).getCell(3).toString().isEmpty())
+			if(!sheet.getRow(line+1).getCell(3).toString().isEmpty()) //les fichiers sur job 
 			{
-				
+
 				Boolean loop=true;
-				
-				
+
+
 				while(loop)
 				{i++;
-					
-					if(valableIndice(line+i))
-						{
-						
-						loop=!sheet.getRow(line+i).getCell(3).toString().isEmpty();
-						
-						}
-					else
-					{
-						return sheet.getRow(line).getCell(2).toString();
-					}
-					
-					
-					
+
+				if(valableIndice(line+i))
+				{
+
+					loop=!sheet.getRow(line+i).getCell(3).toString().isEmpty();
+
 				}
-				
+				else
+				{
+					return sheet.getRow(line).getCell(2).toString();
+				}
+
+
+
+				}
+
 				if(sheet.getRow(line).getCell(2).toString().equals(sheet.getRow(line+i).getCell(11).toString()))
 					return  ResolvLink(line+i);
-				
+
 				return sheet.getRow(line).getCell(2).toString();
-				
+
 			}
 			else if(sheet.getRow(line).getCell(2).toString().equals(sheet.getRow(line+1).getCell(11).toString()))
 				return  ResolvLink(line+1);
@@ -661,7 +709,7 @@ public void CheckSplitAtTheBegening()
 		return false;
 
 	}
-	
+
 	public boolean valableIndice(int i)
 	{
 		if(sheet.getLastRowNum()>=i)
@@ -681,7 +729,7 @@ public void CheckSplitAtTheBegening()
 		//if it's the first complex case in the jobchain we create a jobchain with a new order and a new process
 		//else we add a new process, look a config file for understand
 		//jobchain in the config file it's not a common jobchain 
-		
+
 
 
 
@@ -729,7 +777,7 @@ public void CheckSplitAtTheBegening()
 					return cellTemp.toString();
 				}
 
-			}else if(rowL1.getCell(3).toString().equals("O"))
+			}else if(rowL1.getCell(3).toString().equals("O")||rowL1.getCell(3).toString().equals("N"))
 			{
 				return getL1(numeroColone,indice+1);
 
@@ -749,7 +797,7 @@ public void CheckSplitAtTheBegening()
 			Row rowL1=sheet.getRow(ligne+1);
 			if(rowL1.getCell(3).toString().equals("O"))
 			{
-		        String lineFile=String.valueOf(ligne+1);
+				String lineFile=String.valueOf(ligne+1);
 				boolean noEndFileEndChain=false;
 				int add=2;
 				if(sheet.getLastRowNum()>=ligne+add)
@@ -775,7 +823,7 @@ public void CheckSplitAtTheBegening()
 				}
 				//un job peut avoir le nom de (numberfile+_file) meme si cela est peu probable
 				//je rajoute Unique pour etre sur qu'il n'y est pas de conflit
-				
+
 				return lineFile;
 			}
 		}
@@ -786,7 +834,7 @@ public void CheckSplitAtTheBegening()
 	public String cdata(String st) {
 		return "<![CDATA[" + st + "]]>"; // for add CDATA in Xml file
 	}
-/*
+	/*
 	public void waitFileForExecute(String contenuFichier)
 	{
 
@@ -912,7 +960,7 @@ public void CheckSplitAtTheBegening()
 		}
 	}
 
-*/
+	 */
 	/**
 	 * name - getL2 get in two next line, the column enter in parameter
 	 *                           
@@ -1056,13 +1104,13 @@ public void CheckSplitAtTheBegening()
 		return "noJobchainNext";
 	}
 
-public String splitAtBegening(String chaine)
-{
-	if(!splitAtBegening.containsKey(chaine))
-	return "No";
-	
-	return splitAtBegening.get(chaine);
-}
+	public String splitAtBegening(String chaine)
+	{
+		if(!splitAtBegening.containsKey(chaine))
+			return "No";
+
+		return splitAtBegening.get(chaine);
+	}
 	public String getJobChaine(String JID)
 	{
 
