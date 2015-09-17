@@ -2109,10 +2109,75 @@ public class ExcelReader {
 		boolean delete=false;
 		String nameOfJobChain="";
 		int NumberJobchainsup=10;
+		
 		for(int p=2;p<=sheet.getLastRowNum();p++)	 
 		{	
 
-			if(!row.getCell(2).toString().isEmpty()&&!row.getCell(16).toString().isEmpty()&&!rowSuiv.getCell(16).toString().isEmpty()&&(!rowPrec.getCell(3).toString().isEmpty()||!rowPrec.getCell(5).toString().isEmpty()))
+			 if(!row.getCell(2).toString().isEmpty())
+				{ 
+					int nextLine=numLigne+1;
+					LinkedHashMap<String,Integer> lineAft = new LinkedHashMap<String,Integer>();
+					LinkedHashMap<String,Integer> lineBef = new LinkedHashMap<String,Integer>();
+					while(nextLine<=sheet.getLastRowNum())
+					{
+						if(!sheet.getRow(nextLine).getCell(1).toString().isEmpty()){
+							nextLine=sheet.getLastRowNum(); 
+
+						}
+						else if(sheet.getRow(numLigne).getCell(2).toString().equals(sheet.getRow(nextLine).getCell(11).toString()))
+						{
+
+						lineAft.put(sheet.getRow(nextLine).getCell(2).toString(), nextLine);
+						}
+						nextLine++;
+					}
+					
+					if(lineAft.size()==1)
+					{
+						if(lineAft.values().iterator().next()!=numLigne+1)
+						{
+							copyExcelJob(lineAft.values().iterator().next(),(numLigne+1));
+							
+							delete=true;
+							log+="La ligne "+lineAft.values().iterator().next() + "a été remonté à la ligne "+ (numLigne+1);
+							System.out.println("La ligne "+lineAft.values().iterator().next() + "a été remonté à la ligne "+ (numLigne+1));
+						}
+					}
+					
+					nextLine=numLigne+1;
+					
+					while(nextLine<=sheet.getLastRowNum())
+					{
+						if(!sheet.getRow(nextLine).getCell(1).toString().isEmpty()){
+							nextLine=sheet.getLastRowNum(); 
+
+						}
+						else if(sheet.getRow(numLigne).getCell(11).toString().equals(sheet.getRow(nextLine).getCell(2).toString()))
+						{
+							if(!sheet.getRow(numLigne).getCell(11).toString().isEmpty()&&!sheet.getRow(nextLine).getCell(2).toString().isEmpty())
+							{
+								System.out.println(sheet.getRow(numLigne).getCell(11).toString()+" "+numLigne);
+								System.out.println(sheet.getRow(nextLine).getCell(2).toString()+" "+nextLine);
+								System.out.println("line "+ numLigne+" "+nextLine);
+								lineBef.put(sheet.getRow(nextLine).getCell(2).toString(), nextLine);
+							}
+						}
+						
+						nextLine++;
+					}
+					
+					if(lineBef.size()==1)
+					{
+						
+							copyExcelJob(lineBef.values().iterator().next(),(numLigne-1));				
+							rowSuiv=row;
+							row = sheet.getRow(p-1);
+							delete=true;
+						
+					}
+	
+				}
+		else if(!row.getCell(2).toString().isEmpty()&&!row.getCell(16).toString().isEmpty()&&!rowSuiv.getCell(16).toString().isEmpty()&&(!rowPrec.getCell(3).toString().isEmpty()||!rowPrec.getCell(5).toString().isEmpty()))
 			{
 				String timeRow=row.getCell(16).toString();
 				int aComparer=numLigne;
@@ -2136,13 +2201,13 @@ public class ExcelReader {
 
 					if(ligneEchange!=0)
 					{
-						log+="Une incohérence dans la listes des jobs a été détectée et corrigée, la ligne "+(ligneEchange+1)+ "a été échangée avec la ligne "+ (aComparer+1)+" à cause de la colonne <<at>> \n";
+						log+="Une incohérence dans la liste des jobs a été détectée et corrigée, la ligne "+(ligneEchange+1)+ "a été échangée avec la ligne "+ (aComparer+1)+" à cause de la colonne <<at>> \n";
 
 						switchRow(aComparer, ligneEchange,csCF);
-
+                        /*
 						if(rebuildDependency(aComparer,nameOfJobChain+NumberJobchainsup))
-							NumberJobchainsup++;
-						 
+	                  						NumberJobchainsup++;
+						 */
 						ligneEchange=0;
 					}
 
@@ -2165,27 +2230,7 @@ public class ExcelReader {
 					rowPrec.getCell(16).setCellStyle(csCF);
 				}
 			}
-			else  if(!row.getCell(2).toString().isEmpty() &&!row.getCell(11).toString().isEmpty())
-			{ 
-
-				int nextLine=numLigne+1;
-
-				while(nextLine<=sheet.getLastRowNum())
-				{
-					if(sheet.getRow(nextLine).getCell(2).toString().isEmpty()){
-						nextLine=sheet.getLastRowNum(); 
-
-					}
-					else if(sheet.getRow(nextLine).getCell(2).toString().equals(sheet.getRow(numLigne).getCell(11).toString()))
-					{
-
-						switchRow(numLigne, nextLine,csCF);
-						nextLine=numLigne;
-					}
-					nextLine++;
-				}
-
-			}
+			 
 
 
 			if(!row.getCell(1).toString().isEmpty())
@@ -2224,7 +2269,17 @@ public class ExcelReader {
 			}
 
 
-
+			
+			FileOutputStream fileOut;
+			try {
+				fileOut = new FileOutputStream(outPut+numLigne+file.getName());
+				wb.write(fileOut);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
 			if(rowSuiv.getCell(3).toString().equals("O"))
 			{
 
@@ -2316,7 +2371,6 @@ public class ExcelReader {
 			if(row.getCell(3).toString().equals("O")&&rowPrec.getCell(3).toString().equals("R"))
 			{
 				sheet.removeRow(sheet.getRow(p-2));
-
 				sheet.shiftRows(p-1, sheet.getLastRowNum(),-1);
 				delete=true;
 				log+="Suppression d'un order à la ligne :"+(p-1)+" vérifier que tous les orders ont été supprimés! \n";
@@ -2344,7 +2398,7 @@ public class ExcelReader {
 			else
 			{
 				rowPrec=row;
-				row=rowSuiv ;
+				row=rowSuiv;
 				if(p+1<=sheet.getLastRowNum())
 					rowSuiv = sheet.getRow(p+1);
 			}
@@ -2391,23 +2445,66 @@ public class ExcelReader {
 
 	public void copyExcelJob(int line, int  newLine )
 	{
-		sheet.shiftRows(newLine, sheet.getLastRowNum(), 1);
-		sheet.createRow(newLine);
+		//si le job est suivis de fichier(s) il faut rajouer le job apres le fichier (ou le lock)
 
-		Row row=sheet.getRow(line);
-		Row row2=sheet.getRow(newLine);
+		boolean boucle=!sheet.getRow(newLine).getCell(3).toString().isEmpty();
 
-		for (int i=0;i<61;i++)
+		while(boucle)
 		{
-			row2.createCell(i);
-			row2.getCell(i).setCellValue(row.getCell(i).toString());
-			row2.getCell(i, Row.CREATE_NULL_AS_BLANK);
-
-
+			
+			newLine++;
+			
+			boucle=!sheet.getRow(newLine+1).getCell(3).toString().isEmpty();
 		}
 
 
+		ArrayList<Integer> ajouter=new ArrayList<Integer>();
+		ajouter.add(line);
+
+		boucle=line+1<=sheet.getLastRowNum();
+		if(boucle)
+			boucle=!sheet.getRow(line+1).getCell(3).toString().isEmpty();
+
+		while(boucle)
+		{
+			line++;
+			ajouter.add(line);
+
+			boucle=line+1<=sheet.getLastRowNum();
+			if(boucle)
+				boucle=!sheet.getRow(line+1).getCell(3).toString().isEmpty();
+		}
+
+
+		for(int z=0;z<ajouter.size();z++)
+		{
+
+			
+			Row row=sheet.getRow(ajouter.get(z)); 
+			sheet.shiftRows(newLine, sheet.getLastRowNum(), 1);
+			sheet.createRow(newLine);
+
+			Row row2=sheet.getRow(newLine);
+
+			for (int i=0;i<61;i++)
+			{
+				row2.createCell(i);
+				row.getCell(i, Row.CREATE_NULL_AS_BLANK);
+				row2.getCell(i, Row.CREATE_NULL_AS_BLANK);
+				row2.getCell(i).setCellValue(row.getCell(i).toString());
+
+
+
+			}
+			sheet.removeRow(sheet.getRow(ajouter.get(z)+1));
+			sheet.shiftRows((ajouter.get(z)+2), sheet.getLastRowNum(),-1);
+
+			//we have created a line then we need to add 1 to the indice "line" for stay on the right value
+
+			newLine++;
+		}
 	}
+	/*
 	public boolean rebuildDependency(int numLgne, String Chaine)
 	{
 		int follower=0;
@@ -2472,7 +2569,7 @@ public class ExcelReader {
 		return false;
 	}
 
-
+*/
 	public void switchRow( int ligne1, int ligne2, CellStyle csCF)
 	{
 		Row row=sheet.getRow(ligne1);
@@ -2510,18 +2607,18 @@ public class ExcelReader {
 		}
 	}
 
-	public void copyRow(XSSFSheet worksheet, int destinationRowNum, CellStyle csCF) {
+	public void copyRow(int destinationRowNum, CellStyle csCF) {
 		// Get the source / new row
-		Row newRow = worksheet.getRow(destinationRowNum);
+		Row newRow = sheet.getRow(destinationRowNum);
 
 
 		// If the row exist in destination, push down all rows by 1 
 		if (newRow != null) {
-			worksheet.shiftRows(destinationRowNum, worksheet.getLastRowNum(), 1);
+			sheet.shiftRows(destinationRowNum, sheet.getLastRowNum(), 1);
 		} 
 
-		worksheet.createRow(destinationRowNum);
-		Row row= worksheet.getRow(destinationRowNum);
+		sheet.createRow(destinationRowNum);
+		Row row= sheet.getRow(destinationRowNum);
 
 
 
@@ -2605,7 +2702,7 @@ public class ExcelReader {
 	public static void main(String[] args) throws IOException, JAXBException {
 
 		ExcelReader exrd = new ExcelReader(
-				"C:/Users/m419099/Documents/Moyen/MoyenOld/MISTRAL.xlsm",
+				"C:/Users/m419099/Documents/AEPBetaT7.xlsm",
 				"C:/Users/m419099/Documents/résultat",new ConvertisseurTwsJbs(),true);
 		// 1=job
 		// 2=jobchain
