@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ * Copyright (C) 2015 Jean-Vincent http://bigloupe.github.io/SoS-JobScheduler/
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@
  *
  * Date          : 20/05/2015
  * 
- * Copyright     : 
+ * Copyright     :  Licensed under the Apache License
  */
 
 package org.jobscheduler.dashboard.ocab;
@@ -100,7 +100,6 @@ public class ExcelReader {
 	String saveAt;
 	int metrique;
 	boolean fichier=false;
-	ArrayList<String> contenuFichier=new ArrayList<String>();
 	String timeJob="";
 	String untilJob="";
 	String log="";
@@ -111,26 +110,27 @@ public class ExcelReader {
 	String lockInUse="";
 	String jobchainRunOtherJobChain;
 	String orderfileName;
-	
 	String jobFileName;
 	boolean Orderauthorization;
 	boolean boucleExterne;
 	String[] LineSpleat;
+	boolean alertUtilisateur;
+
 	/**
 	 * For the conversion , we must know the next steps for each job,
 	 * but ExcelReader work sequentially and don't stock anything about the next 
-	 * JobHelper contain some operation for now who is the next, 
+	 * JobHelper contain some operation for know who is the next, 
 	 * or if jobchain is complex. 
 	 * 
 	 */
 	JobHelper jobhelp;
 
 	/**
-	 *this variable allows insert in a jobchain, a job split and a job for the synchronization
-	 *we need those variables because there is no correspondence in the ocab file, we add the job manually. 
+	 *this variable allows insert a job split and a job for the synchronization  in a jobchain, 
+	 *we need those variables because there is no correspondence in the ocab file (no split no synchro), we add the job manually. 
 	 *jbcnSplitBool jbcnSyncBool, just for say if we need add a split/Sync job or not.
-	 *alreadySync, many job can converge on a job of Synchronization, but there is only one job of Synchronization,
-	 *when he exist, alreadySync is true  
+	 *alreadySync, many job can converge on a Synchronization, but there is only one job of Synchronization,
+	 *when he already on the chain, alreadySync is true  
 	 */
 	boolean jbcnSplitBool=false;
 	boolean jbcnSyncBool=false;
@@ -150,12 +150,12 @@ public class ExcelReader {
 	boolean runtime = false;
 	boolean params = false;
 	boolean haveRunTimeFiles;
+
 	/**
 	 * Lists
 	 */
 
 	ArrayList<String> ligneTitre = new ArrayList<String>(); // title line of  Excel															
-	Hashtable job = new Hashtable();
 	LinkedHashMap<String, JobChain> jobchain = new LinkedHashMap<String, JobChain>();
 	// amount "order" for each jobchain
 	Hashtable<String, Integer> nbOrderParJobchain = new Hashtable<String, Integer>();
@@ -164,7 +164,7 @@ public class ExcelReader {
 	Iterator<Row> rowIterator;
 	Iterator<Cell> cellFirstLigne;
 	Iterator<Cell> cellIterator;
-	
+	ArrayList<String> contenuFichier=new ArrayList<String>();
 
 	/**
 	 * Objects generated from the schema
@@ -181,7 +181,24 @@ public class ExcelReader {
 	JobChainNode jbcnSync;
 	RunTime runTimeFiles;
 
+	/**
+	 * variable Initialization 
+	 */
 
+	public void InitVariable()
+	{
+		metrique=0;
+		orderfileName="";
+		alertUtilisateur=true;
+		jobFileName="";
+		Orderauthorization=true;
+		boucleExterne=false;
+		contenuFichier=new ArrayList<String>();
+		jobchainEnCour = null;
+		nbrDeOrder = 0;
+		saveAt="00:00";//Default Time
+		haveRunTimeFiles=false;
+	}
 
 	/**
 	 * Constructor using Excel and Xml path
@@ -193,25 +210,16 @@ public class ExcelReader {
 		modeTest=modTest;
 		interfaceGraphique=ctj;
 		this.outPut = output;
-		metrique=0;
-		orderfileName="";
-		
-		jobFileName="";
-		Orderauthorization=true;
-		boucleExterne=false;
+		InitVariable();
+
 		file = new File(EmplacementFichierExcel);
 		File dir = new File (outPut+"/"+file.getName().split("\\.")[0]);
-
 		dir.mkdirs();
 		outPut=dir.getAbsolutePath()+"/";
 
-
-
-
-
 		log="**********************************************************\n";
-
 		log+="Traitement du fichier Excel : "+file.getName()+" destination: "+outPut+"\n";
+
 
 		jc = JAXBContext
 				.newInstance("org.jobscheduler.dashboard.jobdefinition.xml");
@@ -228,12 +236,14 @@ public class ExcelReader {
 			}
 		});
 
+
 		fabrique = new ObjectFactory();
 		fis = new FileInputStream(file);
 		wb = new XSSFWorkbook(fis);
 
 		sheet = wb.getSheetAt(3);
 
+		//first clean of excel file, create blank for null case 
 		for(Row row : sheet) {
 
 			for(int cn=0; cn<row.getLastCellNum(); cn++) {
@@ -242,11 +252,11 @@ public class ExcelReader {
 
 			}
 		}
+
+
 		interfaceGraphique.addValueProgressBar(5);
 
-
 		ExcelCleaner(sheet);
-
 		FileOutputStream fileOut = new FileOutputStream(outPut+file.getName());
 		wb.write(fileOut);
 
@@ -254,19 +264,18 @@ public class ExcelReader {
 
 		log+="Exécution du JobHelper \n";
 
+		//jobhelp help the main work, he resolve the dependence,  exp (next 1002 is 1003)
+		//detect the split case (parallel), etc.
+
 		jobhelp.initialization(outPut);
 
-		interfaceGraphique.addValueProgressBar(20);
+		interfaceGraphique.addValueProgressBar(20);//update graphic
 
 		rowIterator = sheet.iterator();// Iterate through each rows one by one
 
 		cellFirstLigne = sheet.getRow(0).cellIterator();// Get the first line of
-		// excel file
-		jobchainEnCour = null;
-		nbrDeOrder = 0;
-		saveAt="00:00";//Default Time
-		haveRunTimeFiles=false;
 
+		// application Lock (for stop a application put "setmaxNonExclusive=0") 
 		Lock lc=fabrique.createLock();
 		lc.setMaxNonExclusive(new BigInteger("50"));
 		OutputStream os = new FileOutputStream(outPut+file.getName().split("\\.")[0]+".lock.xml");
@@ -328,6 +337,19 @@ public class ExcelReader {
 	}
 
 	/**
+	 * variable JobChain Initialization 
+	 */
+	public void InitVariableOfJobChain()
+	{//initialization
+		lockInUse=""; 
+		boucleExterne=true;//for the repetition in another chain
+		LineSpleat=null; // line for add parallel job
+		timeJob="";
+		numeroOrder=1;
+		haveRunTimeFiles=false;
+	}
+
+	/**
 	 * name - treatJobChainLine, initialization of a new jobchain
 	 * 
 	 * @author Jean-vincent
@@ -337,32 +359,35 @@ public class ExcelReader {
 	 */
 
 	public void treatJobChainLine(boolean MAJ) {
-		lockInUse=""; //initialization
-		boucleExterne=true;
-		LineSpleat=null;
+
 		int i = 2;// cell and "i"(column title) must be synchronized, title must
 		// correspond to cell
+
+		InitVariableOfJobChain();
+		//if the past chain don't synchronize his split (parallel job) we add it here
+		//The last job was a split with no end, the only way for add it it's in the next jobchain because, 
+		//next of the last job is always a jobchain or nothing (end of the file) 
 		if(jbcnSyncBool)
 		{
 
 			jbcnSyncBool=false;
 			jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcnSync);
 		}
-
+		//if the jobchain wait a file for execute, he can't have order
 		Orderauthorization=Orderauthorization(numLigne+1);
+
+		//new jobchain
 		jbc = fabrique.createJobChain();
 		jbc.setVisible("yes");
 		jbc.setOrdersRecoverable("yes");
-		timeJob="";
-		numeroOrder=1;
-		haveRunTimeFiles=false;
 		runTimeFiles=fabrique.createRunTime();
-		//The last job was a split with no end, the only way for add it it's in the next jobchain because, 
-		//next of the last job is always a jobchain or nothing (end of the file) 
+
+
 
 		do {
 
-			cell = coloneExcelSuivant();// first time, we pass to the case 3nd
+			cell = coloneExcelSuivant();
+			// first time, we pass to the case 3nd
 			// case
 			// it's why i=2 (0,1,2)=>3
 
@@ -374,34 +399,37 @@ public class ExcelReader {
 
 		} while (cellIterator.hasNext());
 
+		//add the new jobchain in the list of jobchain (list of jobchain application) 
 		jobchain.put(jbc.getName(), jbc);
-		//for now if we treat a new jobchain
 
-		if (jobchainEnCour != jbc.getName() && jobchainEnCour!=null) {// reset correspondence between jobchain
-			// and order
+
+		if (jobchainEnCour != jbc.getName() && jobchainEnCour!=null) {
+			// now if we treat a new jobchain
+			// reset correspondence between jobchain
+			// and order because jobchain can have many order
 
 			nbOrderParJobchain.put(jobchainEnCour, nbrDeOrder);
 			nbrDeOrder = 0;
 
+			//here we finish the past jobchain if he easy we add step "success" and "error" 
+			//else one more, "END"
 			addBeginAndEndJobChain(jobchainEnCour);
 		}
 
-
+		//now the present jobchain is the new chain
 		jobchainEnCour = jbc.getName();
 
 
-
-
-		if(MAJ) //cela veux dire que l'on traite un jobchaine lié a lancienne jochaine deja traiter il 
-			//faut donc garder le nom de lancienne jobchain pour savoir d'ou il vient
-
+		//in the new version this step is not use
+		//if MAJ=true it's a jobchain i have add with the prog
+		if(MAJ) 
 			jobchainRunOtherJobChain=jobchainEnCour;
 
 	}
 
 	/**
 	 * name - treatJobChainOption functional correspondence between the excel 
-	 *                            file and jobscheduler (jobchain)
+	 * file and jobscheduler (jobchain) look the Ocab file 
 	 * 
 	 * @param int : correspondence with the title line of the excel file
 	 * @author jean-vincent
@@ -414,6 +442,7 @@ public class ExcelReader {
 
 		switch (ligneTitre.get(i).toString()) {
 
+		//option in the excel ocab
 		case "jobstream":
 			jbc.setName(cell.toString());
 
@@ -456,9 +485,10 @@ public class ExcelReader {
 	}
 
 	/**
-	 * name - traiterLesOptionDunJob functional correspondence between the excel
-	 * file and jobscheduler (job)
+	 * name - treatJobOption functional correspondence between the excel
+	 * file and jobscheduler (job) 
 	 * 
+	 * see treatJobLine()
 	 * @param int : correspondence with the title line of the excel file
 	 * @author jean-vincent
 	 * @date 20/05/2015
@@ -508,17 +538,19 @@ public class ExcelReader {
 
 			break;
 		case "user":
-			if(!cell.toString().equals(file.getName().split("\\.")[0].toLowerCase()))
+			//If there is more than one users, notify in log
+			if(!cell.toString().equals(file.getName().split("\\.")[0].toLowerCase())&&alertUtilisateur)
 			{
 
 
 				log+="ATTENTION les jobs dans le fichier ont plusieurs utilisateurs! \n";
-
+				alertUtilisateur=false;
 
 			}
 
 
 			break;
+
 		case "description":
 
 			if(cell.toString().indexOf("by composer")==-1)
@@ -576,14 +608,17 @@ public class ExcelReader {
 
 		case "follows":
 
-			
+			//if a job wait a file
 			if(!jobhelp.getJobWithFiles(jobFileName).equals("nofiles"))
 			{ 
-                
+				//if the job wait a file(s) to be execute,  we create job with the same
+				//name with "wait_file" at end. this job wait the file(s), then execute the job
+				//See : http://www.sos-berlin.com/doc/JITL/JobSchedulerExistsFile.xml
+
 				String[] Line=jobhelp.getJobWithFiles(jobFileName).split(";");
-                
+
 				JobChainNode tempBoucle=fabrique.createJobChainJobChainNode();
-                
+
 				Job jobSchedulerExistsFile=fabrique.createJob();
 				Description dsc=fabrique.createJobDescription();
 
@@ -610,17 +645,17 @@ public class ExcelReader {
 				//par défaut	 
 				initialiseParamsJobBoucle(prms,jobSchedulerExistsFile);
 				//End défaut  
-				
+
 				String[] splitdirectory=null;
-				
+
 				if(Line.length>1)
 				{
 					for(int a=0;a< Line.length;a++)
 					{
 						splitdirectory=sheet.getRow(Integer.parseInt(Line[a])).getCell(30).toString().split("/");
-						
-						
-						
+
+
+
 						if(a==0)
 						{
 							for(int j=0;j<splitdirectory.length-1;j++)
@@ -634,13 +669,13 @@ public class ExcelReader {
 									directory+=splitdirectory[j]; 
 								}
 							}
-						file1.setValue(directory);
-						regex.setValue(splitdirectory[splitdirectory.length-1]);
-						
+							file1.setValue(directory);
+							regex.setValue(splitdirectory[splitdirectory.length-1]);
+
 						}
 						else
 						{
-						 regex.setValue(regex.getValue()+" || "+splitdirectory[splitdirectory.length-1]);
+							regex.setValue(regex.getValue()+" || "+splitdirectory[splitdirectory.length-1]);
 						}
 					}
 					skip_first_files.setValue(String.valueOf(Line.length));
@@ -660,11 +695,12 @@ public class ExcelReader {
 							directory+=splitdirectory[j]; 
 						}
 					}
-					
+
 					file1.setValue(directory);
 					regex.setValue(splitdirectory[splitdirectory.length-1]);
-					
+
 				}
+
 				tempBoucle.setState(jobFileName+"_WaitFiles");
 				tempBoucle.setJob(jobFileName+"_WaitFiles");
 				tempBoucle.setNextState(jbcn.getState());
@@ -674,7 +710,7 @@ public class ExcelReader {
 				prms.getParamOrCopyParamsOrInclude().add(skip_first_files);
 				jobSchedulerExistsFile.setParams(prms);
 				outJob(jobSchedulerExistsFile,jobFileName+"_WaitFiles");
-				
+
 
 
 
@@ -682,7 +718,9 @@ public class ExcelReader {
 
 			if(!jobhelp.getNextJob(jobFileName).equals("NogetL1"))
 			{	 
-				if(!jobhelp.getJobWithFiles(jobhelp.getNextJob(jobFileName)).equals("nofiles"))//si le prochain job a un fichier
+				//if the next job have a file the current job have for next a WaitFiles
+				//see the top of "follow"---> in the switch--> line 608 if he don't change
+				if(!jobhelp.getJobWithFiles(jobhelp.getNextJob(jobFileName)).equals("nofiles"))
 				{
 
 					jbcn.setNextState(jobhelp.getNextJob(jobFileName)+"_WaitFiles");
@@ -708,11 +746,11 @@ public class ExcelReader {
 
 				}
 
-				if(jobhelp.isJobChainComplex(jobchainEnCour)) //if it's a complex case next of the last jobchainode go to jobchainnode end
+				if(jobhelp.isJobChainComplex(jobchainEnCour)) //if it's a complex case next of the last jobchain node go to jobchainnode end
 				{
 					jbcn.setNextState("End");	
 				}
-				else if(fichier)
+				else if(fichier) //if there is a file we delete it
 				{
 					jbcn.setNextState("S_cleanfile"); 
 				}
@@ -734,7 +772,7 @@ public class ExcelReader {
 		case "at":
 
 
-
+			//see Ocab
 			if(sheet.getRow(numLigne-1).getCell(3).toString().isEmpty())
 			{
 				RunTime rt= new  RunTime();
@@ -752,7 +790,8 @@ public class ExcelReader {
 		case "every":
 
 
-
+			//boucle interne = repeat in a Order
+			//boucle externe= reapeat in a other jobchain			
 
 			if(boucleExterne)
 			{
@@ -907,9 +946,9 @@ public class ExcelReader {
 	}
 
 	/**
-	 * name - traiterUneLigneJob treat a job
+	 * name - treatJobLine() treat a job line
 	 * 
-	 * @see traiterLesOptionDunJob
+	 * @see treatJobOption
 	 * @author jean-vincent
 	 * @date 20/05/2015
 	 * @note
@@ -1006,7 +1045,7 @@ public class ExcelReader {
 
 
 		}
-
+		//add the job in the list of job
 		ljob.put(jobFileName, jb);
 
 	}
@@ -1015,7 +1054,7 @@ public class ExcelReader {
 	 * name - countDay  correspondence between  excel and job scheduler date
 	 * 
 	 * 
-	 * @param String[] : correspondence with the title line of the excel file
+	 * @param String[] : Days to convert 
 	 * @author jean-vincent
 	 * @date 20/05/2015
 	 * @note
@@ -1076,9 +1115,18 @@ public class ExcelReader {
 
 	}
 
+	/**
+	 * name - countDay  correspondence between  excel and job scheduler date
+	 * 
+	 * 
+	 * @param String : Day to convert 
+	 * @author jean-vincent
+	 * @date 20/05/2015
+	 * @note
+	 */	
+
 	public String countDay(String day)
 	{
-
 
 
 		switch (day) {
@@ -1124,9 +1172,10 @@ public class ExcelReader {
 
 
 	/**
-	 * name - traiterLesOptionDunOrder functional correspondence between the
+	 * name - treatOrderOption functional correspondence between the
 	 * excel file and jobscheduler (order)
 	 * 
+	 * see treatOrderLine
 	 * @param int : correspondence with the title line of the excel file
 	 * @author jean-vincent
 	 * @date 20/05/2015
@@ -1144,6 +1193,8 @@ public class ExcelReader {
 			switch (ligneTitre.get(i).toString()) {
 
 			case "runcycle":
+
+				//Formatting name of order 
 
 				String zero="";
 				if(numeroOrder<10)
@@ -1231,6 +1282,7 @@ public class ExcelReader {
 					Period tmpPeriodfile = fabrique.createPeriod();
 
 					tmpPeriod2.setSingleStart(saveAt);
+					//if there is a file we add the period in the first(s) job
 					tmpPeriodfile.setBegin(saveAt);
 
 
@@ -1460,6 +1512,16 @@ public class ExcelReader {
 		}
 
 	}
+
+	/**
+	 * name - Orderauthorization : if a job have a file, no order
+	 *
+	 * 
+	 * @author jean-vincent
+	 * @date 20/05/2015
+	 * @note
+	 */
+
 	public boolean Orderauthorization(int line)
 	{//les order on t'il le droit d'etre utilisé ici dans la chaine ? si il y a un fichier non
 
@@ -1477,6 +1539,15 @@ public class ExcelReader {
 
 		return false;
 	}
+
+	/**
+	 * name - detectBoucle : if a job have a boucle, extern (in another jobchain) or intern(in order)
+	 *
+	 * 
+	 * @author jean-vincent
+	 * @date 20/05/2015
+	 * @note
+	 */
 	public void detectBoucle(Period period)
 	{
 		int ligne=numLigne+1;
@@ -1490,6 +1561,7 @@ public class ExcelReader {
 		String timeBoucle=sheet.getRow(ligne).getCell(47).toString();
 		canBoucleInOrder=!timeBoucle.isEmpty();
 		boolean run=true;
+
 		//traite deux fois la meme ligne pas très propre
 		while(!sheet.getRow(ligne).getCell(2).toString().isEmpty() && run && canBoucleInOrder)
 		{	
@@ -1529,14 +1601,15 @@ public class ExcelReader {
 	}
 
 	/**
-	 * name - traiterUneLigneOrder treat a order
+	 * name -treatOrderLine  treat a order
 	 *
-	 * @see traiterLesOptionDunOrder
+	 * @see treatOrderOption
 	 * @author jean-vincent
 	 * @date 20/05/2015
 	 * @note
 	 */
-	public void treatOrderLine() {
+
+	public void TreatOrderLine() {
 
 		oRuntime = fabrique.createRunTime();
 		oParams = fabrique.createParams();
@@ -1598,7 +1671,7 @@ public class ExcelReader {
 
 
 	/**
-	 * name - trainterLeFichierExcel() treat a excel file
+	 * name -  treatExcelFile() treat a excel file
 	 *
 	 * @exception IOException
 	 * @return boolean
@@ -1636,6 +1709,7 @@ public class ExcelReader {
 			if (!chaine.isEmpty()) {
 				ActivateMultiFileOrder=true;
 
+				// normaly useless 
 				if(chaine.equals("-1"))
 				{
 					Commands cmd=fabrique.createCommands();
@@ -1663,10 +1737,13 @@ public class ExcelReader {
 				if (!cell.toString().isEmpty()) {
 					// we treat the entire line (it's a job)
 
+					//now we can't add file in the chain again, 
+					//now if there is a file, it's on a job
 					ActivateMultiFileOrder=false;
 					treatJobLine();
 
 				} else {
+
 					// if JID don't exist we look the DEP
 					// if DEP exist and equal "R" we create a order
 					cell = coloneExcelSuivant();
@@ -1674,7 +1751,9 @@ public class ExcelReader {
 					if (cell.toString().equals("R")) {
 
 						if(sheet.getRow(numLigne).getCell(15).toString().isEmpty())
-						{treatOrderLine();}
+						{
+							TreatOrderLine();
+						}
 						else if(sheet.getRow(numLigne-1).getCell(3).toString().equals("R"))
 						{
 							Holidays hlds=fabrique.createHolidays();
@@ -1693,7 +1772,7 @@ public class ExcelReader {
 					}
 					else if(cell.toString().equals("O"))
 					{
-						if(ActivateMultiFileOrder)
+						if(ActivateMultiFileOrder) //use for add files only on a jobchain 
 						{
 
 							contenuFichier.add(sheet.getRow(numLigne).getCell(30).toString());
@@ -1720,12 +1799,6 @@ public class ExcelReader {
 		return true;
 	}
 
-	// 1=job
-	// 2=jobchain
-	// 3=order
-	// 12= job et jobchain
-	// etc...
-
 	/**
 	 * name - OutputTest test the program, create XML files
 	 * 
@@ -1736,7 +1809,7 @@ public class ExcelReader {
 	 * @note
 	 */
 
-	public int OutputTest(int lancement) throws FileNotFoundException,
+	public int OutputTest() throws FileNotFoundException,
 	JAXBException, IllegalStateException {
 		Collection c=jobchain.values();
 		Iterator ejobchain=c.iterator();
@@ -1891,7 +1964,7 @@ public class ExcelReader {
 	{
 		JobChain.FileOrderSource file=fabrique.createJobChainFileOrderSource();
 		Job jobSchedulerExistsFile=fabrique.createJob();
-		
+
 		Params prms=fabrique.createParams();
 
 		Param file1=fabrique.createParam();
@@ -1908,7 +1981,7 @@ public class ExcelReader {
 		initialiseParamsJobBoucle(prms,jobSchedulerExistsFile);
 		//End défaut    		 
 
-		
+
 		for(int i=0;i<contenuFichier.size();i++)
 		{
 			String[] split=contenuFichier.get(i).split("/");
@@ -1942,8 +2015,8 @@ public class ExcelReader {
 			{
 				regex.setValue(regex.getValue()+" || "+split[split.length-1]);
 			}
-			
-		
+
+
 		}
 
 		if(contenuFichier.size()==2)
@@ -1956,12 +2029,12 @@ public class ExcelReader {
 			prms.getParamOrCopyParamsOrInclude().add(file1);	
 			prms.getParamOrCopyParamsOrInclude().add(regex);
 			prms.getParamOrCopyParamsOrInclude().add(skip_first_files);
-			
+
 			jobSchedulerExistsFile.setParams(prms);
-			
-			
+
+
 			outJob(jobSchedulerExistsFile, jobchainEnCour+"Wait_Files");
-			
+
 
 			JobChainNode temp=fabrique.createJobChainJobChainNode();
 			temp.setState(jobchainEnCour+"Wait_Files");
@@ -2072,22 +2145,22 @@ public class ExcelReader {
 		check_steady_state_interval.setName("check_steady_state_interval");
 		check_steady_state_interval.setValue("1");
 		prms.getParamOrCopyParamsOrInclude().add(check_steady_state_interval);
-		
+
 		Description dsc=fabrique.createJobDescription();
 
 		Include inc=fabrique.createInclude();
 		inc.setFile("jobs/JobSchedulerExistsFile.xml");
 		dsc.getContent().add(inc);
 		jb.setDescription(dsc);
-		
+
 		Script scr= fabrique.createScript();
 		scr.setJavaClass("sos.scheduler.file.JobSchedulerExistsFile");
 		scr.setLanguage("java");
 		jb.setScript(scr);
-		
+
 		jb.setOrder("yes");
 		jb.setStopOnError("no");
-		
+
 	}
 	public void ExcelCleaner(XSSFSheet sheet)
 	{
@@ -2109,75 +2182,75 @@ public class ExcelReader {
 		boolean delete=false;
 		String nameOfJobChain="";
 		int NumberJobchainsup=10;
-		
+
 		for(int p=2;p<=sheet.getLastRowNum();p++)	 
 		{	
 
-			 if(!row.getCell(2).toString().isEmpty())
-				{ 
-					int nextLine=numLigne+1;
-					LinkedHashMap<String,Integer> lineAft = new LinkedHashMap<String,Integer>();
-					LinkedHashMap<String,Integer> lineBef = new LinkedHashMap<String,Integer>();
-					while(nextLine<=sheet.getLastRowNum())
-					{
-						if(!sheet.getRow(nextLine).getCell(1).toString().isEmpty()){
-							nextLine=sheet.getLastRowNum(); 
+			if(!row.getCell(2).toString().isEmpty())
+			{ 
+				int nextLine=numLigne+1;
+				LinkedHashMap<String,Integer> lineAft = new LinkedHashMap<String,Integer>();
+				LinkedHashMap<String,Integer> lineBef = new LinkedHashMap<String,Integer>();
+				while(nextLine<=sheet.getLastRowNum())
+				{
+					if(!sheet.getRow(nextLine).getCell(1).toString().isEmpty()){
+						nextLine=sheet.getLastRowNum(); 
 
-						}
-						else if(sheet.getRow(numLigne).getCell(2).toString().equals(sheet.getRow(nextLine).getCell(11).toString()))
-						{
+					}
+					else if(sheet.getRow(numLigne).getCell(2).toString().equals(sheet.getRow(nextLine).getCell(11).toString()))
+					{
 
 						lineAft.put(sheet.getRow(nextLine).getCell(2).toString(), nextLine);
-						}
-						nextLine++;
 					}
-					
-					if(lineAft.size()==1)
-					{
-						if(lineAft.values().iterator().next()!=numLigne+1)
-						{
-							copyExcelJob(lineAft.values().iterator().next(),(numLigne+1));
-							
-							delete=true;
-							log+="La ligne "+lineAft.values().iterator().next() + "a été remonté à la ligne "+ (numLigne+1);
-							System.out.println("La ligne "+lineAft.values().iterator().next() + "a été remonté à la ligne "+ (numLigne+1));
-							
-						}
-					}
-					
-					nextLine=numLigne+1;
-					
-					while(nextLine<=sheet.getLastRowNum())
-					{
-						if(!sheet.getRow(nextLine).getCell(1).toString().isEmpty()){
-							nextLine=sheet.getLastRowNum(); 
-
-						}
-						else if(sheet.getRow(numLigne).getCell(11).toString().equals(sheet.getRow(nextLine).getCell(2).toString()))
-						{
-							if(!sheet.getRow(numLigne).getCell(11).toString().isEmpty()&&!sheet.getRow(nextLine).getCell(2).toString().isEmpty())
-							{
-								
-								System.out.println("lline "+ numLigne+" "+nextLine);
-								lineBef.put(sheet.getRow(nextLine).getCell(2).toString(), nextLine);
-							}
-						}
-						
-						nextLine++;
-					}
-					
-					if(lineBef.size()==1)
-					{
-						
-							copyExcelJob(lineBef.values().iterator().next(),numLigne);				
-							rowSuiv=row;
-							row = sheet.getRow(p-1);
-							delete=true;
-						
-					}
-	
+					nextLine++;
 				}
-			 /*
+
+				if(lineAft.size()==1)
+				{
+					if(lineAft.values().iterator().next()!=numLigne+1)
+					{
+						copyExcelJob(lineAft.values().iterator().next(),(numLigne+1));
+
+						delete=true;
+						log+="La ligne "+lineAft.values().iterator().next() + "a été remonté à la ligne "+ (numLigne+1);
+						System.out.println("La ligne "+lineAft.values().iterator().next() + "a été remonté à la ligne "+ (numLigne+1));
+
+					}
+				}
+
+				nextLine=numLigne+1;
+
+				while(nextLine<=sheet.getLastRowNum())
+				{
+					if(!sheet.getRow(nextLine).getCell(1).toString().isEmpty()){
+						nextLine=sheet.getLastRowNum(); 
+
+					}
+					else if(sheet.getRow(numLigne).getCell(11).toString().equals(sheet.getRow(nextLine).getCell(2).toString()))
+					{
+						if(!sheet.getRow(numLigne).getCell(11).toString().isEmpty()&&!sheet.getRow(nextLine).getCell(2).toString().isEmpty())
+						{
+
+							System.out.println("lline "+ numLigne+" "+nextLine);
+							lineBef.put(sheet.getRow(nextLine).getCell(2).toString(), nextLine);
+						}
+					}
+
+					nextLine++;
+				}
+
+				if(lineBef.size()==1)
+				{
+
+					copyExcelJob(lineBef.values().iterator().next(),numLigne);				
+					rowSuiv=row;
+					row = sheet.getRow(p-1);
+					delete=true;
+
+				}
+
+			}
+			/*
 		else if(!row.getCell(2).toString().isEmpty()&&!row.getCell(16).toString().isEmpty()&&!rowSuiv.getCell(16).toString().isEmpty()&&(!rowPrec.getCell(3).toString().isEmpty()||!rowPrec.getCell(5).toString().isEmpty()))
 			{
 				String timeRow=row.getCell(16).toString();
@@ -2208,8 +2281,8 @@ public class ExcelReader {
                         /*
 						if(rebuildDependency(aComparer,nameOfJobChain+NumberJobchainsup))
 	                  						NumberJobchainsup++;
-						 */
-			 /*
+			 */
+			/*
 						ligneEchange=0;
 					}
 
@@ -2232,8 +2305,8 @@ public class ExcelReader {
 					rowPrec.getCell(16).setCellStyle(csCF);
 				}
 			}
-			 
-*/
+
+			 */
 
 			if(!row.getCell(1).toString().isEmpty())
 			{
@@ -2271,7 +2344,7 @@ public class ExcelReader {
 			}
 
 
-			
+
 			/*
 			FileOutputStream fileOut;
 			try {
@@ -2281,8 +2354,8 @@ public class ExcelReader {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			*/
-			
+			 */
+
 			if(rowSuiv.getCell(3).toString().equals("O"))
 			{
 
@@ -2451,13 +2524,13 @@ public class ExcelReader {
 		//si le job est suivis de fichier(s) il faut rajouer le job apres le fichier (ou le lock)
 
 		boolean boucle=!sheet.getRow(newLine).getCell(3).toString().isEmpty();
-System.out.println(line+" "+newLine );
+		System.out.println(line+" "+newLine );
 
 		while(boucle)
 		{
-			
+
 			newLine++;
-			
+
 			boucle=!sheet.getRow(newLine+1).getCell(3).toString().isEmpty();
 		}
 
@@ -2479,11 +2552,11 @@ System.out.println(line+" "+newLine );
 				boucle=!sheet.getRow(line+1).getCell(3).toString().isEmpty();
 		}
 
-		
+
 		for(int z=0;z<ajouter.size();z++)
 		{
 
-			
+
 			Row row=sheet.getRow(ajouter.get(z)); 
 			sheet.shiftRows(newLine, sheet.getLastRowNum(), 1);
 			sheet.createRow(newLine);
@@ -2500,12 +2573,12 @@ System.out.println(line+" "+newLine );
 
 
 			}
-			
-			
+
+
 			System.out.println(sheet.getRow((ajouter.get(z)+1)).getCell(2).toString()+"  "+(ajouter.get(z)) );
-			
+
 			sheet.removeRow(sheet.getRow((ajouter.get(z)+1)));
-			
+
 			FileOutputStream fileOut;
 			try {
 				fileOut = new FileOutputStream(outPut+numLigne+file.getName());
@@ -2514,11 +2587,11 @@ System.out.println(line+" "+newLine );
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 			if((ajouter.get(z)+1)!=sheet.getLastRowNum()+1)
-			sheet.shiftRows((ajouter.get(z)+2), sheet.getLastRowNum(),-1);
-			
-			
+				sheet.shiftRows((ajouter.get(z)+2), sheet.getLastRowNum(),-1);
+
+
 			//we have created a line then we need to add 1 to the indice "line" for stay on the right value
 
 			newLine++;
@@ -2589,7 +2662,7 @@ System.out.println(line+" "+newLine );
 		return false;
 	}
 
-*/
+	 */
 	public void switchRow( int ligne1, int ligne2, CellStyle csCF)
 	{
 		Row row=sheet.getRow(ligne1);
@@ -2718,25 +2791,21 @@ System.out.println(line+" "+newLine );
 		}
 	}
 
-
+// for test the programme 
 	public static void main(String[] args) throws IOException, JAXBException {
 
 		ExcelReader exrd = new ExcelReader(
 				"C:/Users/m419099/Documents/AEPBetaT7.xlsm",
 				"C:/Users/m419099/Documents/résultat",new ConvertisseurTwsJbs(),true);
-		// 1=job
-		// 2=jobchain
-		// 3=order
-		// 12= job et jobchain
-		// etc...
+
 
 		if (exrd.treatExcelFile())
 
 		{
 			System.out.println("Fichier Excel traité");
-			exrd.OutputTest(123);}
+			exrd.OutputTest();}
 		else{
-			System.out.println("nofichir");
+			System.out.println("prob");
 		}
 
 		System.exit(0);
