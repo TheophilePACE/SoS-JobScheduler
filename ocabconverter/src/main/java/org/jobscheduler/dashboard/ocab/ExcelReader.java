@@ -2141,6 +2141,7 @@ public class ExcelReader {
 							delete=true;
 							log+="La ligne "+lineAft.values().iterator().next() + "a été remonté à la ligne "+ (numLigne+1);
 							System.out.println("La ligne "+lineAft.values().iterator().next() + "a été remonté à la ligne "+ (numLigne+1));
+							
 						}
 					}
 					
@@ -2156,9 +2157,8 @@ public class ExcelReader {
 						{
 							if(!sheet.getRow(numLigne).getCell(11).toString().isEmpty()&&!sheet.getRow(nextLine).getCell(2).toString().isEmpty())
 							{
-								System.out.println(sheet.getRow(numLigne).getCell(11).toString()+" "+numLigne);
-								System.out.println(sheet.getRow(nextLine).getCell(2).toString()+" "+nextLine);
-								System.out.println("line "+ numLigne+" "+nextLine);
+								
+								System.out.println("lline "+ numLigne+" "+nextLine);
 								lineBef.put(sheet.getRow(nextLine).getCell(2).toString(), nextLine);
 							}
 						}
@@ -2169,7 +2169,7 @@ public class ExcelReader {
 					if(lineBef.size()==1)
 					{
 						
-							copyExcelJob(lineBef.values().iterator().next(),(numLigne-1));				
+							copyExcelJob(lineBef.values().iterator().next(),numLigne);				
 							rowSuiv=row;
 							row = sheet.getRow(p-1);
 							delete=true;
@@ -2177,6 +2177,7 @@ public class ExcelReader {
 					}
 	
 				}
+			 /*
 		else if(!row.getCell(2).toString().isEmpty()&&!row.getCell(16).toString().isEmpty()&&!rowSuiv.getCell(16).toString().isEmpty()&&(!rowPrec.getCell(3).toString().isEmpty()||!rowPrec.getCell(5).toString().isEmpty()))
 			{
 				String timeRow=row.getCell(16).toString();
@@ -2208,6 +2209,7 @@ public class ExcelReader {
 						if(rebuildDependency(aComparer,nameOfJobChain+NumberJobchainsup))
 	                  						NumberJobchainsup++;
 						 */
+			 /*
 						ligneEchange=0;
 					}
 
@@ -2231,7 +2233,7 @@ public class ExcelReader {
 				}
 			}
 			 
-
+*/
 
 			if(!row.getCell(1).toString().isEmpty())
 			{
@@ -2270,6 +2272,7 @@ public class ExcelReader {
 
 
 			
+			/*
 			FileOutputStream fileOut;
 			try {
 				fileOut = new FileOutputStream(outPut+numLigne+file.getName());
@@ -2278,7 +2281,7 @@ public class ExcelReader {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+			*/
 			
 			if(rowSuiv.getCell(3).toString().equals("O"))
 			{
@@ -2448,6 +2451,7 @@ public class ExcelReader {
 		//si le job est suivis de fichier(s) il faut rajouer le job apres le fichier (ou le lock)
 
 		boolean boucle=!sheet.getRow(newLine).getCell(3).toString().isEmpty();
+System.out.println(line+" "+newLine );
 
 		while(boucle)
 		{
@@ -2475,7 +2479,7 @@ public class ExcelReader {
 				boucle=!sheet.getRow(line+1).getCell(3).toString().isEmpty();
 		}
 
-
+		
 		for(int z=0;z<ajouter.size();z++)
 		{
 
@@ -2496,9 +2500,25 @@ public class ExcelReader {
 
 
 			}
-			sheet.removeRow(sheet.getRow(ajouter.get(z)+1));
+			
+			
+			System.out.println(sheet.getRow((ajouter.get(z)+1)).getCell(2).toString()+"  "+(ajouter.get(z)) );
+			
+			sheet.removeRow(sheet.getRow((ajouter.get(z)+1)));
+			
+			FileOutputStream fileOut;
+			try {
+				fileOut = new FileOutputStream(outPut+numLigne+file.getName());
+				wb.write(fileOut);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			if((ajouter.get(z)+1)!=sheet.getLastRowNum()+1)
 			sheet.shiftRows((ajouter.get(z)+2), sheet.getLastRowNum(),-1);
-
+			
+			
 			//we have created a line then we need to add 1 to the indice "line" for stay on the right value
 
 			newLine++;
