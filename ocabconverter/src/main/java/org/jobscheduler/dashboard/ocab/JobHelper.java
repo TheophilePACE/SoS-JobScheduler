@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ * Copyright (C) 2015 Jean-Vincent http://bigloupe.github.io/SoS-JobScheduler/
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.

@@ -99,15 +99,15 @@ public class ExcelReader {
 	String outPut;
 	String saveAt;
 	int metrique;
-	boolean fichier=false;
-	String timeJob="";
-	String untilJob="";
-	String log="";
+	boolean fichier = false;
+	String timeJob = "";
+	String untilJob = "";
+	String log = "";
 	ConvertisseurTwsJbs interfaceGraphique;
 	boolean modeTest;
-	int numeroOrder=1;
-	int numLigne=1;
-	String lockInUse="";
+	int numeroOrder = 1;
+	int numLigne = 1;
+	String lockInUse = "";
 	String jobchainRunOtherJobChain;
 	String orderfileName;
 	String jobFileName;
@@ -117,25 +117,26 @@ public class ExcelReader {
 	boolean alertUtilisateur;
 
 	/**
-	 * For the conversion , we must know the next steps for each job,
-	 * but ExcelReader work sequentially and don't stock anything about the next 
-	 * JobHelper contain some operation for know who is the next, 
-	 * or if jobchain is complex. 
+	 * For the conversion , we must know the next steps for each job, but
+	 * ExcelReader work sequentially and don't stock anything about the next
+	 * JobHelper contain some operation for know who is the next, or if jobchain
+	 * is complex.
 	 * 
 	 */
 	JobHelper jobhelp;
 
 	/**
-	 *this variable allows insert a job split and a job for the synchronization  in a jobchain, 
-	 *we need those variables because there is no correspondence in the ocab file (no split no synchro), we add the job manually. 
-	 *jbcnSplitBool jbcnSyncBool, just for say if we need add a split/Sync job or not.
-	 *alreadySync, many job can converge on a Synchronization, but there is only one job of Synchronization,
-	 *when he already on the chain, alreadySync is true  
+	 * this variable allows insert a job split and a job for the synchronization
+	 * in a jobchain, we need those variables because there is no correspondence
+	 * in the ocab file (no split no synchro), we add the job manually.
+	 * jbcnSplitBool jbcnSyncBool, just for say if we need add a split/Sync job
+	 * or not. alreadySync, many job can converge on a Synchronization, but
+	 * there is only one job of Synchronization, when he already on the chain,
+	 * alreadySync is true
 	 */
-	boolean jbcnSplitBool=false;
-	boolean jbcnSyncBool=false;
-	boolean alreadySync=false;
-
+	boolean jbcnSplitBool = false;
+	boolean jbcnSyncBool = false;
+	boolean alreadySync = false;
 
 	/**
 	 * Name the order based on jobchain
@@ -155,7 +156,8 @@ public class ExcelReader {
 	 * Lists
 	 */
 
-	ArrayList<String> ligneTitre = new ArrayList<String>(); // title line of  Excel															
+	ArrayList<String> ligneTitre = new ArrayList<String>(); // title line of
+															// Excel
 	LinkedHashMap<String, JobChain> jobchain = new LinkedHashMap<String, JobChain>();
 	// amount "order" for each jobchain
 	Hashtable<String, Integer> nbOrderParJobchain = new Hashtable<String, Integer>();
@@ -164,7 +166,7 @@ public class ExcelReader {
 	Iterator<Row> rowIterator;
 	Iterator<Cell> cellFirstLigne;
 	Iterator<Cell> cellIterator;
-	ArrayList<String> contenuFichier=new ArrayList<String>();
+	ArrayList<String> contenuFichier = new ArrayList<String>();
 
 	/**
 	 * Objects generated from the schema
@@ -182,60 +184,60 @@ public class ExcelReader {
 	RunTime runTimeFiles;
 
 	/**
-	 * variable Initialization 
+	 * variable Initialization
 	 */
 
-	public void InitVariable()
-	{
-		metrique=0;
-		orderfileName="";
-		alertUtilisateur=true;
-		jobFileName="";
-		Orderauthorization=true;
-		boucleExterne=false;
-		contenuFichier=new ArrayList<String>();
+	public void InitVariable() {
+		metrique = 0;
+		orderfileName = "";
+		alertUtilisateur = true;
+		jobFileName = "";
+		Orderauthorization = true;
+		boucleExterne = false;
+		contenuFichier = new ArrayList<String>();
 		jobchainEnCour = null;
 		nbrDeOrder = 0;
-		saveAt="00:00";//Default Time
-		haveRunTimeFiles=false;
+		saveAt = "00:00";// Default Time
+		haveRunTimeFiles = false;
 	}
 
 	/**
 	 * Constructor using Excel and Xml path
 	 */
 
-	public ExcelReader(String EmplacementFichierExcel, String output, ConvertisseurTwsJbs ctj,boolean modTest)
-			throws JAXBException, IOException {
+	public ExcelReader(String EmplacementFichierExcel, String output,
+			ConvertisseurTwsJbs ctj, boolean modTest) throws JAXBException,
+			IOException {
 		super();
-		modeTest=modTest;
-		interfaceGraphique=ctj;
+		modeTest = modTest;
+		interfaceGraphique = ctj;
 		this.outPut = output;
 		InitVariable();
 
 		file = new File(EmplacementFichierExcel);
-		File dir = new File (outPut+"/"+file.getName().split("\\.")[0]);
+		File dir = new File(outPut + "/" + file.getName().split("\\.")[0]);
 		dir.mkdirs();
-		outPut=dir.getAbsolutePath()+"/";
+		outPut = dir.getAbsolutePath() + "/";
 
-		log="**********************************************************\n";
-		log+="Traitement du fichier Excel : "+file.getName()+" destination: "+outPut+"\n";
-
+		log = "**********************************************************\n";
+		log += "Traitement du fichier Excel : " + file.getName()
+				+ " destination: " + outPut + "\n";
 
 		jc = JAXBContext
 				.newInstance("org.jobscheduler.dashboard.jobdefinition.xml");
 		marshaller = jc.createMarshaller();
 		marshaller.setProperty("jaxb.encoding", "ISO-8859-1");
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-		//For add CDATA, jaxb don't allow the use of "<!" (special character in xml)
+		// For add CDATA, jaxb don't allow the use of "<!" (special character in
+		// xml)
 		marshaller.setProperty("com.sun.xml.bind.characterEscapeHandler",
 				new CharacterEscapeHandler() {
-			@Override
-			public void escape(char[] ch, int start, int length,
-					boolean isAttVal, Writer writer) throws IOException {
-				writer.write(ch, start, length);
-			}
-		});
-
+					@Override
+					public void escape(char[] ch, int start, int length,
+							boolean isAttVal, Writer writer) throws IOException {
+						writer.write(ch, start, length);
+					}
+				});
 
 		fabrique = new ObjectFactory();
 		fis = new FileInputStream(file);
@@ -243,42 +245,44 @@ public class ExcelReader {
 
 		sheet = wb.getSheetAt(3);
 
-		//first clean of excel file, create blank for null case 
-		for(Row row : sheet) {
+		// first clean of excel file, create blank for null case
+		for (Row row : sheet) {
 
-			for(int cn=0; cn<row.getLastCellNum(); cn++) {
+			for (int cn = 0; cn < row.getLastCellNum(); cn++) {
 
 				row.getCell(cn, Row.CREATE_NULL_AS_BLANK);
 
 			}
 		}
 
-
 		interfaceGraphique.addValueProgressBar(5);
 
-		ExcelCleaner(sheet);
-		FileOutputStream fileOut = new FileOutputStream(outPut+file.getName());
+		ExcelCleaner excl = new ExcelCleaner();
+		excl.ExcelOcabCleaner(wb, sheet, log, outPut, ctj);
+		FileOutputStream fileOut = new FileOutputStream(outPut + file.getName());
 		wb.write(fileOut);
 
-		jobhelp=new JobHelper(sheet,marshaller);
+		jobhelp = new JobHelper(sheet, marshaller);
 
-		log+="Exécution du JobHelper \n";
+		log += "Exécution du JobHelper \n";
 
-		//jobhelp help the main work, he resolve the dependence,  exp (next 1002 is 1003)
-		//detect the split case (parallel), etc.
+		// jobhelp help the main work, he resolve the dependence, exp (next 1002
+		// is 1003)
+		// detect the split case (parallel), etc.
 
 		jobhelp.initialization(outPut);
 
-		interfaceGraphique.addValueProgressBar(20);//update graphic
+		interfaceGraphique.addValueProgressBar(20);// update graphic
 
 		rowIterator = sheet.iterator();// Iterate through each rows one by one
 
 		cellFirstLigne = sheet.getRow(0).cellIterator();// Get the first line of
 
-		// application Lock (for stop a application put "setmaxNonExclusive=0") 
-		Lock lc=fabrique.createLock();
+		// application Lock (for stop a application put "setmaxNonExclusive=0")
+		Lock lc = fabrique.createLock();
 		lc.setMaxNonExclusive(new BigInteger("50"));
-		OutputStream os = new FileOutputStream(outPut+file.getName().split("\\.")[0]+".lock.xml");
+		OutputStream os = new FileOutputStream(outPut
+				+ file.getName().split("\\.")[0] + ".lock.xml");
 		marshaller.marshal(fabrique.createLock(lc), os);
 	}
 
@@ -337,16 +341,15 @@ public class ExcelReader {
 	}
 
 	/**
-	 * variable JobChain Initialization 
+	 * variable JobChain Initialization
 	 */
-	public void InitVariableOfJobChain()
-	{//initialization
-		lockInUse=""; 
-		boucleExterne=true;//for the repetition in another chain
-		LineSpleat=null; // line for add parallel job
-		timeJob="";
-		numeroOrder=1;
-		haveRunTimeFiles=false;
+	public void InitVariableOfJobChain() {// initialization
+		lockInUse = "";
+		boucleExterne = true;// for the repetition in another chain
+		LineSpleat = null; // line for add parallel job
+		timeJob = "";
+		numeroOrder = 1;
+		haveRunTimeFiles = false;
 	}
 
 	/**
@@ -364,25 +367,25 @@ public class ExcelReader {
 		// correspond to cell
 
 		InitVariableOfJobChain();
-		//if the past chain don't synchronize his split (parallel job) we add it here
-		//The last job was a split with no end, the only way for add it it's in the next jobchain because, 
-		//next of the last job is always a jobchain or nothing (end of the file) 
-		if(jbcnSyncBool)
-		{
+		// if the past chain don't synchronize his split (parallel job) we add
+		// it here
+		// The last job was a split with no end, the only way for add it it's in
+		// the next jobchain because,
+		// next of the last job is always a jobchain or nothing (end of the
+		// file)
+		if (jbcnSyncBool) {
 
-			jbcnSyncBool=false;
+			jbcnSyncBool = false;
 			jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcnSync);
 		}
-		//if the jobchain wait a file for execute, he can't have order
-		Orderauthorization=Orderauthorization(numLigne+1);
+		// if the jobchain wait a file for execute, he can't have order
+		Orderauthorization = Orderauthorization(numLigne + 1);
 
-		//new jobchain
+		// new jobchain
 		jbc = fabrique.createJobChain();
 		jbc.setVisible("yes");
 		jbc.setOrdersRecoverable("yes");
-		runTimeFiles=fabrique.createRunTime();
-
-
+		runTimeFiles = fabrique.createRunTime();
 
 		do {
 
@@ -399,11 +402,11 @@ public class ExcelReader {
 
 		} while (cellIterator.hasNext());
 
-		//add the new jobchain in the list of jobchain (list of jobchain application) 
+		// add the new jobchain in the list of jobchain (list of jobchain
+		// application)
 		jobchain.put(jbc.getName(), jbc);
 
-
-		if (jobchainEnCour != jbc.getName() && jobchainEnCour!=null) {
+		if (jobchainEnCour != jbc.getName() && jobchainEnCour != null) {
 			// now if we treat a new jobchain
 			// reset correspondence between jobchain
 			// and order because jobchain can have many order
@@ -411,25 +414,25 @@ public class ExcelReader {
 			nbOrderParJobchain.put(jobchainEnCour, nbrDeOrder);
 			nbrDeOrder = 0;
 
-			//here we finish the past jobchain if he easy we add step "success" and "error" 
-			//else one more, "END"
+			// here we finish the past jobchain if he easy we add step "success"
+			// and "error"
+			// else one more, "END"
 			addBeginAndEndJobChain(jobchainEnCour);
 		}
 
-		//now the present jobchain is the new chain
+		// now the present jobchain is the new chain
 		jobchainEnCour = jbc.getName();
 
-
-		//in the new version this step is not use
-		//if MAJ=true it's a jobchain i have add with the prog
-		if(MAJ) 
-			jobchainRunOtherJobChain=jobchainEnCour;
+		// in the new version this step is not use
+		// if MAJ=true it's a jobchain i have add with the prog
+		if (MAJ)
+			jobchainRunOtherJobChain = jobchainEnCour;
 
 	}
 
 	/**
-	 * name - treatJobChainOption functional correspondence between the excel 
-	 * file and jobscheduler (jobchain) look the Ocab file 
+	 * name - treatJobChainOption functional correspondence between the excel
+	 * file and jobscheduler (jobchain) look the Ocab file
 	 * 
 	 * @param int : correspondence with the title line of the excel file
 	 * @author jean-vincent
@@ -439,23 +442,24 @@ public class ExcelReader {
 
 	public void treatJobChainOption(int i) {
 
-
 		switch (ligneTitre.get(i).toString()) {
 
-		//option in the excel ocab
+		// option in the excel ocab
 		case "jobstream":
 			jbc.setName(cell.toString());
 
-			if(!jobhelp.splitAtBegening(cell.toString()).equals("No"))
-			{
-				jbcnSplit=fabrique.createJobChainJobChainNode();
-				String temp=jobhelp.splitAtBegening(cell.toString()).split(";")[0];//just a temporary variable
-				LineSpleat=jobhelp.splitAtBegening(cell.toString()).split(";");
+			if (!jobhelp.splitAtBegening(cell.toString()).equals("No")) {
+				jbcnSplit = fabrique.createJobChainJobChainNode();
+				String temp = jobhelp.splitAtBegening(cell.toString()).split(
+						";")[0];// just a temporary variable
+				LineSpleat = jobhelp.splitAtBegening(cell.toString())
+						.split(";");
 
 				jbcnSplit.setState(temp);
 				jbcnSplit.setNextState(jobhelp.getNextJob(temp));
 				jbcnSplit.setJob("/sos/jitl/JobChainSplitter");
-				jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcnSplit);
+				jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(
+						jbcnSplit);
 			}
 
 			break;
@@ -465,18 +469,28 @@ public class ExcelReader {
 			break;
 
 		case "at":
-			timeJob= cell.toString().substring(0, 2) + ":"
+			timeJob = cell.toString().substring(0, 2) + ":"
 					+ cell.toString().substring(2, 4);
 
 			break;
 
 		case "until":
-			untilJob= cell.toString().substring(0, 2) + ":"
+			untilJob = cell.toString().substring(0, 2) + ":"
 					+ cell.toString().substring(2, 4);
+			int tmp = Integer.parseInt(untilJob.split(":")[0]
+					+ untilJob.split(":")[1]);
+
+			if (!timeJob.isEmpty()) {
+
+				int tmp2 = Integer.parseInt(timeJob.split(":")[0]
+						+ timeJob.split(":")[1]);
+				if (tmp <= tmp2 || untilJob.equals("00:15")
+						|| untilJob.equals("00:05")) {
+					untilJob = "";
+				}
+			}
 
 			break;
-
-
 
 		default:
 			break;
@@ -485,10 +499,11 @@ public class ExcelReader {
 	}
 
 	/**
-	 * name - treatJobOption functional correspondence between the excel
-	 * file and jobscheduler (job) 
+	 * name - treatJobOption functional correspondence between the excel file
+	 * and jobscheduler (job)
 	 * 
 	 * see treatJobLine()
+	 * 
 	 * @param int : correspondence with the title line of the excel file
 	 * @author jean-vincent
 	 * @date 20/05/2015
@@ -500,75 +515,75 @@ public class ExcelReader {
 		switch (ligneTitre.get(i).toString()) {
 
 		case "job":
-			jobFileName=cell.toString();
+			jobFileName = cell.toString();
 			jbcn.setJob(cell.toString());
 			jbcn.setState(cell.toString());
 
-			//if next line is a split, then we have to create a new jobchainnode (split)  in actual jobchain
-			//see split at begening of jobchain in treatJobchainoption
+			// if next line is a split, then we have to create a new
+			// jobchainnode (split) in actual jobchain
+			// see split at begening of jobchain in treatJobchainoption
 
-			if(jobhelp.getNextJob(cell.toString()).indexOf("Split_")!=-1)
-			{
-				jbcnSplit=fabrique.createJobChainJobChainNode();
-				String temp=jobhelp.getNextJob(cell.toString());//just a temporary variable
+			if (jobhelp.getNextJob(cell.toString()).indexOf("Split_") != -1) {
+				jbcnSplit = fabrique.createJobChainJobChainNode();
+				String temp = jobhelp.getNextJob(cell.toString());// just a
+																	// temporary
+																	// variable
 				jbcnSplit.setState(temp);
 				jbcnSplit.setNextState(jobhelp.getNextJob(temp));
 				jbcnSplit.setJob("/sos/jitl/JobChainSplitter");
-				jbcnSplitBool=true;
+				jbcnSplitBool = true;
 			}
 
-			//if next line is a split, then we have to create a new synchro in actual jobchain
-			//but every job in a complex case have synch for next or we have only one synch
-			//then we notice we need create a job synch but we add it at the end of the complex case,
-			//when next of the current job is different of Synch and alreySync(=we have a job synch to add) is true    
+			// if next line is a split, then we have to create a new synchro in
+			// actual jobchain
+			// but every job in a complex case have synch for next or we have
+			// only one synch
+			// then we notice we need create a job synch but we add it at the
+			// end of the complex case,
+			// when next of the current job is different of Synch and
+			// alreySync(=we have a job synch to add) is true
 
-			if(jobhelp.AddSynch(sheet.getRow(numLigne).getCell(2).toString()))
-			{
+			if (jobhelp.AddSynch(sheet.getRow(numLigne).getCell(2).toString())) {
 
-				jbcnSync=fabrique.createJobChainJobChainNode();
-				String temp=jobhelp.getNextJob(cell.toString());
+				jbcnSync = fabrique.createJobChainJobChainNode();
+				String temp = jobhelp.getNextJob(cell.toString());
 
 				jbcnSync.setState(temp);
 				jbcnSync.setNextState(jobhelp.getNextJob(temp));
 				jbcnSync.setJob(temp);
-				jbcnSyncBool=true;
+				jbcnSyncBool = true;
 
 			}
-
 
 			break;
 		case "user":
-			//If there is more than one users, notify in log
-			if(!cell.toString().equals(file.getName().split("\\.")[0].toLowerCase())&&alertUtilisateur)
-			{
+			// If there is more than one users, notify in log
+			if (!cell.toString().equals(
+					file.getName().split("\\.")[0].toLowerCase())
+					&& alertUtilisateur) {
 
-
-				log+="ATTENTION les jobs dans le fichier ont plusieurs utilisateurs! \n";
-				alertUtilisateur=false;
+				log += "ATTENTION les jobs dans le fichier ont plusieurs utilisateurs! \n";
+				alertUtilisateur = false;
 
 			}
-
 
 			break;
 
 		case "description":
 
-			if(cell.toString().indexOf("by composer")==-1)
+			if (cell.toString().indexOf("by composer") == -1)
 				jb.setTitle(cell.toString());
-
 
 			break;
 
 		case "scriptname":
 
-			if(modeTest)
-			{
-				scrpt.getContent().add(cdata("sleep 12 " +"#"+cell.toString()));
+			if (modeTest) {
+				scrpt.getContent().add(
+						cdata("sleep 12 " + "#" + cell.toString()));
 
 				jb.setScript(scrpt);
-			}
-			else
-			{
+			} else {
 				scrpt.getContent().add(cdata(cell.toString()));
 				jb.setScript(scrpt);
 			}
@@ -577,30 +592,25 @@ public class ExcelReader {
 
 		case "recovery_option":
 
-			if (cell.toString().equals("stop")||cell.toString().isEmpty()) {
+			if (cell.toString().equals("stop") || cell.toString().isEmpty()) {
 				jbcn.setErrorState("!end_ERR");
 
-
-			} else if(cell.toString().equals("RERUN"))
-			{
+			} else if (cell.toString().equals("RERUN")) {
 				jbcn.setOnError("setback");
-				DelayOrderAfterSetback dl=fabrique.createJobDelayOrderAfterSetback();
+				DelayOrderAfterSetback dl = fabrique
+						.createJobDelayOrderAfterSetback();
 				dl.setIsMaximum("yes");
 				dl.setDelay("0");
 				dl.setSetbackCount(new BigInteger("1"));
 				jb.getDelayOrderAfterSetback().add(dl);
 				jbcn.setErrorState("!end_ERR");
-			}	
-			else{
+			} else {
 
-				if(jbcn.getNextState().toString().isEmpty())
-				{	
+				if (jbcn.getNextState().toString().isEmpty()) {
 
 					jbcn.setErrorState("!end_ERR");
 
-				}
-				else
-				{
+				} else {
 					jbcn.setErrorState(jbcn.getNextState());
 				}
 			}
@@ -608,154 +618,143 @@ public class ExcelReader {
 
 		case "follows":
 
-			//if a job wait a file
-			if(!jobhelp.getJobWithFiles(jobFileName).equals("nofiles"))
-			{ 
-				//if the job wait a file(s) to be execute,  we create job with the same
-				//name with "wait_file" at end. this job wait the file(s), then execute the job
-				//See : http://www.sos-berlin.com/doc/JITL/JobSchedulerExistsFile.xml
+			// if a job wait a file
+			if (!jobhelp.getJobWithFiles(jobFileName).equals("nofiles")) {
+				// if the job wait a file(s) to be execute, we create job with
+				// the same
+				// name with "wait_file" at end. this job wait the file(s), then
+				// execute the job
+				// See :
+				// http://www.sos-berlin.com/doc/JITL/JobSchedulerExistsFile.xml
 
-				String[] Line=jobhelp.getJobWithFiles(jobFileName).split(";");
+				String[] Line = jobhelp.getJobWithFiles(jobFileName).split(";");
 
-				JobChainNode tempBoucle=fabrique.createJobChainJobChainNode();
+				JobChainNode tempBoucle = fabrique.createJobChainJobChainNode();
 
-				Job jobSchedulerExistsFile=fabrique.createJob();
-				Description dsc=fabrique.createJobDescription();
+				Job jobSchedulerExistsFile = fabrique.createJob();
+				Description dsc = fabrique.createJobDescription();
 
-				Include inc=fabrique.createInclude();
+				Include inc = fabrique.createInclude();
 				inc.setFile("jobs/JobSchedulerExistsFile.xml");
 				dsc.getContent().add(inc);
 
-				Script scr= fabrique.createScript();
+				Script scr = fabrique.createScript();
 				scr.setJavaClass("sos.scheduler.file.JobSchedulerExistsFile");
 				scr.setLanguage("java");
 
-				Params prms=fabrique.createParams();
+				Params prms = fabrique.createParams();
 
-				Param file1=fabrique.createParam();
+				Param file1 = fabrique.createParam();
 				file1.setName("file");
 
-				Param regex=fabrique.createParam();
+				Param regex = fabrique.createParam();
 				regex.setName("file_spec");
 
-				Param skip_first_files=fabrique.createParam();
+				Param skip_first_files = fabrique.createParam();
 				skip_first_files.setName("skip_first_files");
 
-				String directory="";
-				//par défaut	 
-				initialiseParamsJobBoucle(prms,jobSchedulerExistsFile);
-				//End défaut  
+				String directory = "";
+				// par défaut
+				initialiseParamsJobBoucle(prms, jobSchedulerExistsFile);
+				// End défaut
 
-				String[] splitdirectory=null;
+				String[] splitdirectory = null;
 
-				if(Line.length>1)
-				{
-					for(int a=0;a< Line.length;a++)
-					{
-						splitdirectory=sheet.getRow(Integer.parseInt(Line[a])).getCell(30).toString().split("/");
+				if (Line.length > 1) {
+					for (int a = 0; a < Line.length; a++) {
+						splitdirectory = sheet
+								.getRow(Integer.parseInt(Line[a])).getCell(30)
+								.toString().split("/");
 
-
-
-						if(a==0)
-						{
-							for(int j=0;j<splitdirectory.length-1;j++)
-							{
-								if(j<splitdirectory.length-2)
-								{
-									directory+=splitdirectory[j]+"/";
-								}
-								else
-								{
-									directory+=splitdirectory[j]; 
+						if (a == 0) {
+							for (int j = 0; j < splitdirectory.length - 1; j++) {
+								if (j < splitdirectory.length - 2) {
+									directory += splitdirectory[j] + "/";
+								} else {
+									directory += splitdirectory[j];
 								}
 							}
 							file1.setValue(directory);
-							regex.setValue(splitdirectory[splitdirectory.length-1]);
+							regex.setValue(splitdirectory[splitdirectory.length - 1]);
 
-						}
-						else
-						{
-							regex.setValue(regex.getValue()+" || "+splitdirectory[splitdirectory.length-1]);
+						} else {
+							regex.setValue(regex.getValue() + " || "
+									+ splitdirectory[splitdirectory.length - 1]);
 						}
 					}
 					skip_first_files.setValue(String.valueOf(Line.length));
-				}
-				else
-				{
-					splitdirectory=sheet.getRow(Integer.parseInt(Line[0])).getCell(30).toString().split("/");
+				} else {
+					splitdirectory = sheet.getRow(Integer.parseInt(Line[0]))
+							.getCell(30).toString().split("/");
 					skip_first_files.setValue("0");
-					for(int j=0;j<splitdirectory.length-1;j++)
-					{
-						if(j<splitdirectory.length-2)
-						{
-							directory+=splitdirectory[j]+"/";
-						}
-						else
-						{
-							directory+=splitdirectory[j]; 
+					for (int j = 0; j < splitdirectory.length - 1; j++) {
+						if (j < splitdirectory.length - 2) {
+							directory += splitdirectory[j] + "/";
+						} else {
+							directory += splitdirectory[j];
 						}
 					}
 
 					file1.setValue(directory);
-					regex.setValue(splitdirectory[splitdirectory.length-1]);
+					regex.setValue(splitdirectory[splitdirectory.length - 1]);
 
 				}
 
-				tempBoucle.setState(jobFileName+"_WaitFiles");
-				tempBoucle.setJob(jobFileName+"_WaitFiles");
+				tempBoucle.setState(jobFileName + "_WaitFiles");
+				tempBoucle.setJob(jobFileName + "_WaitFiles");
 				tempBoucle.setNextState(jbcn.getState());
-				jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(tempBoucle);
+				jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(
+						tempBoucle);
 				prms.getParamOrCopyParamsOrInclude().add(file1);
 				prms.getParamOrCopyParamsOrInclude().add(regex);
 				prms.getParamOrCopyParamsOrInclude().add(skip_first_files);
 				jobSchedulerExistsFile.setParams(prms);
-				outJob(jobSchedulerExistsFile,jobFileName+"_WaitFiles");
-
-
-
+				outJob(jobSchedulerExistsFile, jobFileName + "_WaitFiles");
 
 			}
 
-			if(!jobhelp.getNextJob(jobFileName).equals("NogetL1"))
-			{	 
-				//if the next job have a file the current job have for next a WaitFiles
-				//see the top of "follow"---> in the switch--> line 608 if he don't change
-				if(!jobhelp.getJobWithFiles(jobhelp.getNextJob(jobFileName)).equals("nofiles"))
-				{
+			if (!jobhelp.getNextJob(jobFileName).equals("NogetL1")) {
+				// if the next job have a file the current job have for next a
+				// WaitFiles
+				// see the top of "follow"---> in the switch--> line 608 if he
+				// don't change
+				if (!jobhelp.getJobWithFiles(jobhelp.getNextJob(jobFileName))
+						.equals("nofiles")) {
 
-					jbcn.setNextState(jobhelp.getNextJob(jobFileName)+"_WaitFiles");
+					jbcn.setNextState(jobhelp.getNextJob(jobFileName)
+							+ "_WaitFiles");
 
-
-
-				}else
-				{
+				} else {
 					jbcn.setNextState(jobhelp.getNextJob(jobFileName));
 				}
-			}
-			else
-			{
-				//add a dependence on a other jobchain
-				if(!jobhelp.jobChainSuivant(jobchainEnCour).equals("noJobchainNext"))
-				{
-					Commands cmd=fabrique.createCommands();
+			} else {
+				// add a dependence on a other jobchain
+				if (!jobhelp.jobChainSuivant(jobchainEnCour).equals(
+						"noJobchainNext")) {
+					Commands cmd = fabrique.createCommands();
 					cmd.getOnExitCode().add("success");
-					Order tmp=fabrique.createOrder();
-					tmp.setJobChain("/"+file.getName().split("\\.")[0]+"/"+jobhelp.jobChainSuivant(jobchainEnCour));
-					cmd.getAddJobsOrAddOrderOrCheckFolders().add(fabrique.createOrder(tmp));
+					Order tmp = fabrique.createOrder();
+					tmp.setJobChain("/" + file.getName().split("\\.")[0] + "/"
+							+ jobhelp.jobChainSuivant(jobchainEnCour));
+					cmd.getAddJobsOrAddOrderOrCheckFolders().add(
+							fabrique.createOrder(tmp));
 					jb.getCommands().add(cmd);
 
 				}
 
-				if(jobhelp.isJobChainComplex(jobchainEnCour)) //if it's a complex case next of the last jobchain node go to jobchainnode end
+				if (jobhelp.isJobChainComplex(jobchainEnCour)) // if it's a
+																// complex case
+																// next of the
+																// last jobchain
+																// node go to
+																// jobchainnode
+																// end
 				{
-					jbcn.setNextState("End");	
-				}
-				else if(fichier) //if there is a file we delete it
+					jbcn.setNextState("End");
+				} else if (fichier) // if there is a file we delete it
 				{
-					jbcn.setNextState("S_cleanfile"); 
-				}
-				else	 
-				{	 
+					jbcn.setNextState("S_cleanfile");
+				} else {
 					jbcn.setNextState("end_SUC_All");
 
 				}
@@ -771,107 +770,125 @@ public class ExcelReader {
 
 		case "at":
 
-
-			//see Ocab
-			if(sheet.getRow(numLigne-1).getCell(3).toString().isEmpty())
-			{
-				RunTime rt= new  RunTime();
+			// see Ocab
+			if (sheet.getRow(numLigne - 1).getCell(3).toString().isEmpty()) {
+				RunTime rt = new RunTime();
 				rt.setBegin(cell.toString().substring(0, 2) + ":"
-						+ cell.toString().substring(2, 4));	  
-				if(jb.getRunTime()==null)
+						+ cell.toString().substring(2, 4));
+				if (jb.getRunTime() == null)
 					jb.setRunTime(rt);
 				else
-					jb.getRunTime().setBegin(cell.toString().substring(0, 2) + ":"
-							+ cell.toString().substring(2, 4));
+					jb.getRunTime().setBegin(
+							cell.toString().substring(0, 2) + ":"
+									+ cell.toString().substring(2, 4));
 			}
 
 			break;
 
 		case "every":
 
+			// boucle interne = repeat in a Order
+			// boucle externe= reapeat in a other jobchain
 
-			//boucle interne = repeat in a Order
-			//boucle externe= reapeat in a other jobchain			
+			if (boucleExterne) {
 
-			if(boucleExterne)
-			{
-
-
-				Commands cmds=fabrique.createCommands();
-				Order tmp=fabrique.createOrder();
-				RunTime rt= new  RunTime();
-				JobChain tmpJobchain=fabrique.createJobChain();
-				tmpJobchain.setName(jobchainEnCour+"_"+jobFileName+"repeat");
+				Commands cmds = fabrique.createCommands();
+				Order tmp = fabrique.createOrder();
+				RunTime rt = new RunTime();
+				JobChain tmpJobchain = fabrique.createJobChain();
+				tmpJobchain.setName(jobchainEnCour + "_" + jobFileName
+						+ "repeat");
 				tmpJobchain.setVisible("yes");
 
-				JobChain.JobChainNode temp = fabrique.createJobChainJobChainNode();
-				temp.setState(jbcn.getState()+"_R");
-				temp.setJob(jbcn.getJob()+"_R");
+				JobChain.JobChainNode temp = fabrique
+						.createJobChainJobChainNode();
+				temp.setState(jbcn.getState() + "_R");
+				temp.setJob(jbcn.getJob() + "_R");
 				temp.setNextState("end_SUC_All");
 				temp.setErrorState("!end_ERR");
-				tmpJobchain.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(temp);
+				tmpJobchain.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd()
+						.add(temp);
 
 				temp = fabrique.createJobChainJobChainNode();
 				temp.setState("end_SUC_All");
-				tmpJobchain.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(temp);
+				tmpJobchain.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd()
+						.add(temp);
 
 				temp = fabrique.createJobChainJobChainNode();
 				temp.setState("!end_ERR");
-				tmpJobchain.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(temp);
-
+				tmpJobchain.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd()
+						.add(temp);
 
 				rt.setRepeat(cell.toString().substring(0, 2) + ":"
-						+ cell.toString().substring(2, 4));	 
+						+ cell.toString().substring(2, 4));
 
-				if(!sheet.getRow(numLigne).getCell(16).toString().isEmpty()&&!sheet.getRow(numLigne).getCell(19).toString().isEmpty())
-				{
+				if (!sheet.getRow(numLigne).getCell(16).toString().isEmpty()
+						&& !sheet.getRow(numLigne).getCell(19).toString()
+								.isEmpty()) {
 
-					rt.setBegin(sheet.getRow(numLigne).getCell(16).toString().substring(0, 2) + ":"
-							+sheet.getRow(numLigne).getCell(16).toString().substring(2,4));
+					rt.setBegin(sheet.getRow(numLigne).getCell(16).toString()
+							.substring(0, 2)
+							+ ":"
+							+ sheet.getRow(numLigne).getCell(16).toString()
+									.substring(2, 4));
 
-					rt.setEnd(sheet.getRow(numLigne).getCell(19).toString().substring(0, 2) + ":"
-							+sheet.getRow(numLigne).getCell(19).toString().substring(2,4));
+					rt.setEnd(sheet.getRow(numLigne).getCell(19).toString()
+							.substring(0, 2)
+							+ ":"
+							+ sheet.getRow(numLigne).getCell(19).toString()
+									.substring(2, 4));
 
-				}
-				else{
+				} else {
 
-					int n=numLigne-1;
-					while(n!=1)
-					{
-						if(!sheet.getRow(n).getCell(16).toString().isEmpty()&&
-								!sheet.getRow(n).getCell(19).toString().isEmpty()&&
-								sheet.getRow(n).getCell(3).toString().equals("N"))
-						{
-							rt.setBegin(sheet.getRow(n).getCell(16).toString().substring(0, 2) + ":"
-									+sheet.getRow(n).getCell(16).toString().substring(2,4));
+					int n = numLigne - 1;
+					while (n != 1) {
+						if (!sheet.getRow(n).getCell(16).toString().isEmpty()
+								&& !sheet.getRow(n).getCell(19).toString()
+										.isEmpty()
+								&& sheet.getRow(n).getCell(3).toString()
+										.equals("N")) {
+							rt.setBegin(sheet.getRow(n).getCell(16).toString()
+									.substring(0, 2)
+									+ ":"
+									+ sheet.getRow(n).getCell(16).toString()
+											.substring(2, 4));
 
-							rt.setEnd(sheet.getRow(n).getCell(19).toString().substring(0, 2) + ":"
-									+sheet.getRow(n).getCell(19).toString().substring(2,4));
-							n=2;
+							rt.setEnd(sheet.getRow(n).getCell(19).toString()
+									.substring(0, 2)
+									+ ":"
+									+ sheet.getRow(n).getCell(19).toString()
+											.substring(2, 4));
+							n = 2;
 						}
 
-						if(!sheet.getRow(n).getCell(16).toString().isEmpty()&&
-								!sheet.getRow(n).getCell(19).toString().isEmpty()&&
-								!sheet.getRow(n).getCell(1).toString().isEmpty())
-						{
-							rt.setBegin(sheet.getRow(n).getCell(16).toString().substring(0, 2) + ":"
-									+sheet.getRow(n).getCell(16).toString().substring(2,4));
+						if (!sheet.getRow(n).getCell(16).toString().isEmpty()
+								&& !sheet.getRow(n).getCell(19).toString()
+										.isEmpty()
+								&& !sheet.getRow(n).getCell(1).toString()
+										.isEmpty()) {
+							rt.setBegin(sheet.getRow(n).getCell(16).toString()
+									.substring(0, 2)
+									+ ":"
+									+ sheet.getRow(n).getCell(16).toString()
+											.substring(2, 4));
 
-							rt.setEnd(sheet.getRow(n).getCell(19).toString().substring(0, 2) + ":"
-									+sheet.getRow(n).getCell(19).toString().substring(2,4));
-							n=2;
+							rt.setEnd(sheet.getRow(n).getCell(19).toString()
+									.substring(0, 2)
+									+ ":"
+									+ sheet.getRow(n).getCell(19).toString()
+											.substring(2, 4));
+							n = 2;
 
 						}
 
-						if(!sheet.getRow(n).getCell(1).toString().isEmpty()&&
-								(sheet.getRow(n).getCell(16).toString().isEmpty()||sheet.getRow(n).getCell(19).toString().isEmpty())
-								)
-						{
-							n=2;
+						if (!sheet.getRow(n).getCell(1).toString().isEmpty()
+								&& (sheet.getRow(n).getCell(16).toString()
+										.isEmpty() || sheet.getRow(n)
+										.getCell(19).toString().isEmpty())) {
+							n = 2;
 							rt.setBegin("00:00");
 							rt.setEnd("24:00");
-							log+="Attention! un job répétitif sans plage de répétition a été détecté! plage par defaut : 24h \n";
-
+							log += "Attention! un job répétitif sans plage de répétition a été détecté! plage par defaut : 24h \n";
 
 						}
 
@@ -879,14 +896,14 @@ public class ExcelReader {
 					}
 				}
 
-
 				tmp.setRunTime(rt);
-				tmp.setJobChain(file.getName().split("\\.")[0]+"/"+jobchainEnCour+"_"+jobFileName+"repeat");
+				tmp.setJobChain(file.getName().split("\\.")[0] + "/"
+						+ jobchainEnCour + "_" + jobFileName + "repeat");
 
 				OutputStream os;
 
 				try {
-					os = new FileOutputStream(outPut + jobFileName+"_R"
+					os = new FileOutputStream(outPut + jobFileName + "_R"
 							+ ".job.xml");
 					marshaller.marshal(jb, os);
 				} catch (FileNotFoundException | JAXBException e1) {
@@ -894,26 +911,17 @@ public class ExcelReader {
 					e1.printStackTrace();
 				}
 
-
-
-
-
-				if(jb.getCommands().isEmpty())
-				{
+				if (jb.getCommands().isEmpty()) {
 					cmds.getOnExitCode().add("success");
 
-					cmds.getAddJobsOrAddOrderOrCheckFolders().add(fabrique.createOrder(tmp));
+					cmds.getAddJobsOrAddOrderOrCheckFolders().add(
+							fabrique.createOrder(tmp));
 					jb.getCommands().add(cmds);
+				} else {
+					cmds = jb.getCommands().get(0);
+					cmds.getAddJobsOrAddOrderOrCheckFolders().add(
+							fabrique.createOrder(tmp));
 				}
-				else
-				{
-					cmds=jb.getCommands().get(0);
-					cmds.getAddJobsOrAddOrderOrCheckFolders().add(fabrique.createOrder(tmp));
-				}
-
-
-
-
 
 				try {
 					os = new FileOutputStream(outPut + tmpJobchain.getName()
@@ -933,11 +941,10 @@ public class ExcelReader {
 
 	}
 
-	public void outJob(Job jb, String name)
-	{
+	public void outJob(Job jb, String name) {
 		OutputStream os;
 		try {
-			os = new FileOutputStream(outPut+name+".job.xml");
+			os = new FileOutputStream(outPut + name + ".job.xml");
 			marshaller.marshal(jb, os);
 		} catch (FileNotFoundException | JAXBException e) {
 			// TODO Auto-generated catch block
@@ -961,108 +968,96 @@ public class ExcelReader {
 		jb.setStopOnError("no");
 		scrpt = fabrique.createScript();
 		scrpt.setLanguage("shell");
-		jobFileName="";
-		if(!lockInUse.isEmpty())
-		{
-			LockUse temp=fabrique.createJobLockUse();
+		jobFileName = "";
+		if (!lockInUse.isEmpty()) {
+			LockUse temp = fabrique.createJobLockUse();
 			temp.setLock(lockInUse);
 			temp.setExclusive("no");
 			jb.getLockUse().add(temp);
 		}
 
-		LockUse lck=fabrique.createJobLockUse();
+		LockUse lck = fabrique.createJobLockUse();
 		lck.setLock(file.getName().split("\\.")[0]);
 		lck.setExclusive("no");
 		jb.getLockUse().add(lck);
 
 		int i = 2;// information about job begin in the 2nd column
 
-		//if the jobchain wait a file and have a time for execute
-		//the only way for convert in jobscheduler is the runtime in a job 
-		if(haveRunTimeFiles && fichier)
-		{
+		// if the jobchain wait a file and have a time for execute
+		// the only way for convert in jobscheduler is the runtime in a job
+		if (haveRunTimeFiles && fichier) {
 
-			if(LineSpleat!=null) 
-			{
-				for(int u=1;u<LineSpleat.length;u++)
-				{
-					if(numLigne==Integer.parseInt(LineSpleat[u]))
+			if (LineSpleat != null) {
+				for (int u = 1; u < LineSpleat.length; u++) {
+					if (numLigne == Integer.parseInt(LineSpleat[u]))
 						jb.setRunTime(runTimeFiles);
 				}
 
-				if(Integer.parseInt(LineSpleat[LineSpleat.length-1])<numLigne)
-				{ haveRunTimeFiles=false;
-				runTimeFiles=fabrique.createRunTime();
+				if (Integer.parseInt(LineSpleat[LineSpleat.length - 1]) < numLigne) {
+					haveRunTimeFiles = false;
+					runTimeFiles = fabrique.createRunTime();
 				}
-			}
-			else
-			{
+			} else {
 				jb.setRunTime(runTimeFiles);
-				haveRunTimeFiles=false;
-				runTimeFiles=fabrique.createRunTime();
+				haveRunTimeFiles = false;
+				runTimeFiles = fabrique.createRunTime();
 			}
 
 		}
 
 		do {
 
-
 			cell = coloneExcelSuivant();
 			i++;
 
-
-			if (!cell.toString().isEmpty()||i==11||i==41) {
-
-
+			if (!cell.toString().isEmpty() || i == 11 || i == 41) {
 
 				treatJobOption(i); // treat a job hut
 
 			}
 
-
-
 		} while (cellIterator.hasNext());
 
+		jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcn);// add
+																		// the
+																		// jobchainnode
+																		// in
+																		// jobchain
 
-
-
-
-
-		jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcn);// add the jobchainnode in jobchain																 
-
-		if(jbcnSyncBool)//if a split or a synchro file exist then add in the jobchain
+		if (jbcnSyncBool)// if a split or a synchro file exist then add in the
+							// jobchain
 		{
 			jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcnSync);
-			jbcnSyncBool=false;//for reset
-
+			jbcnSyncBool = false;// for reset
 
 		}
 
-		if(jbcnSplitBool)//if a split or a synchro file exist then add in the jobchain
+		if (jbcnSplitBool)// if a split or a synchro file exist then add in the
+							// jobchain
 		{
-			jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcnSplit);
-			jbcnSplitBool=false;//for reset
-
+			jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd()
+					.add(jbcnSplit);
+			jbcnSplitBool = false;// for reset
 
 		}
-		//add the job in the list of job
+		// add the job in the list of job
 		ljob.put(jobFileName, jb);
 
 	}
 
 	/**
-	 * name - countDay  correspondence between  excel and job scheduler date
+	 * name - countDay correspondence between excel and job scheduler date
 	 * 
 	 * 
-	 * @param String[] : Days to convert 
+	 * @param String
+	 *            [] : Days to convert
 	 * @author jean-vincent
 	 * @date 20/05/2015
 	 * @note
-	 */	
+	 */
 
-	public String countDay(String[] days)
-	{
-		String day="";
+	public String countDay(String[] days) {
+		String day = "";
 
 		for (int k = 0; k < days.length; k++) {
 			switch (days[k]) {
@@ -1116,25 +1111,23 @@ public class ExcelReader {
 	}
 
 	/**
-	 * name - countDay  correspondence between  excel and job scheduler date
+	 * name - countDay correspondence between excel and job scheduler date
 	 * 
 	 * 
-	 * @param String : Day to convert 
+	 * @param String
+	 *            : Day to convert
 	 * @author jean-vincent
 	 * @date 20/05/2015
 	 * @note
-	 */	
+	 */
 
-	public String countDay(String day)
-	{
-
+	public String countDay(String day) {
 
 		switch (day) {
 
 		case "MO":
 
 			return "1";
-
 
 		case "TU":
 
@@ -1164,18 +1157,16 @@ public class ExcelReader {
 
 		}
 
-
 		return null;
 
 	}
 
-
-
 	/**
-	 * name - treatOrderOption functional correspondence between the
-	 * excel file and jobscheduler (order)
+	 * name - treatOrderOption functional correspondence between the excel file
+	 * and jobscheduler (order)
 	 * 
 	 * see treatOrderLine
+	 * 
 	 * @param int : correspondence with the title line of the excel file
 	 * @author jean-vincent
 	 * @date 20/05/2015
@@ -1188,29 +1179,22 @@ public class ExcelReader {
 
 		if (!cell.toString().equals("")) {
 
-
-
 			switch (ligneTitre.get(i).toString()) {
 
 			case "runcycle":
 
-				//Formatting name of order 
+				// Formatting name of order
 
-				String zero="";
-				if(numeroOrder<10)
-				{
-					zero="00"+numeroOrder;
-				}
-				else if(numeroOrder<100)
-				{
-					zero="0"+numeroOrder;
-				}
-				else
-				{
-					zero=String.valueOf(numeroOrder);
+				String zero = "";
+				if (numeroOrder < 10) {
+					zero = "00" + numeroOrder;
+				} else if (numeroOrder < 100) {
+					zero = "0" + numeroOrder;
+				} else {
+					zero = String.valueOf(numeroOrder);
 				}
 
-				orderfileName="O"+zero+"_"+jobchainEnCour;
+				orderfileName = "O" + zero + "_" + jobchainEnCour;
 
 				numeroOrder++;
 				break;
@@ -1218,62 +1202,65 @@ public class ExcelReader {
 			case "description":
 				od.setTitle(cell.toString());
 
-
 				break;
 			case "until":
 
-
 				String heureEnd = cell.toString().substring(0, 2) + ":"
 						+ cell.toString().substring(2, 4);
-				if(!heureEnd.toString().equals("23:59"))
-				{oRuntime.setEnd(heureEnd);
-				runtime = true;
-				runTimeFiles.setEnd(heureEnd);
-				haveRunTimeFiles=true;
+
+				int tmp = Integer.parseInt(cell.toString());
+
+				int tmp2 = Integer.parseInt(heureEnd.split(":")[0]
+						+ heureEnd.split(":")[1]);
+
+				if (tmp <= tmp2 || heureEnd.equals("00:15")
+						|| heureEnd.equals("00:05")) {
+					heureEnd = "";
+				}
+
+				if (!heureEnd.toString().equals("23:59") && !heureEnd.isEmpty()) {
+					oRuntime.setEnd(heureEnd);
+					runtime = true;
+					runTimeFiles.setEnd(heureEnd);
+					haveRunTimeFiles = true;
 				}
 				break;
 
 			case "timezone":
 
 				oRuntime.setTimeZone(cell.toString());
-				runtime=true;
+				runtime = true;
 				runTimeFiles.setTimeZone(cell.toString());
-				haveRunTimeFiles=true;
+				haveRunTimeFiles = true;
 				break;
 			case "at":
 
-
 				String heure = cell.toString().substring(0, 2) + ":"
 						+ cell.toString().substring(2, 4);
-				saveAt=heure;
+				saveAt = heure;
 
 				break;
 
 			case "dates":
 
-
-				Date dt=fabrique.createRunTimeDate();
+				Date dt = fabrique.createRunTimeDate();
 				dt.setDate(cell.toString());
-				Period prd=fabrique.createPeriod();
+				Period prd = fabrique.createPeriod();
 				prd.setSingleStart(saveAt);
 				dt.getPeriod().add(prd);
 				oRuntime.getDate().add(dt);
 
 				runTimeFiles.getDate().add(dt);
-				haveRunTimeFiles=true;
+				haveRunTimeFiles = true;
 
 				runtime = true;
 				break;
-
 
 			case "ical":
 
 				String[] listCommande = cell.toString().split(";");
 
-
-
-				if(listCommande[0].indexOf("FREQ=DAILY")!=-1)
-				{
+				if (listCommande[0].indexOf("FREQ=DAILY") != -1) {
 
 					Weekdays.Day tmpDay2 = fabrique.createWeekdaysDay();
 					Period tmpPeriod2 = fabrique.createPeriod();
@@ -1282,35 +1269,29 @@ public class ExcelReader {
 					Period tmpPeriodfile = fabrique.createPeriod();
 
 					tmpPeriod2.setSingleStart(saveAt);
-					//if there is a file we add the period in the first(s) job
+					// if there is a file we add the period in the first(s) job
 					tmpPeriodfile.setBegin(saveAt);
 
+					String day = "1 2 3 4 5 6 7";
+					for (int j = 1; j < listCommande.length; j++) {
 
-					String day="1 2 3 4 5 6 7";
-					for(int j=1;j<listCommande.length;j++)
-					{
-
-						if(listCommande[j].equals("BYWORKDAY"))
-							day="1 2 3 4 5";
+						if (listCommande[j].equals("BYWORKDAY"))
+							day = "1 2 3 4 5";
 					}
 
 					tmpDay2.getDay().add(day);
 					tmpDayfile.getDay().add(day);
 					detectBoucle(tmpPeriod2);
 
-
 					tmpDay2.getPeriod().add(tmpPeriod2);
 					tmpDayfile.getPeriod().add(tmpPeriodfile);
 
 					if (oRuntime.getWeekdays() != null) {
 
-
 						oRuntime.getWeekdays().getDay().add(tmpDay2);
 						runTimeFiles.getWeekdays().getDay().add(tmpDayfile);
 
-					}
-					else
-					{
+					} else {
 						Weekdays tmpWeek2 = fabrique.createWeekdays();
 						Weekdays tmpWeekFile = fabrique.createWeekdays();
 
@@ -1319,21 +1300,16 @@ public class ExcelReader {
 
 						oRuntime.setWeekdays(tmpWeek2);
 
-						if(runTimeFiles.getWeekdays()==null)
+						if (runTimeFiles.getWeekdays() == null)
 							runTimeFiles.setWeekdays(tmpWeekFile);
 						else
 							runTimeFiles.getWeekdays().getDay().add(tmpDayfile);
 
-
 						runtime = true;
 
-
-
 					}
-					haveRunTimeFiles=true;
-				}
-				else if (listCommande[0].indexOf("FREQ=WEEKLY")!=-1)
-				{
+					haveRunTimeFiles = true;
+				} else if (listCommande[0].indexOf("FREQ=WEEKLY") != -1) {
 
 					Weekdays.Day tmpDay2 = fabrique.createWeekdaysDay();
 					Weekdays.Day tmpDayFile = fabrique.createWeekdaysDay();
@@ -1344,18 +1320,18 @@ public class ExcelReader {
 					tmpPeriod2.setSingleStart(saveAt);
 					tmpPeriodFile.setBegin(saveAt);
 
-					detectBoucle(tmpPeriod2);//une boucle est ajouter si les conditions sont ok
+					detectBoucle(tmpPeriod2);// une boucle(repeat)  est ajouté si les
+												// conditions sont ok
 
 					tmpDay2.getPeriod().add(tmpPeriod2);
 					tmpDayFile.getPeriod().add(tmpPeriodFile);
 
 					if (oRuntime.getWeekdays() != null) {
 
-						for(int t=1;t<listCommande.length;t++)
-						{
-							if(listCommande[t].indexOf("BYDAY")!=-1)
-							{
-								String substringDay = listCommande[t].substring(6);
+						for (int t = 1; t < listCommande.length; t++) {
+							if (listCommande[t].indexOf("BYDAY") != -1) {
+								String substringDay = listCommande[t]
+										.substring(6);
 
 								String[] days = substringDay.split(",");
 
@@ -1363,25 +1339,22 @@ public class ExcelReader {
 								tmpDayFile.getDay().add(countDay(days));
 
 								oRuntime.getWeekdays().getDay().add(tmpDay2);
-								runTimeFiles.getWeekdays().getDay().add(tmpDayFile);
+								runTimeFiles.getWeekdays().getDay()
+										.add(tmpDayFile);
 
 							}
 
 						}
 
-
-
-					}
-					else
-					{
-						for(int t=1;t<listCommande.length;t++)
-						{
-							if(listCommande[t].indexOf("BYDAY")!=-1)
-							{
+					} else {
+						for (int t = 1; t < listCommande.length; t++) {
+							if (listCommande[t].indexOf("BYDAY") != -1) {
 								Weekdays tmpWeek2 = fabrique.createWeekdays();
-								Weekdays tmpWeekFile = fabrique.createWeekdays();
+								Weekdays tmpWeekFile = fabrique
+										.createWeekdays();
 
-								String substringDay = listCommande[t].substring(6);
+								String substringDay = listCommande[t]
+										.substring(6);
 								String[] days = substringDay.split(",");
 
 								tmpDay2.getDay().add(countDay(days));
@@ -1391,117 +1364,119 @@ public class ExcelReader {
 								tmpWeekFile.getDay().add(tmpDayFile);
 
 								oRuntime.setWeekdays(tmpWeek2);
-								if(runTimeFiles.getWeekdays()==null)
+								if (runTimeFiles.getWeekdays() == null)
 									runTimeFiles.setWeekdays(tmpWeekFile);
 								else
-									runTimeFiles.getWeekdays().getDay().add(tmpDayFile);
+									runTimeFiles.getWeekdays().getDay()
+											.add(tmpDayFile);
 
 								runtime = true;
 							}
-						}	
-
-
-						haveRunTimeFiles=true;
-
-					}
-
-				}
-				else if (listCommande[0].indexOf("FREQ=MONTHLY")!=-1)
-				{   haveRunTimeFiles=true;                            
-				runtime = true;
-				String whichPrecedent="";
-				if (oRuntime.getMonthdays() == null) {
-					Monthdays tmpMonthday=fabrique.createMonthdays();
-					Monthdays tmpMonthdayFile=fabrique.createMonthdays();
-
-					oRuntime.setMonthdays(tmpMonthday);
-					runTimeFiles.setMonthdays(tmpMonthdayFile);
-
-				}  
-
-				Monthdays.Weekday tmpWekkday=fabrique.createMonthdaysWeekday();
-				Monthdays.Weekday tmpWekkdayFile=fabrique.createMonthdaysWeekday();
-
-				Period tmpPeriod3 = fabrique.createPeriod();
-				Period tmpPeriodFile = fabrique.createPeriod();
-
-				tmpPeriod3.setSingleStart(saveAt);
-				tmpPeriodFile.setBegin(saveAt);
-
-				detectBoucle(tmpPeriod3);
-				for(int t=1;t<listCommande.length;t++)
-				{
-					if(listCommande[t].indexOf("BYDAY")!=-1)
-					{
-						String substringDay = listCommande[t].substring(6);
-						String[] days = substringDay.split(",");
-
-						for(int f=0;f<days.length;f++)
-						{
-							String which=days[f].substring(0,1);
-							String day=days[f].substring(1);
-
-							if(f==0)
-							{
-								tmpWekkday = fabrique.createMonthdaysWeekday();
-								tmpWekkdayFile=fabrique.createMonthdaysWeekday();
-
-								tmpWekkday.setWhich(which);
-								tmpWekkdayFile.setWhich(which);
-
-								whichPrecedent=which;
-								tmpWekkday.getPeriod().add(tmpPeriod3);
-								tmpWekkdayFile.getPeriod().add(tmpPeriodFile);
-							}
-							else if(!whichPrecedent.equals(which))
-							{
-								oRuntime.getMonthdays().getDayOrWeekday().add(tmpWekkday);
-								runTimeFiles.getMonthdays().getDayOrWeekday().add(tmpWekkdayFile);
-
-								tmpWekkday = fabrique.createMonthdaysWeekday();
-								tmpWekkdayFile=fabrique.createMonthdaysWeekday();
-
-								tmpWekkday.setWhich(which);
-								tmpWekkdayFile.setWhich(which);
-
-								tmpWekkday.getPeriod().add(tmpPeriod3);
-								tmpWekkdayFile.getPeriod().add(tmpPeriodFile);
-							}
-
-							tmpWekkday.getDay().add(countDay(day));
-							tmpWekkdayFile.getDay().add(countDay(day));
-						}
-						oRuntime.getMonthdays().getDayOrWeekday().add(tmpWekkday);
-						runTimeFiles.getMonthdays().getDayOrWeekday().add(tmpWekkdayFile);
-					}
-					else if(listCommande[t].indexOf("BYMONTHDAY")!=-1)
-					{
-						String[] numberDay = listCommande[t].substring(11).split(",");
-						Monthdays.Day day=fabrique.createMonthdaysDay();
-						Monthdays.Day dayFile=fabrique.createMonthdaysDay();
-
-						for(int a=0;a<numberDay.length;a++)
-						{
-							day.getDay().add(Integer.parseInt(numberDay[a]));
-							dayFile.getDay().add(Integer.parseInt(numberDay[a]));
 						}
 
-						day.getPeriod().add(tmpPeriod3);
-						dayFile.getPeriod().add(tmpPeriodFile);
+						haveRunTimeFiles = true;
 
-						oRuntime.getMonthdays().getDayOrWeekday().add(day);
-						runTimeFiles.getMonthdays().getDayOrWeekday().add(dayFile);
+					}
+
+				} else if (listCommande[0].indexOf("FREQ=MONTHLY") != -1) {
+					haveRunTimeFiles = true;
+					runtime = true;
+					String whichPrecedent = "";
+					if (oRuntime.getMonthdays() == null) {
+						Monthdays tmpMonthday = fabrique.createMonthdays();
+						Monthdays tmpMonthdayFile = fabrique.createMonthdays();
+
+						oRuntime.setMonthdays(tmpMonthday);
+						runTimeFiles.setMonthdays(tmpMonthdayFile);
+
+					}
+
+					Monthdays.Weekday tmpWekkday = fabrique
+							.createMonthdaysWeekday();
+					Monthdays.Weekday tmpWekkdayFile = fabrique
+							.createMonthdaysWeekday();
+
+					Period tmpPeriod3 = fabrique.createPeriod();
+					Period tmpPeriodFile = fabrique.createPeriod();
+
+					tmpPeriod3.setSingleStart(saveAt);
+					tmpPeriodFile.setBegin(saveAt);
+
+					detectBoucle(tmpPeriod3);
+					for (int t = 1; t < listCommande.length; t++) {
+						if (listCommande[t].indexOf("BYDAY") != -1) {
+							String substringDay = listCommande[t].substring(6);
+							String[] days = substringDay.split(",");
+
+							for (int f = 0; f < days.length; f++) {
+								String which = days[f].substring(0, 1);
+								String day = days[f].substring(1);
+
+								if (f == 0) {
+									tmpWekkday = fabrique
+											.createMonthdaysWeekday();
+									tmpWekkdayFile = fabrique
+											.createMonthdaysWeekday();
+
+									tmpWekkday.setWhich(which);
+									tmpWekkdayFile.setWhich(which);
+
+									whichPrecedent = which;
+									tmpWekkday.getPeriod().add(tmpPeriod3);
+									tmpWekkdayFile.getPeriod().add(
+											tmpPeriodFile);
+								} else if (!whichPrecedent.equals(which)) {
+									oRuntime.getMonthdays().getDayOrWeekday()
+											.add(tmpWekkday);
+									runTimeFiles.getMonthdays()
+											.getDayOrWeekday()
+											.add(tmpWekkdayFile);
+
+									tmpWekkday = fabrique
+											.createMonthdaysWeekday();
+									tmpWekkdayFile = fabrique
+											.createMonthdaysWeekday();
+
+									tmpWekkday.setWhich(which);
+									tmpWekkdayFile.setWhich(which);
+
+									tmpWekkday.getPeriod().add(tmpPeriod3);
+									tmpWekkdayFile.getPeriod().add(
+											tmpPeriodFile);
+								}
+
+								tmpWekkday.getDay().add(countDay(day));
+								tmpWekkdayFile.getDay().add(countDay(day));
+							}
+							oRuntime.getMonthdays().getDayOrWeekday()
+									.add(tmpWekkday);
+							runTimeFiles.getMonthdays().getDayOrWeekday()
+									.add(tmpWekkdayFile);
+						} else if (listCommande[t].indexOf("BYMONTHDAY") != -1) {
+							String[] numberDay = listCommande[t].substring(11)
+									.split(",");
+							Monthdays.Day day = fabrique.createMonthdaysDay();
+							Monthdays.Day dayFile = fabrique
+									.createMonthdaysDay();
+
+							for (int a = 0; a < numberDay.length; a++) {
+								day.getDay()
+										.add(Integer.parseInt(numberDay[a]));
+								dayFile.getDay().add(
+										Integer.parseInt(numberDay[a]));
+							}
+
+							day.getPeriod().add(tmpPeriod3);
+							dayFile.getPeriod().add(tmpPeriodFile);
+
+							oRuntime.getMonthdays().getDayOrWeekday().add(day);
+							runTimeFiles.getMonthdays().getDayOrWeekday()
+									.add(dayFile);
+						}
+
 					}
 
 				}
-
-
-
-
-
-				}
-
-
 
 				break;
 
@@ -1522,78 +1497,72 @@ public class ExcelReader {
 	 * @note
 	 */
 
-	public boolean Orderauthorization(int line)
-	{//les order on t'il le droit d'etre utilisé ici dans la chaine ? si il y a un fichier non
+	public boolean Orderauthorization(int line) {
+		for (int i = line; i <= sheet.getLastRowNum(); i++) {
 
-
-		for( int i=line; i<=sheet.getLastRowNum();i++)
-		{
-
-			if(!sheet.getRow(i).getCell(2).toString().isEmpty())
+			if (!sheet.getRow(i).getCell(2).toString().isEmpty())
 				return true;
-			else if(sheet.getRow(i).getCell(3).toString().equals("O"))
+			else if (sheet.getRow(i).getCell(3).toString().equals("O"))
 				return false;
-			else if(!sheet.getRow(i).getCell(1).toString().isEmpty())
-				return false;	
+			else if (!sheet.getRow(i).getCell(1).toString().isEmpty())
+				return false;
 		}
 
 		return false;
 	}
 
 	/**
-	 * name - detectBoucle : if a job have a boucle, extern (in another jobchain) or intern(in order)
+	 * name - detectBoucle : if a job have a boucle, extern (in another
+	 * jobchain) or intern(in order)
 	 *
 	 * 
 	 * @author jean-vincent
 	 * @date 20/05/2015
 	 * @note
 	 */
-	public void detectBoucle(Period period)
-	{
-		int ligne=numLigne+1;
-		//je me déplace pour arriver sur le premier job
-		while(sheet.getRow(ligne).getCell(2).toString().isEmpty())
-		{
+	public void detectBoucle(Period period) {
+		int ligne = numLigne + 1;
+		// je me déplace pour arriver sur le premier job
+		while (sheet.getRow(ligne).getCell(2).toString().isEmpty()) {
 			ligne++;
 		}
 
-		boolean canBoucleInOrder=true;
-		String timeBoucle=sheet.getRow(ligne).getCell(47).toString();
-		canBoucleInOrder=!timeBoucle.isEmpty();
-		boolean run=true;
+		boolean canBoucleInOrder = true;
+		String timeBoucle = sheet.getRow(ligne).getCell(47).toString();
+		canBoucleInOrder = !timeBoucle.isEmpty();
+		boolean run = true;
 
-		//traite deux fois la meme ligne pas très propre
-		while(!sheet.getRow(ligne).getCell(2).toString().isEmpty() && run && canBoucleInOrder)
-		{	
-			if(!timeBoucle.equals(sheet.getRow(ligne).getCell(47).toString()))
-				canBoucleInOrder=false;
+		// traite deux fois la meme ligne pas très propre
+		while (!sheet.getRow(ligne).getCell(2).toString().isEmpty() && run
+				&& canBoucleInOrder) {
+			if (!timeBoucle.equals(sheet.getRow(ligne).getCell(47).toString()))
+				canBoucleInOrder = false;
 
-			if(ligne+1<=sheet.getLastRowNum())
+			if (ligne + 1 <= sheet.getLastRowNum())
 				ligne++;
 			else
-				run=false;	
+				run = false;
 		}
 
-
-
-		if(canBoucleInOrder)
-		{
-			boucleExterne=false;
+		if (canBoucleInOrder) {
+			boucleExterne = false;
 
 			period.setBegin(period.getSingleStart());
-			period.setRepeat(timeBoucle.substring(0,2) + ":"
-					+ timeBoucle.substring(2,4));
+			period.setRepeat(timeBoucle.substring(0, 2) + ":"
+					+ timeBoucle.substring(2, 4));
 
-			if(runtime)
+			if (runtime)
 				period.setEnd(oRuntime.getEnd());
 
-			if(!sheet.getRow(ligne-1).getCell(16).toString().isEmpty()&&!sheet.getRow(ligne-1).getCell(19).toString().isEmpty())
-			{
+			if (!sheet.getRow(ligne - 1).getCell(16).toString().isEmpty()
+					&& !sheet.getRow(ligne - 1).getCell(19).toString()
+							.isEmpty()) {
 
-
-
-				period.setEnd(sheet.getRow(ligne-1).getCell(19).toString().substring(0, 2) + ":"
-						+ sheet.getRow(ligne-1).getCell(19).toString().substring(2,4));
+				period.setEnd(sheet.getRow(ligne - 1).getCell(19).toString()
+						.substring(0, 2)
+						+ ":"
+						+ sheet.getRow(ligne - 1).getCell(19).toString()
+								.substring(2, 4));
 			}
 
 			period.setSingleStart(null);
@@ -1601,7 +1570,7 @@ public class ExcelReader {
 	}
 
 	/**
-	 * name -treatOrderLine  treat a order
+	 * name -treatOrderLine treat a order
 	 *
 	 * @see treatOrderOption
 	 * @author jean-vincent
@@ -1614,7 +1583,7 @@ public class ExcelReader {
 		oRuntime = fabrique.createRunTime();
 		oParams = fabrique.createParams();
 		od = fabrique.createOrder();
-		orderfileName="";
+		orderfileName = "";
 
 		int i = 3;
 
@@ -1626,21 +1595,16 @@ public class ExcelReader {
 
 		if (runtime == true) {
 			od.setRunTime(oRuntime);
-			runtime=false;
+			runtime = false;
 		}
 
-
-
-		if(Orderauthorization)
-		{
-			lorder.put(orderfileName,od);
+		if (Orderauthorization) {
+			lorder.put(orderfileName, od);
 			nbrDeOrder++;
-		}	
-		if(!saveAt.equals("00:00"))
-			saveAt=new String("00:00");
+		}
+		if (!saveAt.equals("00:00"))
+			saveAt = new String("00:00");
 	}
-
-
 
 	/**
 	 * name - addEndErrorEndSucsses add jobchainnodestate : EndError, EndSucces
@@ -1651,8 +1615,8 @@ public class ExcelReader {
 	 */
 
 	public void addEndErrorEndSucsses() {
-		Collection c=jobchain.values();
-		Iterator ijobchain=c.iterator();
+		Collection c = jobchain.values();
+		Iterator ijobchain = c.iterator();
 
 		while (ijobchain.hasNext())
 
@@ -1668,10 +1632,8 @@ public class ExcelReader {
 		}
 	}
 
-
-
 	/**
-	 * name -  treatExcelFile() treat a excel file
+	 * name - treatExcelFile() treat a excel file
 	 *
 	 * @exception IOException
 	 * @return boolean
@@ -1682,20 +1644,19 @@ public class ExcelReader {
 
 	public boolean treatExcelFile() throws IOException {
 
-		log+="Traitement du fichier Excel \n";
+		log += "Traitement du fichier Excel \n";
 
 		copyLineTitle();
 		nextExcelLine();
 		String chaine;
-		double size=40/sheet.getLastRowNum();
-		double valeur=0;
-		boolean ActivateMultiFileOrder=false;
+		double size = 40 / sheet.getLastRowNum();
+		double valeur = 0;
+		boolean ActivateMultiFileOrder = false;
 		while (rowIterator.hasNext()) {
-			valeur+=size;
-			if(valeur>=1)
-			{
-				interfaceGraphique.addValueProgressBar((int)valeur);
-				valeur=0;
+			valeur += size;
+			if (valeur >= 1) {
+				interfaceGraphique.addValueProgressBar((int) valeur);
+				valeur = 0;
 			}
 			Row row = rowIterator.next();// get a line in the file
 
@@ -1707,25 +1668,31 @@ public class ExcelReader {
 
 			// check if SID exist for create a jobchain
 			if (!chaine.isEmpty()) {
-				ActivateMultiFileOrder=true;
+				ActivateMultiFileOrder = true;
 
-				// normaly useless 
-				if(chaine.equals("-1"))
-				{
-					Commands cmd=fabrique.createCommands();
+				// normaly useless
+				if (chaine.equals("-1")) {
+					Commands cmd = fabrique.createCommands();
 					cmd.getOnExitCode().add("success");
-					Order tmp=fabrique.createOrder();
-					tmp.setJobChain("/"+file.getName().split("\\.")[0]+"/"+sheet.getRow(numLigne).getCell(5).toString());
-					cmd.getAddJobsOrAddOrderOrCheckFolders().add(fabrique.createOrder(tmp));
+					Order tmp = fabrique.createOrder();
+					tmp.setJobChain("/" + file.getName().split("\\.")[0] + "/"
+							+ sheet.getRow(numLigne).getCell(5).toString());
+					cmd.getAddJobsOrAddOrderOrCheckFolders().add(
+							fabrique.createOrder(tmp));
 
-					ljob.get(sheet.getRow(numLigne).getCell(5).toString().substring(jobchainRunOtherJobChain.length()+3)).getCommands().add(cmd);
-					//+3 le chiffre rajouter pour distinger le jobchain + le "_" cela fait trois caracteres à sauter
+					ljob.get(
+							sheet.getRow(numLigne)
+									.getCell(5)
+									.toString()
+									.substring(
+											jobchainRunOtherJobChain.length() + 3))
+							.getCommands().add(cmd);
+					// +3 le chiffre rajouter pour distinger le jobchain + le
+					// "_" cela fait trois caracteres à sauter
 
 					treatJobChainLine(false);
 
-				}
-				else
-				{	
+				} else {
 					treatJobChainLine(true);
 				}
 			} else {
@@ -1737,9 +1704,9 @@ public class ExcelReader {
 				if (!cell.toString().isEmpty()) {
 					// we treat the entire line (it's a job)
 
-					//now we can't add file in the chain again, 
-					//now if there is a file, it's on a job
-					ActivateMultiFileOrder=false;
+					// now we can't add file in the chain again,
+					// now if there is a file, it's on a job
+					ActivateMultiFileOrder = false;
 					treatJobLine();
 
 				} else {
@@ -1750,38 +1717,36 @@ public class ExcelReader {
 
 					if (cell.toString().equals("R")) {
 
-						if(sheet.getRow(numLigne).getCell(15).toString().isEmpty())
-						{
+						if (sheet.getRow(numLigne).getCell(15).toString()
+								.isEmpty()) {
 							TreatOrderLine();
-						}
-						else if(sheet.getRow(numLigne-1).getCell(3).toString().equals("R"))
-						{
-							Holidays hlds=fabrique.createHolidays();
-							Holiday hld=fabrique.createHoliday();
-							String [] vacs=sheet.getRow(numLigne).getCell(25).toString().split(",");
+						} else if (sheet.getRow(numLigne - 1).getCell(3)
+								.toString().equals("R")) {
+							Holidays hlds = fabrique.createHolidays();
+							Holiday hld = fabrique.createHoliday();
+							String[] vacs = sheet.getRow(numLigne).getCell(25)
+									.toString().split(",");
 
-							for(int w=0;w<vacs.length;w++)
-							{
+							for (int w = 0; w < vacs.length; w++) {
 								hld.setDate(vacs[w]);
 								hlds.getWeekdaysOrHolidayOrInclude().add(hld);
-								hld=fabrique.createHoliday();
+								hld = fabrique.createHoliday();
 							}
 							od.getRunTime().setHolidays(hlds);
 						}
 
-					}
-					else if(cell.toString().equals("O"))
-					{
-						if(ActivateMultiFileOrder) //use for add files only on a jobchain 
+					} else if (cell.toString().equals("O")) {
+						if (ActivateMultiFileOrder) // use for add files only on
+													// a jobchain
 						{
 
-							contenuFichier.add(sheet.getRow(numLigne).getCell(30).toString());
-							fichier=true;
+							contenuFichier.add(sheet.getRow(numLigne)
+									.getCell(30).toString());
+							fichier = true;
 						}
-					}
-					else if(cell.toString().equals("N"))
-					{
-						lockInUse=sheet.getRow(numLigne).getCell(32).toString();
+					} else if (cell.toString().equals("N")) {
+						lockInUse = sheet.getRow(numLigne).getCell(32)
+								.toString();
 					}
 
 				}
@@ -1794,7 +1759,7 @@ public class ExcelReader {
 		nbOrderParJobchain.put(jobchainEnCour, nbrDeOrder);
 		addEndErrorEndSucsses();
 		fis.close();
-		log+="Fin du traitement, les fichiers ont été chargés en mémoire \n";
+		log += "Fin du traitement, les fichiers ont été chargés en mémoire \n";
 
 		return true;
 	}
@@ -1809,29 +1774,23 @@ public class ExcelReader {
 	 * @note
 	 */
 
-	public int OutputTest() throws FileNotFoundException,
-	JAXBException, IllegalStateException {
-		Collection c=jobchain.values();
-		Iterator ejobchain=c.iterator();
-
+	public int OutputTest() throws FileNotFoundException, JAXBException,
+			IllegalStateException {
+		Collection c = jobchain.values();
+		Iterator ejobchain = c.iterator();
 
 		Collection cjob = ljob.values();
-		Iterator ejob=cjob.iterator();
-		Set keyset2=ljob.keySet();
-		Iterator nameFileJob=keyset2.iterator();
+		Iterator ejob = cjob.iterator();
+		Set keyset2 = ljob.keySet();
+		Iterator nameFileJob = keyset2.iterator();
 
-
-
-
-		Collection c2=lorder.values();
-		Iterator eOrder=c2.iterator();
-		Set keyset=lorder.keySet();
-		Iterator nameFileOrder=keyset.iterator();
-
-
+		Collection c2 = lorder.values();
+		Iterator eOrder = c2.iterator();
+		Set keyset = lorder.keySet();
+		Iterator nameFileOrder = keyset.iterator();
 
 		Job job;
-		log+="génération des jobs \n";
+		log += "génération des jobs \n";
 
 		while (ejob.hasNext())
 
@@ -1844,10 +1803,8 @@ public class ExcelReader {
 
 		}
 
-
-
 		JobChain jobch;
-		log+="génération des jobchains \n";
+		log += "génération des jobchains \n";
 
 		while (ejobchain.hasNext())
 
@@ -1861,51 +1818,42 @@ public class ExcelReader {
 
 		}
 
-
-
-
 		int tmp = 0;
 		JobChain jobch3;
 
-		ejobchain=c.iterator();
+		ejobchain = c.iterator();
 
 		jobch3 = (JobChain) ejobchain.next();
 
-		log+="génération des orders \n";
+		log += "génération des orders \n";
 
 		while (eOrder.hasNext()) {
-
-
 
 			if (tmp == nbOrderParJobchain.get(jobch3.getName())) {
 				jobch3 = (JobChain) ejobchain.next();
 
 				tmp = 0;
-			}else
-			{	
+			} else {
 				Order ordTemp = (Order) eOrder.next();
-				OutputStream os = new FileOutputStream(outPut + jobch3.getName()
-						+ "," + nameFileOrder.next().toString()+ ".order.xml");
+				OutputStream os = new FileOutputStream(outPut
+						+ jobch3.getName() + ","
+						+ nameFileOrder.next().toString() + ".order.xml");
 
 				marshaller.marshal(fabrique.createOrder(ordTemp), os);
-
 
 				tmp++;
 			}
 		}
 
-
-
-		log+="Fin du traitement pour le fichier: "+file.getName() +" \n";
-
-		log+="**********************************************************\n";
+		log += "Fin du traitement pour le fichier: " + file.getName() + " \n";
+		log += "**********************************************************\n";
 
 		interfaceGraphique.notification(log);
-		File f = new File (outPut+"LOG.txt");
+		File f = new File(outPut + "LOG.txt");
 		PrintWriter pw;
 		try {
-			pw = new PrintWriter (new BufferedWriter (new FileWriter (f)));
-			pw.println (log);
+			pw = new PrintWriter(new BufferedWriter(new FileWriter(f)));
+			pw.println(log);
 			pw.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -1915,245 +1863,236 @@ public class ExcelReader {
 		File di = new File(outPut);
 		File fl[] = di.listFiles();
 
-
 		return fl.length;
 	}
 
-	public void addBeginAndEndJobChain(String jobChainEnCour)
-	{
-		if(jobhelp.isJobChainComplex(jobchainEnCour))
-		{   
+	public void addBeginAndEndJobChain(String jobChainEnCour) {
+		if (jobhelp.isJobChainComplex(jobchainEnCour)) {
 
-			JobChain.JobChainNode jbcnTemp=fabrique.createJobChainJobChainNode();
+			JobChain.JobChainNode jbcnTemp = fabrique
+					.createJobChainJobChainNode();
 			jbcnTemp.setState("00_Start");
 			jbcnTemp.setJob("/sos/jitl/JobChainStart");
 			jbcnTemp.setErrorState("!end_ERR");
-			JobChain.JobChainNode jbcnTemp2 =(JobChainNode) jobchain.get(jobchainEnCour).getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().get(0);
+			JobChain.JobChainNode jbcnTemp2 = (JobChainNode) jobchain
+					.get(jobchainEnCour)
+					.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().get(0);
 			jbcnTemp.setNextState(jbcnTemp2.getState());
-			jobchain.get(jobchainEnCour).getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(0, jbcnTemp);
+			jobchain.get(jobchainEnCour)
+					.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd()
+					.add(0, jbcnTemp);
 
-			jbcnTemp=fabrique.createJobChainJobChainNode();
+			jbcnTemp = fabrique.createJobChainJobChainNode();
 			jbcnTemp.setState("End");
 			jbcnTemp.setJob("/sos/jitl/JobChainEnd");
 
-			if(fichier)
-			{
+			if (fichier) {
 				jbcnTemp.setErrorState("!end_ERR");
 				jbcnTemp.setNextState("S_cleanfile");
-				jobchain.get(jobchainEnCour).getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcnTemp);
+				jobchain.get(jobchainEnCour)
+						.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd()
+						.add(jbcnTemp);
 
 				AddFileJobChain(true);
-			}
-			else
-			{
+			} else {
 				jbcnTemp.setErrorState("!end_ERR");
 				jbcnTemp.setNextState("end_SUC_All");
-				jobchain.get(jobchainEnCour).getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcnTemp);	
+				jobchain.get(jobchainEnCour)
+						.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd()
+						.add(jbcnTemp);
 			}
 
-
-		}
-		else if(fichier)
-		{
+		} else if (fichier) {
 			AddFileJobChain(false);
 		}
 
 	}
 
-	public void AddFileJobChain(boolean complexe)
-	{
-		JobChain.FileOrderSource file=fabrique.createJobChainFileOrderSource();
-		Job jobSchedulerExistsFile=fabrique.createJob();
+	public void AddFileJobChain(boolean complexe) {
+		JobChain.FileOrderSource file = fabrique
+				.createJobChainFileOrderSource();
+		Job jobSchedulerExistsFile = fabrique.createJob();
 
-		Params prms=fabrique.createParams();
+		Params prms = fabrique.createParams();
 
-		Param file1=fabrique.createParam();
+		Param file1 = fabrique.createParam();
 		file1.setName("file");
 
-		Param regex=fabrique.createParam();
+		Param regex = fabrique.createParam();
 		regex.setName("file_spec");
 
-		Param skip_first_files=fabrique.createParam();
+		Param skip_first_files = fabrique.createParam();
 		skip_first_files.setName("skip_first_files");
 
+		// défaut
+		initialiseParamsJobBoucle(prms, jobSchedulerExistsFile);
+		// End défaut
 
-		//par défaut	 
-		initialiseParamsJobBoucle(prms,jobSchedulerExistsFile);
-		//End défaut    		 
-
-
-		for(int i=0;i<contenuFichier.size();i++)
-		{
-			String[] split=contenuFichier.get(i).split("/");
-			String directory="";
-			for(int j=0;j<split.length-1;j++)
-			{
-				if(j<split.length-2)
-				{
-					directory+=split[j]+"/";
-				}
-				else
-				{
-					directory+=split[j]; 
+		for (int i = 0; i < contenuFichier.size(); i++) {
+			String[] split = contenuFichier.get(i).split("/");
+			String directory = "";
+			for (int j = 0; j < split.length - 1; j++) {
+				if (j < split.length - 2) {
+					directory += split[j] + "/";
+				} else {
+					directory += split[j];
 				}
 			}
 
-			if(i==0)
-			{	 
+			if (i == 0) {
 				file.setDirectory(directory);
-				file.setRegex(split[split.length-1]);
+				file.setRegex(split[split.length - 1]);
 				jobchain.get(jobchainEnCour).getFileOrderSource().add(file);
-			}
-			else if(i==1)
-			{
+			} else if (i == 1) {
 
 				file1.setValue(directory);
-				regex.setValue(split[split.length-1]); 
+				regex.setValue(split[split.length - 1]);
 
+			} else {
+				regex.setValue(regex.getValue() + " || "
+						+ split[split.length - 1]);
 			}
-			else
-			{
-				regex.setValue(regex.getValue()+" || "+split[split.length-1]);
-			}
-
 
 		}
 
-		if(contenuFichier.size()==2)
+		if (contenuFichier.size() == 2)
 			skip_first_files.setValue("0");
-		else if(contenuFichier.size()>2)
-			skip_first_files.setValue(String.valueOf(contenuFichier.size()));// you think it's a error ? it's not don't tuch...  
+		else if (contenuFichier.size() > 2)
+			skip_first_files.setValue(String.valueOf(contenuFichier.size()));
 
-		if(contenuFichier.size()>1)
-		{ 
-			prms.getParamOrCopyParamsOrInclude().add(file1);	
+		if (contenuFichier.size() > 1) {
+			prms.getParamOrCopyParamsOrInclude().add(file1);
 			prms.getParamOrCopyParamsOrInclude().add(regex);
 			prms.getParamOrCopyParamsOrInclude().add(skip_first_files);
 
 			jobSchedulerExistsFile.setParams(prms);
 
+			outJob(jobSchedulerExistsFile, jobchainEnCour + "Wait_Files");
 
-			outJob(jobSchedulerExistsFile, jobchainEnCour+"Wait_Files");
-
-
-			JobChainNode temp=fabrique.createJobChainJobChainNode();
-			temp.setState(jobchainEnCour+"Wait_Files");
-			temp.setJob(jobchainEnCour+"Wait_Files");
-			JobChain jbctemp=jobchain.get(jobchainEnCour);			
-			JobChain.JobChainNode jbcnTemp2 =(JobChainNode) jobchain.get(jobchainEnCour).getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().get(0);
+			JobChainNode temp = fabrique.createJobChainJobChainNode();
+			temp.setState(jobchainEnCour + "Wait_Files");
+			temp.setJob(jobchainEnCour + "Wait_Files");
+			JobChain jbctemp = jobchain.get(jobchainEnCour);
+			JobChain.JobChainNode jbcnTemp2 = (JobChainNode) jobchain
+					.get(jobchainEnCour)
+					.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().get(0);
 			temp.setNextState(jbcnTemp2.getState());
-			jobchain.get(jobchainEnCour).getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(0, temp);
-
+			jobchain.get(jobchainEnCour)
+					.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd()
+					.add(0, temp);
 
 		}
-		JobChain.FileOrderSink deletFile=fabrique.createJobChainFileOrderSink();
+		JobChain.FileOrderSink deletFile = fabrique
+				.createJobChainFileOrderSink();
 		deletFile.setState("S_cleanfile");
 		deletFile.setRemove("yes");
-		jobchain.get(jobchainEnCour).getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(deletFile);
-		fichier=false;
-		contenuFichier=new ArrayList<String>();
+		jobchain.get(jobchainEnCour)
+				.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd()
+				.add(deletFile);
+		fichier = false;
+		contenuFichier = new ArrayList<String>();
 	}
 
-	public void initialiseParamsJobBoucle(Params prms, Job jb)
-	{
-		Param on_empty_result_set=fabrique.createParam();
+	public void initialiseParamsJobBoucle(Params prms, Job jb) {
+		
+		Param on_empty_result_set = fabrique.createParam();
 		on_empty_result_set.setName("on_empty_result_set");
-		on_empty_result_set.setValue(jobchainEnCour+"Wait_Files");
+		on_empty_result_set.setValue(jobFileName + "_WaitFiles");
 		prms.getParamOrCopyParamsOrInclude().add(on_empty_result_set);
 
-		Param max_file_age=fabrique.createParam();
+		Param max_file_age = fabrique.createParam();
 		max_file_age.setName("max_file_age");
 		max_file_age.setValue("1000");
 		prms.getParamOrCopyParamsOrInclude().add(max_file_age);
 
-		Param gracious=fabrique.createParam();
+		Param gracious = fabrique.createParam();
 		gracious.setName("gracious");
 		gracious.setValue("true");
 		prms.getParamOrCopyParamsOrInclude().add(gracious);
 
-		Param min_file_age=fabrique.createParam();
+		Param min_file_age = fabrique.createParam();
 		min_file_age.setName("min_file_age");
 		min_file_age.setValue("0");
 		prms.getParamOrCopyParamsOrInclude().add(min_file_age);
 
-		Param max_file_size=fabrique.createParam();
+		Param max_file_size = fabrique.createParam();
 		max_file_size.setName("max_file_size");
 		max_file_size.setValue("1000");
 		prms.getParamOrCopyParamsOrInclude().add(max_file_size);
 
-		Param min_file_size=fabrique.createParam();
+		Param min_file_size = fabrique.createParam();
 		min_file_size.setName("min_file_size");
 		min_file_size.setValue("0");
-		prms.getParamOrCopyParamsOrInclude().add( min_file_size);
+		prms.getParamOrCopyParamsOrInclude().add(min_file_size);
 
-		Param skip_last_files=fabrique.createParam();
+		Param skip_last_files = fabrique.createParam();
 		skip_last_files.setName("skip_last_files");
 		skip_last_files.setValue("0");
 		prms.getParamOrCopyParamsOrInclude().add(skip_last_files);
 
-		Param count_files=fabrique.createParam();
+		Param count_files = fabrique.createParam();
 		count_files.setName("count_files");
 		count_files.setValue("false");
 		prms.getParamOrCopyParamsOrInclude().add(count_files);
 
-		Param create_order=fabrique.createParam();     
+		Param create_order = fabrique.createParam();
 		create_order.setName("create_order");
 		create_order.setValue("");
 		prms.getParamOrCopyParamsOrInclude().add(create_order);
 
-		Param create_order_for_all_files=fabrique.createParam();
+		Param create_order_for_all_files = fabrique.createParam();
 		create_order_for_all_files.setName("create_order_for_all_files");
 		create_order_for_all_files.setValue("");
 		prms.getParamOrCopyParamsOrInclude().add(create_order_for_all_files);
 
-		Param order_jobchain_name=fabrique.createParam();
+		Param order_jobchain_name = fabrique.createParam();
 		order_jobchain_name.setName("order_jobchain_name");
 		order_jobchain_name.setValue("");
 		prms.getParamOrCopyParamsOrInclude().add(order_jobchain_name);
 
-		Param next_state=fabrique.createParam();
+		Param next_state = fabrique.createParam();
 		next_state.setName("next_state");
 		next_state.setValue("");
-		prms.getParamOrCopyParamsOrInclude().add( next_state);
+		prms.getParamOrCopyParamsOrInclude().add(next_state);
 
-		Param merge_order_parameter=fabrique.createParam();
+		Param merge_order_parameter = fabrique.createParam();
 		merge_order_parameter.setName("merge_order_parameter");
 		merge_order_parameter.setValue("false");
 		prms.getParamOrCopyParamsOrInclude().add(merge_order_parameter);
 
-		Param expected_size_of_result_set=fabrique.createParam();
+		Param expected_size_of_result_set = fabrique.createParam();
 		expected_size_of_result_set.setName("expected_size_of_result_set");
 		expected_size_of_result_set.setValue("");
 		prms.getParamOrCopyParamsOrInclude().add(expected_size_of_result_set);
 
-		Param raise_error_if_result_set_is=fabrique.createParam();
+		Param raise_error_if_result_set_is = fabrique.createParam();
 		raise_error_if_result_set_is.setName("raise_error_if_result_set_is");
 		raise_error_if_result_set_is.setValue("");
 		prms.getParamOrCopyParamsOrInclude().add(raise_error_if_result_set_is);
 
-		Param check_steady_state_of_files=fabrique.createParam();
+		Param check_steady_state_of_files = fabrique.createParam();
 		check_steady_state_of_files.setName("check_steady_state_of_files");
 		check_steady_state_of_files.setValue("false");
 		prms.getParamOrCopyParamsOrInclude().add(check_steady_state_of_files);
 
-		Param steady_state_count=fabrique.createParam();
+		Param steady_state_count = fabrique.createParam();
 		steady_state_count.setName("steady_state_count");
 		steady_state_count.setValue("30");
 		prms.getParamOrCopyParamsOrInclude().add(steady_state_count);
 
-		Param check_steady_state_interval=fabrique.createParam();
+		Param check_steady_state_interval = fabrique.createParam();
 		check_steady_state_interval.setName("check_steady_state_interval");
 		check_steady_state_interval.setValue("1");
 		prms.getParamOrCopyParamsOrInclude().add(check_steady_state_interval);
 
-		Description dsc=fabrique.createJobDescription();
+		Description dsc = fabrique.createJobDescription();
 
-		Include inc=fabrique.createInclude();
+		Include inc = fabrique.createInclude();
 		inc.setFile("jobs/JobSchedulerExistsFile.xml");
 		dsc.getContent().add(inc);
 		jb.setDescription(dsc);
 
-		Script scr= fabrique.createScript();
+		Script scr = fabrique.createScript();
 		scr.setJavaClass("sos.scheduler.file.JobSchedulerExistsFile");
 		scr.setLanguage("java");
 		jb.setScript(scr);
@@ -2162,649 +2101,21 @@ public class ExcelReader {
 		jb.setStopOnError("no");
 
 	}
-	public void ExcelCleaner(XSSFSheet sheet)
-	{
-		log+="Nettoyage du fichier Excel \n";
 
-		//couleur cellule modifier
-		XSSFFont font = wb.createFont();
-		font.setColor((short)45);
-		CellStyle csCF = wb.createCellStyle();
-		csCF.setFont(font);
-		//Fin couleur cellule modifier
-		Iterator<Row> rowIt=sheet.iterator();
-		rowIt.next();
-		Row row,rowPrec,rowSuiv;
-		row = sheet.getRow(1);
-		rowPrec=row ;
-		rowSuiv=sheet.getRow(2);
-		int numLigne=1;
-		boolean delete=false;
-		String nameOfJobChain="";
-		int NumberJobchainsup=10;
-
-		for(int p=2;p<=sheet.getLastRowNum();p++)	 
-		{	
-
-			if(!row.getCell(2).toString().isEmpty())
-			{ 
-				int nextLine=numLigne+1;
-				LinkedHashMap<String,Integer> lineAft = new LinkedHashMap<String,Integer>();
-				LinkedHashMap<String,Integer> lineBef = new LinkedHashMap<String,Integer>();
-				while(nextLine<=sheet.getLastRowNum())
-				{
-					if(!sheet.getRow(nextLine).getCell(1).toString().isEmpty()){
-						nextLine=sheet.getLastRowNum(); 
-
-					}
-					else if(sheet.getRow(numLigne).getCell(2).toString().equals(sheet.getRow(nextLine).getCell(11).toString()))
-					{
-
-						lineAft.put(sheet.getRow(nextLine).getCell(2).toString(), nextLine);
-					}
-					nextLine++;
-				}
-
-				if(lineAft.size()==1)
-				{
-					if(lineAft.values().iterator().next()!=numLigne+1)
-					{
-						copyExcelJob(lineAft.values().iterator().next(),(numLigne+1));
-
-						delete=true;
-						log+="La ligne "+lineAft.values().iterator().next() + "a été remonté à la ligne "+ (numLigne+1);
-						System.out.println("La ligne "+lineAft.values().iterator().next() + "a été remonté à la ligne "+ (numLigne+1));
-
-					}
-				}
-
-				nextLine=numLigne+1;
-
-				while(nextLine<=sheet.getLastRowNum())
-				{
-					if(!sheet.getRow(nextLine).getCell(1).toString().isEmpty()){
-						nextLine=sheet.getLastRowNum(); 
-
-					}
-					else if(sheet.getRow(numLigne).getCell(11).toString().equals(sheet.getRow(nextLine).getCell(2).toString()))
-					{
-						if(!sheet.getRow(numLigne).getCell(11).toString().isEmpty()&&!sheet.getRow(nextLine).getCell(2).toString().isEmpty())
-						{
-
-							System.out.println("lline "+ numLigne+" "+nextLine);
-							lineBef.put(sheet.getRow(nextLine).getCell(2).toString(), nextLine);
-						}
-					}
-
-					nextLine++;
-				}
-
-				if(lineBef.size()==1)
-				{
-
-					copyExcelJob(lineBef.values().iterator().next(),numLigne);				
-					rowSuiv=row;
-					row = sheet.getRow(p-1);
-					delete=true;
-
-				}
-
-			}
-			/*
-		else if(!row.getCell(2).toString().isEmpty()&&!row.getCell(16).toString().isEmpty()&&!rowSuiv.getCell(16).toString().isEmpty()&&(!rowPrec.getCell(3).toString().isEmpty()||!rowPrec.getCell(5).toString().isEmpty()))
-			{
-				String timeRow=row.getCell(16).toString();
-				int aComparer=numLigne;
-				int nbJob=aComparer+1;
-				int ligneEchange=0;
-				boolean echange=true;
-
-				while(echange)
-				{	 
-					while(!sheet.getRow(nbJob).getCell(2).toString().isEmpty()&&!sheet.getRow(nbJob).getCell(16).toString().isEmpty())
-					{
-						if(Integer.parseInt(timeRow)>Integer.parseInt(sheet.getRow(nbJob).getCell(16).toString()))
-						{
-
-							ligneEchange=nbJob;
-							timeRow=sheet.getRow(nbJob).getCell(16).toString();
-
-						}
-						nbJob++;
-					}
-
-					if(ligneEchange!=0)
-					{
-						log+="Une incohérence dans la liste des jobs a été détectée et corrigée, la ligne "+(ligneEchange+1)+ "a été échangée avec la ligne "+ (aComparer+1)+" à cause de la colonne <<at>> \n";
-
-						switchRow(aComparer, ligneEchange,csCF);
-                        /*
-						if(rebuildDependency(aComparer,nameOfJobChain+NumberJobchainsup))
-	                  						NumberJobchainsup++;
-			 */
-			/*
-						ligneEchange=0;
-					}
-
-
-					if(aComparer==nbJob-1)
-					{
-						echange=false; 
-					}
-
-					aComparer++;
-					nbJob=aComparer+1;
-					timeRow=sheet.getRow(aComparer).getCell(16).toString();
-				}
-
-				if(rowPrec.getCell(3).toString().equals("R"))
-				{
-					log+="Modification de l'order: "+rowPrec.getCell(14).toString()+ ", mise à jour de la colone <<at>> \n";
-
-					rowPrec.getCell(16).setCellValue(row.getCell(16).toString()); 
-					rowPrec.getCell(16).setCellStyle(csCF);
-				}
-			}
-
-			 */
-
-			if(!row.getCell(1).toString().isEmpty())
-			{
-				nameOfJobChain=row.getCell(5).toString();
-			}
-
-
-
-			/*
-			//Add order
-			 if(!row.getCell(16).toString().isEmpty()&& !row.getCell(1).toString().isEmpty())
-			 {
-
-				 if(!rowSuiv.getCell(3).toString().equals("R")&&!rowSuiv.getCell(3).toString().equals("O"))
-				 {
-					 log+="Ajout d'un order à la ligne :"+(numLigne+1)+" \n";
-					 copyRow(sheet,numLigne+1, csCF); 
-
-				 }
-			 }
-			//End add order
-			 */
-
-			if(!row.getCell(1).toString().isEmpty()&&!row.getCell(16).toString().isEmpty()&&!row.getCell(16).toString().isEmpty())
-			{
-				if(!rowSuiv.getCell(2).toString().isEmpty())
-				{
-					if(rowSuiv.getCell(16).toString().isEmpty())
-						rowSuiv.getCell(16).setCellValue(row.getCell(16).toString());
-
-					if(rowSuiv.getCell(19).toString().isEmpty())
-						rowSuiv.getCell(19).setCellValue(row.getCell(19).toString());
-				}
-
-			}
-
-
-
-			/*
-			FileOutputStream fileOut;
-			try {
-				fileOut = new FileOutputStream(outPut+numLigne+file.getName());
-				wb.write(fileOut);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			 */
-
-			if(rowSuiv.getCell(3).toString().equals("O"))
-			{
-
-				rowSuiv.getCell(30).setCellValue(rowSuiv.getCell(30).toString().replace("//", "/"));
-				String correction=rowSuiv.getCell(30).toString();
-
-
-				String[] cheminEtRegex=correction.split("/");
-
-				String regex=cheminEtRegex[cheminEtRegex.length-1];	
-
-				StringTokenizer chaine = new StringTokenizer(regex,"?*",true);
-				if(chaine.countTokens()>1)
-				{
-					rowSuiv.getCell(30).setCellValue("");
-					String temps=chaine.nextToken();
-					String tempsNext;
-					for(int z=0;z<cheminEtRegex.length-1;z++)
-					{
-						rowSuiv.getCell(30).setCellValue(rowSuiv.getCell(30).toString()+cheminEtRegex[z]+"/");
-					}
-
-					while(chaine.hasMoreTokens())
-					{
-						tempsNext=chaine.nextToken();
-
-						if(!temps.contains(".")&&(tempsNext.equals("*")||tempsNext.equals("?")))
-						{
-
-							rowSuiv.getCell(30).setCellStyle(csCF);
-
-
-							rowSuiv.getCell(30).setCellValue(rowSuiv.getCell(30).toString()+temps+"."+tempsNext);
-							log+="Modification du regex à la ligne :"+(numLigne+1)+" \n";
-
-							rowSuiv.getCell(30).setCellStyle(csCF);
-						}
-						else if(!temps.equals("*")&&!temps.equals("?"))
-						{
-
-							rowSuiv.getCell(30).setCellValue(rowSuiv.getCell(30).toString()+temps+tempsNext);
-						}
-						temps=tempsNext;
-
-					}
-
-				}
-			}
-
-
-
-
-			//Cleaning excel order
-			if(row.getCell(3).toString().equals("R"))
-			{
-
-				if(row.getCell(16).toString().isEmpty())
-				{
-
-					if(!rowPrec.getCell(16).toString().isEmpty())
-					{
-
-						row.getCell(16).setCellValue(rowPrec.getCell(16).toString());
-						row.getCell(16).setCellStyle(csCF);
-					}
-
-					if(!rowSuiv.getCell(16).toString().isEmpty())
-					{
-						row.getCell(16).setCellValue(rowSuiv.getCell(16).toString());
-						row.getCell(16).setCellStyle(csCF);
-					}
-
-					if(!rowPrec.getCell(19).toString().isEmpty()&&!rowPrec.getCell(19).toString().equals("2359"))
-					{
-
-						row.getCell(19).setCellValue(rowPrec.getCell(19).toString());
-						row.getCell(19).setCellStyle(csCF);
-					}
-
-
-				}
-
-
-			}
-			//End cleaning excel order
-
-			/*
-			//Delete order
-			if(row.getCell(3).toString().equals("O")&&rowPrec.getCell(3).toString().equals("R"))
-			{
-				sheet.removeRow(sheet.getRow(p-2));
-				sheet.shiftRows(p-1, sheet.getLastRowNum(),-1);
-				delete=true;
-				log+="Suppression d'un order à la ligne :"+(p-1)+" vérifier que tous les orders ont été supprimés! \n";
-			p--;
-			}
-			else if(row.getCell(3).toString().equals("N")&&rowPrec.getCell(3).toString().equals("R")&&rowSuiv.getCell(3).toString().equals("O"))
-			{
-
-                sheet.removeRow(sheet.getRow(p-2));		
-				sheet.shiftRows(p-1, sheet.getLastRowNum(),-1);
-				delete=true;
-				log+="Suppression d'un order à la ligne :"+(p-1)+" vérifier que tous les orders ont été supprimés! \n";
-			p--;
-			}
-			 */
-
-			if(delete)
-			{
-				rowPrec=sheet.getRow(p-1);
-				row = sheet.getRow(p);
-				if(p+1<=sheet.getLastRowNum())
-					rowSuiv = sheet.getRow(p+1);
-				delete=false;
-			}
-			else
-			{
-				rowPrec=row;
-				row=rowSuiv;
-				if(p+1<=sheet.getLastRowNum())
-					rowSuiv = sheet.getRow(p+1);
-			}
-			//End Delete order
-
-
-			numLigne++;
-
-
-
-		}
-
-
-
-		log+="Fin du nettoyage, génération du nouveau fichier Excel \n";
-
-		interfaceGraphique.addValueProgressBar(15);
-	}
-
-	public void addExcelJobChain(int line, String name)
-	{
-		sheet.shiftRows(line, sheet.getLastRowNum(), 1);
-		sheet.createRow(line);
-		Row row=sheet.getRow(line);
-		for (int i=0;i<62;i++)
-		{
-			row.createCell(i);
-			row.getCell(i, Row.CREATE_NULL_AS_BLANK);
-
-			switch(i)
-			{
-			case 1:
-				row.getCell(i).setCellValue("-1");
-				break;
-
-			case 5:
-				row.getCell(i).setCellValue(name);
-				break;
-
-
-			}
-		}
-	}
-
-	public void copyExcelJob(int line, int  newLine )
-	{
-		//si le job est suivis de fichier(s) il faut rajouer le job apres le fichier (ou le lock)
-
-		boolean boucle=!sheet.getRow(newLine).getCell(3).toString().isEmpty();
-		System.out.println(line+" "+newLine );
-
-		while(boucle)
-		{
-
-			newLine++;
-
-			boucle=!sheet.getRow(newLine+1).getCell(3).toString().isEmpty();
-		}
-
-
-		ArrayList<Integer> ajouter=new ArrayList<Integer>();
-		ajouter.add(line);
-
-		boucle=line+1<=sheet.getLastRowNum();
-		if(boucle)
-			boucle=!sheet.getRow(line+1).getCell(3).toString().isEmpty();
-
-		while(boucle)
-		{
-			line++;
-			ajouter.add(line);
-
-			boucle=line+1<=sheet.getLastRowNum();
-			if(boucle)
-				boucle=!sheet.getRow(line+1).getCell(3).toString().isEmpty();
-		}
-
-
-		for(int z=0;z<ajouter.size();z++)
-		{
-
-
-			Row row=sheet.getRow(ajouter.get(z)); 
-			sheet.shiftRows(newLine, sheet.getLastRowNum(), 1);
-			sheet.createRow(newLine);
-
-			Row row2=sheet.getRow(newLine);
-
-			for (int i=0;i<61;i++)
-			{
-				row2.createCell(i);
-				row.getCell(i, Row.CREATE_NULL_AS_BLANK);
-				row2.getCell(i, Row.CREATE_NULL_AS_BLANK);
-				row2.getCell(i).setCellValue(row.getCell(i).toString());
-
-
-
-			}
-
-
-			System.out.println(sheet.getRow((ajouter.get(z)+1)).getCell(2).toString()+"  "+(ajouter.get(z)) );
-
-			sheet.removeRow(sheet.getRow((ajouter.get(z)+1)));
-
-			FileOutputStream fileOut;
-			try {
-				fileOut = new FileOutputStream(outPut+numLigne+file.getName());
-				wb.write(fileOut);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			if((ajouter.get(z)+1)!=sheet.getLastRowNum()+1)
-				sheet.shiftRows((ajouter.get(z)+2), sheet.getLastRowNum(),-1);
-
-
-			//we have created a line then we need to add 1 to the indice "line" for stay on the right value
-
-			newLine++;
-		}
-	}
-	/*
-	public boolean rebuildDependency(int numLgne, String Chaine)
-	{
-		int follower=0;
-		int i=1;
-		int aEchanger=0;
-
-		boolean boucle=(numLgne+i)<=sheet.getLastRowNum();
-
-		if(boucle)
-			boucle=!sheet.getRow(numLgne+i).getCell(2).toString().isEmpty();
-
-		String numjob=sheet.getRow(numLgne).getCell(2).toString();
-		while(boucle)
-		{
-			sheet.getRow(numLgne+i).getCell(11).toString();
-
-			if(sheet.getRow(numLgne+i).getCell(11).toString().equals(numjob))
-			{
-
-				follower++;
-				if(aEchanger==0)
-					aEchanger=numLgne+i;
-
-			}
-			i++;
-
-			boucle=(numLgne+i)<=sheet.getLastRowNum();
-			if(boucle)
-				boucle=!sheet.getRow(numLgne+i).getCell(2).toString().isEmpty();
-		}
-
-
-		if(follower!=0 && aEchanger!=(numLgne+1)&&sheet.getRow(aEchanger).getCell(16).toString().isEmpty())
-		{
-
-
-			int firstLineToDelete=aEchanger;
-			i=numLgne+i;
-
-			addExcelJobChain(i, Chaine+"_"+sheet.getRow(numLgne).getCell(6).toString());
-
-			i++;
-			copyExcelJob(aEchanger, i );
-			i++;
-			aEchanger++;
-			while(sheet.getRow(aEchanger-1).getCell(2).toString().equals(sheet.getRow(aEchanger).getCell(11).toString()))
-			{
-				copyExcelJob(aEchanger, i );
-				i++;
-				aEchanger++;
-
-			}
-			for(int t=firstLineToDelete;t<aEchanger;t++)
-			{
-				sheet.removeRow(sheet.getRow(t));
-			}
-
-			sheet.shiftRows(aEchanger, sheet.getLastRowNum(),(aEchanger-firstLineToDelete)*-1);
-
-			return true;
-		}
-		return false;
-	}
-
-	 */
-	public void switchRow( int ligne1, int ligne2, CellStyle csCF)
-	{
-		Row row=sheet.getRow(ligne1);
-		Row row2=sheet.getRow(ligne2);
-		row.setRowStyle(csCF);
-
-		log+="Echange entre la ligne n: "+ligne1+"et la ligne n2: " +ligne2+ "\n";
-
-
-		for(int cn=0; cn<row.getLastCellNum(); cn++) {
-
-			String stringRow=row.getCell(cn).toString();
-			String stringRow2=row2.getCell(cn).toString();
-
-			row.getCell(cn).setCellValue(stringRow2);
-			row2.getCell(cn).setCellValue(stringRow);
-
-
-			if(stringRow.equals("") && (row2.getCell(cn).getCellType()==Cell.CELL_TYPE_STRING)){
-				row2.removeCell(row2.getCell(cn));
-				row2.getCell(cn, Row.CREATE_NULL_AS_BLANK);
-
-			}
-
-			if(stringRow2.equals("")&& (row.getCell(cn).getCellType()==Cell.CELL_TYPE_STRING)){
-				row.removeCell(row.getCell(cn));
-				row.getCell(cn, Row.CREATE_NULL_AS_BLANK);
-
-			}
-
-
-
-
-
-		}
-	}
-
-	public void copyRow(int destinationRowNum, CellStyle csCF) {
-		// Get the source / new row
-		Row newRow = sheet.getRow(destinationRowNum);
-
-
-		// If the row exist in destination, push down all rows by 1 
-		if (newRow != null) {
-			sheet.shiftRows(destinationRowNum, sheet.getLastRowNum(), 1);
-		} 
-
-		sheet.createRow(destinationRowNum);
-		Row row= sheet.getRow(destinationRowNum);
-
-
-
-		for(int cn=0; cn<newRow.getLastCellNum(); cn++) {
-
-			row.createCell(cn);
-			newRow.getCell(cn, Row.CREATE_NULL_AS_BLANK);//plutot row.getcell(cn,R...);
-
-			switch (cn)
-
-			{
-			case 3:
-				row.getCell(cn).setCellValue("R");
-				break;
-
-
-			case 28 :
-				row.getCell(cn).setCellValue("FREQ=DAILY;INTERVAL=1");
-				break;
-			}
-
-
-		}
-		row.setRowStyle(csCF);
-
-
-	}
-
-
-	public void replaceNumber(XSSFSheet worksheet, int numbeToReplace,int replace)	
-	{
-		Iterator<Row> rowIt=worksheet.iterator();
-		rowIt.next();
-		Row row;
-		while(rowIt.hasNext())
-		{
-			row=rowIt.next();
-			if(row.getCell(2).getStringCellValue().equals(numbeToReplace))
-			{
-				row.getCell(2).setCellValue(replace);
-			}
-
-			if(row.getCell(11).getStringCellValue().indexOf(numbeToReplace)!=-1)
-			{
-
-				if(row.getCell(11).getStringCellValue().equals(numbeToReplace))
-				{row.getCell(11).setCellValue(replace);
-				}
-				else{
-					String[] listNum = row.getCell(11).getStringCellValue().split(",");
-					row.getCell(11).setCellValue("");
-
-					for(String st :listNum)
-					{
-
-						if(st.equals(String.valueOf(numbeToReplace)))
-						{
-							st=String.valueOf(replace);
-						}
-
-						if(row.getCell(11).getStringCellValue().isEmpty())
-						{
-							row.getCell(11).setCellValue(st);	
-						}
-						else
-						{
-							row.getCell(11).setCellValue(row.getCell(11).getStringCellValue()+","+st);	
-						}
-
-					}
-
-
-				}
-
-
-			}
-		}
-	}
-
-// for test the programme 
+	// for test the programme
 	public static void main(String[] args) throws IOException, JAXBException {
 
 		ExcelReader exrd = new ExcelReader(
 				"C:/Users/m419099/Documents/AEPBetaT7.xlsm",
-				"C:/Users/m419099/Documents/résultat",new ConvertisseurTwsJbs(),true);
-
+				"C:/Users/m419099/Documents/résultat",
+				new ConvertisseurTwsJbs(), true);
 
 		if (exrd.treatExcelFile())
 
 		{
 			System.out.println("Fichier Excel traité");
-			exrd.OutputTest();}
-		else{
+			exrd.OutputTest();
+		} else {
 			System.out.println("prob");
 		}
 
