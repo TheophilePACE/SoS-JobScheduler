@@ -59,6 +59,62 @@ public class ExcelCleaner {
 
 		for(int p=2;p<=sheet.getLastRowNum();p++)	 
 		{	
+			if(!row.getCell(2).toString().isEmpty()&&!row.getCell(16).toString().isEmpty()&&!rowSuiv.getCell(16).toString().isEmpty()&&(!rowPrec.getCell(3).toString().isEmpty()||!rowPrec.getCell(5).toString().isEmpty()))
+			{
+				String timeRow=row.getCell(16).toString();
+				int aComparer=numLigne;
+				int nbJob=aComparer+1;
+				int ligneEchange=0;
+				boolean echange=true;
+
+				while(echange)
+				{	 
+					while(!sheet.getRow(nbJob).getCell(2).toString().isEmpty()&&!sheet.getRow(nbJob).getCell(16).toString().isEmpty())
+					{
+						if(Integer.parseInt(timeRow)>Integer.parseInt(sheet.getRow(nbJob).getCell(16).toString()))
+						{
+
+							ligneEchange=nbJob;
+							timeRow=sheet.getRow(nbJob).getCell(16).toString();
+
+						}
+						nbJob++;
+					}
+
+					if(ligneEchange!=0)
+					{
+						log+="Une incohérence dans la liste des jobs a été détectée et corrigée, la ligne "+(ligneEchange+1)+ "a été échangée avec la ligne "+ (aComparer+1)+" à cause de la colonne <<at>> \n";
+
+						switchRow(aComparer, ligneEchange,csCF);
+                        /*
+						if(rebuildDependency(aComparer,nameOfJobChain+NumberJobchainsup))
+	                  						NumberJobchainsup++;
+			 */
+			
+						ligneEchange=0;
+					}
+
+
+					if(aComparer==nbJob-1)
+					{
+						echange=false; 
+					}
+
+					aComparer++;
+					nbJob=aComparer+1;
+					timeRow=sheet.getRow(aComparer).getCell(16).toString();
+				}
+
+				if(rowPrec.getCell(3).toString().equals("R"))
+				{
+					log+="Modification de l'order: "+rowPrec.getCell(14).toString()+ ", mise à jour de la colone <<at>> \n";
+
+					rowPrec.getCell(16).setCellValue(row.getCell(16).toString()); 
+					rowPrec.getCell(16).setCellStyle(csCF);
+				}
+			}
+
+			 
 
 			if(!row.getCell(2).toString().isEmpty()) //sort job on dependency
 			{ 
@@ -127,63 +183,7 @@ public class ExcelCleaner {
 			
 			//If you want schedule with time, he sorts the time from smallest to largest 
 			/*
-		 if(!row.getCell(2).toString().isEmpty()&&!row.getCell(16).toString().isEmpty()&&!rowSuiv.getCell(16).toString().isEmpty()&&(!rowPrec.getCell(3).toString().isEmpty()||!rowPrec.getCell(5).toString().isEmpty()))
-			{
-				String timeRow=row.getCell(16).toString();
-				int aComparer=numLigne;
-				int nbJob=aComparer+1;
-				int ligneEchange=0;
-				boolean echange=true;
-
-				while(echange)
-				{	 
-					while(!sheet.getRow(nbJob).getCell(2).toString().isEmpty()&&!sheet.getRow(nbJob).getCell(16).toString().isEmpty())
-					{
-						if(Integer.parseInt(timeRow)>Integer.parseInt(sheet.getRow(nbJob).getCell(16).toString()))
-						{
-
-							ligneEchange=nbJob;
-							timeRow=sheet.getRow(nbJob).getCell(16).toString();
-
-						}
-						nbJob++;
-					}
-
-					if(ligneEchange!=0)
-					{
-						log+="Une incohérence dans la liste des jobs a été détectée et corrigée, la ligne "+(ligneEchange+1)+ "a été échangée avec la ligne "+ (aComparer+1)+" à cause de la colonne <<at>> \n";
-
-						switchRow(aComparer, ligneEchange,csCF);
-                        /*
-						if(rebuildDependency(aComparer,nameOfJobChain+NumberJobchainsup))
-	                  						NumberJobchainsup++;
-			 */
-			/*
-						ligneEchange=0;
-					}
-
-
-					if(aComparer==nbJob-1)
-					{
-						echange=false; 
-					}
-
-					aComparer++;
-					nbJob=aComparer+1;
-					timeRow=sheet.getRow(aComparer).getCell(16).toString();
-				}
-
-				if(rowPrec.getCell(3).toString().equals("R"))
-				{
-					log+="Modification de l'order: "+rowPrec.getCell(14).toString()+ ", mise à jour de la colone <<at>> \n";
-
-					rowPrec.getCell(16).setCellValue(row.getCell(16).toString()); 
-					rowPrec.getCell(16).setCellStyle(csCF);
-				}
-			}
-
-			 */
-
+		 
 			if(!row.getCell(1).toString().isEmpty())
 			{
 				nameOfJobChain=row.getCell(5).toString();
