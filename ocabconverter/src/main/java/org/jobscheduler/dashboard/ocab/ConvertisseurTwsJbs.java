@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2014 BigLoupe http://bigloupe.github.io/SoS-JobScheduler/
+ * Copyright (C) 2014 Jean-Vincent GENNADE http://bigloupe.github.io/SoS-JobScheduler/
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,28 +48,20 @@ import org.jobscheduler.dashboard.jobdefinition.xml.Job;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-/*
-Bouton connexion jButton1
-champs ine :jTexField1
-champ mot de passe :jPasswordField1
-champ pour afficher mots de passe incorrete: jLabel4
-
-*/
 
 /**
  *
- * @author puls2
+ * @author Jean vincent
  */
 public class ConvertisseurTwsJbs extends javax.swing.JFrame {
 
 
     /**
-     * Creates new form SocialNetworkIHM
+     * Creates new form ConvertisseurTwsJbs
      */
     public ConvertisseurTwsJbs() throws RemoteException {
         
         initComponents();
-        //this.getContentPane().setBackground(new Color(247,247,247));
         this.getContentPane().setBackground(Color.WHITE);
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
         "Excel", "xlsm","xlss");
@@ -279,6 +271,7 @@ temp.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         pack();
     }// </editor-fold>//GEN-END:initComponents
 //convertir
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     	if(jFileChooser1.getSelectedFiles().length!=0)
@@ -455,8 +448,8 @@ jLabel4.setVisible(true);
      
      
     /**
-     * Fonction qui recupere le texte d'un TextePane et lance le coloriage des mot a partir de ses tableau de mot 
-     * @param c 
+     * Coloriage des mots 
+     * @param JTextPane 
      */
     public void sQLHighlight(JTextPane c) {
         String[] strsToHighlightFunction ={"ATTENTION","Modification","Error","null"};

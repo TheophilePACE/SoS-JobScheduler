@@ -139,7 +139,7 @@ public class ExcelReader {
 	boolean alreadySync = false;
 
 	/**
-	 * Name the order based on jobchain
+	 * for the name of order based on jobchain and know how many order have a jobchain
 	 */
 
 	String jobchainEnCour;
@@ -729,13 +729,15 @@ public class ExcelReader {
 				}
 			} else {
 				// add a dependence on a other jobchain
-				if (!jobhelp.jobChainSuivant(jobchainEnCour).equals(
-						"noJobchainNext")) {
+				if (!jobhelp.jobChainNext(jobchainEnCour).equals(
+						"noJobchainNext") && !jobhelp.jobChainNext(jobchainEnCour).equals(
+								jobchainEnCour)) {
+					
 					Commands cmd = fabrique.createCommands();
 					cmd.getOnExitCode().add("success");
 					Order tmp = fabrique.createOrder();
 					tmp.setJobChain("/" + file.getName().split("\\.")[0] + "/"
-							+ jobhelp.jobChainSuivant(jobchainEnCour));
+							+ jobhelp.jobChainNext(jobchainEnCour));
 					cmd.getAddJobsOrAddOrderOrCheckFolders().add(
 							fabrique.createOrder(tmp));
 					jb.getCommands().add(cmd);
@@ -1490,7 +1492,7 @@ public class ExcelReader {
 
 	/**
 	 * name - Orderauthorization : if a job have a file, no order
-	 *
+	 *@param int : line
 	 * 
 	 * @author jean-vincent
 	 * @date 20/05/2015
@@ -1514,7 +1516,7 @@ public class ExcelReader {
 	/**
 	 * name - detectBoucle : if a job have a boucle, extern (in another
 	 * jobchain) or intern(in order)
-	 *
+	 *@param Period : period to update 
 	 * 
 	 * @author jean-vincent
 	 * @date 20/05/2015
@@ -1767,8 +1769,6 @@ public class ExcelReader {
 	/**
 	 * name - OutputTest test the program, create XML files
 	 * 
-	 * @param int : 1=> out a job, 2=> out a jobchain, 3=order, 12= job et
-	 *        jobchain
 	 * @author jean-vincent
 	 * @date 20/05/2015
 	 * @note
@@ -1866,6 +1866,18 @@ public class ExcelReader {
 		return fl.length;
 	}
 
+	/**
+	 * name - addBeginAndEndJobChain add some elements in jobchain (top and end) for formalism,
+	 * "00_Start" =>at the beginning of the jobchain
+	 * "!end_ERR" "end_SUC_All" at the end
+	 * if complexe jobchain (with split) "End"
+	 * if jobchain have a file "S_cleanfile"
+	 * 
+	 * @param String : the current jobChain 
+	 * @author jean-vincent
+	 * @date 20/05/2015
+	 * @note
+	 */
 	public void addBeginAndEndJobChain(String jobChainEnCour) {
 		if (jobhelp.isJobChainComplex(jobchainEnCour)) {
 
@@ -1908,6 +1920,14 @@ public class ExcelReader {
 
 	}
 
+	/**
+	 * name - AddFileJobChain : add job for wait file in jobchain
+	 * 
+	 * @param boolean : for know if the jobchain is complex or not 
+	 * @author jean-vincent
+	 * @date 20/05/2015
+	 * @note
+	 */
 	public void AddFileJobChain(boolean complexe) {
 		JobChain.FileOrderSource file = fabrique
 				.createJobChainFileOrderSource();
@@ -1993,6 +2013,17 @@ public class ExcelReader {
 		contenuFichier = new ArrayList<String>();
 	}
 
+	/**
+	 * name - AddFileJobChain : add job for wait file in jobchain
+	 * 
+	 * @param Params : params to update
+	 * @param Job : Job waitfile to update
+	 * 
+	 * @author jean-vincent
+	 * @date 20/05/2015
+	 * @note
+	 */
+	
 	public void initialiseParamsJobBoucle(Params prms, Job jb) {
 		
 		Param on_empty_result_set = fabrique.createParam();

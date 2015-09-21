@@ -71,7 +71,6 @@ public class JobHelper {
 	XSSFSheet sheet;
 	int ligne=1;
 	Marshaller marshaller;
-
 	String paramValue;
 	LinkedHashMap<String,Boolean> jobChainComplex;
 	Hashtable  <String , String > nextJobChain;
@@ -92,10 +91,21 @@ public class JobHelper {
 	String jobEndComplex="";
 	Hashtable <String, String> addSynch=new Hashtable<String, String>();
 	int indiceEndSplit=-1;
-	//Hashtable  <String , String > SynchroafterJob=new Hashtable<String, String>();
+
+	/**
+	 * name - AddSynch notify on job need synchronization before process
+	 * 
+	 * 
+	 * @param String : name of the job
+	 * @author jean-vincent
+	 * @date 20/05/2015
+	 * @note
+	 */
+
 	public boolean AddSynch(String st) {
 		return addSynch.containsKey(st);
 	}
+
 
 	public JobHelper(XSSFSheet sheet,Marshaller marshaller)
 	{
@@ -189,7 +199,7 @@ public class JobHelper {
 
 		cellIterator=row.cellIterator();
 
-		cell=coloneExcelSuivant(7);	//we go to the column 7, the job name (of the current job)
+		cell=coloneExcelSuivant(7);	//we go to the column 7, the job name (if it's a job)
 
 
 
@@ -200,70 +210,70 @@ public class JobHelper {
 		{
 			String temp=getL1File();
 
-		if(isEndComplex(String.valueOf(jid))) //here, we look if this job is the end of a complex case
-		{//end of a complex case is always a synchronization 
-			nameNextJob.put(cell.toString(),"Sync_"+numbeSyn);
+			if(isEndComplex(String.valueOf(jid))) //here, we look if this job is the end of a complex case
+			{//end of a complex case is always a synchronization 
+				nameNextJob.put(cell.toString(),"Sync_"+numbeSyn);
 
-			if(!temp.equals("NogetL1File"))
-			{
-				jobWithFiles.put(cell.toString(), temp);
-			}
-
-
-		}
-		else
-		{
-			//the last job in parallel execution, we can up the number of synchronization and split
-			if (jobEndComplex.equals(String.valueOf(jid)))
-			{
-				EndComplexCase(cell.toString());
-				jobEndComplex="";
-			} 
-
-			//here we find a split point, this is the beginning of a complex case 
-			String endSplit=splitPoint(String.valueOf(jid));
-			if(!endSplit.equals("-1")&&indiceEndSplit!=-1)
-			{
-
-
-				String[] value=endSplit.split(",");
-				if(indiceEndSplit!=-2)
-					jobEndComplex=sheet.getRow(indiceEndSplit).getCell(2).toString();
-
-				indiceEndSplit=-1;
-
-				addSynch.put(value[value.length-1],"Sync_"+numbeSyn);
-
-				for(int z=0;z<value.length;z++)
+				if(!temp.equals("NogetL1File"))
 				{
-					EndCmplex.put(value[z],numbeSyn);
-				}
-
-				if (!jobChainComplex.containsKey(nameJobChain))
-				{
-					jobChainComplex.put(nameJobChain,true);//For now if a jochain contain complex case,
-					//We add for the complex jobchain a job start and a job end 
-				}
-				complexe=true;
-
-			}else{
-				//a normal case, just put the next job in a hashtable
-
-
-				if(temp.equals("NogetL1File"))
-				{
-					if(!nameNextJob.containsKey(cell.toString()))
-					nameNextJob.put(cell.toString(),getL1(7,1));
-					
-				}
-				else{
-
 					jobWithFiles.put(cell.toString(), temp);
-					nameNextJob.put(cell.toString(),getL1(7,2)); //on s	it deja que le prochain est un fichier
 				}
-			}
 
-		}
+
+			}
+			else
+			{
+				//the last job in parallel execution, we can up the number of synchronization and split
+				if (jobEndComplex.equals(String.valueOf(jid)))
+				{
+					EndComplexCase(cell.toString());
+					jobEndComplex="";
+				} 
+
+				//here we find a split point, this is the beginning of a complex case 
+				String endSplit=splitPoint(String.valueOf(jid));
+				if(!endSplit.equals("-1")&&indiceEndSplit!=-1)
+				{
+
+
+					String[] value=endSplit.split(",");
+					if(indiceEndSplit!=-2)
+						jobEndComplex=sheet.getRow(indiceEndSplit).getCell(2).toString();
+
+					indiceEndSplit=-1;
+
+					addSynch.put(value[value.length-1],"Sync_"+numbeSyn);
+
+					for(int z=0;z<value.length;z++)
+					{
+						EndCmplex.put(value[z],numbeSyn);
+					}
+
+					if (!jobChainComplex.containsKey(nameJobChain))
+					{
+						jobChainComplex.put(nameJobChain,true);// for know if a jochain contain complex case,
+						//then ExcelReader Will add for the complex jobchain a job start and a job end 
+					}
+					complexe=true;
+
+				}else{
+					//a normal case, just put the next job in a hashtable
+
+
+					if(temp.equals("NogetL1File"))// if there is no file on a job
+					{
+						if(!nameNextJob.containsKey(cell.toString()))
+							nameNextJob.put(cell.toString(),getL1(7,1));
+
+					}
+					else{
+
+						jobWithFiles.put(cell.toString(), temp);
+						nameNextJob.put(cell.toString(),getL1(7,2)); //we already know the next line is a file
+					}
+				}
+
+			}
 
 		}
 
@@ -271,7 +281,7 @@ public class JobHelper {
 		ligne++;
 	}
 
-	if (complexe)
+	if (complexe)// for end complece case
 	{
 		EndComplexCase("End");
 		jobEndComplex="";
@@ -279,6 +289,15 @@ public class JobHelper {
 
 
 	}
+	
+	/**
+	 * name - CheckSplitAtTheBegening : specially for check if there is parallel job at the beginning                  
+	 * 
+	 * @author jean-vincent
+	 * @date 20/05/2015
+	 * @note
+	 */
+	
 	public void CheckSplitAtTheBegening()
 	{
 
@@ -314,6 +333,15 @@ public class JobHelper {
 
 
 	}
+	
+	/**
+	 * name - CheckSplitAtTheBegening : specially for check if there is parallel job at the beginning                  
+	 * @param String : name of the job
+	 * @author jean-vincent
+	 * @date 20/05/2015
+	 * @note
+	 */
+	
 	public String getJobWithFiles(String st) {
 		if(jobWithFiles.containsKey(st))
 			return jobWithFiles.get(st);
@@ -321,7 +349,15 @@ public class JobHelper {
 		return "nofiles";
 	}
 
-
+	/**
+	 * name - splitPoint :  for check if the job is the beginning of a parallel execution              
+	 * @param String : name of the job
+	 * @see   splitBegeningPoint (for the comments)
+	 * @author jean-vincent
+	 * @date 20/05/2015
+	 * @note
+	 */
+	
 	public String splitPoint(String Job)
 	{
 		String returnn="";
@@ -473,12 +509,23 @@ public class JobHelper {
 
 	}
 
+	/**
+	 * name - splitBegeningPoint :  for check if the job is the beginning of a parallel execution 
+	 * Specially for the top of a jobchain, very similar to function "splitPoint", 
+	 * i think we can merge the two function (but there is some work!)
+	 *          
+	 * @param String : name of the job
+	 * @author jean-vincent
+	 * @date 20/05/2015
+	 * @note
+	 */
+	
 	public String splitBegeningPoint(String Job)
 	{
 		String returnn="";
 		boolean boucle,endSplit=false;
 		int numLigne=ligne;
-		boolean happyEnd=false;
+		boolean happyEnd=false; // if the complex case end with a split in the excel then yes, else we need to determine where is the end 
 		int firstJob=-1;
 		boolean noTime=true;
 
@@ -486,14 +533,14 @@ public class JobHelper {
 
 		if(haveNextIndice(numLigne))
 		{
-			while(haveNextIndice(numLigne)&& sheet.getRow(numLigne).getCell(2).toString().isEmpty())//a rectifier trop compliquer faire le contraire
+			while(haveNextIndice(numLigne)&& sheet.getRow(numLigne).getCell(2).toString().isEmpty()) // go on the first job (line)
 			{
 				numLigne++;
 				firstJob=numLigne;
 
 			}
 
-			boucle=sheet.getRow(numLigne).getCell(1).toString().isEmpty(); //n'est pas un jobchain vérification	
+			boucle=sheet.getRow(numLigne).getCell(1).toString().isEmpty(); //is a jobchain ? if empty, no  
 
 			while(boucle&&!endSplit)
 			{
@@ -504,7 +551,7 @@ public class JobHelper {
 
 				if(sheet.getRow(numLigne).getCell(11).toString().equals(Job) && !sheet.getRow(numLigne).getCell(2).toString().isEmpty() )
 				{
-					parallelJob.add(new Integer(Integer.valueOf(numLigne)));
+					parallelJob.add(new Integer(Integer.valueOf(numLigne))); // add a job in parallel 
 
 				}
 
@@ -537,22 +584,24 @@ public class JobHelper {
 
 		}
 
-		if(parallelJob.size()>1)
+		if(parallelJob.size()>1) // if there is more than on job in parallel
 		{
 			paramValue="";
 
 			String tempo=";";
 			for(int h=0;h<parallelJob.size();h++)
 			{
+				
 				tempo+=parallelJob.get(h)+";";
 			}
 
+			//tempo is the line of the job in parallel, it's a information for excelReader
+			//see ExcelReader :treatJobChainOption : line 453 (may have changed) 
 			splitAtBegening.put(nameJobChain, "Split_"+numbeSplit+tempo);
 
 			if(firstJob==-1)
-				throw new Error("Problème dans le fichier Excel");
+				throw new Error("Problème dans le fichier Excel, pas de job dans une chaine");
 
-			//nameNextJob.put("Split_"+numbeSplit,sheet.getRow(firstJob).getCell(6).toString()); à sup
 			Job jb=fabrique.createJob();
 			jb.setOrder("yes");
 			jb.setStopOnError("no");
@@ -570,7 +619,7 @@ public class JobHelper {
 
 
 
-			if(happyEnd)
+			if(happyEnd)// there is a end for the split
 			{
 				returnn=sheet.getRow(indiceEndSplit).getCell(11).toString();
 			}
@@ -590,7 +639,7 @@ public class JobHelper {
 					{
 						returnn=ResolvLink(parallelJob.get(j));
 					}
-					
+
 					if(haveNextIndice(parallelJob.get(j)))
 					{
 						if(sheet.getRow(parallelJob.get(j)+1).getCell(3).toString().equals("O"))
@@ -603,19 +652,20 @@ public class JobHelper {
 					{
 						paramValue=sheet.getRow(parallelJob.get(j)).getCell(6).toString();
 					}
-					
+
 
 				}
 				else
 				{
 					if(!happyEnd)
 					{
+						// there is no end for the split, we need resolve the dependence for know where is the end
 						returnn=returnn+","+ResolvLink(parallelJob.get(j));
 					}
-					
+
 					if(haveNextIndice(parallelJob.get(j)))
-					{
-						if(sheet.getRow(parallelJob.get(j)+1).getCell(3).toString().equals("O"))
+					{   // if the job have a file, then execute in parallel the job wait file
+						if(sheet.getRow(parallelJob.get(j)+1).getCell(3).toString().equals("O")) 
 							paramValue=paramValue+";"+sheet.getRow(parallelJob.get(j)).getCell(6).toString()+"_WaitFiles"; 
 						else
 							paramValue=paramValue+";"+sheet.getRow(parallelJob.get(j)).getCell(6).toString();
@@ -629,7 +679,7 @@ public class JobHelper {
 
 			}
 
-
+            //create the config file
 			createConfigFile();
 
 
@@ -656,6 +706,16 @@ public class JobHelper {
 
 	}
 
+	
+	/**
+	 * name - splitBegeningPoint :  resolve dependence of a job (the last son after him 3002->3003->3004[end] return 3004)
+	 *          
+	 * @param int : line of the job to treat 
+	 * @author jean-vincent
+	 * @date 20/05/2015
+	 * @note
+	 */
+	
 	public String ResolvLink(int line)
 	{
 		int i=1;
@@ -695,13 +755,13 @@ public class JobHelper {
 			}
 			else if(sheet.getRow(line).getCell(2).toString().equals(sheet.getRow(line+1).getCell(11).toString()))
 				return  ResolvLink(line+1);
-			
+
 			return sheet.getRow(line).getCell(2).toString();
 		}
 
 		return sheet.getRow(line).getCell(2).toString();
 	}
-	
+
 	public boolean haveNextIndice(int i)
 	{
 		if(sheet.getLastRowNum()>=i+1)
@@ -717,26 +777,19 @@ public class JobHelper {
 		return false;
 
 	}
+	
+	
 	public void EndComplexCase(String nextSynchro)
 	{
-		//now we treat a simple case or a jobchain but before we treat a complex case then we have some thing to do
-		//set  next of the synchro and split 
+
 		nameNextJob.put("Split_"+numbeSplit,"Sync_"+numbeSyn);//next of a split is always a synchronization
-		nameNextJob.put("Sync_"+numbeSyn,nextSynchro);
+		nameNextJob.put("Sync_"+numbeSyn,nextSynchro);// next of the synchronization ( a job)
 		complexe=false;//reset
-
-		//here, we have treat the complex, we must create a job file
-		//if it's the first complex case in the jobchain we create a jobchain with a new order and a new process
-		//else we add a new process, look a config file for understand
-		//jobchain in the config file it's not a common jobchain 
-
-
-
-
 
 		numbeSyn++;//for the next synchro
 		numbeSplit++;//for the next split
 	}
+
 	/**
 	 * name - getL1 get in next line, the column enter in parameter
 	 *                           
@@ -789,7 +842,17 @@ public class JobHelper {
 
 		return "NogetL1";
 	}
-
+	
+	/**
+	 * name - getL1File get in next line, if the job have a file, or not
+	 *                           
+	 * 
+	 * @param int : column number
+	 * @return String :  case specified in parameter of the next line
+	 * @author jean-vincent
+	 * @date 20/05/2015
+	 * @note
+	 */
 	public String getL1File()
 	{
 		if(haveNextIndice(ligne))
@@ -821,20 +884,19 @@ public class JobHelper {
 					}
 
 				}
-				//un job peut avoir le nom de (numberfile+_file) meme si cela est peu probable
-				//je rajoute Unique pour etre sur qu'il n'y est pas de conflit
+			
 
 				return lineFile;
 			}
 		}
-		System.out.println("inin");
+		
 		return "NogetL1File";
 	}
 
 	public String cdata(String st) {
 		return "<![CDATA[" + st + "]]>"; // for add CDATA in Xml file
 	}
-	
+
 	/**
 	 * name - getL2 get in two next line, the column enter in parameter
 	 *                           
@@ -913,6 +975,8 @@ public class JobHelper {
 		return false;
 	}
 
+	/*//for copy a file
+ 
 	public static boolean copyFile(String source, String dest){
 		FileChannel in = null; // canal d'entrée
 		FileChannel out = null; // canal de sortie
@@ -943,7 +1007,8 @@ public class JobHelper {
 		}
 		return true;
 	}
-
+*/
+	
 	public Cell coloneExcelSuivant(Iterator<Cell> tempCellIteratorL1,int nbreCell) {
 
 
@@ -955,20 +1020,48 @@ public class JobHelper {
 		return tempCellIteratorL1.next(); 
 	}
 
-	public String getNextJob(String name)
+	/**
+	 * name - getNextJob : use by Excelreader for know who is the next job and add it in the jobchain 
+	 *   
+	 * @param String : name of the job                          
+	 * @return String :  name of the jobchain
+	 * @author jean-vincent
+	 * @date 20/05/2015
+	 * @note
+	 */
+	public String getNextJob(String job)
 	{
-		return nameNextJob.get(name);
+		return nameNextJob.get(job);
 	}
 
-	public boolean isJobChainComplex(String name)
+	/**
+	 * name - isJobChainComplex : use by Excelreader for know if a jobchain have parallel job
+	 *   
+	 * @param String : name of the jobchain                          
+	 * @return boolean 
+	 * @author jean-vincent
+	 * @date 20/05/2015
+	 * @note
+	 */
+	
+	public boolean isJobChainComplex(String jobchain)
 	{
-		if(jobChainComplex.containsKey(name))
+		if(jobChainComplex.containsKey(jobchain))
 		{return true;}
 
 		return false;
 	}
 
-	public String jobChainSuivant(String nameJobchain)
+	/**
+	 * name - jobChainNext : use by Excelreader for know if a jobchain execute a other jobchain 
+	 *   
+	 * @param String : name of the jobchain                          
+	 * @return String : name of the next jobchain
+	 * @author jean-vincent
+	 * @date 20/05/2015
+	 * @note
+	 */
+	public String jobChainNext(String nameJobchain)
 	{
 
 		if(nextJobChain.containsKey(nameJobchain))
@@ -985,6 +1078,16 @@ public class JobHelper {
 
 		return splitAtBegening.get(chaine);
 	}
+	
+	/**
+	 * name -  getJobChaine : return the jobchain of a job
+	 *   
+	 * @param String : jid of the job                          
+	 * @return String : name of the jobchain 
+	 * @author jean-vincent
+	 * @date 20/05/2015
+	 * @note
+	 */
 	public String getJobChaine(String JID)
 	{
 
@@ -996,6 +1099,7 @@ public class JobHelper {
 
 		return "NoJobchain";
 	}
+	
 	/**
 	 * name - createConfigFile create a config job for a split
 	 * 

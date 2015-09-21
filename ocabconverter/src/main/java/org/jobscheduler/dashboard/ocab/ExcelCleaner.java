@@ -15,6 +15,11 @@
  * limitations under the License
  */
 
+/*
+ * that file help ExcelReader,
+ * he clean Excel file, and regenerate a new excel file
+ * 
+ */
 package org.jobscheduler.dashboard.ocab;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -54,11 +59,10 @@ public class ExcelCleaner {
 		rowSuiv=sheet.getRow(2);
 		int numLigne=1;
 		boolean delete=false;
-		String nameOfJobChain="";
-		int NumberJobchainsup=10;
 
 		for(int p=2;p<=sheet.getLastRowNum();p++)	 
 		{	
+			//sort on time (of a job)
 			if(!row.getCell(2).toString().isEmpty()&&!row.getCell(16).toString().isEmpty()&&!rowSuiv.getCell(16).toString().isEmpty()&&(!rowPrec.getCell(3).toString().isEmpty()||!rowPrec.getCell(5).toString().isEmpty()))
 			{
 				String timeRow=row.getCell(16).toString();
@@ -89,7 +93,7 @@ public class ExcelCleaner {
                         /*
 						if(rebuildDependency(aComparer,nameOfJobChain+NumberJobchainsup))
 	                  						NumberJobchainsup++;
-			 */
+			              */
 			
 						ligneEchange=0;
 					}
@@ -180,17 +184,7 @@ public class ExcelCleaner {
 				}
 
 			}
-			
-			//If you want schedule with time, he sorts the time from smallest to largest 
-			/*
-		 
-			if(!row.getCell(1).toString().isEmpty())
-			{
-				nameOfJobChain=row.getCell(5).toString();
-			}
-
-
-              
+			 
 			/* décomment if you want add a order when there is not, but carefully! see michael koch C2t 
 			//Add order
 			 if(!row.getCell(16).toString().isEmpty()&& !row.getCell(1).toString().isEmpty())
@@ -205,7 +199,8 @@ public class ExcelCleaner {
 			 }
 			//End add order
 			 */
-
+			
+			// put the time of a jobchain in the order
 			if(!row.getCell(1).toString().isEmpty()&&!row.getCell(16).toString().isEmpty()&&!row.getCell(16).toString().isEmpty())
 			{
 				if(!rowSuiv.getCell(2).toString().isEmpty())
@@ -218,7 +213,8 @@ public class ExcelCleaner {
 				}
 
 			}
-
+			
+            // for clean the regex, add a "." befor "?" and "*"
 			if(rowSuiv.getCell(3).toString().equals("O"))
 			{
 
@@ -326,7 +322,7 @@ public class ExcelCleaner {
 			}
 			 */
 
-			if(delete)
+			if(delete)// if we have delete a line 
 			{
 				rowPrec=sheet.getRow(p-1);
 				row = sheet.getRow(p);
@@ -356,32 +352,7 @@ public class ExcelCleaner {
 
 		interfaceGraphique.addValueProgressBar(15);
 	}
-
-	public void addExcelJobChain(int line, String name)
-	{
-		sheet.shiftRows(line, sheet.getLastRowNum(), 1);
-		sheet.createRow(line);
-		Row row=sheet.getRow(line);
-		for (int i=0;i<62;i++)
-		{
-			row.createCell(i);
-			row.getCell(i, Row.CREATE_NULL_AS_BLANK);
-
-			switch(i)
-			{
-			case 1:
-				row.getCell(i).setCellValue("-1");
-				break;
-
-			case 5:
-				row.getCell(i).setCellValue(name);
-				break;
-
-
-			}
-		}
-	}
-
+	
 	public void copyExcelJob(int line, int  newLine )
 	{
 		//si le job est suivis de fichier(s) il faut rajouer le job apres le fichier (ou le lock)
