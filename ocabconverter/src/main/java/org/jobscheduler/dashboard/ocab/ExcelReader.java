@@ -105,6 +105,7 @@ public class ExcelReader {
 	String log = "";
 	ConvertisseurTwsJbs interfaceGraphique;
 	boolean modeTest;
+	boolean userMode;
 	int numeroOrder = 1;
 	int numLigne = 1;
 	String lockInUse = "";
@@ -115,6 +116,7 @@ public class ExcelReader {
 	boolean boucleExterne;
 	String[] LineSpleat;
 	boolean alertUtilisateur;
+	String userJob="";
 
 	/**
 	 * For the conversion , we must know the next steps for each job, but
@@ -206,10 +208,11 @@ public class ExcelReader {
 	 */
 
 	public ExcelReader(String EmplacementFichierExcel, String output,
-			ConvertisseurTwsJbs ctj, boolean modTest) throws JAXBException,
+			ConvertisseurTwsJbs ctj, boolean modTest,boolean usermode) throws JAXBException,
 			IOException {
 		super();
 		modeTest = modTest;
+		userMode=usermode;
 		interfaceGraphique = ctj;
 		this.outPut = output;
 		InitVariable();
@@ -558,15 +561,19 @@ public class ExcelReader {
 			break;
 		case "user":
 			// If there is more than one users, notify in log
-			if (!cell.toString().equals(
-					file.getName().split("\\.")[0].toLowerCase())
+			if(userJob.isEmpty())
+				userJob=cell.toString();
+			
+			if (!cell.toString().equals(userJob)
 					&& alertUtilisateur) {
 
-				log += "ATTENTION les jobs dans le fichier ont plusieurs utilisateurs! \n";
+				log += "ATTENTION les jobs dans le fichier ont plusieurs utilisateurs! 1-"+userJob+"2-"+cell.toString()+"\n";
 				alertUtilisateur = false;
 
 			}
 
+			if(!userJob.equals(cell.toString()))
+				userJob=cell.toString();
 			break;
 
 		case "description":
@@ -578,14 +585,35 @@ public class ExcelReader {
 
 		case "scriptname":
 
-			if (modeTest) {
+			if (modeTest) {//test mode with sleep 12 and the script in comment 
+				if(userMode) //userMode use the Excel ocab user, otherwise, it's the default user (jobscheduler user) 
+				{
+					scrpt.getContent().add(
+							cdata("sleep 12 " + "#sudo -iHu "+userJob+" "+ cell.toString()));
+
+					jb.setScript(scrpt);
+				}
+				else
+				{	
 				scrpt.getContent().add(
 						cdata("sleep 12 " + "#" + cell.toString()));
 
 				jb.setScript(scrpt);
+				}
 			} else {
+				
+				if(userMode) //userMode use the Excel ocab user, otherwise, it's the default user (jobscheduler user) 
+				{
+					scrpt.getContent().add(
+							cdata("sudo -iHu "+userJob+" "+ cell.toString()));
+
+					jb.setScript(scrpt);
+				}
+				else
+				{	
 				scrpt.getContent().add(cdata(cell.toString()));
 				jb.setScript(scrpt);
+				}
 			}
 
 			break;
@@ -2137,9 +2165,9 @@ public class ExcelReader {
 	public static void main(String[] args) throws IOException, JAXBException {
 
 		ExcelReader exrd = new ExcelReader(
-				"C:/Users/m419099/Documents/AEPBetaT7.xlsm",
-				"C:/Users/m419099/Documents/résultat",
-				new ConvertisseurTwsJbs(), true);
+				"C:/Users/j-vincent/Documents/OCAB-Extraction/QVI/PROD/Moyen/CFM.xlsm",
+				"C:/Users/j-vincent/Documents/résultat",
+				new ConvertisseurTwsJbs(), true,false);
 
 		if (exrd.treatExcelFile())
 
