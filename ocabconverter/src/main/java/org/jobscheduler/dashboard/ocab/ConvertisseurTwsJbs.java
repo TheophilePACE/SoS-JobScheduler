@@ -110,6 +110,7 @@ temp.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         jRadioButton1 = new javax.swing.JRadioButton();
         jButton2 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
+        jRadioButton2 = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Convertisseur Ocab TWS");
@@ -178,6 +179,13 @@ temp.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         jLabel9.setForeground(new java.awt.Color(255, 51, 0));
         jLabel9.setText("path");
 
+        jRadioButton2.setText("Mode sudo");
+        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -222,7 +230,8 @@ temp.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                                     .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jButton1))
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jRadioButton2))))
                 .addGap(0, 11, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -237,8 +246,8 @@ temp.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                     .addComponent(jButton2)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -255,6 +264,8 @@ temp.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                                 .addComponent(jLabel3))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jRadioButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jRadioButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -348,7 +359,7 @@ temp.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
     {jProgressBar1.setValue(0);
     
     	try {
- 			ExcelReader exrd = new ExcelReader(absolutePath,destination, this,modeTest);
+ 			ExcelReader exrd = new ExcelReader(absolutePath,destination, this,modeTest,modeSudo);
  			jProgressBar1.setValue(20);
  			if (exrd.treatExcelFile())
  				{
@@ -405,6 +416,20 @@ jLabel4.setVisible(true);
     	
 // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+    	
+    	if(jRadioButton2.isSelected())
+         {
+             modeSudo=true;
+         }
+         else
+         {
+              modeSudo=false;
+         }
+    	
+    	// TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButton2ActionPerformed
 
     public void  jFileChooserTempActionPerformed(java.awt.event.ActionEvent evt)
     {
@@ -535,12 +560,13 @@ jLabel4.setVisible(true);
     private javax.swing.JLabel jLabel9;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextPane jTextPane1;
     // End of variables declaration//GEN-END:variables
-       JFileChooser temp=new JFileChooser();;
-    // End of variables declaration//GEN-END:variables
     boolean modeTest=false;
+    boolean modeSudo=false;
+    JFileChooser temp=new JFileChooser();
     String destination=System.getProperty("user.dir")+"/";
     public void addValueProgressBar(int vlr) {
     	jProgressBar1.setValue(jProgressBar1.getValue()+vlr);
