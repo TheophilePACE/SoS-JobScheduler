@@ -36,14 +36,14 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class ExcelCleaner {
 	XSSFSheet sheet;
 	String outPut;
-	String log;
+	StringBuilder log=new StringBuilder();
 	
-	public void ExcelOcabCleaner(XSSFWorkbook wb,XSSFSheet sheet, String log,String outPut, ConvertisseurTwsJbs interfaceGraphique)
+	public void ExcelOcabCleaner(XSSFWorkbook wb,XSSFSheet sheet, StringBuilder logg,String outPut, ConvertisseurTwsJbs interfaceGraphique)
 	{
 		this.sheet=sheet;
 		this.outPut=outPut;
-		this.log=log;		
-		log+="Nettoyage du fichier Excel \n";
+		this.log=logg;		
+		log.append("Nettoyage du fichier Excel \n");
 
 		//couleur cellule modifier
 		XSSFFont font = wb.createFont();
@@ -87,7 +87,7 @@ public class ExcelCleaner {
 
 					if(ligneEchange!=0)
 					{
-						log+="Une incohérence dans la liste des jobs a été détectée et corrigée, la ligne "+(ligneEchange+1)+ "a été échangée avec la ligne "+ (aComparer+1)+" à cause de la colonne <<at>> \n";
+						log.append("Une incohérence dans la liste des jobs a été détectée et corrigée, la ligne "+(ligneEchange+1)+ "a été échangée avec la ligne "+ (aComparer+1)+" à cause de la colonne <<at>> \n");
 
 						switchRow(aComparer, ligneEchange,csCF);
                         /*
@@ -111,7 +111,7 @@ public class ExcelCleaner {
 
 				if(rowPrec.getCell(3).toString().equals("R"))
 				{
-					log+="Modification de l'order: "+rowPrec.getCell(14).toString()+ ", mise à jour de la colone <<at>> \n";
+					log.append("Modification de l'order: "+rowPrec.getCell(14).toString()+ ", mise à jour de la colone <<at>> \n");
 
 					rowPrec.getCell(16).setCellValue(row.getCell(16).toString()); 
 					rowPrec.getCell(16).setCellStyle(csCF);
@@ -146,8 +146,7 @@ public class ExcelCleaner {
 						copyExcelJob(lineAft.values().iterator().next(),(numLigne+1));
 
 						delete=true;
-						log+="La ligne "+lineAft.values().iterator().next() + "a été remonté à la ligne "+ (numLigne+1);
-						System.out.println("La ligne "+lineAft.values().iterator().next() + "a été remonté à la ligne "+ (numLigne+1));
+						
 
 					}
 				}
@@ -165,7 +164,7 @@ public class ExcelCleaner {
 						if(!sheet.getRow(numLigne).getCell(11).toString().isEmpty()&&!sheet.getRow(nextLine).getCell(2).toString().isEmpty())
 						{
 
-							System.out.println("lline "+ numLigne+" "+nextLine);
+							
 							lineBef.put(sheet.getRow(nextLine).getCell(2).toString(), nextLine);
 						}
 					}
@@ -248,7 +247,7 @@ public class ExcelCleaner {
 
 
 							rowSuiv.getCell(30).setCellValue(rowSuiv.getCell(30).toString()+temps+"."+tempsNext);
-							log+="Modification du regex à la ligne :"+(numLigne+1)+" \n";
+							log.append("Modification du regex à la ligne :"+(numLigne+1)+" \n");
 
 							rowSuiv.getCell(30).setCellStyle(csCF);
 						}
@@ -348,7 +347,7 @@ public class ExcelCleaner {
 
 
 
-		log+="Fin du nettoyage, génération du nouveau fichier Excel \n";
+		log.append("Fin du nettoyage, génération du nouveau fichier Excel \n");
 
 		interfaceGraphique.addValueProgressBar(15);
 	}
@@ -358,7 +357,7 @@ public class ExcelCleaner {
 		//si le job est suivis de fichier(s) il faut rajouer le job apres le fichier (ou le lock)
 
 		boolean boucle=!sheet.getRow(newLine).getCell(3).toString().isEmpty();
-		System.out.println(line+" "+newLine );
+		
 
 		while(boucle)
 		{
@@ -409,7 +408,7 @@ public class ExcelCleaner {
 			}
 
 
-			System.out.println(sheet.getRow((ajouter.get(z)+1)).getCell(2).toString()+"  "+(ajouter.get(z)) );
+			
 
 			sheet.removeRow(sheet.getRow((ajouter.get(z)+1)));
 
@@ -429,7 +428,7 @@ public class ExcelCleaner {
 		Row row2=sheet.getRow(ligne2);
 		row.setRowStyle(csCF);
 
-		log+="Echange entre la ligne n: "+ligne1+"et la ligne n2: " +ligne2+ "\n";
+		log.append("Echange entre la ligne n: "+ligne1+"et la ligne n2: " +ligne2+ "\n");
 
 
 		for(int cn=0; cn<row.getLastCellNum(); cn++) {

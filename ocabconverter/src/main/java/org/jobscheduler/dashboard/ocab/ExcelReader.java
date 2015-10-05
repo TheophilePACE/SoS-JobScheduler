@@ -102,7 +102,7 @@ public class ExcelReader {
 	boolean fichier = false;
 	String timeJob = "";
 	String untilJob = "";
-	String log = "";
+	StringBuilder log=new StringBuilder("");
 	ConvertisseurTwsJbs interfaceGraphique;
 	boolean modeTest;
 	boolean userMode;
@@ -222,9 +222,9 @@ public class ExcelReader {
 		dir.mkdirs();
 		outPut = dir.getAbsolutePath() + "/";
 
-		log = "**********************************************************\n";
-		log += "Traitement du fichier Excel : " + file.getName()
-				+ " destination: " + outPut + "\n";
+		log.append("**********************************************************\n");
+		log.append("Traitement du fichier Excel : " + file.getName()
+				+ " destination: " + outPut + "\n");
 
 		jc = JAXBContext
 				.newInstance("org.jobscheduler.dashboard.jobdefinition.xml");
@@ -267,7 +267,7 @@ public class ExcelReader {
 
 		jobhelp = new JobHelper(sheet, marshaller);
 
-		log += "Exécution du JobHelper \n";
+		log.append( "Exécution du JobHelper \n");
 
 		// jobhelp help the main work, he resolve the dependence, exp (next 1002
 		// is 1003)
@@ -567,7 +567,7 @@ public class ExcelReader {
 			if (!cell.toString().equals(userJob)
 					&& alertUtilisateur) {
 
-				log += "ATTENTION les jobs dans le fichier ont plusieurs utilisateurs! 1-"+userJob+"2-"+cell.toString()+"\n";
+				log.append( "ATTENTION les jobs dans le fichier ont plusieurs utilisateurs! 1-"+userJob+" 2-"+cell.toString()+"\n");
 				alertUtilisateur = false;
 
 			}
@@ -918,7 +918,7 @@ public class ExcelReader {
 							n = 2;
 							rt.setBegin("00:00");
 							rt.setEnd("24:00");
-							log += "Attention! un job répétitif sans plage de répétition a été détecté! plage par defaut : 24h \n";
+							log.append("Attention! un job répétitif sans plage de répétition a été détecté! plage par defaut : 24h \n");
 
 						}
 
@@ -1674,7 +1674,7 @@ public class ExcelReader {
 
 	public boolean treatExcelFile() throws IOException {
 
-		log += "Traitement du fichier Excel \n";
+		log.append("Traitement du fichier Excel \n");
 
 		copyLineTitle();
 		nextExcelLine();
@@ -1789,7 +1789,7 @@ public class ExcelReader {
 		nbOrderParJobchain.put(jobchainEnCour, nbrDeOrder);
 		addEndErrorEndSucsses();
 		fis.close();
-		log += "Fin du traitement, les fichiers ont été chargés en mémoire \n";
+		log.append( "Fin du traitement, les fichiers ont été chargés en mémoire \n");
 
 		return true;
 	}
@@ -1818,7 +1818,7 @@ public class ExcelReader {
 		Iterator nameFileOrder = keyset.iterator();
 
 		Job job;
-		log += "génération des jobs \n";
+		log.append("génération des jobs \n");
 
 		while (ejob.hasNext())
 
@@ -1832,7 +1832,7 @@ public class ExcelReader {
 		}
 
 		JobChain jobch;
-		log += "génération des jobchains \n";
+		log.append("génération des jobchains \n");
 
 		while (ejobchain.hasNext())
 
@@ -1853,7 +1853,7 @@ public class ExcelReader {
 
 		jobch3 = (JobChain) ejobchain.next();
 
-		log += "génération des orders \n";
+		log.append( "génération des orders \n");
 
 		while (eOrder.hasNext()) {
 
@@ -1873,10 +1873,10 @@ public class ExcelReader {
 			}
 		}
 
-		log += "Fin du traitement pour le fichier: " + file.getName() + " \n";
-		log += "**********************************************************\n";
+		log.append( "Fin du traitement pour le fichier: " + file.getName() + " \n");
+		log.append( "**********************************************************\n");
 
-		interfaceGraphique.notification(log);
+		interfaceGraphique.notification(log.toString());
 		File f = new File(outPut + "LOG.txt");
 		PrintWriter pw;
 		try {
