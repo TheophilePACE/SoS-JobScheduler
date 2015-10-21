@@ -400,7 +400,6 @@ public class ExcelReader {
 			if (!cell.toString().isEmpty()) {
 				treatJobChainOption(i); // treat a jobchain hut
 			}
-
 			i++;
 
 		} while (cellIterator.hasNext());
