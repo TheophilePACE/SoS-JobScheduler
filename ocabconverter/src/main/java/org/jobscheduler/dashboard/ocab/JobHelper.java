@@ -147,13 +147,23 @@ public class JobHelper {
 
 		if(!row.getCell(5).getStringCellValue().isEmpty()) //for check jobchain name 
 		{  
+			//if complexe=true then the last treated jobchain end with a synchronization
+			//we have to complete informations about dependency for synch and split
 			if (complexe)
 			{
 				EndComplexCase("End");
 				jobEndComplex="";
-			} 
+			}
+			
+			//List of last parallel job 
+			// exp : if we have a parallel execution of job : 2 3 4 5
+			// then we add "5" in EndCmplex, because in the xml jobchain
+			//we have to add a synchronization after every last parallel job
+			//when i speak about last, it's only for the XML file, because functionally
+			// job 2 3 4 5 is execute at the same time (parallel execution) 
 			EndCmplex=new LinkedHashMap<String, Integer>();
 
+			//if the jobchain have a dependency 
 			if(!row.getCell(11).toString().isEmpty())
 			{
 
@@ -166,12 +176,12 @@ public class JobHelper {
 			configFile=false;
 			nameJobChain=row.getCell(5).getStringCellValue(); //for check jobchain name
 			beginJobchain=true; //initialization for a new jobchain
-			CheckSplitAtTheBegening();
+			CheckSplitAtTheBeginning();//check if there is a parallel execution at the beginning 
 
 		}
 
 
-		if(!row.getCell(2).toString().isEmpty())	//for check the jid of the line
+		if(!row.getCell(2).toString().isEmpty())	//for check the cell jid 
 		{
 
 
@@ -299,13 +309,13 @@ public class JobHelper {
 	 * @note
 	 */
 	
-	public void CheckSplitAtTheBegening()
+	public void CheckSplitAtTheBeginning()
 	{
 
 
 		String jid="";
 		//here we find a split point, this is the beginning of a complex case 
-		String endSplit=splitBegeningPoint(jid);
+		String endSplit=splitBeginningPoint(jid);
 		if(!endSplit.equals("-1")&&indiceEndSplit!=-1)
 		{
 
@@ -521,7 +531,7 @@ public class JobHelper {
 	 * @note
 	 */
 	
-	public String splitBegeningPoint(String Job)
+	public String splitBeginningPoint(String Job)
 	{
 		String returnn="";
 		boolean boucle,endSplit=false;

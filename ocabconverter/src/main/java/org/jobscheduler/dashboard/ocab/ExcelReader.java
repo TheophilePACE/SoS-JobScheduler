@@ -991,6 +991,8 @@ public class ExcelReader {
 		scrpt = fabrique.createScript();
 		scrpt.setLanguage("shell");
 		jobFileName = "";
+		
+		//optional lock see ocab
 		if (!lockInUse.isEmpty()) {
 			LockUse temp = fabrique.createJobLockUse();
 			temp.setLock(lockInUse);
@@ -998,6 +1000,7 @@ public class ExcelReader {
 			jb.getLockUse().add(temp);
 		}
 
+		//default lock
 		LockUse lck = fabrique.createJobLockUse();
 		lck.setLock(file.getName().split("\\.")[0]);
 		lck.setExclusive("no");
