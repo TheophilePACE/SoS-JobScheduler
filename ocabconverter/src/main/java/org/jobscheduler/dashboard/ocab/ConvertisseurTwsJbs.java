@@ -364,7 +364,7 @@ temp.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
  			if (exrd.treatExcelFile())
  				{
  				
- 				int nbFichier=exrd.OutputTest();
+ 				int nbFichier=exrd.OutputFiles();
  				jTextPane1.setText(jTextPane1.getText()+nbFichier+" fichier(s) ont été générés");
  				
  				jTextPane1.setText(jTextPane1.getText()+"\n"+"Operation succeeded");

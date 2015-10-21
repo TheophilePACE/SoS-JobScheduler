@@ -109,7 +109,6 @@ public class ExcelReader {
 	int numeroOrder = 1;
 	int numLigne = 1;
 	String lockInUse = "";
-	String jobchainRunOtherJobChain;
 	String orderfileName;
 	String jobFileName;
 	boolean orderAuthorization;
@@ -363,7 +362,7 @@ public class ExcelReader {
 	 * 
 	 */
 
-	public void treatJobChainLine(boolean MAJ) {
+	public void treatJobChainLine() {
 
 		int i = 2;// cell and "i"(column title) must be synchronized, title must
 		// correspond to cell
@@ -423,11 +422,6 @@ public class ExcelReader {
 
 		// now the present jobchain is the new chain
 		jobchainEnCour = jbc.getName();
-
-		// in the new version this step is not use
-		// if MAJ=true it's a jobchain i have add with the prog
-		if (MAJ)
-			jobchainRunOtherJobChain = jobchainEnCour;
 
 	}
 
@@ -1681,11 +1675,14 @@ public class ExcelReader {
 		double valeur = 0;
 		boolean ActivateMultiFileOrder = false;
 		while (rowIterator.hasNext()) {
+			
+			//graphique
 			valeur += size;
 			if (valeur >= 1) {
 				interfaceGraphique.addValueProgressBar((int) valeur);
 				valeur = 0;
 			}
+			
 			Row row = rowIterator.next();// get a line in the file
 
 			cellIterator = row.cellIterator(); // get huts in the line
@@ -1696,33 +1693,12 @@ public class ExcelReader {
 
 			// check if SID exist for create a jobchain
 			if (!chaine.isEmpty()) {
+				
 				ActivateMultiFileOrder = true;
 
-				// normaly useless
-				if (chaine.equals("-1")) {
-					Commands cmd = fabrique.createCommands();
-					cmd.getOnExitCode().add("success");
-					Order tmp = fabrique.createOrder();
-					tmp.setJobChain("/" + file.getName().split("\\.")[0] + "/"
-							+ sheet.getRow(numLigne).getCell(5).toString());
-					cmd.getAddJobsOrAddOrderOrCheckFolders().add(
-							fabrique.createOrder(tmp));
-
-					lJob.get(
-							sheet.getRow(numLigne)
-									.getCell(5)
-									.toString()
-									.substring(
-											jobchainRunOtherJobChain.length() + 3))
-							.getCommands().add(cmd);
-					// +3 le chiffre rajouter pour distinger le jobchain + le
-					// "_" cela fait trois caracteres à sauter
-
-					treatJobChainLine(false);
-
-				} else {
-					treatJobChainLine(true);
-				}
+					treatJobChainLine();
+					
+				
 			} else {
 				// if SID don't exist we look the JID
 				// if JID exist we create a job
@@ -1783,6 +1759,7 @@ public class ExcelReader {
 
 			numLigne++;
 		}
+		//header and footer
 		addBeginAndEndJobChain(jobchainEnCour);
 		nbOrderParJobchain.put(jobchainEnCour, nbrOrder);
 		addEndErrorEndSucsses();
@@ -1800,7 +1777,7 @@ public class ExcelReader {
 	 * @note
 	 */
 
-	public int OutputTest() throws FileNotFoundException, JAXBException,
+	public int OutputFiles() throws FileNotFoundException, JAXBException,
 			IllegalStateException {
 		Collection c = jobchain.values();
 		Iterator ejobchain = c.iterator();
@@ -1888,7 +1865,7 @@ public class ExcelReader {
 
 		File di = new File(outPut);
 		File fl[] = di.listFiles();
-
+        //Total Files 
 		return fl.length;
 	}
 
@@ -2171,7 +2148,7 @@ public class ExcelReader {
 
 		{
 			System.out.println("Fichier Excel traité");
-			exrd.OutputTest();
+			exrd.OutputFiles();
 		} else {
 			System.out.println("prob");
 		}
