@@ -68,6 +68,7 @@ public class JobHelper {
 	 */
 	int numbeSplit;
 	int numbeSyn;
+	
 	XSSFSheet sheet;
 	int ligne=1;
 	Marshaller marshaller;

@@ -88,7 +88,7 @@ public class ExcelReader {
 	/**
 	 * System objects
 	 */
-	File file;;
+	File file;
 	FileInputStream fis;
 	JAXBContext jc;
 	Marshaller marshaller;
@@ -112,9 +112,9 @@ public class ExcelReader {
 	String jobchainRunOtherJobChain;
 	String orderfileName;
 	String jobFileName;
-	boolean Orderauthorization;
+	boolean orderAuthorization;
 	boolean boucleExterne;
-	String[] LineSpleat;
+	String[] lineSpleat;
 	boolean alertUtilisateur;
 	String userJob="";
 
@@ -145,7 +145,7 @@ public class ExcelReader {
 	 */
 
 	String jobchainEnCour;
-	int nbrDeOrder;
+	int nbrOrder;
 
 	/**
 	 * Existence or not of a runtime / params ( job scheduler functionality )
@@ -163,8 +163,8 @@ public class ExcelReader {
 	LinkedHashMap<String, JobChain> jobchain = new LinkedHashMap<String, JobChain>();
 	// amount "order" for each jobchain
 	Hashtable<String, Integer> nbOrderParJobchain = new Hashtable<String, Integer>();
-	LinkedHashMap<String, Job> ljob = new LinkedHashMap<String, Job>();
-	LinkedHashMap<String, Order> lorder = new LinkedHashMap<String, Order>();
+	LinkedHashMap<String, Job> lJob = new LinkedHashMap<String, Job>();
+	LinkedHashMap<String, Order> lOrder = new LinkedHashMap<String, Order>();
 	Iterator<Row> rowIterator;
 	Iterator<Cell> cellFirstLigne;
 	Iterator<Cell> cellIterator;
@@ -194,11 +194,11 @@ public class ExcelReader {
 		orderfileName = "";
 		alertUtilisateur = true;
 		jobFileName = "";
-		Orderauthorization = true;
+		orderAuthorization = true;
 		boucleExterne = false;
 		contenuFichier = new ArrayList<String>();
 		jobchainEnCour = null;
-		nbrDeOrder = 0;
+		nbrOrder = 0;
 		saveAt = "00:00";// Default Time
 		haveRunTimeFiles = false;
 	}
@@ -245,7 +245,6 @@ public class ExcelReader {
 		fabrique = new ObjectFactory();
 		fis = new FileInputStream(file);
 		wb = new XSSFWorkbook(fis);
-
 		sheet = wb.getSheetAt(3);
 
 		// first clean of excel file, create blank for null case
@@ -349,7 +348,7 @@ public class ExcelReader {
 	public void InitVariableOfJobChain() {// initialization
 		lockInUse = "";
 		boucleExterne = true;// for the repetition in another chain
-		LineSpleat = null; // line for add parallel job
+		lineSpleat = null; // line for add parallel job
 		timeJob = "";
 		numeroOrder = 1;
 		haveRunTimeFiles = false;
@@ -382,7 +381,7 @@ public class ExcelReader {
 			jbc.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(jbcnSync);
 		}
 		// if the jobchain wait a file for execute, he can't have order
-		Orderauthorization = Orderauthorization(numLigne + 1);
+		orderAuthorization = Orderauthorization(numLigne + 1);
 
 		// new jobchain
 		jbc = fabrique.createJobChain();
@@ -413,8 +412,8 @@ public class ExcelReader {
 			// reset correspondence between jobchain
 			// and order because jobchain can have many order
 
-			nbOrderParJobchain.put(jobchainEnCour, nbrDeOrder);
-			nbrDeOrder = 0;
+			nbOrderParJobchain.put(jobchainEnCour, nbrOrder);
+			nbrOrder = 0;
 
 			// here we finish the past jobchain if he easy we add step "success"
 			// and "error"
@@ -454,7 +453,7 @@ public class ExcelReader {
 				jbcnSplit = fabrique.createJobChainJobChainNode();
 				String temp = jobhelp.splitAtBegening(cell.toString()).split(
 						";")[0];// just a temporary variable
-				LineSpleat = jobhelp.splitAtBegening(cell.toString())
+				lineSpleat = jobhelp.splitAtBegening(cell.toString())
 						.split(";");
 
 				jbcnSplit.setState(temp);
@@ -1016,13 +1015,13 @@ public class ExcelReader {
 		// the only way for convert in jobscheduler is the runtime in a job
 		if (haveRunTimeFiles && fichier) {
 
-			if (LineSpleat != null) {
-				for (int u = 1; u < LineSpleat.length; u++) {
-					if (numLigne == Integer.parseInt(LineSpleat[u]))
+			if (lineSpleat != null) {
+				for (int u = 1; u < lineSpleat.length; u++) {
+					if (numLigne == Integer.parseInt(lineSpleat[u]))
 						jb.setRunTime(runTimeFiles);
 				}
-
-				if (Integer.parseInt(LineSpleat[LineSpleat.length - 1]) < numLigne) {
+                //if true, it's the last parallel job at the jobchain beginning 
+				if (Integer.parseInt(lineSpleat[lineSpleat.length - 1]) < numLigne) {
 					haveRunTimeFiles = false;
 					runTimeFiles = fabrique.createRunTime();
 				}
@@ -1070,7 +1069,7 @@ public class ExcelReader {
 
 		}
 		// add the job in the list of job
-		ljob.put(jobFileName, jb);
+		lJob.put(jobFileName, jb);
 
 	}
 
@@ -1627,9 +1626,9 @@ public class ExcelReader {
 			runtime = false;
 		}
 
-		if (Orderauthorization) {
-			lorder.put(orderfileName, od);
-			nbrDeOrder++;
+		if (orderAuthorization) {
+			lOrder.put(orderfileName, od);
+			nbrOrder++;
 		}
 		if (!saveAt.equals("00:00"))
 			saveAt = new String("00:00");
@@ -1709,7 +1708,7 @@ public class ExcelReader {
 					cmd.getAddJobsOrAddOrderOrCheckFolders().add(
 							fabrique.createOrder(tmp));
 
-					ljob.get(
+					lJob.get(
 							sheet.getRow(numLigne)
 									.getCell(5)
 									.toString()
@@ -1785,7 +1784,7 @@ public class ExcelReader {
 			numLigne++;
 		}
 		addBeginAndEndJobChain(jobchainEnCour);
-		nbOrderParJobchain.put(jobchainEnCour, nbrDeOrder);
+		nbOrderParJobchain.put(jobchainEnCour, nbrOrder);
 		addEndErrorEndSucsses();
 		fis.close();
 		log.append( "Fin du traitement, les fichiers ont été chargés en mémoire \n");
@@ -1806,14 +1805,14 @@ public class ExcelReader {
 		Collection c = jobchain.values();
 		Iterator ejobchain = c.iterator();
 
-		Collection cjob = ljob.values();
+		Collection cjob = lJob.values();
 		Iterator ejob = cjob.iterator();
-		Set keyset2 = ljob.keySet();
+		Set keyset2 = lJob.keySet();
 		Iterator nameFileJob = keyset2.iterator();
 
-		Collection c2 = lorder.values();
+		Collection c2 = lOrder.values();
 		Iterator eOrder = c2.iterator();
-		Set keyset = lorder.keySet();
+		Set keyset = lOrder.keySet();
 		Iterator nameFileOrder = keyset.iterator();
 
 		Job job;
