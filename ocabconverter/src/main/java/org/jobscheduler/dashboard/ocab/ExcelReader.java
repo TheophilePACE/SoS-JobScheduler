@@ -41,22 +41,15 @@ import java.io.Writer;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Set;
-import java.util.StringTokenizer;
-
-import javax.swing.JOptionPane;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jobscheduler.dashboard.jobdefinition.xml.Commands;
@@ -79,7 +72,6 @@ import org.jobscheduler.dashboard.jobdefinition.xml.Period;
 import org.jobscheduler.dashboard.jobdefinition.xml.RunTime;
 import org.jobscheduler.dashboard.jobdefinition.xml.RunTime.Date;
 import org.jobscheduler.dashboard.jobdefinition.xml.Script;
-import org.jobscheduler.dashboard.jobdefinition.xml.StartJob;
 import org.jobscheduler.dashboard.jobdefinition.xml.Weekdays;
 
 import com.sun.xml.bind.marshaller.CharacterEscapeHandler;
@@ -1640,13 +1632,13 @@ public class ExcelReader {
 	 */
 
 	public void addEndErrorEndSucsses() {
-		Collection c = jobchain.values();
-		Iterator ijobchain = c.iterator();
+		Collection<JobChain> c = jobchain.values();
+		Iterator<JobChain> ijobchain = c.iterator();
 
 		while (ijobchain.hasNext())
 
 		{
-			JobChain jtemp = (JobChain) ijobchain.next();
+			JobChain jtemp =  ijobchain.next();
 			JobChain.JobChainNode temp = fabrique.createJobChainJobChainNode();
 			temp.setState("end_SUC_All");
 			jtemp.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().add(temp);
@@ -1782,18 +1774,18 @@ public class ExcelReader {
 
 	public int OutputFiles() throws FileNotFoundException, JAXBException,
 			IllegalStateException {
-		Collection c = jobchain.values();
-		Iterator ejobchain = c.iterator();
+		Collection<JobChain> c = jobchain.values();
+		Iterator<JobChain> ejobchain = c.iterator();
 
-		Collection cjob = lJob.values();
-		Iterator ejob = cjob.iterator();
-		Set keyset2 = lJob.keySet();
-		Iterator nameFileJob = keyset2.iterator();
+		Collection<Job> cjob = lJob.values();
+		Iterator<Job> ejob = cjob.iterator();
+		Set<String> keyset2 = lJob.keySet();
+		Iterator<String> nameFileJob = keyset2.iterator();
 
-		Collection c2 = lOrder.values();
-		Iterator eOrder = c2.iterator();
-		Set keyset = lOrder.keySet();
-		Iterator nameFileOrder = keyset.iterator();
+		Collection<Order> c2 = lOrder.values();
+		Iterator<Order> eOrder = c2.iterator();
+		Set<String> keyset = lOrder.keySet();
+		Iterator<String> nameFileOrder = keyset.iterator();
 
 		Job job;
 		log.append("génération des jobs \n");
@@ -1998,7 +1990,6 @@ public class ExcelReader {
 			JobChainNode temp = fabrique.createJobChainJobChainNode();
 			temp.setState(jobchainEnCour + "Wait_Files");
 			temp.setJob(jobchainEnCour + "Wait_Files");
-			JobChain jbctemp = jobchain.get(jobchainEnCour);
 			JobChain.JobChainNode jbcnTemp2 = (JobChainNode) jobchain
 					.get(jobchainEnCour)
 					.getJobChainNodeOrFileOrderSinkOrJobChainNodeEnd().get(0);

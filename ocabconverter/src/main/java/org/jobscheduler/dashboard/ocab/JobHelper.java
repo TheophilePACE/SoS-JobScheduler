@@ -23,27 +23,21 @@
  */
 package org.jobscheduler.dashboard.ocab;
 
-import java.io.FileInputStream;
+
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigInteger;
-import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.List;
-
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.jobscheduler.dashboard.jobdefinition.xml.Job;
-import org.jobscheduler.dashboard.jobdefinition.xml.Job.Monitor;
 import org.jobscheduler.dashboard.jobdefinition.xml.JobChain;
 import org.jobscheduler.dashboard.jobdefinition.xml.JobSettings;
 import org.jobscheduler.dashboard.jobdefinition.xml.Lock;
@@ -52,9 +46,7 @@ import org.jobscheduler.dashboard.jobdefinition.xml.Order;
 import org.jobscheduler.dashboard.jobdefinition.xml.Param;
 import org.jobscheduler.dashboard.jobdefinition.xml.Params;
 import org.jobscheduler.dashboard.jobdefinition.xml.RunTime;
-import org.jobscheduler.dashboard.jobdefinition.xml.Script;
 import org.jobscheduler.dashboard.jobdefinition.xml.Settings;
-import org.w3c.dom.CDATASection;
 
 public class JobHelper {
 
@@ -538,7 +530,7 @@ public class JobHelper {
 		int numLigne=ligne;
 		boolean happyEnd=false; // if the complex case end with a split in the excel then yes, else we need to determine where is the end 
 		int firstJob=-1;
-		boolean noTime=true;
+	
 
 		ArrayList<Integer> parallelJob=new ArrayList<Integer> ();
 
@@ -556,8 +548,7 @@ public class JobHelper {
 			while(boucle&&!endSplit)
 			{
 
-				if(!sheet.getRow(numLigne).getCell(16).toString().isEmpty())
-					noTime=false;
+				
 
 
 				if(sheet.getRow(numLigne).getCell(11).toString().equals(Job) && !sheet.getRow(numLigne).getCell(2).toString().isEmpty() )
@@ -730,7 +721,7 @@ public class JobHelper {
 	public String ResolvLink(int line)
 	{
 		int i=1;
-		boolean boucle;
+		
 
 		if(valableIndice(line+1))
 		{
